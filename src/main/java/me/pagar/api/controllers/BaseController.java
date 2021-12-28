@@ -23,7 +23,7 @@ import me.pagar.api.http.response.HttpResponse;
  * Base class for all Controllers.
  */
 public abstract class BaseController {
-    protected static String userAgent = "PagarmeCoreApi - Java 6.0.0-alpha.0";
+    protected static String userAgent = "PagarmeCoreApi - Java 6.1.0-alpha.0";
 
     /**
      * Protected variables to hold an instance of Configuration.
