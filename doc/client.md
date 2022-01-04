@@ -5,7 +5,7 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `httpClientConfig` | `ReadonlyHttpClientConfiguration` | Http Client Configuration instance.<br>* See available [builder methods here](/doc/http-client-configuration-builder.md). |
+| `httpClientConfig` | `ReadonlyHttpClientConfiguration` | Http Client Configuration instance. |
 | `basicAuthUserName` | `String` | The username to use with basic authentication |
 | `basicAuthPassword` | `String` | The password to use with basic authentication |
 
@@ -27,16 +27,15 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 
 | Name | Description | Return Type |
 |  --- | --- | --- |
+| `getOrdersController()` | Provides access to Orders controller. | `OrdersController` |
 | `getPlansController()` | Provides access to Plans controller. | `PlansController` |
 | `getSubscriptionsController()` | Provides access to Subscriptions controller. | `SubscriptionsController` |
 | `getInvoicesController()` | Provides access to Invoices controller. | `InvoicesController` |
-| `getOrdersController()` | Provides access to Orders controller. | `OrdersController` |
 | `getCustomersController()` | Provides access to Customers controller. | `CustomersController` |
 | `getRecipientsController()` | Provides access to Recipients controller. | `RecipientsController` |
 | `getChargesController()` | Provides access to Charges controller. | `ChargesController` |
-| `getTransfersController()` | Provides access to Transfers controller. | `TransfersController` |
 | `getTokensController()` | Provides access to Tokens controller. | `TokensController` |
-| `getSellersController()` | Provides access to Sellers controller. | `SellersController` |
+| `getTransfersController()` | Provides access to Transfers controller. | `TransfersController` |
 | `getTransactionsController()` | Provides access to Transactions controller. | `TransactionsController` |
 
 ### Methods

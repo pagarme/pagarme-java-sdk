@@ -14,8 +14,6 @@ Request for creating an order item
 | `Amount` | `int` | Required | Amount | int getAmount() | setAmount(int amount) |
 | `Description` | `String` | Required | Description | String getDescription() | setDescription(String description) |
 | `Quantity` | `int` | Required | Quantity | int getQuantity() | setQuantity(int quantity) |
-| `Seller` | [`CreateSellerRequest`](/doc/models/create-seller-request.md) | Optional | Item seller | CreateSellerRequest getSeller() | setSeller(CreateSellerRequest seller) |
-| `SellerId` | `String` | Optional | seller identificator | String getSellerId() | setSellerId(String sellerId) |
 | `Category` | `String` | Required | Category | String getCategory() | setCategory(String category) |
 | `Code` | `String` | Optional | The item code passed by the client | String getCode() | setCode(String code) |
 
@@ -26,8 +24,6 @@ Request for creating an order item
   "amount": 46,
   "description": "description0",
   "quantity": 68,
-  "seller": null,
-  "seller_id": null,
   "category": "category2",
   "code": null
 }

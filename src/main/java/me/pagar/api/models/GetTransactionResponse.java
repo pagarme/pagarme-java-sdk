@@ -30,15 +30,15 @@ import me.pagar.api.DateTimeHelper;
         defaultImpl = GetTransactionResponse.class,
         visible = true)
 @JsonSubTypes({
+    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
     @Type(value = GetBankTransferTransactionResponse.class, name = "bank_transfer"),
     @Type(value = GetSafetyPayTransactionResponse.class, name = "safetypay"),
-    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
-    @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
     @Type(value = GetDebitCardTransactionResponse.class, name = "debit_card"),
-    @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
+    @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
     @Type(value = GetCashTransactionResponse.class, name = "cash"),
-    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card"),
-    @Type(value = GetPixTransactionResponse.class, name = "pix")
+    @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
+    @Type(value = GetPixTransactionResponse.class, name = "pix"),
+    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card")
 })
 @JsonInclude(Include.ALWAYS)
 public class GetTransactionResponse {

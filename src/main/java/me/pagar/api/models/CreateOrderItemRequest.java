@@ -17,10 +17,6 @@ public class CreateOrderItemRequest {
     private int amount;
     private String description;
     private int quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private CreateSellerRequest seller;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String sellerId;
     private String category;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String code;
@@ -37,8 +33,6 @@ public class CreateOrderItemRequest {
      * @param  description  String value for description.
      * @param  quantity  int value for quantity.
      * @param  category  String value for category.
-     * @param  seller  CreateSellerRequest value for seller.
-     * @param  sellerId  String value for sellerId.
      * @param  code  String value for code.
      */
     public CreateOrderItemRequest(
@@ -46,14 +40,10 @@ public class CreateOrderItemRequest {
             String description,
             int quantity,
             String category,
-            CreateSellerRequest seller,
-            String sellerId,
             String code) {
         this.amount = amount;
         this.description = description;
         this.quantity = quantity;
-        this.seller = seller;
-        this.sellerId = sellerId;
         this.category = category;
         this.code = code;
     }
@@ -119,46 +109,6 @@ public class CreateOrderItemRequest {
     }
 
     /**
-     * Getter for Seller.
-     * Item seller
-     * @return Returns the CreateSellerRequest
-     */
-    @JsonGetter("seller")
-    public CreateSellerRequest getSeller() {
-        return seller;
-    }
-
-    /**
-     * Setter for Seller.
-     * Item seller
-     * @param seller Value for CreateSellerRequest
-     */
-    @JsonSetter("seller")
-    public void setSeller(CreateSellerRequest seller) {
-        this.seller = seller;
-    }
-
-    /**
-     * Getter for SellerId.
-     * seller identificator
-     * @return Returns the String
-     */
-    @JsonGetter("seller_id")
-    public String getSellerId() {
-        return sellerId;
-    }
-
-    /**
-     * Setter for SellerId.
-     * seller identificator
-     * @param sellerId Value for String
-     */
-    @JsonSetter("seller_id")
-    public void setSellerId(String sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    /**
      * Getter for Category.
      * Category
      * @return Returns the String
@@ -205,8 +155,7 @@ public class CreateOrderItemRequest {
     @Override
     public String toString() {
         return "CreateOrderItemRequest [" + "amount=" + amount + ", description=" + description
-                + ", quantity=" + quantity + ", category=" + category + ", seller=" + seller
-                + ", sellerId=" + sellerId + ", code=" + code + "]";
+                + ", quantity=" + quantity + ", category=" + category + ", code=" + code + "]";
     }
 
     /**
@@ -216,8 +165,6 @@ public class CreateOrderItemRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(amount, description, quantity, category)
-                .seller(getSeller())
-                .sellerId(getSellerId())
                 .code(getCode());
         return builder;
     }
@@ -230,8 +177,6 @@ public class CreateOrderItemRequest {
         private String description;
         private int quantity;
         private String category;
-        private CreateSellerRequest seller;
-        private String sellerId;
         private String code;
 
         /**
@@ -295,26 +240,6 @@ public class CreateOrderItemRequest {
         }
 
         /**
-         * Setter for seller.
-         * @param  seller  CreateSellerRequest value for seller.
-         * @return Builder
-         */
-        public Builder seller(CreateSellerRequest seller) {
-            this.seller = seller;
-            return this;
-        }
-
-        /**
-         * Setter for sellerId.
-         * @param  sellerId  String value for sellerId.
-         * @return Builder
-         */
-        public Builder sellerId(String sellerId) {
-            this.sellerId = sellerId;
-            return this;
-        }
-
-        /**
          * Setter for code.
          * @param  code  String value for code.
          * @return Builder
@@ -329,8 +254,7 @@ public class CreateOrderItemRequest {
          * @return {@link CreateOrderItemRequest}
          */
         public CreateOrderItemRequest build() {
-            return new CreateOrderItemRequest(amount, description, quantity, category, seller,
-                    sellerId, code);
+            return new CreateOrderItemRequest(amount, description, quantity, category, code);
         }
     }
 }

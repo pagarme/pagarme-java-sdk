@@ -363,153 +363,6 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
-     * @param  recipientId  Required parameter: Example:
-     * @param  withdrawalId  Required parameter: Example:
-     * @return    Returns the GetWithdrawResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetWithdrawResponse getWithdrawById(
-            final String recipientId,
-            final String withdrawalId) throws ApiException, IOException {
-        HttpRequest request = buildGetWithdrawByIdRequest(recipientId, withdrawalId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetWithdrawByIdResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getWithdrawById.
-     */
-    private HttpRequest buildGetWithdrawByIdRequest(
-            final String recipientId,
-            final String withdrawalId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}/withdrawals/{withdrawal_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("recipient_id",
-                new SimpleEntry<Object, Boolean>(recipientId, true));
-        templateParameters.put("withdrawal_id",
-                new SimpleEntry<Object, Boolean>(withdrawalId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getWithdrawById.
-     * @return An object of type GetWithdrawResponse
-     */
-    private GetWithdrawResponse handleGetWithdrawByIdResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetWithdrawResponse result = ApiHelper.deserialize(responseBody,
-                GetWithdrawResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the default bank account from a recipient.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Bank account data
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse updateRecipientDefaultBankAccount(
-            final String recipientId,
-            final UpdateRecipientBankAccountRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateRecipientDefaultBankAccountRequest(recipientId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateRecipientDefaultBankAccountResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateRecipientDefaultBankAccount.
-     */
-    private HttpRequest buildUpdateRecipientDefaultBankAccountRequest(
-            final String recipientId,
-            final UpdateRecipientBankAccountRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}/default-bank-account");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("recipient_id",
-                new SimpleEntry<Object, Boolean>(recipientId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateRecipientDefaultBankAccount.
-     * @return An object of type GetRecipientResponse
-     */
-    private GetRecipientResponse handleUpdateRecipientDefaultBankAccountResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetRecipientResponse result = ApiHelper.deserialize(responseBody,
-                GetRecipientResponse.class);
-
-        return result;
-    }
-
-    /**
      * Updates recipient metadata.
      * @param  recipientId  Required parameter: Recipient id
      * @param  request  Required parameter: Metadata
@@ -587,97 +440,6 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
-     * Gets a paginated list of transfers for the recipient.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  status  Optional parameter: Filter for transfer status
-     * @param  createdSince  Optional parameter: Filter for start range of transfer creation date
-     * @param  createdUntil  Optional parameter: Filter for end range of transfer creation date
-     * @return    Returns the ListTransferResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListTransferResponse getTransfers(
-            final String recipientId,
-            final Integer page,
-            final Integer size,
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException {
-        HttpRequest request = buildGetTransfersRequest(recipientId, page, size, status,
-                createdSince, createdUntil);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetTransfersResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getTransfers.
-     */
-    private HttpRequest buildGetTransfersRequest(
-            final String recipientId,
-            final Integer page,
-            final Integer size,
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}/transfers");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("recipient_id",
-                new SimpleEntry<Object, Boolean>(recipientId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-        queryParameters.put("status", status);
-        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
-        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getTransfers.
-     * @return An object of type ListTransferResponse
-     */
-    private ListTransferResponse handleGetTransfersResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListTransferResponse result = ApiHelper.deserialize(responseBody,
-                ListTransferResponse.class);
-
-        return result;
-    }
-
-    /**
      * Gets a transfer.
      * @param  recipientId  Required parameter: Recipient id
      * @param  transferId  Required parameter: Transfer id
@@ -744,154 +506,6 @@ public final class DefaultRecipientsController extends BaseController implements
         String responseBody = ((HttpStringResponse) response).getBody();
         GetTransferResponse result = ApiHelper.deserialize(responseBody,
                 GetTransferResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  recipientId  Required parameter: Example:
-     * @param  request  Required parameter: Example:
-     * @return    Returns the GetWithdrawResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetWithdrawResponse createWithdraw(
-            final String recipientId,
-            final CreateWithdrawRequest request) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateWithdrawRequest(recipientId, request);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateWithdrawResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createWithdraw.
-     */
-    private HttpRequest buildCreateWithdrawRequest(
-            final String recipientId,
-            final CreateWithdrawRequest request) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}/withdrawals");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("recipient_id",
-                new SimpleEntry<Object, Boolean>(recipientId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for createWithdraw.
-     * @return An object of type GetWithdrawResponse
-     */
-    private GetWithdrawResponse handleCreateWithdrawResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetWithdrawResponse result = ApiHelper.deserialize(responseBody,
-                GetWithdrawResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates recipient metadata.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse updateAutomaticAnticipationSettings(
-            final String recipientId,
-            final UpdateAutomaticAnticipationSettingsRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateAutomaticAnticipationSettingsRequest(recipientId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateAutomaticAnticipationSettingsResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateAutomaticAnticipationSettings.
-     */
-    private HttpRequest buildUpdateAutomaticAnticipationSettingsRequest(
-            final String recipientId,
-            final UpdateAutomaticAnticipationSettingsRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}/automatic-anticipation-settings");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("recipient_id",
-                new SimpleEntry<Object, Boolean>(recipientId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateAutomaticAnticipationSettings.
-     * @return An object of type GetRecipientResponse
-     */
-    private GetRecipientResponse handleUpdateAutomaticAnticipationSettingsResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetRecipientResponse result = ApiHelper.deserialize(responseBody,
-                GetRecipientResponse.class);
 
         return result;
     }
@@ -1150,34 +764,113 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
-     * Retrieves recipient information.
-     * @param  recipientId  Required parameter: Recipiend id
+     * Updates the default bank account from a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Bank account data
+     * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetRecipientResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetRecipientResponse getRecipient(
-            final String recipientId) throws ApiException, IOException {
-        HttpRequest request = buildGetRecipientRequest(recipientId);
-        authManagers.get("global").apply(request);
+    public GetRecipientResponse updateRecipientDefaultBankAccount(
+            final String recipientId,
+            final UpdateRecipientBankAccountRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildUpdateRecipientDefaultBankAccountRequest(recipientId,
+                request, idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
 
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
 
-        return handleGetRecipientResponse(context);
+        return handleUpdateRecipientDefaultBankAccountResponse(context);
     }
 
     /**
-     * Builds the HttpRequest object for getRecipient.
+     * Builds the HttpRequest object for updateRecipientDefaultBankAccount.
      */
-    private HttpRequest buildGetRecipientRequest(
-            final String recipientId) {
+    private HttpRequest buildUpdateRecipientDefaultBankAccountRequest(
+            final String recipientId,
+            final UpdateRecipientBankAccountRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
         //the base uri for api requests
         String baseUri = config.getBaseUri();
 
         //prepare query string for API call
         final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}");
+                + "/recipients/{recipient_id}/default-bank-account");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("recipient_id",
+                new SimpleEntry<Object, Boolean>(recipientId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for updateRecipientDefaultBankAccount.
+     * @return An object of type GetRecipientResponse
+     */
+    private GetRecipientResponse handleUpdateRecipientDefaultBankAccountResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetRecipientResponse result = ApiHelper.deserialize(responseBody,
+                GetRecipientResponse.class);
+
+        return result;
+    }
+
+    /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  request  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetWithdrawResponse createWithdraw(
+            final String recipientId,
+            final CreateWithdrawRequest request) throws ApiException, IOException {
+        HttpRequest internalRequest = buildCreateWithdrawRequest(recipientId, request);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleCreateWithdrawResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for createWithdraw.
+     */
+    private HttpRequest buildCreateWithdrawRequest(
+            final String recipientId,
+            final CreateWithdrawRequest request) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/recipients/{recipient_id}/withdrawals");
 
         //process template parameters
         Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
@@ -1189,18 +882,21 @@ public final class DefaultRecipientsController extends BaseController implements
         Headers headers = new Headers();
         headers.add("user-agent", BaseController.userAgent);
         headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
 
         //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
+                bodyJson);
 
-        return request;
+        return internalRequest;
     }
 
     /**
-     * Processes the response for getRecipient.
-     * @return An object of type GetRecipientResponse
+     * Processes the response for createWithdraw.
+     * @return An object of type GetWithdrawResponse
      */
-    private GetRecipientResponse handleGetRecipientResponse(
+    private GetWithdrawResponse handleCreateWithdrawResponse(
             HttpContext context) throws ApiException, IOException {
         HttpResponse response = context.getResponse();
 
@@ -1209,8 +905,8 @@ public final class DefaultRecipientsController extends BaseController implements
 
         //extract result from the http response
         String responseBody = ((HttpStringResponse) response).getBody();
-        GetRecipientResponse result = ApiHelper.deserialize(responseBody,
-                GetRecipientResponse.class);
+        GetWithdrawResponse result = ApiHelper.deserialize(responseBody,
+                GetWithdrawResponse.class);
 
         return result;
     }
@@ -1277,97 +973,6 @@ public final class DefaultRecipientsController extends BaseController implements
         String responseBody = ((HttpStringResponse) response).getBody();
         GetBalanceResponse result = ApiHelper.deserialize(responseBody,
                 GetBalanceResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Gets a paginated list of transfers for the recipient.
-     * @param  recipientId  Required parameter: Example:
-     * @param  page  Optional parameter: Example:
-     * @param  size  Optional parameter: Example:
-     * @param  status  Optional parameter: Example:
-     * @param  createdSince  Optional parameter: Example:
-     * @param  createdUntil  Optional parameter: Example:
-     * @return    Returns the ListWithdrawals response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListWithdrawals getWithdrawals(
-            final String recipientId,
-            final Integer page,
-            final Integer size,
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException {
-        HttpRequest request = buildGetWithdrawalsRequest(recipientId, page, size, status,
-                createdSince, createdUntil);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetWithdrawalsResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getWithdrawals.
-     */
-    private HttpRequest buildGetWithdrawalsRequest(
-            final String recipientId,
-            final Integer page,
-            final Integer size,
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/recipients/{recipient_id}/withdrawals");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("recipient_id",
-                new SimpleEntry<Object, Boolean>(recipientId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-        queryParameters.put("status", status);
-        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
-        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getWithdrawals.
-     * @return An object of type ListWithdrawals
-     */
-    private ListWithdrawals handleGetWithdrawalsResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListWithdrawals result = ApiHelper.deserialize(responseBody,
-                ListWithdrawals.class);
 
         return result;
     }
@@ -1512,6 +1117,401 @@ public final class DefaultRecipientsController extends BaseController implements
         String responseBody = ((HttpStringResponse) response).getBody();
         GetRecipientResponse result = ApiHelper.deserialize(responseBody,
                 GetRecipientResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Updates recipient metadata.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse updateAutomaticAnticipationSettings(
+            final String recipientId,
+            final UpdateAutomaticAnticipationSettingsRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildUpdateAutomaticAnticipationSettingsRequest(recipientId,
+                request, idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleUpdateAutomaticAnticipationSettingsResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for updateAutomaticAnticipationSettings.
+     */
+    private HttpRequest buildUpdateAutomaticAnticipationSettingsRequest(
+            final String recipientId,
+            final UpdateAutomaticAnticipationSettingsRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/recipients/{recipient_id}/automatic-anticipation-settings");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("recipient_id",
+                new SimpleEntry<Object, Boolean>(recipientId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for updateAutomaticAnticipationSettings.
+     * @return An object of type GetRecipientResponse
+     */
+    private GetRecipientResponse handleUpdateAutomaticAnticipationSettingsResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetRecipientResponse result = ApiHelper.deserialize(responseBody,
+                GetRecipientResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Retrieves recipient information.
+     * @param  recipientId  Required parameter: Recipiend id
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse getRecipient(
+            final String recipientId) throws ApiException, IOException {
+        HttpRequest request = buildGetRecipientRequest(recipientId);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetRecipientResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getRecipient.
+     */
+    private HttpRequest buildGetRecipientRequest(
+            final String recipientId) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/recipients/{recipient_id}");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("recipient_id",
+                new SimpleEntry<Object, Boolean>(recipientId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getRecipient.
+     * @return An object of type GetRecipientResponse
+     */
+    private GetRecipientResponse handleGetRecipientResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetRecipientResponse result = ApiHelper.deserialize(responseBody,
+                GetRecipientResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Gets a paginated list of transfers for the recipient.
+     * @param  recipientId  Required parameter: Example:
+     * @param  page  Optional parameter: Example:
+     * @param  size  Optional parameter: Example:
+     * @param  status  Optional parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @return    Returns the ListWithdrawals response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListWithdrawals getWithdrawals(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException {
+        HttpRequest request = buildGetWithdrawalsRequest(recipientId, page, size, status,
+                createdSince, createdUntil);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetWithdrawalsResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getWithdrawals.
+     */
+    private HttpRequest buildGetWithdrawalsRequest(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/recipients/{recipient_id}/withdrawals");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("recipient_id",
+                new SimpleEntry<Object, Boolean>(recipientId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all query parameters
+        Map<String, Object> queryParameters = new HashMap<>();
+        queryParameters.put("page", page);
+        queryParameters.put("size", size);
+        queryParameters.put("status", status);
+        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
+        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
+                null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getWithdrawals.
+     * @return An object of type ListWithdrawals
+     */
+    private ListWithdrawals handleGetWithdrawalsResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        ListWithdrawals result = ApiHelper.deserialize(responseBody,
+                ListWithdrawals.class);
+
+        return result;
+    }
+
+    /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  withdrawalId  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetWithdrawResponse getWithdrawById(
+            final String recipientId,
+            final String withdrawalId) throws ApiException, IOException {
+        HttpRequest request = buildGetWithdrawByIdRequest(recipientId, withdrawalId);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetWithdrawByIdResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getWithdrawById.
+     */
+    private HttpRequest buildGetWithdrawByIdRequest(
+            final String recipientId,
+            final String withdrawalId) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/recipients/{recipient_id}/withdrawals/{withdrawal_id}");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("recipient_id",
+                new SimpleEntry<Object, Boolean>(recipientId, true));
+        templateParameters.put("withdrawal_id",
+                new SimpleEntry<Object, Boolean>(withdrawalId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getWithdrawById.
+     * @return An object of type GetWithdrawResponse
+     */
+    private GetWithdrawResponse handleGetWithdrawByIdResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetWithdrawResponse result = ApiHelper.deserialize(responseBody,
+                GetWithdrawResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Gets a paginated list of transfers for the recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  status  Optional parameter: Filter for transfer status
+     * @param  createdSince  Optional parameter: Filter for start range of transfer creation date
+     * @param  createdUntil  Optional parameter: Filter for end range of transfer creation date
+     * @return    Returns the ListTransferResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListTransferResponse getTransfers(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException {
+        HttpRequest request = buildGetTransfersRequest(recipientId, page, size, status,
+                createdSince, createdUntil);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetTransfersResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getTransfers.
+     */
+    private HttpRequest buildGetTransfersRequest(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/recipients/{recipient_id}/transfers");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("recipient_id",
+                new SimpleEntry<Object, Boolean>(recipientId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all query parameters
+        Map<String, Object> queryParameters = new HashMap<>();
+        queryParameters.put("page", page);
+        queryParameters.put("size", size);
+        queryParameters.put("status", status);
+        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
+        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
+                null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getTransfers.
+     * @return An object of type ListTransferResponse
+     */
+    private ListTransferResponse handleGetTransfersResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        ListTransferResponse result = ApiHelper.deserialize(responseBody,
+                ListTransferResponse.class);
 
         return result;
     }

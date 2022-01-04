@@ -20,8 +20,7 @@ public interface Configuration {
     Environment getEnvironment();
 
     /**
-     * Http Client Configuration instance. 
-     * See available [builder methods here](__HttpClientConfiguration.Builder).
+     * Http Client Configuration instance.
      * @return a copy of httpClientConfig
      */
     ReadonlyHttpClientConfiguration getHttpClientConfig();

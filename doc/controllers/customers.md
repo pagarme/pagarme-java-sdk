@@ -13,24 +13,24 @@ CustomersController customersController = client.getCustomersController();
 * [Update Card](/doc/controllers/customers.md#update-card)
 * [Update Address](/doc/controllers/customers.md#update-address)
 * [Delete Access Token](/doc/controllers/customers.md#delete-access-token)
-* [Create Customer](/doc/controllers/customers.md#create-customer)
 * [Create Address](/doc/controllers/customers.md#create-address)
-* [Delete Access Tokens](/doc/controllers/customers.md#delete-access-tokens)
-* [Get Address](/doc/controllers/customers.md#get-address)
-* [Delete Address](/doc/controllers/customers.md#delete-address)
+* [Create Customer](/doc/controllers/customers.md#create-customer)
 * [Create Card](/doc/controllers/customers.md#create-card)
-* [Get Customers](/doc/controllers/customers.md#get-customers)
-* [Update Customer](/doc/controllers/customers.md#update-customer)
-* [Create Access Token](/doc/controllers/customers.md#create-access-token)
-* [Get Access Tokens](/doc/controllers/customers.md#get-access-tokens)
 * [Get Cards](/doc/controllers/customers.md#get-cards)
 * [Renew Card](/doc/controllers/customers.md#renew-card)
+* [Get Address](/doc/controllers/customers.md#get-address)
+* [Delete Address](/doc/controllers/customers.md#delete-address)
 * [Get Access Token](/doc/controllers/customers.md#get-access-token)
 * [Update Customer Metadata](/doc/controllers/customers.md#update-customer-metadata)
+* [Get Card](/doc/controllers/customers.md#get-card)
+* [Delete Access Tokens](/doc/controllers/customers.md#delete-access-tokens)
+* [Create Access Token](/doc/controllers/customers.md#create-access-token)
+* [Get Access Tokens](/doc/controllers/customers.md#get-access-tokens)
+* [Get Customers](/doc/controllers/customers.md#get-customers)
+* [Update Customer](/doc/controllers/customers.md#update-customer)
 * [Delete Card](/doc/controllers/customers.md#delete-card)
 * [Get Addresses](/doc/controllers/customers.md#get-addresses)
 * [Get Customer](/doc/controllers/customers.md#get-customer)
-* [Get Card](/doc/controllers/customers.md#get-card)
 
 
 # Update Card
@@ -182,63 +182,6 @@ try {
 ```
 
 
-# Create Customer
-
-Creates a new customer
-
-```java
-CompletableFuture<GetCustomerResponse> createCustomer(
-    final CreateCustomerRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `request` | [`CreateCustomerRequest`](/doc/models/create-customer-request.md) | Body, Required | Request for creating a customer |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetCustomerResponse`](/doc/models/get-customer-response.md)
-
-## Example Usage
-
-```java
-CreateCustomerRequest request = new CreateCustomerRequest();
-request.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
-request.setEmail("email0");
-request.setDocument("document0");
-request.setType("type4");
-request.setAddress(new CreateAddressRequest());
-request.getAddress().setStreet("street2");
-request.getAddress().setNumber("number0");
-request.getAddress().setZipCode("zip_code6");
-request.getAddress().setNeighborhood("neighborhood8");
-request.getAddress().setCity("city2");
-request.getAddress().setState("state8");
-request.getAddress().setCountry("country6");
-request.getAddress().setComplement("complement8");
-request.getAddress().setMetadata(new LinkedHashMap<>());
-request.getAddress().getMetadata().put("key0", "metadata7");
-request.getAddress().setLine1("line_16");
-request.getAddress().setLine2("line_20");
-request.setMetadata(new LinkedHashMap<>());
-request.getMetadata().put("key0", "metadata3");
-request.setPhones(new CreatePhonesRequest());
-request.setCode("code4");
-
-try {
-    GetCustomerResponse response = customersController.createCustomer(request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
 # Create Address
 
 Creates a new address for a customer
@@ -290,85 +233,13 @@ try {
 ```
 
 
-# Delete Access Tokens
+# Create Customer
 
-Delete a Customer's access tokens
-
-```java
-CompletableFuture<ListAccessTokensResponse> deleteAccessTokens(
-    final String customerId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer Id |
-
-## Response Type
-
-[`ListAccessTokensResponse`](/doc/models/list-access-tokens-response.md)
-
-## Example Usage
+Creates a new customer
 
 ```java
-String customerId = "customer_id8";
-
-try {
-    ListAccessTokensResponse response = customersController.deleteAccessTokens(customerId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Address
-
-Get a customer's address
-
-```java
-CompletableFuture<GetAddressResponse> getAddress(
-    final String customerId,
-    final String addressId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer id |
-| `addressId` | `String` | Template, Required | Address Id |
-
-## Response Type
-
-[`GetAddressResponse`](/doc/models/get-address-response.md)
-
-## Example Usage
-
-```java
-String customerId = "customer_id8";
-String addressId = "address_id0";
-
-try {
-    GetAddressResponse response = customersController.getAddress(customerId, addressId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Delete Address
-
-Delete a Customer's address
-
-```java
-CompletableFuture<GetAddressResponse> deleteAddress(
-    final String customerId,
-    final String addressId,
+CompletableFuture<GetCustomerResponse> createCustomer(
+    final CreateCustomerRequest request,
     final String idempotencyKey)
 ```
 
@@ -376,22 +247,41 @@ CompletableFuture<GetAddressResponse> deleteAddress(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer Id |
-| `addressId` | `String` | Template, Required | Address Id |
+| `request` | [`CreateCustomerRequest`](/doc/models/create-customer-request.md) | Body, Required | Request for creating a customer |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetAddressResponse`](/doc/models/get-address-response.md)
+[`GetCustomerResponse`](/doc/models/get-customer-response.md)
 
 ## Example Usage
 
 ```java
-String customerId = "customer_id8";
-String addressId = "address_id0";
+CreateCustomerRequest request = new CreateCustomerRequest();
+request.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
+request.setEmail("email0");
+request.setDocument("document0");
+request.setType("type4");
+request.setAddress(new CreateAddressRequest());
+request.getAddress().setStreet("street2");
+request.getAddress().setNumber("number0");
+request.getAddress().setZipCode("zip_code6");
+request.getAddress().setNeighborhood("neighborhood8");
+request.getAddress().setCity("city2");
+request.getAddress().setState("state8");
+request.getAddress().setCountry("country6");
+request.getAddress().setComplement("complement8");
+request.getAddress().setMetadata(new LinkedHashMap<>());
+request.getAddress().getMetadata().put("key0", "metadata7");
+request.getAddress().setLine1("line_16");
+request.getAddress().setLine2("line_20");
+request.setMetadata(new LinkedHashMap<>());
+request.getMetadata().put("key0", "metadata3");
+request.setPhones(new CreatePhonesRequest());
+request.setCode("code4");
 
 try {
-    GetAddressResponse response = customersController.deleteAddress(customerId, addressId, null);
+    GetCustomerResponse response = customersController.createCustomer(request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -459,167 +349,6 @@ request.setLabel("label6");
 
 try {
     GetCardResponse response = customersController.createCard(customerId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Customers
-
-Get all Customers
-
-```java
-CompletableFuture<ListCustomersResponse> getCustomers(
-    final String name,
-    final String document,
-    final Integer page,
-    final Integer size,
-    final String email,
-    final String code)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `name` | `String` | Query, Optional | Name of the Customer |
-| `document` | `String` | Query, Optional | Document of the Customer |
-| `page` | `Integer` | Query, Optional | Current page the the search<br>**Default**: `1` |
-| `size` | `Integer` | Query, Optional | Quantity pages of the search<br>**Default**: `10` |
-| `email` | `String` | Query, Optional | Customer's email |
-| `code` | `String` | Query, Optional | Customer's code |
-
-## Response Type
-
-[`ListCustomersResponse`](/doc/models/list-customers-response.md)
-
-## Example Usage
-
-```java
-Integer page = 1;
-Integer size = 10;
-
-try {
-    ListCustomersResponse response = customersController.getCustomers(null, null, page, size, null, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Customer
-
-Updates a customer
-
-```java
-CompletableFuture<GetCustomerResponse> updateCustomer(
-    final String customerId,
-    final UpdateCustomerRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer id |
-| `request` | [`UpdateCustomerRequest`](/doc/models/update-customer-request.md) | Body, Required | Request for updating a customer |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetCustomerResponse`](/doc/models/get-customer-response.md)
-
-## Example Usage
-
-```java
-String customerId = "customer_id8";
-UpdateCustomerRequest request = new UpdateCustomerRequest();
-
-try {
-    GetCustomerResponse response = customersController.updateCustomer(customerId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Access Token
-
-Creates a access token for a customer
-
-```java
-CompletableFuture<GetAccessTokenResponse> createAccessToken(
-    final String customerId,
-    final CreateAccessTokenRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer Id |
-| `request` | [`CreateAccessTokenRequest`](/doc/models/create-access-token-request.md) | Body, Required | Request for creating a access token |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetAccessTokenResponse`](/doc/models/get-access-token-response.md)
-
-## Example Usage
-
-```java
-String customerId = "customer_id8";
-CreateAccessTokenRequest request = new CreateAccessTokenRequest();
-
-try {
-    GetAccessTokenResponse response = customersController.createAccessToken(customerId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Access Tokens
-
-Get all access tokens from a customer
-
-```java
-CompletableFuture<ListAccessTokensResponse> getAccessTokens(
-    final String customerId,
-    final Integer page,
-    final Integer size)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer Id |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-
-## Response Type
-
-[`ListAccessTokensResponse`](/doc/models/list-access-tokens-response.md)
-
-## Example Usage
-
-```java
-String customerId = "customer_id8";
-
-try {
-    ListAccessTokensResponse response = customersController.getAccessTokens(customerId, null, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -705,6 +434,82 @@ try {
 ```
 
 
+# Get Address
+
+Get a customer's address
+
+```java
+CompletableFuture<GetAddressResponse> getAddress(
+    final String customerId,
+    final String addressId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer id |
+| `addressId` | `String` | Template, Required | Address Id |
+
+## Response Type
+
+[`GetAddressResponse`](/doc/models/get-address-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+String addressId = "address_id0";
+
+try {
+    GetAddressResponse response = customersController.getAddress(customerId, addressId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Delete Address
+
+Delete a Customer's address
+
+```java
+CompletableFuture<GetAddressResponse> deleteAddress(
+    final String customerId,
+    final String addressId,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer Id |
+| `addressId` | `String` | Template, Required | Address Id |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetAddressResponse`](/doc/models/get-address-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+String addressId = "address_id0";
+
+try {
+    GetAddressResponse response = customersController.deleteAddress(customerId, addressId, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
 # Get Access Token
 
 Get a Customer's access token
@@ -775,6 +580,238 @@ request.getMetadata().put("key0", "metadata3");
 
 try {
     GetCustomerResponse response = customersController.updateCustomerMetadata(customerId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Card
+
+Get a customer's card
+
+```java
+CompletableFuture<GetCardResponse> getCard(
+    final String customerId,
+    final String cardId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer id |
+| `cardId` | `String` | Template, Required | Card id |
+
+## Response Type
+
+[`GetCardResponse`](/doc/models/get-card-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+String cardId = "card_id4";
+
+try {
+    GetCardResponse response = customersController.getCard(customerId, cardId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Delete Access Tokens
+
+Delete a Customer's access tokens
+
+```java
+CompletableFuture<ListAccessTokensResponse> deleteAccessTokens(
+    final String customerId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer Id |
+
+## Response Type
+
+[`ListAccessTokensResponse`](/doc/models/list-access-tokens-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+
+try {
+    ListAccessTokensResponse response = customersController.deleteAccessTokens(customerId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Create Access Token
+
+Creates a access token for a customer
+
+```java
+CompletableFuture<GetAccessTokenResponse> createAccessToken(
+    final String customerId,
+    final CreateAccessTokenRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer Id |
+| `request` | [`CreateAccessTokenRequest`](/doc/models/create-access-token-request.md) | Body, Required | Request for creating a access token |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetAccessTokenResponse`](/doc/models/get-access-token-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+CreateAccessTokenRequest request = new CreateAccessTokenRequest();
+
+try {
+    GetAccessTokenResponse response = customersController.createAccessToken(customerId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Access Tokens
+
+Get all access tokens from a customer
+
+```java
+CompletableFuture<ListAccessTokensResponse> getAccessTokens(
+    final String customerId,
+    final Integer page,
+    final Integer size)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer Id |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+
+## Response Type
+
+[`ListAccessTokensResponse`](/doc/models/list-access-tokens-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+
+try {
+    ListAccessTokensResponse response = customersController.getAccessTokens(customerId, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Customers
+
+Get all Customers
+
+```java
+CompletableFuture<ListCustomersResponse> getCustomers(
+    final String name,
+    final String document,
+    final Integer page,
+    final Integer size,
+    final String email,
+    final String code)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `name` | `String` | Query, Optional | Name of the Customer |
+| `document` | `String` | Query, Optional | Document of the Customer |
+| `page` | `Integer` | Query, Optional | Current page the the search<br>**Default**: `1` |
+| `size` | `Integer` | Query, Optional | Quantity pages of the search<br>**Default**: `10` |
+| `email` | `String` | Query, Optional | Customer's email |
+| `code` | `String` | Query, Optional | Customer's code |
+
+## Response Type
+
+[`ListCustomersResponse`](/doc/models/list-customers-response.md)
+
+## Example Usage
+
+```java
+Integer page = 1;
+Integer size = 10;
+
+try {
+    ListCustomersResponse response = customersController.getCustomers(null, null, page, size, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Update Customer
+
+Updates a customer
+
+```java
+CompletableFuture<GetCustomerResponse> updateCustomer(
+    final String customerId,
+    final UpdateCustomerRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `customerId` | `String` | Template, Required | Customer id |
+| `request` | [`UpdateCustomerRequest`](/doc/models/update-customer-request.md) | Body, Required | Request for updating a customer |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetCustomerResponse`](/doc/models/get-customer-response.md)
+
+## Example Usage
+
+```java
+String customerId = "customer_id8";
+UpdateCustomerRequest request = new UpdateCustomerRequest();
+
+try {
+    GetCustomerResponse response = customersController.updateCustomer(customerId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -886,43 +923,6 @@ String customerId = "customer_id8";
 
 try {
     GetCustomerResponse response = customersController.getCustomer(customerId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Card
-
-Get a customer's card
-
-```java
-CompletableFuture<GetCardResponse> getCard(
-    final String customerId,
-    final String cardId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `customerId` | `String` | Template, Required | Customer id |
-| `cardId` | `String` | Template, Required | Card id |
-
-## Response Type
-
-[`GetCardResponse`](/doc/models/get-card-response.md)
-
-## Example Usage
-
-```java
-String customerId = "customer_id8";
-String cardId = "card_id4";
-
-try {
-    GetCardResponse response = customersController.getCard(customerId, cardId);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

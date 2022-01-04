@@ -10,122 +10,13 @@ InvoicesController invoicesController = client.getInvoicesController();
 
 ## Methods
 
-* [Update Invoice Metadata](/doc/controllers/invoices.md#update-invoice-metadata)
-* [Get Partial Invoice](/doc/controllers/invoices.md#get-partial-invoice)
-* [Cancel Invoice](/doc/controllers/invoices.md#cancel-invoice)
 * [Create Invoice](/doc/controllers/invoices.md#create-invoice)
 * [Get Invoices](/doc/controllers/invoices.md#get-invoices)
-* [Get Invoice](/doc/controllers/invoices.md#get-invoice)
+* [Cancel Invoice](/doc/controllers/invoices.md#cancel-invoice)
+* [Update Invoice Metadata](/doc/controllers/invoices.md#update-invoice-metadata)
+* [Get Partial Invoice](/doc/controllers/invoices.md#get-partial-invoice)
 * [Update Invoice Status](/doc/controllers/invoices.md#update-invoice-status)
-
-
-# Update Invoice Metadata
-
-Updates the metadata from an invoice
-
-```java
-CompletableFuture<GetInvoiceResponse> updateInvoiceMetadata(
-    final String invoiceId,
-    final UpdateMetadataRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `invoiceId` | `String` | Template, Required | The invoice id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the invoice metadata |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
-
-## Example Usage
-
-```java
-String invoiceId = "invoice_id0";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-request.setMetadata(new LinkedHashMap<>());
-request.getMetadata().put("key0", "metadata3");
-
-try {
-    GetInvoiceResponse response = invoicesController.updateInvoiceMetadata(invoiceId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Partial Invoice
-
-```java
-CompletableFuture<GetInvoiceResponse> getPartialInvoice(
-    final String subscriptionId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `String` | Template, Required | Subscription Id |
-
-## Response Type
-
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
-
-## Example Usage
-
-```java
-String subscriptionId = "subscription_id0";
-
-try {
-    GetInvoiceResponse response = invoicesController.getPartialInvoice(subscriptionId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Cancel Invoice
-
-Cancels an invoice
-
-```java
-CompletableFuture<GetInvoiceResponse> cancelInvoice(
-    final String invoiceId,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `invoiceId` | `String` | Template, Required | Invoice id |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
-
-## Example Usage
-
-```java
-String invoiceId = "invoice_id0";
-
-try {
-    GetInvoiceResponse response = invoicesController.cancelInvoice(invoiceId, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+* [Get Invoice](/doc/controllers/invoices.md#get-invoice)
 
 
 # Create Invoice
@@ -221,20 +112,22 @@ try {
 ```
 
 
-# Get Invoice
+# Cancel Invoice
 
-Gets an invoice
+Cancels an invoice
 
 ```java
-CompletableFuture<GetInvoiceResponse> getInvoice(
-    final String invoiceId)
+CompletableFuture<GetInvoiceResponse> cancelInvoice(
+    final String invoiceId,
+    final String idempotencyKey)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `invoiceId` | `String` | Template, Required | Invoice Id |
+| `invoiceId` | `String` | Template, Required | Invoice id |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
@@ -246,7 +139,80 @@ CompletableFuture<GetInvoiceResponse> getInvoice(
 String invoiceId = "invoice_id0";
 
 try {
-    GetInvoiceResponse response = invoicesController.getInvoice(invoiceId);
+    GetInvoiceResponse response = invoicesController.cancelInvoice(invoiceId, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Update Invoice Metadata
+
+Updates the metadata from an invoice
+
+```java
+CompletableFuture<GetInvoiceResponse> updateInvoiceMetadata(
+    final String invoiceId,
+    final UpdateMetadataRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `invoiceId` | `String` | Template, Required | The invoice id |
+| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the invoice metadata |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+
+## Example Usage
+
+```java
+String invoiceId = "invoice_id0";
+UpdateMetadataRequest request = new UpdateMetadataRequest();
+request.setMetadata(new LinkedHashMap<>());
+request.getMetadata().put("key0", "metadata3");
+
+try {
+    GetInvoiceResponse response = invoicesController.updateInvoiceMetadata(invoiceId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Partial Invoice
+
+```java
+CompletableFuture<GetInvoiceResponse> getPartialInvoice(
+    final String subscriptionId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `String` | Template, Required | Subscription Id |
+
+## Response Type
+
+[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+
+## Example Usage
+
+```java
+String subscriptionId = "subscription_id0";
+
+try {
+    GetInvoiceResponse response = invoicesController.getPartialInvoice(subscriptionId);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -287,6 +253,40 @@ request.setStatus("status8");
 
 try {
     GetInvoiceResponse response = invoicesController.updateInvoiceStatus(invoiceId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Invoice
+
+Gets an invoice
+
+```java
+CompletableFuture<GetInvoiceResponse> getInvoice(
+    final String invoiceId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `invoiceId` | `String` | Template, Required | Invoice Id |
+
+## Response Type
+
+[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+
+## Example Usage
+
+```java
+String invoiceId = "invoice_id0";
+
+try {
+    GetInvoiceResponse response = invoicesController.getInvoice(invoiceId);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

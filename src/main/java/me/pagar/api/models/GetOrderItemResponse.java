@@ -7,7 +7,6 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
@@ -18,8 +17,6 @@ public class GetOrderItemResponse {
     private int amount;
     private String description;
     private int quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private GetSellerResponse getSellerResponse;
     private String category;
     private String code;
 
@@ -37,7 +34,6 @@ public class GetOrderItemResponse {
      * @param  quantity  int value for quantity.
      * @param  category  String value for category.
      * @param  code  String value for code.
-     * @param  getSellerResponse  GetSellerResponse value for getSellerResponse.
      */
     public GetOrderItemResponse(
             String id,
@@ -45,13 +41,11 @@ public class GetOrderItemResponse {
             String description,
             int quantity,
             String category,
-            String code,
-            GetSellerResponse getSellerResponse) {
+            String code) {
         this.id = id;
         this.amount = amount;
         this.description = description;
         this.quantity = quantity;
-        this.getSellerResponse = getSellerResponse;
         this.category = category;
         this.code = code;
     }
@@ -131,26 +125,6 @@ public class GetOrderItemResponse {
     }
 
     /**
-     * Getter for GetSellerResponse.
-     * Seller data
-     * @return Returns the GetSellerResponse
-     */
-    @JsonGetter("GetSellerResponse")
-    public GetSellerResponse getGetSellerResponse() {
-        return getSellerResponse;
-    }
-
-    /**
-     * Setter for GetSellerResponse.
-     * Seller data
-     * @param getSellerResponse Value for GetSellerResponse
-     */
-    @JsonSetter("GetSellerResponse")
-    public void setGetSellerResponse(GetSellerResponse getSellerResponse) {
-        this.getSellerResponse = getSellerResponse;
-    }
-
-    /**
      * Getter for Category.
      * Category
      * @return Returns the String
@@ -198,7 +172,7 @@ public class GetOrderItemResponse {
     public String toString() {
         return "GetOrderItemResponse [" + "id=" + id + ", amount=" + amount + ", description="
                 + description + ", quantity=" + quantity + ", category=" + category + ", code="
-                + code + ", getSellerResponse=" + getSellerResponse + "]";
+                + code + "]";
     }
 
     /**
@@ -207,8 +181,7 @@ public class GetOrderItemResponse {
      * @return a new {@link GetOrderItemResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, amount, description, quantity, category, code)
-                .getSellerResponse(getGetSellerResponse());
+        Builder builder = new Builder(id, amount, description, quantity, category, code);
         return builder;
     }
 
@@ -222,7 +195,6 @@ public class GetOrderItemResponse {
         private int quantity;
         private String category;
         private String code;
-        private GetSellerResponse getSellerResponse;
 
         /**
          * Initialization constructor.
@@ -310,22 +282,11 @@ public class GetOrderItemResponse {
         }
 
         /**
-         * Setter for getSellerResponse.
-         * @param  getSellerResponse  GetSellerResponse value for getSellerResponse.
-         * @return Builder
-         */
-        public Builder getSellerResponse(GetSellerResponse getSellerResponse) {
-            this.getSellerResponse = getSellerResponse;
-            return this;
-        }
-
-        /**
          * Builds a new {@link GetOrderItemResponse} object using the set fields.
          * @return {@link GetOrderItemResponse}
          */
         public GetOrderItemResponse build() {
-            return new GetOrderItemResponse(id, amount, description, quantity, category, code,
-                    getSellerResponse);
+            return new GetOrderItemResponse(id, amount, description, quantity, category, code);
         }
     }
 }

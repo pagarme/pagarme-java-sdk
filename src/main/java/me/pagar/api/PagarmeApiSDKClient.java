@@ -17,7 +17,6 @@ import me.pagar.api.controllers.DefaultInvoicesController;
 import me.pagar.api.controllers.DefaultOrdersController;
 import me.pagar.api.controllers.DefaultPlansController;
 import me.pagar.api.controllers.DefaultRecipientsController;
-import me.pagar.api.controllers.DefaultSellersController;
 import me.pagar.api.controllers.DefaultSubscriptionsController;
 import me.pagar.api.controllers.DefaultTokensController;
 import me.pagar.api.controllers.DefaultTransactionsController;
@@ -26,7 +25,6 @@ import me.pagar.api.controllers.InvoicesController;
 import me.pagar.api.controllers.OrdersController;
 import me.pagar.api.controllers.PlansController;
 import me.pagar.api.controllers.RecipientsController;
-import me.pagar.api.controllers.SellersController;
 import me.pagar.api.controllers.SubscriptionsController;
 import me.pagar.api.controllers.TokensController;
 import me.pagar.api.controllers.TransactionsController;
@@ -46,16 +44,15 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     /**
      * Private store for controllers.
      */
+    private OrdersController orders;
     private PlansController plans;
     private SubscriptionsController subscriptions;
     private InvoicesController invoices;
-    private OrdersController orders;
     private CustomersController customers;
     private RecipientsController recipients;
     private ChargesController charges;
-    private TransfersController transfers;
     private TokensController tokens;
-    private SellersController sellers;
+    private TransfersController transfers;
     private TransactionsController transactions;
 
     /**
@@ -101,17 +98,16 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
             this.authManagers.put("global", basicAuthManager);
         }
 
+        orders = new DefaultOrdersController(this, this.httpClient, this.authManagers);
         plans = new DefaultPlansController(this, this.httpClient, this.authManagers);
         subscriptions = new DefaultSubscriptionsController(this, this.httpClient,
                 this.authManagers);
         invoices = new DefaultInvoicesController(this, this.httpClient, this.authManagers);
-        orders = new DefaultOrdersController(this, this.httpClient, this.authManagers);
         customers = new DefaultCustomersController(this, this.httpClient, this.authManagers);
         recipients = new DefaultRecipientsController(this, this.httpClient, this.authManagers);
         charges = new DefaultChargesController(this, this.httpClient, this.authManagers);
-        transfers = new DefaultTransfersController(this, this.httpClient, this.authManagers);
         tokens = new DefaultTokensController(this, this.httpClient, this.authManagers);
-        sellers = new DefaultSellersController(this, this.httpClient, this.authManagers);
+        transfers = new DefaultTransfersController(this, this.httpClient, this.authManagers);
         transactions = new DefaultTransactionsController(this, this.httpClient, this.authManagers);
     }
 
@@ -120,6 +116,14 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
      */
     public static void shutdown() {
         OkClient.shutdown();
+    }
+
+    /**
+     * Get the instance of OrdersController.
+     * @return orders
+     */
+    public OrdersController getOrdersController() {
+        return orders;
     }
 
     /**
@@ -147,14 +151,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of OrdersController.
-     * @return orders
-     */
-    public OrdersController getOrdersController() {
-        return orders;
-    }
-
-    /**
      * Get the instance of CustomersController.
      * @return customers
      */
@@ -179,14 +175,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of TransfersController.
-     * @return transfers
-     */
-    public TransfersController getTransfersController() {
-        return transfers;
-    }
-
-    /**
      * Get the instance of TokensController.
      * @return tokens
      */
@@ -195,11 +183,11 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of SellersController.
-     * @return sellers
+     * Get the instance of TransfersController.
+     * @return transfers
      */
-    public SellersController getSellersController() {
-        return sellers;
+    public TransfersController getTransfersController() {
+        return transfers;
     }
 
     /**

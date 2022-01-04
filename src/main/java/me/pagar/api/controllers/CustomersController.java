@@ -77,18 +77,6 @@ public interface CustomersController {
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
-     * Creates a new customer.
-     * @param  request  Required parameter: Request for creating a customer
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCustomerResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetCustomerResponse createCustomer(
-            final CreateCustomerRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
      * Creates a new address for a customer.
      * @param  customerId  Required parameter: Customer Id
      * @param  request  Required parameter: Request for creating an address
@@ -103,14 +91,58 @@ public interface CustomersController {
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
-     * Delete a Customer's access tokens.
-     * @param  customerId  Required parameter: Customer Id
-     * @return    Returns the ListAccessTokensResponse response from the API call
+     * Creates a new customer.
+     * @param  request  Required parameter: Request for creating a customer
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    ListAccessTokensResponse deleteAccessTokens(
-            final String customerId) throws ApiException, IOException;
+    GetCustomerResponse createCustomer(
+            final CreateCustomerRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Creates a new card for a customer.
+     * @param  customerId  Required parameter: Customer id
+     * @param  request  Required parameter: Request for creating a card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetCardResponse createCard(
+            final String customerId,
+            final CreateCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Get all cards from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListCardsResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListCardsResponse getCards(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException;
+
+    /**
+     * Renew a card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetCardResponse renewCard(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) throws ApiException, IOException;
 
     /**
      * Get a customer's address.
@@ -139,18 +171,80 @@ public interface CustomersController {
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
-     * Creates a new card for a customer.
-     * @param  customerId  Required parameter: Customer id
-     * @param  request  Required parameter: Request for creating a card
+     * Get a Customer's access token.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  tokenId  Required parameter: Token Id
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetAccessTokenResponse getAccessToken(
+            final String customerId,
+            final String tokenId) throws ApiException, IOException;
+
+    /**
+     * Updates the metadata a customer.
+     * @param  customerId  Required parameter: The customer id
+     * @param  request  Required parameter: Request for updating the customer metadata
      * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetCustomerResponse updateCustomerMetadata(
+            final String customerId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Get a customer's card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card id
      * @return    Returns the GetCardResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetCardResponse createCard(
+    GetCardResponse getCard(
             final String customerId,
-            final CreateCardRequest request,
+            final String cardId) throws ApiException, IOException;
+
+    /**
+     * Delete a Customer's access tokens.
+     * @param  customerId  Required parameter: Customer Id
+     * @return    Returns the ListAccessTokensResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListAccessTokensResponse deleteAccessTokens(
+            final String customerId) throws ApiException, IOException;
+
+    /**
+     * Creates a access token for a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  request  Required parameter: Request for creating a access token
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetAccessTokenResponse createAccessToken(
+            final String customerId,
+            final CreateAccessTokenRequest request,
             final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Get all access tokens from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListAccessTokensResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListAccessTokensResponse getAccessTokens(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException;
 
     /**
      * Get all Customers.
@@ -184,88 +278,6 @@ public interface CustomersController {
     GetCustomerResponse updateCustomer(
             final String customerId,
             final UpdateCustomerRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Creates a access token for a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  request  Required parameter: Request for creating a access token
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetAccessTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetAccessTokenResponse createAccessToken(
-            final String customerId,
-            final CreateAccessTokenRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Get all access tokens from a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListAccessTokensResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    ListAccessTokensResponse getAccessTokens(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException;
-
-    /**
-     * Get all cards from a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListCardsResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    ListCardsResponse getCards(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException;
-
-    /**
-     * Renew a card.
-     * @param  customerId  Required parameter: Customer id
-     * @param  cardId  Required parameter: Card Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetCardResponse renewCard(
-            final String customerId,
-            final String cardId,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Get a Customer's access token.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  tokenId  Required parameter: Token Id
-     * @return    Returns the GetAccessTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetAccessTokenResponse getAccessToken(
-            final String customerId,
-            final String tokenId) throws ApiException, IOException;
-
-    /**
-     * Updates the metadata a customer.
-     * @param  customerId  Required parameter: The customer id
-     * @param  request  Required parameter: Request for updating the customer metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCustomerResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetCustomerResponse updateCustomerMetadata(
-            final String customerId,
-            final UpdateMetadataRequest request,
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
@@ -305,17 +317,5 @@ public interface CustomersController {
      */
     GetCustomerResponse getCustomer(
             final String customerId) throws ApiException, IOException;
-
-    /**
-     * Get a customer's card.
-     * @param  customerId  Required parameter: Customer id
-     * @param  cardId  Required parameter: Card id
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetCardResponse getCard(
-            final String customerId,
-            final String cardId) throws ApiException, IOException;
 
 }
