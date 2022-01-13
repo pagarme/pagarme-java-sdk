@@ -55,6 +55,7 @@ public class GetSubscriptionResponse {
     private List<GetIncrementResponse> increments;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer boletoDueDays;
+    private GetSubscriptionSplitResponse split;
 
     /**
      * Default constructor.
@@ -83,6 +84,7 @@ public class GetSubscriptionResponse {
      * @param  setup  GetSetupResponse value for setup.
      * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
      * @param  increments  List of GetIncrementResponse value for increments.
+     * @param  split  GetSubscriptionSplitResponse value for split.
      * @param  currentCycle  GetPeriodResponse value for currentCycle.
      * @param  customer  GetCustomerResponse value for customer.
      * @param  nextBillingAt  LocalDateTime value for nextBillingAt.
@@ -112,6 +114,7 @@ public class GetSubscriptionResponse {
             GetSetupResponse setup,
             String gatewayAffiliationId,
             List<GetIncrementResponse> increments,
+            GetSubscriptionSplitResponse split,
             GetPeriodResponse currentCycle,
             GetCustomerResponse customer,
             LocalDateTime nextBillingAt,
@@ -147,6 +150,7 @@ public class GetSubscriptionResponse {
         this.discounts = discounts;
         this.increments = increments;
         this.boletoDueDays = boletoDueDays;
+        this.split = split;
     }
 
     /**
@@ -654,6 +658,26 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Getter for Split.
+     * Subscription's split response
+     * @return Returns the GetSubscriptionSplitResponse
+     */
+    @JsonGetter("split")
+    public GetSubscriptionSplitResponse getSplit() {
+        return split;
+    }
+
+    /**
+     * Setter for Split.
+     * Subscription's split response
+     * @param split Value for GetSubscriptionSplitResponse
+     */
+    @JsonSetter("split")
+    public void setSplit(GetSubscriptionSplitResponse split) {
+        this.split = split;
+    }
+
+    /**
      * Converts this GetSubscriptionResponse into string format.
      * @return String representation of this class
      */
@@ -666,10 +690,11 @@ public class GetSubscriptionResponse {
                 + createdAt + ", updatedAt=" + updatedAt + ", card=" + card + ", items=" + items
                 + ", statementDescriptor=" + statementDescriptor + ", metadata=" + metadata
                 + ", setup=" + setup + ", gatewayAffiliationId=" + gatewayAffiliationId
-                + ", increments=" + increments + ", currentCycle=" + currentCycle + ", customer="
-                + customer + ", nextBillingAt=" + nextBillingAt + ", billingDay=" + billingDay
-                + ", minimumPrice=" + minimumPrice + ", canceledAt=" + canceledAt + ", discounts="
-                + discounts + ", boletoDueDays=" + boletoDueDays + "]";
+                + ", increments=" + increments + ", split=" + split + ", currentCycle="
+                + currentCycle + ", customer=" + customer + ", nextBillingAt=" + nextBillingAt
+                + ", billingDay=" + billingDay + ", minimumPrice=" + minimumPrice + ", canceledAt="
+                + canceledAt + ", discounts=" + discounts + ", boletoDueDays=" + boletoDueDays
+                + "]";
     }
 
     /**
@@ -680,7 +705,7 @@ public class GetSubscriptionResponse {
     public Builder toBuilder() {
         Builder builder = new Builder(id, code, startAt, interval, intervalCount, billingType,
                 paymentMethod, currency, installments, status, createdAt, updatedAt, card, items,
-                statementDescriptor, metadata, setup, gatewayAffiliationId, increments)
+                statementDescriptor, metadata, setup, gatewayAffiliationId, increments, split)
                 .currentCycle(getCurrentCycle())
                 .customer(getCustomer())
                 .nextBillingAt(getNextBillingAt())
@@ -715,6 +740,7 @@ public class GetSubscriptionResponse {
         private GetSetupResponse setup;
         private String gatewayAffiliationId;
         private List<GetIncrementResponse> increments;
+        private GetSubscriptionSplitResponse split;
         private GetPeriodResponse currentCycle;
         private GetCustomerResponse customer;
         private LocalDateTime nextBillingAt;
@@ -751,13 +777,15 @@ public class GetSubscriptionResponse {
          * @param  setup  GetSetupResponse value for setup.
          * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
          * @param  increments  List of GetIncrementResponse value for increments.
+         * @param  split  GetSubscriptionSplitResponse value for split.
          */
         public Builder(String id, String code, LocalDateTime startAt, String interval,
                 int intervalCount, String billingType, String paymentMethod, String currency,
                 int installments, String status, LocalDateTime createdAt, LocalDateTime updatedAt,
                 GetCardResponse card, List<GetSubscriptionItemResponse> items,
                 String statementDescriptor, Map<String, String> metadata, GetSetupResponse setup,
-                String gatewayAffiliationId, List<GetIncrementResponse> increments) {
+                String gatewayAffiliationId, List<GetIncrementResponse> increments,
+                GetSubscriptionSplitResponse split) {
             this.id = id;
             this.code = code;
             this.startAt = startAt;
@@ -777,6 +805,7 @@ public class GetSubscriptionResponse {
             this.setup = setup;
             this.gatewayAffiliationId = gatewayAffiliationId;
             this.increments = increments;
+            this.split = split;
         }
 
         /**
@@ -970,6 +999,16 @@ public class GetSubscriptionResponse {
         }
 
         /**
+         * Setter for split.
+         * @param  split  GetSubscriptionSplitResponse value for split.
+         * @return Builder
+         */
+        public Builder split(GetSubscriptionSplitResponse split) {
+            this.split = split;
+            return this;
+        }
+
+        /**
          * Setter for currentCycle.
          * @param  currentCycle  GetPeriodResponse value for currentCycle.
          * @return Builder
@@ -1057,7 +1096,7 @@ public class GetSubscriptionResponse {
             return new GetSubscriptionResponse(id, code, startAt, interval, intervalCount,
                     billingType, paymentMethod, currency, installments, status, createdAt,
                     updatedAt, card, items, statementDescriptor, metadata, setup,
-                    gatewayAffiliationId, increments, currentCycle, customer, nextBillingAt,
+                    gatewayAffiliationId, increments, split, currentCycle, customer, nextBillingAt,
                     billingDay, minimumPrice, canceledAt, discounts, boletoDueDays);
         }
     }

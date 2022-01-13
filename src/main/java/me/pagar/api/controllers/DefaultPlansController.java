@@ -116,34 +116,31 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
-     * Updates a plan.
+     * Deletes a plan.
      * @param  planId  Required parameter: Plan id
-     * @param  request  Required parameter: Request for updating a plan
      * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetPlanResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetPlanResponse updatePlan(
+    public GetPlanResponse deletePlan(
             final String planId,
-            final UpdatePlanRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdatePlanRequest(planId, request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
+        HttpRequest request = buildDeletePlanRequest(planId, idempotencyKey);
+        authManagers.get("global").apply(request);
 
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
 
-        return handleUpdatePlanResponse(context);
+        return handleDeletePlanResponse(context);
     }
 
     /**
-     * Builds the HttpRequest object for updatePlan.
+     * Builds the HttpRequest object for deletePlan.
      */
-    private HttpRequest buildUpdatePlanRequest(
+    private HttpRequest buildDeletePlanRequest(
             final String planId,
-            final UpdatePlanRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
+            final String idempotencyKey) {
         //the base uri for api requests
         String baseUri = config.getBaseUri();
 
@@ -162,21 +159,18 @@ public final class DefaultPlansController extends BaseController implements Plan
         headers.add("idempotency-key", idempotencyKey);
         headers.add("user-agent", BaseController.userAgent);
         headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
 
         //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().putBody(queryBuilder, headers, null,
-                bodyJson);
+        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
 
-        return internalRequest;
+        return request;
     }
 
     /**
-     * Processes the response for updatePlan.
+     * Processes the response for deletePlan.
      * @return An object of type GetPlanResponse
      */
-    private GetPlanResponse handleUpdatePlanResponse(
+    private GetPlanResponse handleDeletePlanResponse(
             HttpContext context) throws ApiException, IOException {
         HttpResponse response = context.getResponse();
 
@@ -254,6 +248,299 @@ public final class DefaultPlansController extends BaseController implements Plan
      * @return An object of type GetPlanResponse
      */
     private GetPlanResponse handleUpdatePlanMetadataResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetPlanResponse result = ApiHelper.deserialize(responseBody,
+                GetPlanResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Updates a plan item.
+     * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
+     * @param  body  Required parameter: Request for updating the plan item
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanItemResponse updatePlanItem(
+            final String planId,
+            final String planItemId,
+            final UpdatePlanItemRequest body,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest request = buildUpdatePlanItemRequest(planId, planItemId, body, idempotencyKey);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleUpdatePlanItemResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for updatePlanItem.
+     */
+    private HttpRequest buildUpdatePlanItemRequest(
+            final String planId,
+            final String planItemId,
+            final UpdatePlanItemRequest body,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/plans/{plan_id}/items/{plan_item_id}");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("plan_id",
+                new SimpleEntry<Object, Boolean>(planId, true));
+        templateParameters.put("plan_item_id",
+                new SimpleEntry<Object, Boolean>(planItemId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(body);
+        HttpRequest request = getClientInstance().putBody(queryBuilder, headers, null, bodyJson);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for updatePlanItem.
+     * @return An object of type GetPlanItemResponse
+     */
+    private GetPlanItemResponse handleUpdatePlanItemResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetPlanItemResponse result = ApiHelper.deserialize(responseBody,
+                GetPlanItemResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Adds a new item to a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  request  Required parameter: Request for creating a plan item
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanItemResponse createPlanItem(
+            final String planId,
+            final CreatePlanItemRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildCreatePlanItemRequest(planId, request, idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleCreatePlanItemResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for createPlanItem.
+     */
+    private HttpRequest buildCreatePlanItemRequest(
+            final String planId,
+            final CreatePlanItemRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/plans/{plan_id}/items");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("plan_id",
+                new SimpleEntry<Object, Boolean>(planId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for createPlanItem.
+     * @return An object of type GetPlanItemResponse
+     */
+    private GetPlanItemResponse handleCreatePlanItemResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetPlanItemResponse result = ApiHelper.deserialize(responseBody,
+                GetPlanItemResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Gets a plan item.
+     * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
+     * @return    Returns the GetPlanItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanItemResponse getPlanItem(
+            final String planId,
+            final String planItemId) throws ApiException, IOException {
+        HttpRequest request = buildGetPlanItemRequest(planId, planItemId);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetPlanItemResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getPlanItem.
+     */
+    private HttpRequest buildGetPlanItemRequest(
+            final String planId,
+            final String planItemId) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/plans/{plan_id}/items/{plan_item_id}");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("plan_id",
+                new SimpleEntry<Object, Boolean>(planId, true));
+        templateParameters.put("plan_item_id",
+                new SimpleEntry<Object, Boolean>(planItemId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getPlanItem.
+     * @return An object of type GetPlanItemResponse
+     */
+    private GetPlanItemResponse handleGetPlanItemResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetPlanItemResponse result = ApiHelper.deserialize(responseBody,
+                GetPlanItemResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Creates a new plan.
+     * @param  body  Required parameter: Request for creating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanResponse createPlan(
+            final CreatePlanRequest body,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest request = buildCreatePlanRequest(body, idempotencyKey);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleCreatePlanResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for createPlan.
+     */
+    private HttpRequest buildCreatePlanRequest(
+            final CreatePlanRequest body,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/plans");
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(body);
+        HttpRequest request = getClientInstance().postBody(queryBuilder, headers, null, bodyJson);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for createPlan.
+     * @return An object of type GetPlanResponse
+     */
+    private GetPlanResponse handleCreatePlanResponse(
             HttpContext context) throws ApiException, IOException {
         HttpResponse response = context.getResponse();
 
@@ -434,102 +721,34 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
-     * Gets a plan item.
+     * Updates a plan.
      * @param  planId  Required parameter: Plan id
-     * @param  planItemId  Required parameter: Plan item id
-     * @return    Returns the GetPlanItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanItemResponse getPlanItem(
-            final String planId,
-            final String planItemId) throws ApiException, IOException {
-        HttpRequest request = buildGetPlanItemRequest(planId, planItemId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetPlanItemResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getPlanItem.
-     */
-    private HttpRequest buildGetPlanItemRequest(
-            final String planId,
-            final String planItemId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/plans/{plan_id}/items/{plan_item_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("plan_id",
-                new SimpleEntry<Object, Boolean>(planId, true));
-        templateParameters.put("plan_item_id",
-                new SimpleEntry<Object, Boolean>(planItemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getPlanItem.
-     * @return An object of type GetPlanItemResponse
-     */
-    private GetPlanItemResponse handleGetPlanItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetPlanItemResponse result = ApiHelper.deserialize(responseBody,
-                GetPlanItemResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Deletes a plan.
-     * @param  planId  Required parameter: Plan id
+     * @param  request  Required parameter: Request for updating a plan
      * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetPlanResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetPlanResponse deletePlan(
+    public GetPlanResponse updatePlan(
             final String planId,
+            final UpdatePlanRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildDeletePlanRequest(planId, idempotencyKey);
-        authManagers.get("global").apply(request);
+        HttpRequest internalRequest = buildUpdatePlanRequest(planId, request, idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
 
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
 
-        return handleDeletePlanResponse(context);
+        return handleUpdatePlanResponse(context);
     }
 
     /**
-     * Builds the HttpRequest object for deletePlan.
+     * Builds the HttpRequest object for updatePlan.
      */
-    private HttpRequest buildDeletePlanRequest(
+    private HttpRequest buildUpdatePlanRequest(
             final String planId,
-            final String idempotencyKey) {
+            final UpdatePlanRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
         //the base uri for api requests
         String baseUri = config.getBaseUri();
 
@@ -548,240 +767,21 @@ public final class DefaultPlansController extends BaseController implements Plan
         headers.add("idempotency-key", idempotencyKey);
         headers.add("user-agent", BaseController.userAgent);
         headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for deletePlan.
-     * @return An object of type GetPlanResponse
-     */
-    private GetPlanResponse handleDeletePlanResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetPlanResponse result = ApiHelper.deserialize(responseBody,
-                GetPlanResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates a plan item.
-     * @param  planId  Required parameter: Plan id
-     * @param  planItemId  Required parameter: Plan item id
-     * @param  body  Required parameter: Request for updating the plan item
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanItemResponse updatePlanItem(
-            final String planId,
-            final String planItemId,
-            final UpdatePlanItemRequest body,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildUpdatePlanItemRequest(planId, planItemId, body, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleUpdatePlanItemResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updatePlanItem.
-     */
-    private HttpRequest buildUpdatePlanItemRequest(
-            final String planId,
-            final String planItemId,
-            final UpdatePlanItemRequest body,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/plans/{plan_id}/items/{plan_item_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("plan_id",
-                new SimpleEntry<Object, Boolean>(planId, true));
-        templateParameters.put("plan_item_id",
-                new SimpleEntry<Object, Boolean>(planItemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(body);
-        HttpRequest request = getClientInstance().putBody(queryBuilder, headers, null, bodyJson);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for updatePlanItem.
-     * @return An object of type GetPlanItemResponse
-     */
-    private GetPlanItemResponse handleUpdatePlanItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetPlanItemResponse result = ApiHelper.deserialize(responseBody,
-                GetPlanItemResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Adds a new item to a plan.
-     * @param  planId  Required parameter: Plan id
-     * @param  request  Required parameter: Request for creating a plan item
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanItemResponse createPlanItem(
-            final String planId,
-            final CreatePlanItemRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreatePlanItemRequest(planId, request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreatePlanItemResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createPlanItem.
-     */
-    private HttpRequest buildCreatePlanItemRequest(
-            final String planId,
-            final CreatePlanItemRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/plans/{plan_id}/items");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("plan_id",
-                new SimpleEntry<Object, Boolean>(planId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
         headers.add("content-type", "application/json");
 
         //prepare and invoke the API call request to fetch the response
         String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
+        HttpRequest internalRequest = getClientInstance().putBody(queryBuilder, headers, null,
                 bodyJson);
 
         return internalRequest;
     }
 
     /**
-     * Processes the response for createPlanItem.
-     * @return An object of type GetPlanItemResponse
-     */
-    private GetPlanItemResponse handleCreatePlanItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetPlanItemResponse result = ApiHelper.deserialize(responseBody,
-                GetPlanItemResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Creates a new plan.
-     * @param  body  Required parameter: Request for creating a plan
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanResponse createPlan(
-            final CreatePlanRequest body,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildCreatePlanRequest(body, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleCreatePlanResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createPlan.
-     */
-    private HttpRequest buildCreatePlanRequest(
-            final CreatePlanRequest body,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/plans");
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(body);
-        HttpRequest request = getClientInstance().postBody(queryBuilder, headers, null, bodyJson);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for createPlan.
+     * Processes the response for updatePlan.
      * @return An object of type GetPlanResponse
      */
-    private GetPlanResponse handleCreatePlanResponse(
+    private GetPlanResponse handleUpdatePlanResponse(
             HttpContext context) throws ApiException, IOException {
         HttpResponse response = context.getResponse();
 

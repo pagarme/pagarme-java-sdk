@@ -36,6 +36,7 @@
 | `Discounts` | [`List<GetDiscountResponse>`](/doc/models/get-discount-response.md) | Optional | Subscription discounts | List<GetDiscountResponse> getDiscounts() | setDiscounts(List<GetDiscountResponse> discounts) |
 | `Increments` | [`List<GetIncrementResponse>`](/doc/models/get-increment-response.md) | Required | Subscription increments | List<GetIncrementResponse> getIncrements() | setIncrements(List<GetIncrementResponse> increments) |
 | `BoletoDueDays` | `Integer` | Optional | Days until boleto expires | Integer getBoletoDueDays() | setBoletoDueDays(Integer boletoDueDays) |
+| `Split` | [`GetSubscriptionSplitResponse`](/doc/models/get-subscription-split-response.md) | Required | Subscription's split response | GetSubscriptionSplitResponse getSplit() | setSplit(GetSubscriptionSplitResponse split) |
 
 ## Example (as JSON)
 
@@ -372,7 +373,20 @@
                 "subscription_item": null
               }
             ],
-            "boleto_due_days": null
+            "boleto_due_days": null,
+            "split": {
+              "enabled": true,
+              "rules": [
+                {
+                  "type": "type1",
+                  "amount": 253,
+                  "recipient": null,
+                  "gateway_id": "gateway_id1",
+                  "options": null,
+                  "id": "id9"
+                }
+              ]
+            }
           },
           "name": "name5",
           "quantity": null,
@@ -411,7 +425,28 @@
             "subscription_item": null
           }
         ],
-        "boleto_due_days": null
+        "boleto_due_days": null,
+        "split": {
+          "enabled": true,
+          "rules": [
+            {
+              "type": "type3",
+              "amount": 247,
+              "recipient": null,
+              "gateway_id": "gateway_id3",
+              "options": null,
+              "id": "id7"
+            },
+            {
+              "type": "type2",
+              "amount": 248,
+              "recipient": null,
+              "gateway_id": "gateway_id2",
+              "options": null,
+              "id": "id8"
+            }
+          ]
+        }
       },
       "name": "name7",
       "quantity": null,
@@ -709,7 +744,28 @@
                 "subscription_item": null
               }
             ],
-            "boleto_due_days": null
+            "boleto_due_days": null,
+            "split": {
+              "enabled": false,
+              "rules": [
+                {
+                  "type": "type0",
+                  "amount": 252,
+                  "recipient": null,
+                  "gateway_id": "gateway_id0",
+                  "options": null,
+                  "id": "id0"
+                },
+                {
+                  "type": "type9",
+                  "amount": 251,
+                  "recipient": null,
+                  "gateway_id": "gateway_id9",
+                  "options": null,
+                  "id": "id1"
+                }
+              ]
+            }
           },
           "name": "name4",
           "quantity": null,
@@ -770,7 +826,20 @@
             "subscription_item": null
           }
         ],
-        "boleto_due_days": null
+        "boleto_due_days": null,
+        "split": {
+          "enabled": false,
+          "rules": [
+            {
+              "type": "type4",
+              "amount": 246,
+              "recipient": null,
+              "gateway_id": "gateway_id4",
+              "options": null,
+              "id": "id6"
+            }
+          ]
+        }
       },
       "name": "name8",
       "quantity": null,
@@ -810,7 +879,28 @@
       "subscription_item": null
     }
   ],
-  "boleto_due_days": null
+  "boleto_due_days": null,
+  "split": {
+    "enabled": false,
+    "rules": [
+      {
+        "type": "type4",
+        "amount": 246,
+        "recipient": null,
+        "gateway_id": "gateway_id4",
+        "options": null,
+        "id": "id6"
+      },
+      {
+        "type": "type3",
+        "amount": 245,
+        "recipient": null,
+        "gateway_id": "gateway_id3",
+        "options": null,
+        "id": "id7"
+      }
+    ]
+  }
 }
 ```
 

@@ -42,6 +42,7 @@ Request for creating a subcription
 | `Increments` | [`List<CreateIncrementRequest>`](/doc/models/create-increment-request.md) | Required | Increments | List<CreateIncrementRequest> getIncrements() | setIncrements(List<CreateIncrementRequest> increments) |
 | `Period` | [`CreatePeriodRequest`](/doc/models/create-period-request.md) | Optional | - | CreatePeriodRequest getPeriod() | setPeriod(CreatePeriodRequest period) |
 | `Submerchant` | [`CreateSubMerchantRequest`](/doc/models/create-sub-merchant-request.md) | Optional | SubMerchant | CreateSubMerchantRequest getSubmerchant() | setSubmerchant(CreateSubMerchantRequest submerchant) |
+| `Split` | [`CreateSubscriptionSplitRequest`](/doc/models/create-subscription-split-request.md) | Optional | Subscription's split | CreateSubscriptionSplitRequest getSplit() | setSplit(CreateSubscriptionSplitRequest split) |
 
 ## Example (as JSON)
 

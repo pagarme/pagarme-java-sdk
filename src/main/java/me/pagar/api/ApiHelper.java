@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.http.request.MultipartFileWrapper;
 import me.pagar.api.http.request.MultipartWrapper;
@@ -445,7 +447,8 @@ public class ApiHelper {
                 
             hasParam = true;
             // Load element value as string
-            paramKeyValPair = String.format("%s=%s&", accessor, tryUrlEncode(value.toString(), false));
+            paramKeyValPair = 
+                    String.format("%s=%s&", accessor, tryUrlEncode(value.toString(), false));
             objBuilder.append(paramKeyValPair);
 
         }
@@ -513,6 +516,7 @@ public class ApiHelper {
             List<SimpleEntry<String, Object>> objectList, HashSet<Integer> processed) {
 
         Collection<?> array = obj;
+        array = sortByWrapperType(array);
         // Append all elements of the array into a string
         int index = 0;
         for (Object element : array) {
@@ -628,6 +632,20 @@ public class ApiHelper {
                 clazz = clazz.getSuperclass();
             }
         }
+    }
+
+    /**
+     * Pushes all wrapper types to the last in given list.
+     * @param array The list on which the sorting is performed.
+     * @return The sorted list.
+     */
+    private static Collection<?> sortByWrapperType(Collection<?> array) {
+        return array.stream().sorted(Comparator.comparing(element -> {
+            if (isWrapperType(element)) {
+                return 1;
+            }
+            return -1;
+        })).collect(Collectors.toList());
     }
 
     /**
