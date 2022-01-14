@@ -19,6 +19,8 @@ public class CreateSplitRequest {
     private String recipientId;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateSplitOptionsRequest options;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String splitRuleId;
 
     /**
      * Default constructor.
@@ -32,16 +34,19 @@ public class CreateSplitRequest {
      * @param  amount  int value for amount.
      * @param  recipientId  String value for recipientId.
      * @param  options  CreateSplitOptionsRequest value for options.
+     * @param  splitRuleId  String value for splitRuleId.
      */
     public CreateSplitRequest(
             String type,
             int amount,
             String recipientId,
-            CreateSplitOptionsRequest options) {
+            CreateSplitOptionsRequest options,
+            String splitRuleId) {
         this.type = type;
         this.amount = amount;
         this.recipientId = recipientId;
         this.options = options;
+        this.splitRuleId = splitRuleId;
     }
 
     /**
@@ -125,13 +130,33 @@ public class CreateSplitRequest {
     }
 
     /**
+     * Getter for SplitRuleId.
+     * Rule code used in cancellation.
+     * @return Returns the String
+     */
+    @JsonGetter("split_rule_id")
+    public String getSplitRuleId() {
+        return splitRuleId;
+    }
+
+    /**
+     * Setter for SplitRuleId.
+     * Rule code used in cancellation.
+     * @param splitRuleId Value for String
+     */
+    @JsonSetter("split_rule_id")
+    public void setSplitRuleId(String splitRuleId) {
+        this.splitRuleId = splitRuleId;
+    }
+
+    /**
      * Converts this CreateSplitRequest into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
         return "CreateSplitRequest [" + "type=" + type + ", amount=" + amount + ", recipientId="
-                + recipientId + ", options=" + options + "]";
+                + recipientId + ", options=" + options + ", splitRuleId=" + splitRuleId + "]";
     }
 
     /**
@@ -141,7 +166,8 @@ public class CreateSplitRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(type, amount, recipientId)
-                .options(getOptions());
+                .options(getOptions())
+                .splitRuleId(getSplitRuleId());
         return builder;
     }
 
@@ -153,6 +179,7 @@ public class CreateSplitRequest {
         private int amount;
         private String recipientId;
         private CreateSplitOptionsRequest options;
+        private String splitRuleId;
 
         /**
          * Initialization constructor.
@@ -213,11 +240,21 @@ public class CreateSplitRequest {
         }
 
         /**
+         * Setter for splitRuleId.
+         * @param  splitRuleId  String value for splitRuleId.
+         * @return Builder
+         */
+        public Builder splitRuleId(String splitRuleId) {
+            this.splitRuleId = splitRuleId;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateSplitRequest} object using the set fields.
          * @return {@link CreateSplitRequest}
          */
         public CreateSplitRequest build() {
-            return new CreateSplitRequest(type, amount, recipientId, options);
+            return new CreateSplitRequest(type, amount, recipientId, options, splitRuleId);
         }
     }
 }
