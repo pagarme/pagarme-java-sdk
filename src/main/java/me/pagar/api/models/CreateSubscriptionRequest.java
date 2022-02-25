@@ -36,36 +36,21 @@ public class CreateSubscriptionRequest {
     private List<CreateDiscountRequest> discounts;
     private Map<String, String> metadata;
     private CreateSetupRequest setup;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String planId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String customerId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer billingDay;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer installments;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime startAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardToken;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String gatewayAffiliationId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer boletoDueDays;
     private List<CreateIncrementRequest> increments;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePeriodRequest period;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateSubMerchantRequest submerchant;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateSubscriptionSplitRequest split;
 
     /**
@@ -502,6 +487,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the String
      */
     @JsonGetter("plan_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getPlanId() {
         return planId;
     }
@@ -522,6 +508,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the String
      */
     @JsonGetter("customer_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCustomerId() {
         return customerId;
     }
@@ -542,6 +529,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the String
      */
     @JsonGetter("card_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardId() {
         return cardId;
     }
@@ -562,6 +550,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the Integer
      */
     @JsonGetter("billing_day")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getBillingDay() {
         return billingDay;
     }
@@ -582,6 +571,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the Integer
      */
     @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getInstallments() {
         return installments;
     }
@@ -602,6 +592,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("start_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getStartAt() {
         return startAt;
@@ -624,6 +615,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }
@@ -644,6 +636,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -664,6 +657,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the String
      */
     @JsonGetter("card_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardToken() {
         return cardToken;
     }
@@ -684,6 +678,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the String
      */
     @JsonGetter("gateway_affiliation_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGatewayAffiliationId() {
         return gatewayAffiliationId;
     }
@@ -704,6 +699,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the Integer
      */
     @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getQuantity() {
         return quantity;
     }
@@ -724,6 +720,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the Integer
      */
     @JsonGetter("boleto_due_days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getBoletoDueDays() {
         return boletoDueDays;
     }
@@ -763,6 +760,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the CreatePeriodRequest
      */
     @JsonGetter("period")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePeriodRequest getPeriod() {
         return period;
     }
@@ -782,6 +780,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the CreateSubMerchantRequest
      */
     @JsonGetter("submerchant")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateSubMerchantRequest getSubmerchant() {
         return submerchant;
     }
@@ -802,6 +801,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the CreateSubscriptionSplitRequest
      */
     @JsonGetter("split")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateSubscriptionSplitRequest getSplit() {
         return split;
     }

@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class CreateEmvDataDecryptRequest {
     private String cipher;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateEmvDataDukptDecryptRequest dukpt;
     private List<CreateEmvDataTlvDecryptRequest> tags;
 
@@ -67,6 +66,7 @@ public class CreateEmvDataDecryptRequest {
      * @return Returns the CreateEmvDataDukptDecryptRequest
      */
     @JsonGetter("dukpt")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateEmvDataDukptDecryptRequest getDukpt() {
         return dukpt;
     }

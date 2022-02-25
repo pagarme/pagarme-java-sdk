@@ -20,7 +20,6 @@ import me.pagar.api.DateTimeHelper;
  */
 public class GetCheckoutPaymentResponse {
     private String id;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
     private String defaultPaymentMethod;
     private String successUrl;
@@ -31,10 +30,8 @@ public class GetCheckoutPaymentResponse {
     private boolean skipCheckoutSuccessPage;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime canceledAt;
     private boolean customerEditable;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
     private GetAddressResponse billingaddress;
     private GetCheckoutCreditCardPaymentResponse creditCard;
@@ -42,17 +39,12 @@ public class GetCheckoutPaymentResponse {
     private boolean billingAddressEditable;
     private GetShippingResponse shipping;
     private boolean shippable;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime closedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime expiresAt;
     private String currency;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCheckoutDebitCardPaymentResponse debitCard;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCheckoutBankTransferPaymentResponse bankTransfer;
     private List<String> acceptedBrands;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCheckoutPixPaymentResponse pix;
 
     /**
@@ -172,6 +164,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }
@@ -376,6 +369,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("canceled_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCanceledAt() {
         return canceledAt;
@@ -418,6 +412,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }
@@ -558,6 +553,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("closed_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getClosedAt() {
         return closedAt;
@@ -580,6 +576,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("expires_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getExpiresAt() {
         return expiresAt;
@@ -622,6 +619,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the GetCheckoutDebitCardPaymentResponse
      */
     @JsonGetter("debit_card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCheckoutDebitCardPaymentResponse getDebitCard() {
         return debitCard;
     }
@@ -642,6 +640,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the GetCheckoutBankTransferPaymentResponse
      */
     @JsonGetter("bank_transfer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCheckoutBankTransferPaymentResponse getBankTransfer() {
         return bankTransfer;
     }
@@ -682,6 +681,7 @@ public class GetCheckoutPaymentResponse {
      * @return Returns the GetCheckoutPixPaymentResponse
      */
     @JsonGetter("pix")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCheckoutPixPaymentResponse getPix() {
         return pix;
     }

@@ -22,7 +22,6 @@ public class CreateRecipientRequest {
     private String type;
     private CreateBankAccountRequest defaultBankAccount;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateTransferSettingsRequest transferSettings;
     private String code;
     private String paymentMode;
@@ -216,6 +215,7 @@ public class CreateRecipientRequest {
      * @return Returns the CreateTransferSettingsRequest
      */
     @JsonGetter("transfer_settings")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateTransferSettingsRequest getTransferSettings() {
         return transferSettings;
     }

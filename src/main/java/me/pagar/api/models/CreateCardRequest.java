@@ -26,13 +26,10 @@ public class CreateCardRequest {
     private Map<String, String> metadata;
     private String type;
     private CreateCardOptionsRequest options;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String holderDocument;
     private boolean privateLabel;
     private String label;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String token;
 
     /**
@@ -322,6 +319,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("holder_document")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getHolderDocument() {
         return holderDocument;
     }
@@ -380,6 +378,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getId() {
         return id;
     }
@@ -400,6 +399,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getToken() {
         return token;
     }

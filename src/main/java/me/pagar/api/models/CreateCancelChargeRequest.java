@@ -15,11 +15,8 @@ import java.util.List;
  * This is a model class for CreateCancelChargeRequest type.
  */
 public class CreateCancelChargeRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CreateCancelChargeSplitRulesRequest> splitRules;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CreateSplitRequest> split;
     private String operationReference;
 
@@ -53,6 +50,7 @@ public class CreateCancelChargeRequest {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }
@@ -73,6 +71,7 @@ public class CreateCancelChargeRequest {
      * @return Returns the List of CreateCancelChargeSplitRulesRequest
      */
     @JsonGetter("split_rules")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<CreateCancelChargeSplitRulesRequest> getSplitRules() {
         return splitRules;
     }
@@ -93,6 +92,7 @@ public class CreateCancelChargeRequest {
      * @return Returns the List of CreateSplitRequest
      */
     @JsonGetter("split")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<CreateSplitRequest> getSplit() {
         return split;
     }

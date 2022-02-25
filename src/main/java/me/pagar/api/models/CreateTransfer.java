@@ -18,7 +18,6 @@ public class CreateTransfer {
     private int amount;
     private String sourceId;
     private String targetId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> metadata;
 
     /**
@@ -104,6 +103,7 @@ public class CreateTransfer {
      * @return Returns the List of String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<String> getMetadata() {
         return metadata;
     }

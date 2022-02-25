@@ -18,27 +18,18 @@ public class CreateCheckoutPaymentRequest {
     private List<String> acceptedPaymentMethods;
     private List<Object> acceptedMultiPaymentMethods;
     private String successUrl;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String defaultPaymentMethod;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String gatewayAffiliationId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCheckoutCreditCardPaymentRequest creditCard;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCheckoutDebitCardPaymentRequest debitCard;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCheckoutBoletoPaymentRequest boleto;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean customerEditable;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer expiresIn;
     private boolean skipCheckoutSuccessPage;
     private boolean billingAddressEditable;
     private CreateAddressRequest billingAddress;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCheckoutBankTransferRequest bankTransfer;
     private List<String> acceptedBrands;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCheckoutPixPaymentRequest pix;
 
     /**
@@ -167,6 +158,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("default_payment_method")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDefaultPaymentMethod() {
         return defaultPaymentMethod;
     }
@@ -187,6 +179,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("gateway_affiliation_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGatewayAffiliationId() {
         return gatewayAffiliationId;
     }
@@ -207,6 +200,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the CreateCheckoutCreditCardPaymentRequest
      */
     @JsonGetter("credit_card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCheckoutCreditCardPaymentRequest getCreditCard() {
         return creditCard;
     }
@@ -227,6 +221,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the CreateCheckoutDebitCardPaymentRequest
      */
     @JsonGetter("debit_card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCheckoutDebitCardPaymentRequest getDebitCard() {
         return debitCard;
     }
@@ -247,6 +242,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the CreateCheckoutBoletoPaymentRequest
      */
     @JsonGetter("boleto")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCheckoutBoletoPaymentRequest getBoleto() {
         return boleto;
     }
@@ -267,6 +263,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("customer_editable")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getCustomerEditable() {
         return customerEditable;
     }
@@ -287,6 +284,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the Integer
      */
     @JsonGetter("expires_in")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getExpiresIn() {
         return expiresIn;
     }
@@ -367,6 +365,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the CreateCheckoutBankTransferRequest
      */
     @JsonGetter("bank_transfer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCheckoutBankTransferRequest getBankTransfer() {
         return bankTransfer;
     }
@@ -407,6 +406,7 @@ public class CreateCheckoutPaymentRequest {
      * @return Returns the CreateCheckoutPixPaymentRequest
      */
     @JsonGetter("pix")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCheckoutPixPaymentRequest getPix() {
         return pix;
     }

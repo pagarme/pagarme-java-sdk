@@ -22,7 +22,6 @@ public class GetAccessTokenResponse {
     private String code;
     private String status;
     private LocalDateTime createdAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
 
     /**
@@ -131,6 +130,7 @@ public class GetAccessTokenResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }

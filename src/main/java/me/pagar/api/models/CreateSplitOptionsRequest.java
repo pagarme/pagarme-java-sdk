@@ -14,11 +14,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateSplitOptionsRequest type.
  */
 public class CreateSplitOptionsRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean liable;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean chargeProcessingFee;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean chargeRemainderFee;
 
     /**
@@ -48,6 +45,7 @@ public class CreateSplitOptionsRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("liable")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getLiable() {
         return liable;
     }
@@ -68,6 +66,7 @@ public class CreateSplitOptionsRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("charge_processing_fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getChargeProcessingFee() {
         return chargeProcessingFee;
     }
@@ -87,6 +86,7 @@ public class CreateSplitOptionsRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("charge_remainder_fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getChargeRemainderFee() {
         return chargeRemainderFee;
     }

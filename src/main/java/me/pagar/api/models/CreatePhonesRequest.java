@@ -14,9 +14,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreatePhonesRequest type.
  */
 public class CreatePhonesRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePhoneRequest homePhone;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePhoneRequest mobilePhone;
 
     /**
@@ -42,6 +40,7 @@ public class CreatePhonesRequest {
      * @return Returns the CreatePhoneRequest
      */
     @JsonGetter("home_phone")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePhoneRequest getHomePhone() {
         return homePhone;
     }
@@ -60,6 +59,7 @@ public class CreatePhonesRequest {
      * @return Returns the CreatePhoneRequest
      */
     @JsonGetter("mobile_phone")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePhoneRequest getMobilePhone() {
         return mobilePhone;
     }

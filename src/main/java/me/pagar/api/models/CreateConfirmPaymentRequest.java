@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  */
 public class CreateConfirmPaymentRequest {
     private String description;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
     private String code;
 
@@ -66,6 +65,7 @@ public class CreateConfirmPaymentRequest {
      * @return Returns the Integer
      */
     @JsonGetter("Amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }

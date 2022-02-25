@@ -32,9 +32,7 @@ public class GetSafetyPayTransactionResponse
         extends GetTransactionResponse {
     private String url;
     private String bankTid;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime paidAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer paidAmount;
 
     /**
@@ -144,6 +142,7 @@ public class GetSafetyPayTransactionResponse
      * @return Returns the LocalDateTime
      */
     @JsonGetter("paid_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getPaidAt() {
         return paidAt;
@@ -166,6 +165,7 @@ public class GetSafetyPayTransactionResponse
      * @return Returns the Integer
      */
     @JsonGetter("paid_amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getPaidAmount() {
         return paidAmount;
     }

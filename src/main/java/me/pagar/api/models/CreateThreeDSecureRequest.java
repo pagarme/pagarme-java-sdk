@@ -15,17 +15,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  */
 public class CreateThreeDSecureRequest {
     private String mpi;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cavv;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String eci;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String transactionId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String successUrl;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String dsTransactionId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String version;
 
     /**
@@ -87,6 +81,7 @@ public class CreateThreeDSecureRequest {
      * @return Returns the String
      */
     @JsonGetter("cavv")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCavv() {
         return cavv;
     }
@@ -107,6 +102,7 @@ public class CreateThreeDSecureRequest {
      * @return Returns the String
      */
     @JsonGetter("eci")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getEci() {
         return eci;
     }
@@ -127,6 +123,7 @@ public class CreateThreeDSecureRequest {
      * @return Returns the String
      */
     @JsonGetter("transaction_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getTransactionId() {
         return transactionId;
     }
@@ -147,6 +144,7 @@ public class CreateThreeDSecureRequest {
      * @return Returns the String
      */
     @JsonGetter("success_url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getSuccessUrl() {
         return successUrl;
     }
@@ -167,6 +165,7 @@ public class CreateThreeDSecureRequest {
      * @return Returns the String
      */
     @JsonGetter("ds_transaction_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDsTransactionId() {
         return dsTransactionId;
     }
@@ -187,6 +186,7 @@ public class CreateThreeDSecureRequest {
      * @return Returns the String
      */
     @JsonGetter("version")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getVersion() {
         return version;
     }

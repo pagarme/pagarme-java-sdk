@@ -24,7 +24,6 @@ public class GetOrderResponse {
     private String code;
     private String currency;
     private List<GetOrderItemResponse> items;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
     private String status;
     private LocalDateTime createdAt;
@@ -33,15 +32,10 @@ public class GetOrderResponse {
     private String invoiceUrl;
     private GetShippingResponse shipping;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<GetCheckoutPaymentResponse> checkouts;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String ip;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String sessionId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetLocationResponse location;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetDeviceResponse device;
     private boolean closed;
 
@@ -188,6 +182,7 @@ public class GetOrderResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }
@@ -337,6 +332,7 @@ public class GetOrderResponse {
      * @return Returns the List of GetCheckoutPaymentResponse
      */
     @JsonGetter("checkouts")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<GetCheckoutPaymentResponse> getCheckouts() {
         return checkouts;
     }
@@ -357,6 +353,7 @@ public class GetOrderResponse {
      * @return Returns the String
      */
     @JsonGetter("ip")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getIp() {
         return ip;
     }
@@ -377,6 +374,7 @@ public class GetOrderResponse {
      * @return Returns the String
      */
     @JsonGetter("session_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getSessionId() {
         return sessionId;
     }
@@ -397,6 +395,7 @@ public class GetOrderResponse {
      * @return Returns the GetLocationResponse
      */
     @JsonGetter("location")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetLocationResponse getLocation() {
         return location;
     }
@@ -417,6 +416,7 @@ public class GetOrderResponse {
      * @return Returns the GetDeviceResponse
      */
     @JsonGetter("device")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetDeviceResponse getDevice() {
         return device;
     }

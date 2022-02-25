@@ -43,6 +43,63 @@ public final class DefaultTransfersController extends BaseController implements 
 
 
     /**
+     * Gets all transfers.
+     * @return    Returns the ListTransfers response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListTransfers getTransfers() throws ApiException, IOException {
+        HttpRequest request = buildGetTransfersRequest();
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetTransfersResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getTransfers.
+     */
+    private HttpRequest buildGetTransfersRequest() {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/transfers");
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getTransfers.
+     * @return An object of type ListTransfers
+     */
+    private ListTransfers handleGetTransfersResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        ListTransfers result = ApiHelper.deserialize(responseBody,
+                ListTransfers.class);
+
+        return result;
+    }
+
+    /**
      * @param  transferId  Required parameter: Example:
      * @return    Returns the GetTransfer response from the API call
      * @throws    ApiException    Represents error response from the server.
@@ -165,63 +222,6 @@ public final class DefaultTransfersController extends BaseController implements 
         String responseBody = ((HttpStringResponse) response).getBody();
         GetTransfer result = ApiHelper.deserialize(responseBody,
                 GetTransfer.class);
-
-        return result;
-    }
-
-    /**
-     * Gets all transfers.
-     * @return    Returns the ListTransfers response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListTransfers getTransfers() throws ApiException, IOException {
-        HttpRequest request = buildGetTransfersRequest();
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetTransfersResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getTransfers.
-     */
-    private HttpRequest buildGetTransfersRequest() {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/transfers");
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getTransfers.
-     * @return An object of type ListTransfers
-     */
-    private ListTransfers handleGetTransfersResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListTransfers result = ApiHelper.deserialize(responseBody,
-                ListTransfers.class);
 
         return result;
     }

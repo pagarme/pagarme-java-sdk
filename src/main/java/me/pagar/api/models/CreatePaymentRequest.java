@@ -17,36 +17,21 @@ import java.util.Map;
  */
 public class CreatePaymentRequest {
     private String paymentMethod;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCreditCardPaymentRequest creditCard;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateDebitCardPaymentRequest debitCard;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateBoletoPaymentRequest boleto;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String currency;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateVoucherPaymentRequest voucher;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CreateSplitRequest> split;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateBankTransferPaymentRequest bankTransfer;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String gatewayAffiliationId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCheckoutPaymentRequest checkout;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String customerId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCustomerRequest customer;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCashPaymentRequest cash;
     private CreatePrivateLabelPaymentRequest privateLabel;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePixPaymentRequest pix;
 
     /**
@@ -138,6 +123,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateCreditCardPaymentRequest
      */
     @JsonGetter("credit_card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCreditCardPaymentRequest getCreditCard() {
         return creditCard;
     }
@@ -158,6 +144,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateDebitCardPaymentRequest
      */
     @JsonGetter("debit_card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateDebitCardPaymentRequest getDebitCard() {
         return debitCard;
     }
@@ -178,6 +165,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateBoletoPaymentRequest
      */
     @JsonGetter("boleto")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateBoletoPaymentRequest getBoleto() {
         return boleto;
     }
@@ -198,6 +186,7 @@ public class CreatePaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("currency")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCurrency() {
         return currency;
     }
@@ -218,6 +207,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateVoucherPaymentRequest
      */
     @JsonGetter("voucher")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateVoucherPaymentRequest getVoucher() {
         return voucher;
     }
@@ -238,6 +228,7 @@ public class CreatePaymentRequest {
      * @return Returns the List of CreateSplitRequest
      */
     @JsonGetter("split")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<CreateSplitRequest> getSplit() {
         return split;
     }
@@ -258,6 +249,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateBankTransferPaymentRequest
      */
     @JsonGetter("bank_transfer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateBankTransferPaymentRequest getBankTransfer() {
         return bankTransfer;
     }
@@ -278,6 +270,7 @@ public class CreatePaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("gateway_affiliation_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGatewayAffiliationId() {
         return gatewayAffiliationId;
     }
@@ -298,6 +291,7 @@ public class CreatePaymentRequest {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }
@@ -318,6 +312,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateCheckoutPaymentRequest
      */
     @JsonGetter("checkout")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCheckoutPaymentRequest getCheckout() {
         return checkout;
     }
@@ -338,6 +333,7 @@ public class CreatePaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("customer_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCustomerId() {
         return customerId;
     }
@@ -358,6 +354,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateCustomerRequest
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCustomerRequest getCustomer() {
         return customer;
     }
@@ -378,6 +375,7 @@ public class CreatePaymentRequest {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }
@@ -398,6 +396,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreateCashPaymentRequest
      */
     @JsonGetter("cash")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCashPaymentRequest getCash() {
         return cash;
     }
@@ -438,6 +437,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreatePixPaymentRequest
      */
     @JsonGetter("pix")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePixPaymentRequest getPix() {
         return pix;
     }

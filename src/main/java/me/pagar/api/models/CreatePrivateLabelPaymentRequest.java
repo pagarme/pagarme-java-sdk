@@ -14,23 +14,14 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreatePrivateLabelPaymentRequest type.
  */
 public class CreatePrivateLabelPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer installments;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String statementDescriptor;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardRequest card;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardToken;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean recurrence;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean capture;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean extendedLimitEnabled;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String extendedLimitCode;
 
     /**
@@ -80,6 +71,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the Integer
      */
     @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getInstallments() {
         return installments;
     }
@@ -100,6 +92,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getStatementDescriptor() {
         return statementDescriptor;
     }
@@ -120,6 +113,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the CreateCardRequest
      */
     @JsonGetter("card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardRequest getCard() {
         return card;
     }
@@ -140,6 +134,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardId() {
         return cardId;
     }
@@ -159,6 +154,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardToken() {
         return cardToken;
     }
@@ -178,6 +174,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("recurrence")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getRecurrence() {
         return recurrence;
     }
@@ -198,6 +195,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("capture")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getCapture() {
         return capture;
     }
@@ -218,6 +216,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("extended_limit_enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getExtendedLimitEnabled() {
         return extendedLimitEnabled;
     }
@@ -238,6 +237,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("extended_limit_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getExtendedLimitCode() {
         return extendedLimitCode;
     }

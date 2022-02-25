@@ -30,13 +30,9 @@ public class CreatePlanRequest {
     private String billingType;
     private CreatePricingSchemeRequest pricingScheme;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer trialPeriodDays;
 
     /**
@@ -393,6 +389,7 @@ public class CreatePlanRequest {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }
@@ -413,6 +410,7 @@ public class CreatePlanRequest {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -433,6 +431,7 @@ public class CreatePlanRequest {
      * @return Returns the Integer
      */
     @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getQuantity() {
         return quantity;
     }
@@ -453,6 +452,7 @@ public class CreatePlanRequest {
      * @return Returns the Integer
      */
     @JsonGetter("trial_period_days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getTrialPeriodDays() {
         return trialPeriodDays;
     }

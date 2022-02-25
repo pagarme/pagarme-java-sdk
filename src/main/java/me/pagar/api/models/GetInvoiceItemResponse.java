@@ -18,9 +18,7 @@ public class GetInvoiceItemResponse {
     private String description;
     private GetPricingSchemeResponse pricingScheme;
     private GetPriceBracketResponse priceBracket;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
     private String subscriptionItemId;
 
@@ -134,6 +132,7 @@ public class GetInvoiceItemResponse {
      * @return Returns the Integer
      */
     @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getQuantity() {
         return quantity;
     }
@@ -152,6 +151,7 @@ public class GetInvoiceItemResponse {
      * @return Returns the String
      */
     @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getName() {
         return name;
     }

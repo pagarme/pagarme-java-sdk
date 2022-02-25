@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateDeviceRequest type.
  */
 public class CreateDeviceRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String platform;
 
     /**
@@ -38,6 +37,7 @@ public class CreateDeviceRequest {
      * @return Returns the String
      */
     @JsonGetter("platform")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getPlatform() {
         return platform;
     }

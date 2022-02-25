@@ -33,9 +33,7 @@ public class GetRecipientResponse {
     private GetBankAccountResponse defaultBankAccount;
     private List<GetGatewayRecipientResponse> gatewayRecipients;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetAutomaticAnticipationResponse automaticAnticipationSettings;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetTransferSettingsResponse transferSettings;
     private String code;
     private String paymentMode;
@@ -376,6 +374,7 @@ public class GetRecipientResponse {
      * @return Returns the GetAutomaticAnticipationResponse
      */
     @JsonGetter("automatic_anticipation_settings")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetAutomaticAnticipationResponse getAutomaticAnticipationSettings() {
         return automaticAnticipationSettings;
     }
@@ -394,6 +393,7 @@ public class GetRecipientResponse {
      * @return Returns the GetTransferSettingsResponse
      */
     @JsonGetter("transfer_settings")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetTransferSettingsResponse getTransferSettings() {
         return transferSettings;
     }
