@@ -17,9 +17,7 @@ public class CreateSplitRequest {
     private String type;
     private int amount;
     private String recipientId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateSplitOptionsRequest options;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String splitRuleId;
 
     /**
@@ -115,6 +113,7 @@ public class CreateSplitRequest {
      * @return Returns the CreateSplitOptionsRequest
      */
     @JsonGetter("options")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateSplitOptionsRequest getOptions() {
         return options;
     }
@@ -135,6 +134,7 @@ public class CreateSplitRequest {
      * @return Returns the String
      */
     @JsonGetter("split_rule_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getSplitRuleId() {
         return splitRuleId;
     }

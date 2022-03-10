@@ -21,25 +21,16 @@ public class CreateOrderRequest {
     private List<CreatePaymentRequest> payments;
     private String code;
     private String customerId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateShippingRequest shipping;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean antifraudEnabled;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String ip;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String sessionId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateLocationRequest location;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateDeviceRequest device;
     private boolean closed;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String currency;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateAntifraudRequest antifraud;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateSubMerchantRequest submerchant;
 
     /**
@@ -209,6 +200,7 @@ public class CreateOrderRequest {
      * @return Returns the CreateShippingRequest
      */
     @JsonGetter("shipping")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateShippingRequest getShipping() {
         return shipping;
     }
@@ -249,6 +241,7 @@ public class CreateOrderRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("antifraud_enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getAntifraudEnabled() {
         return antifraudEnabled;
     }
@@ -269,6 +262,7 @@ public class CreateOrderRequest {
      * @return Returns the String
      */
     @JsonGetter("ip")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getIp() {
         return ip;
     }
@@ -289,6 +283,7 @@ public class CreateOrderRequest {
      * @return Returns the String
      */
     @JsonGetter("session_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getSessionId() {
         return sessionId;
     }
@@ -309,6 +304,7 @@ public class CreateOrderRequest {
      * @return Returns the CreateLocationRequest
      */
     @JsonGetter("location")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateLocationRequest getLocation() {
         return location;
     }
@@ -329,6 +325,7 @@ public class CreateOrderRequest {
      * @return Returns the CreateDeviceRequest
      */
     @JsonGetter("device")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateDeviceRequest getDevice() {
         return device;
     }
@@ -367,6 +364,7 @@ public class CreateOrderRequest {
      * @return Returns the String
      */
     @JsonGetter("currency")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCurrency() {
         return currency;
     }
@@ -386,6 +384,7 @@ public class CreateOrderRequest {
      * @return Returns the CreateAntifraudRequest
      */
     @JsonGetter("antifraud")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateAntifraudRequest getAntifraud() {
         return antifraud;
     }
@@ -405,6 +404,7 @@ public class CreateOrderRequest {
      * @return Returns the CreateSubMerchantRequest
      */
     @JsonGetter("submerchant")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateSubMerchantRequest getSubmerchant() {
         return submerchant;
     }

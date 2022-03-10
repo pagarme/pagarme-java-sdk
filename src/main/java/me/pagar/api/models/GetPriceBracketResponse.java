@@ -16,9 +16,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class GetPriceBracketResponse {
     private int startQuantity;
     private int price;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer endQuantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer overagePrice;
 
     /**
@@ -86,6 +84,7 @@ public class GetPriceBracketResponse {
      * @return Returns the Integer
      */
     @JsonGetter("end_quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getEndQuantity() {
         return endQuantity;
     }
@@ -104,6 +103,7 @@ public class GetPriceBracketResponse {
      * @return Returns the Integer
      */
     @JsonGetter("overage_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getOveragePrice() {
         return overagePrice;
     }

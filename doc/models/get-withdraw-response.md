@@ -20,8 +20,8 @@
 | `FundingDate` | `LocalDateTime` | Optional | - | LocalDateTime getFundingDate() | setFundingDate(LocalDateTime fundingDate) |
 | `FundingEstimatedDate` | `LocalDateTime` | Optional | - | LocalDateTime getFundingEstimatedDate() | setFundingEstimatedDate(LocalDateTime fundingEstimatedDate) |
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
-| `Source` | [`GetWithdrawSourceResponse`](/doc/models/get-withdraw-source-response.md) | Required | - | GetWithdrawSourceResponse getSource() | setSource(GetWithdrawSourceResponse source) |
-| `Target` | [`GetWithdrawTargetResponse`](/doc/models/get-withdraw-target-response.md) | Required | - | GetWithdrawTargetResponse getTarget() | setTarget(GetWithdrawTargetResponse target) |
+| `Source` | [`GetWithdrawSourceResponse`](../../doc/models/get-withdraw-source-response.md) | Required | - | GetWithdrawSourceResponse getSource() | setSource(GetWithdrawSourceResponse source) |
+| `Target` | [`GetWithdrawTargetResponse`](../../doc/models/get-withdraw-target-response.md) | Required | - | GetWithdrawTargetResponse getTarget() | setTarget(GetWithdrawTargetResponse target) |
 
 ## Example (as JSON)
 

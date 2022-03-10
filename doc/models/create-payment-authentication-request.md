@@ -12,7 +12,7 @@ The payment authentication request
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Type` | `String` | Required | The Authentication type | String getType() | setType(String type) |
-| `ThreedSecure` | [`CreateThreeDSecureRequest`](/doc/models/create-three-d-secure-request.md) | Required | The 3D-S authentication object | CreateThreeDSecureRequest getThreedSecure() | setThreedSecure(CreateThreeDSecureRequest threedSecure) |
+| `ThreedSecure` | [`CreateThreeDSecureRequest`](../../doc/models/create-three-d-secure-request.md) | Required | The 3D-S authentication object | CreateThreeDSecureRequest getThreedSecure() | setThreedSecure(CreateThreeDSecureRequest threedSecure) |
 
 ## Example (as JSON)
 

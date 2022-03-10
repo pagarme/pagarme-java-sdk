@@ -13,7 +13,7 @@ Request for updating a subscription's payment method
 |  --- | --- | --- | --- | --- | --- |
 | `PaymentMethod` | `String` | Required | The new payment method | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
 | `CardId` | `String` | Required | Card id | String getCardId() | setCardId(String cardId) |
-| `Card` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Required | Card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
+| `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Required | Card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `CardToken` | `String` | Optional | The Card Token | String getCardToken() | setCardToken(String cardToken) |
 
 ## Example (as JSON)

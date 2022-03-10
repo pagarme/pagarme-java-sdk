@@ -14,15 +14,10 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for UpdateAutomaticAnticipationSettingsRequest type.
  */
 public class UpdateAutomaticAnticipationSettingsRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean enabled;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String type;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer volumePercentage;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer delay;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer days;
 
     /**
@@ -57,6 +52,7 @@ public class UpdateAutomaticAnticipationSettingsRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getEnabled() {
         return enabled;
     }
@@ -75,6 +71,7 @@ public class UpdateAutomaticAnticipationSettingsRequest {
      * @return Returns the String
      */
     @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getType() {
         return type;
     }
@@ -93,6 +90,7 @@ public class UpdateAutomaticAnticipationSettingsRequest {
      * @return Returns the Integer
      */
     @JsonGetter("volume_percentage")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getVolumePercentage() {
         return volumePercentage;
     }
@@ -111,6 +109,7 @@ public class UpdateAutomaticAnticipationSettingsRequest {
      * @return Returns the Integer
      */
     @JsonGetter("delay")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getDelay() {
         return delay;
     }
@@ -129,6 +128,7 @@ public class UpdateAutomaticAnticipationSettingsRequest {
      * @return Returns the Integer
      */
     @JsonGetter("days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getDays() {
         return days;
     }

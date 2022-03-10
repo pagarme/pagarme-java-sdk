@@ -10,27 +10,27 @@ CustomersController customersController = client.getCustomersController();
 
 ## Methods
 
-* [Update Card](/doc/controllers/customers.md#update-card)
-* [Update Address](/doc/controllers/customers.md#update-address)
-* [Delete Access Token](/doc/controllers/customers.md#delete-access-token)
-* [Create Customer](/doc/controllers/customers.md#create-customer)
-* [Create Address](/doc/controllers/customers.md#create-address)
-* [Delete Access Tokens](/doc/controllers/customers.md#delete-access-tokens)
-* [Get Address](/doc/controllers/customers.md#get-address)
-* [Delete Address](/doc/controllers/customers.md#delete-address)
-* [Create Card](/doc/controllers/customers.md#create-card)
-* [Get Customers](/doc/controllers/customers.md#get-customers)
-* [Update Customer](/doc/controllers/customers.md#update-customer)
-* [Create Access Token](/doc/controllers/customers.md#create-access-token)
-* [Get Access Tokens](/doc/controllers/customers.md#get-access-tokens)
-* [Get Cards](/doc/controllers/customers.md#get-cards)
-* [Renew Card](/doc/controllers/customers.md#renew-card)
-* [Get Access Token](/doc/controllers/customers.md#get-access-token)
-* [Update Customer Metadata](/doc/controllers/customers.md#update-customer-metadata)
-* [Delete Card](/doc/controllers/customers.md#delete-card)
-* [Get Addresses](/doc/controllers/customers.md#get-addresses)
-* [Get Customer](/doc/controllers/customers.md#get-customer)
-* [Get Card](/doc/controllers/customers.md#get-card)
+* [Update Card](../../doc/controllers/customers.md#update-card)
+* [Update Address](../../doc/controllers/customers.md#update-address)
+* [Delete Access Token](../../doc/controllers/customers.md#delete-access-token)
+* [Create Customer](../../doc/controllers/customers.md#create-customer)
+* [Create Address](../../doc/controllers/customers.md#create-address)
+* [Delete Access Tokens](../../doc/controllers/customers.md#delete-access-tokens)
+* [Get Address](../../doc/controllers/customers.md#get-address)
+* [Delete Address](../../doc/controllers/customers.md#delete-address)
+* [Create Card](../../doc/controllers/customers.md#create-card)
+* [Get Customers](../../doc/controllers/customers.md#get-customers)
+* [Update Customer](../../doc/controllers/customers.md#update-customer)
+* [Create Access Token](../../doc/controllers/customers.md#create-access-token)
+* [Get Access Tokens](../../doc/controllers/customers.md#get-access-tokens)
+* [Get Cards](../../doc/controllers/customers.md#get-cards)
+* [Renew Card](../../doc/controllers/customers.md#renew-card)
+* [Get Access Token](../../doc/controllers/customers.md#get-access-token)
+* [Update Customer Metadata](../../doc/controllers/customers.md#update-customer-metadata)
+* [Delete Card](../../doc/controllers/customers.md#delete-card)
+* [Get Addresses](../../doc/controllers/customers.md#get-addresses)
+* [Get Customer](../../doc/controllers/customers.md#get-customer)
+* [Get Card](../../doc/controllers/customers.md#get-card)
 
 
 # Update Card
@@ -51,12 +51,12 @@ CompletableFuture<GetCardResponse> updateCard(
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | Customer Id |
 | `cardId` | `String` | Template, Required | Card id |
-| `request` | [`UpdateCardRequest`](/doc/models/update-card-request.md) | Body, Required | Request for updating a card |
+| `request` | [`UpdateCardRequest`](../../doc/models/update-card-request.md) | Body, Required | Request for updating a card |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetCardResponse`](/doc/models/get-card-response.md)
+[`GetCardResponse`](../../doc/models/get-card-response.md)
 
 ## Example Usage
 
@@ -114,12 +114,12 @@ CompletableFuture<GetAddressResponse> updateAddress(
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | Customer Id |
 | `addressId` | `String` | Template, Required | Address Id |
-| `request` | [`UpdateAddressRequest`](/doc/models/update-address-request.md) | Body, Required | Request for updating an address |
+| `request` | [`UpdateAddressRequest`](../../doc/models/update-address-request.md) | Body, Required | Request for updating an address |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetAddressResponse`](/doc/models/get-address-response.md)
+[`GetAddressResponse`](../../doc/models/get-address-response.md)
 
 ## Example Usage
 
@@ -164,7 +164,7 @@ CompletableFuture<GetAccessTokenResponse> deleteAccessToken(
 
 ## Response Type
 
-[`GetAccessTokenResponse`](/doc/models/get-access-token-response.md)
+[`GetAccessTokenResponse`](../../doc/models/get-access-token-response.md)
 
 ## Example Usage
 
@@ -196,12 +196,12 @@ CompletableFuture<GetCustomerResponse> createCustomer(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `request` | [`CreateCustomerRequest`](/doc/models/create-customer-request.md) | Body, Required | Request for creating a customer |
+| `request` | [`CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Body, Required | Request for creating a customer |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetCustomerResponse`](/doc/models/get-customer-response.md)
+[`GetCustomerResponse`](../../doc/models/get-customer-response.md)
 
 ## Example Usage
 
@@ -255,12 +255,12 @@ CompletableFuture<GetAddressResponse> createAddress(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | Customer Id |
-| `request` | [`CreateAddressRequest`](/doc/models/create-address-request.md) | Body, Required | Request for creating an address |
+| `request` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Body, Required | Request for creating an address |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetAddressResponse`](/doc/models/get-address-response.md)
+[`GetAddressResponse`](../../doc/models/get-address-response.md)
 
 ## Example Usage
 
@@ -307,7 +307,7 @@ CompletableFuture<ListAccessTokensResponse> deleteAccessTokens(
 
 ## Response Type
 
-[`ListAccessTokensResponse`](/doc/models/list-access-tokens-response.md)
+[`ListAccessTokensResponse`](../../doc/models/list-access-tokens-response.md)
 
 ## Example Usage
 
@@ -343,7 +343,7 @@ CompletableFuture<GetAddressResponse> getAddress(
 
 ## Response Type
 
-[`GetAddressResponse`](/doc/models/get-address-response.md)
+[`GetAddressResponse`](../../doc/models/get-address-response.md)
 
 ## Example Usage
 
@@ -382,7 +382,7 @@ CompletableFuture<GetAddressResponse> deleteAddress(
 
 ## Response Type
 
-[`GetAddressResponse`](/doc/models/get-address-response.md)
+[`GetAddressResponse`](../../doc/models/get-address-response.md)
 
 ## Example Usage
 
@@ -416,12 +416,12 @@ CompletableFuture<GetCardResponse> createCard(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | Customer id |
-| `request` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Body, Required | Request for creating a card |
+| `request` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Body, Required | Request for creating a card |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetCardResponse`](/doc/models/get-card-response.md)
+[`GetCardResponse`](../../doc/models/get-card-response.md)
 
 ## Example Usage
 
@@ -494,7 +494,7 @@ CompletableFuture<ListCustomersResponse> getCustomers(
 
 ## Response Type
 
-[`ListCustomersResponse`](/doc/models/list-customers-response.md)
+[`ListCustomersResponse`](../../doc/models/list-customers-response.md)
 
 ## Example Usage
 
@@ -528,12 +528,12 @@ CompletableFuture<GetCustomerResponse> updateCustomer(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | Customer id |
-| `request` | [`UpdateCustomerRequest`](/doc/models/update-customer-request.md) | Body, Required | Request for updating a customer |
+| `request` | [`UpdateCustomerRequest`](../../doc/models/update-customer-request.md) | Body, Required | Request for updating a customer |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetCustomerResponse`](/doc/models/get-customer-response.md)
+[`GetCustomerResponse`](../../doc/models/get-customer-response.md)
 
 ## Example Usage
 
@@ -567,12 +567,12 @@ CompletableFuture<GetAccessTokenResponse> createAccessToken(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | Customer Id |
-| `request` | [`CreateAccessTokenRequest`](/doc/models/create-access-token-request.md) | Body, Required | Request for creating a access token |
+| `request` | [`CreateAccessTokenRequest`](../../doc/models/create-access-token-request.md) | Body, Required | Request for creating a access token |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetAccessTokenResponse`](/doc/models/get-access-token-response.md)
+[`GetAccessTokenResponse`](../../doc/models/get-access-token-response.md)
 
 ## Example Usage
 
@@ -611,7 +611,7 @@ CompletableFuture<ListAccessTokensResponse> getAccessTokens(
 
 ## Response Type
 
-[`ListAccessTokensResponse`](/doc/models/list-access-tokens-response.md)
+[`ListAccessTokensResponse`](../../doc/models/list-access-tokens-response.md)
 
 ## Example Usage
 
@@ -649,7 +649,7 @@ CompletableFuture<ListCardsResponse> getCards(
 
 ## Response Type
 
-[`ListCardsResponse`](/doc/models/list-cards-response.md)
+[`ListCardsResponse`](../../doc/models/list-cards-response.md)
 
 ## Example Usage
 
@@ -687,7 +687,7 @@ CompletableFuture<GetCardResponse> renewCard(
 
 ## Response Type
 
-[`GetCardResponse`](/doc/models/get-card-response.md)
+[`GetCardResponse`](../../doc/models/get-card-response.md)
 
 ## Example Usage
 
@@ -724,7 +724,7 @@ CompletableFuture<GetAccessTokenResponse> getAccessToken(
 
 ## Response Type
 
-[`GetAccessTokenResponse`](/doc/models/get-access-token-response.md)
+[`GetAccessTokenResponse`](../../doc/models/get-access-token-response.md)
 
 ## Example Usage
 
@@ -758,12 +758,12 @@ CompletableFuture<GetCustomerResponse> updateCustomerMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `customerId` | `String` | Template, Required | The customer id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the customer metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the customer metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetCustomerResponse`](/doc/models/get-customer-response.md)
+[`GetCustomerResponse`](../../doc/models/get-customer-response.md)
 
 ## Example Usage
 
@@ -804,7 +804,7 @@ CompletableFuture<GetCardResponse> deleteCard(
 
 ## Response Type
 
-[`GetCardResponse`](/doc/models/get-card-response.md)
+[`GetCardResponse`](../../doc/models/get-card-response.md)
 
 ## Example Usage
 
@@ -843,7 +843,7 @@ CompletableFuture<ListAddressesResponse> getAddresses(
 
 ## Response Type
 
-[`ListAddressesResponse`](/doc/models/list-addresses-response.md)
+[`ListAddressesResponse`](../../doc/models/list-addresses-response.md)
 
 ## Example Usage
 
@@ -877,7 +877,7 @@ CompletableFuture<GetCustomerResponse> getCustomer(
 
 ## Response Type
 
-[`GetCustomerResponse`](/doc/models/get-customer-response.md)
+[`GetCustomerResponse`](../../doc/models/get-customer-response.md)
 
 ## Example Usage
 
@@ -913,7 +913,7 @@ CompletableFuture<GetCardResponse> getCard(
 
 ## Response Type
 
-[`GetCardResponse`](/doc/models/get-card-response.md)
+[`GetCardResponse`](../../doc/models/get-card-response.md)
 
 ## Example Usage
 

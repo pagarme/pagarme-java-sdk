@@ -18,7 +18,6 @@ public class CreateOrderItemRequest {
     private String description;
     private int quantity;
     private String category;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String code;
 
     /**
@@ -134,6 +133,7 @@ public class CreateOrderItemRequest {
      * @return Returns the String
      */
     @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCode() {
         return code;
     }

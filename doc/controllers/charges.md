@@ -10,19 +10,19 @@ ChargesController chargesController = client.getChargesController();
 
 ## Methods
 
-* [Update Charge Metadata](/doc/controllers/charges.md#update-charge-metadata)
-* [Update Charge Payment Method](/doc/controllers/charges.md#update-charge-payment-method)
-* [Get Charge Transactions](/doc/controllers/charges.md#get-charge-transactions)
-* [Update Charge Due Date](/doc/controllers/charges.md#update-charge-due-date)
-* [Get Charges](/doc/controllers/charges.md#get-charges)
-* [Capture Charge](/doc/controllers/charges.md#capture-charge)
-* [Update Charge Card](/doc/controllers/charges.md#update-charge-card)
-* [Get Charge](/doc/controllers/charges.md#get-charge)
-* [Get Charges Summary](/doc/controllers/charges.md#get-charges-summary)
-* [Retry Charge](/doc/controllers/charges.md#retry-charge)
-* [Cancel Charge](/doc/controllers/charges.md#cancel-charge)
-* [Create Charge](/doc/controllers/charges.md#create-charge)
-* [Confirm Payment](/doc/controllers/charges.md#confirm-payment)
+* [Update Charge Metadata](../../doc/controllers/charges.md#update-charge-metadata)
+* [Update Charge Payment Method](../../doc/controllers/charges.md#update-charge-payment-method)
+* [Get Charge Transactions](../../doc/controllers/charges.md#get-charge-transactions)
+* [Update Charge Due Date](../../doc/controllers/charges.md#update-charge-due-date)
+* [Get Charges](../../doc/controllers/charges.md#get-charges)
+* [Capture Charge](../../doc/controllers/charges.md#capture-charge)
+* [Update Charge Card](../../doc/controllers/charges.md#update-charge-card)
+* [Get Charge](../../doc/controllers/charges.md#get-charge)
+* [Get Charges Summary](../../doc/controllers/charges.md#get-charges-summary)
+* [Retry Charge](../../doc/controllers/charges.md#retry-charge)
+* [Cancel Charge](../../doc/controllers/charges.md#cancel-charge)
+* [Create Charge](../../doc/controllers/charges.md#create-charge)
+* [Confirm Payment](../../doc/controllers/charges.md#confirm-payment)
 
 
 # Update Charge Metadata
@@ -41,12 +41,12 @@ CompletableFuture<GetChargeResponse> updateChargeMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | The charge id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the charge metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the charge metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -82,12 +82,12 @@ CompletableFuture<GetChargeResponse> updateChargePaymentMethod(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`UpdateChargePaymentMethodRequest`](/doc/models/update-charge-payment-method-request.md) | Body, Required | Request for updating the payment method from a charge |
+| `request` | [`UpdateChargePaymentMethodRequest`](../../doc/models/update-charge-payment-method-request.md) | Body, Required | Request for updating the payment method from a charge |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -156,7 +156,7 @@ CompletableFuture<ListChargeTransactionsResponse> getChargeTransactions(
 
 ## Response Type
 
-[`ListChargeTransactionsResponse`](/doc/models/list-charge-transactions-response.md)
+[`ListChargeTransactionsResponse`](../../doc/models/list-charge-transactions-response.md)
 
 ## Example Usage
 
@@ -189,12 +189,12 @@ CompletableFuture<GetChargeResponse> updateChargeDueDate(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | Charge Id |
-| `request` | [`UpdateChargeDueDateRequest`](/doc/models/update-charge-due-date-request.md) | Body, Required | Request for updating the due date |
+| `request` | [`UpdateChargeDueDateRequest`](../../doc/models/update-charge-due-date-request.md) | Body, Required | Request for updating the due date |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -245,7 +245,7 @@ CompletableFuture<ListChargesResponse> getCharges(
 
 ## Response Type
 
-[`ListChargesResponse`](/doc/models/list-charges-response.md)
+[`ListChargesResponse`](../../doc/models/list-charges-response.md)
 
 ## Example Usage
 
@@ -276,12 +276,12 @@ CompletableFuture<GetChargeResponse> captureCharge(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`CreateCaptureChargeRequest`](/doc/models/create-capture-charge-request.md) | Body, Optional | Request for capturing a charge |
+| `request` | [`CreateCaptureChargeRequest`](../../doc/models/create-capture-charge-request.md) | Body, Optional | Request for capturing a charge |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -314,12 +314,12 @@ CompletableFuture<GetChargeResponse> updateChargeCard(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`UpdateChargeCardRequest`](/doc/models/update-charge-card-request.md) | Body, Required | Request for updating a charge's card |
+| `request` | [`UpdateChargeCardRequest`](../../doc/models/update-charge-card-request.md) | Body, Required | Request for updating a charge's card |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -387,7 +387,7 @@ CompletableFuture<GetChargeResponse> getCharge(
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -423,7 +423,7 @@ CompletableFuture<GetChargesSummaryResponse> getChargesSummary(
 
 ## Response Type
 
-[`GetChargesSummaryResponse`](/doc/models/get-charges-summary-response.md)
+[`GetChargesSummaryResponse`](../../doc/models/get-charges-summary-response.md)
 
 ## Example Usage
 
@@ -459,7 +459,7 @@ CompletableFuture<GetChargeResponse> retryCharge(
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -492,12 +492,12 @@ CompletableFuture<GetChargeResponse> cancelCharge(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`CreateCancelChargeRequest`](/doc/models/create-cancel-charge-request.md) | Body, Optional | Request for cancelling a charge |
+| `request` | [`CreateCancelChargeRequest`](../../doc/models/create-cancel-charge-request.md) | Body, Optional | Request for cancelling a charge |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -528,12 +528,12 @@ CompletableFuture<GetChargeResponse> createCharge(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `request` | [`CreateChargeRequest`](/doc/models/create-charge-request.md) | Body, Required | Request for creating a charge |
+| `request` | [`CreateChargeRequest`](../../doc/models/create-charge-request.md) | Body, Required | Request for creating a charge |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 
@@ -602,12 +602,12 @@ CompletableFuture<GetChargeResponse> confirmPayment(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `chargeId` | `String` | Template, Required | - |
-| `request` | [`CreateConfirmPaymentRequest`](/doc/models/create-confirm-payment-request.md) | Body, Optional | Request for confirm payment |
+| `request` | [`CreateConfirmPaymentRequest`](../../doc/models/create-confirm-payment-request.md) | Body, Optional | Request for confirm payment |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetChargeResponse`](/doc/models/get-charge-response.md)
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
 
 ## Example Usage
 

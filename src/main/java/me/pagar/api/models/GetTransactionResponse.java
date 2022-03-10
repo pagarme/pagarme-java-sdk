@@ -51,14 +51,11 @@ public class GetTransactionResponse {
     private int attemptCount;
     private int maxAttempts;
     private List<GetSplitResponse> splits;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime nextAttempt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String transactionType;
     private String id;
     private GetGatewayResponseResponse gatewayResponse;
     private GetAntifraudResponse antifraudResponse;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> metadata;
     private List<GetSplitResponse> split;
 
@@ -313,6 +310,7 @@ public class GetTransactionResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("next_attempt")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getNextAttempt() {
         return nextAttempt;
@@ -334,6 +332,7 @@ public class GetTransactionResponse {
      * @return Returns the String
      */
     @JsonGetter("transaction_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getTransactionType() {
         return transactionType;
     }
@@ -410,6 +409,7 @@ public class GetTransactionResponse {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }

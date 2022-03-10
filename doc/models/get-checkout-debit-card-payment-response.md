@@ -10,7 +10,7 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `StatementDescriptor` | `String` | Required | Descrição na fatura | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
-| `Authentication` | [`GetPaymentAuthenticationResponse`](/doc/models/get-payment-authentication-response.md) | Required | Payment Authentication response object data | GetPaymentAuthenticationResponse getAuthentication() | setAuthentication(GetPaymentAuthenticationResponse authentication) |
+| `Authentication` | [`GetPaymentAuthenticationResponse`](../../doc/models/get-payment-authentication-response.md) | Required | Payment Authentication response object data | GetPaymentAuthenticationResponse getAuthentication() | setAuthentication(GetPaymentAuthenticationResponse authentication) |
 
 ## Example (as JSON)
 

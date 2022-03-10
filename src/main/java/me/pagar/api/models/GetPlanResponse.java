@@ -38,11 +38,8 @@ public class GetPlanResponse {
     private List<Integer> billingDays;
     private boolean shippable;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer trialPeriodDays;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime deletedAt;
 
     /**
@@ -453,6 +450,7 @@ public class GetPlanResponse {
      * @return Returns the Integer
      */
     @JsonGetter("trial_period_days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getTrialPeriodDays() {
         return trialPeriodDays;
     }
@@ -471,6 +469,7 @@ public class GetPlanResponse {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }
@@ -489,6 +488,7 @@ public class GetPlanResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
         return deletedAt;

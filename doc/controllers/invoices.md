@@ -10,13 +10,13 @@ InvoicesController invoicesController = client.getInvoicesController();
 
 ## Methods
 
-* [Update Invoice Metadata](/doc/controllers/invoices.md#update-invoice-metadata)
-* [Get Partial Invoice](/doc/controllers/invoices.md#get-partial-invoice)
-* [Cancel Invoice](/doc/controllers/invoices.md#cancel-invoice)
-* [Create Invoice](/doc/controllers/invoices.md#create-invoice)
-* [Get Invoices](/doc/controllers/invoices.md#get-invoices)
-* [Get Invoice](/doc/controllers/invoices.md#get-invoice)
-* [Update Invoice Status](/doc/controllers/invoices.md#update-invoice-status)
+* [Update Invoice Metadata](../../doc/controllers/invoices.md#update-invoice-metadata)
+* [Get Partial Invoice](../../doc/controllers/invoices.md#get-partial-invoice)
+* [Cancel Invoice](../../doc/controllers/invoices.md#cancel-invoice)
+* [Create Invoice](../../doc/controllers/invoices.md#create-invoice)
+* [Get Invoices](../../doc/controllers/invoices.md#get-invoices)
+* [Get Invoice](../../doc/controllers/invoices.md#get-invoice)
+* [Update Invoice Status](../../doc/controllers/invoices.md#update-invoice-status)
 
 
 # Update Invoice Metadata
@@ -35,12 +35,12 @@ CompletableFuture<GetInvoiceResponse> updateInvoiceMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `invoiceId` | `String` | Template, Required | The invoice id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the invoice metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the invoice metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 
@@ -75,7 +75,7 @@ CompletableFuture<GetInvoiceResponse> getPartialInvoice(
 
 ## Response Type
 
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 
@@ -111,7 +111,7 @@ CompletableFuture<GetInvoiceResponse> cancelInvoice(
 
 ## Response Type
 
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 
@@ -146,12 +146,12 @@ CompletableFuture<GetInvoiceResponse> createInvoice(
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription Id |
 | `cycleId` | `String` | Template, Required | Cycle Id |
-| `request` | [`CreateInvoiceRequest`](/doc/models/create-invoice-request.md) | Body, Optional | - |
+| `request` | [`CreateInvoiceRequest`](../../doc/models/create-invoice-request.md) | Body, Optional | - |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 
@@ -206,7 +206,7 @@ CompletableFuture<ListInvoicesResponse> getInvoices(
 
 ## Response Type
 
-[`ListInvoicesResponse`](/doc/models/list-invoices-response.md)
+[`ListInvoicesResponse`](../../doc/models/list-invoices-response.md)
 
 ## Example Usage
 
@@ -238,7 +238,7 @@ CompletableFuture<GetInvoiceResponse> getInvoice(
 
 ## Response Type
 
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 
@@ -271,12 +271,12 @@ CompletableFuture<GetInvoiceResponse> updateInvoiceStatus(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `invoiceId` | `String` | Template, Required | Invoice Id |
-| `request` | [`UpdateInvoiceStatusRequest`](/doc/models/update-invoice-status-request.md) | Body, Required | Request for updating an invoice's status |
+| `request` | [`UpdateInvoiceStatusRequest`](../../doc/models/update-invoice-status-request.md) | Body, Required | Request for updating an invoice's status |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetInvoiceResponse`](/doc/models/get-invoice-response.md)
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 

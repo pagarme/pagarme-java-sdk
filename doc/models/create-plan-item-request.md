@@ -12,7 +12,7 @@ Request for creating a plan item
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Name` | `String` | Required | Item name | String getName() | setName(String name) |
-| `PricingScheme` | [`CreatePricingSchemeRequest`](/doc/models/create-pricing-scheme-request.md) | Required | Item's pricing scheme | CreatePricingSchemeRequest getPricingScheme() | setPricingScheme(CreatePricingSchemeRequest pricingScheme) |
+| `PricingScheme` | [`CreatePricingSchemeRequest`](../../doc/models/create-pricing-scheme-request.md) | Required | Item's pricing scheme | CreatePricingSchemeRequest getPricingScheme() | setPricingScheme(CreatePricingSchemeRequest pricingScheme) |
 | `Id` | `String` | Required | Item's id | String getId() | setId(String id) |
 | `Description` | `String` | Required | Item's description | String getDescription() | setDescription(String description) |
 | `Cycles` | `Integer` | Optional | Number of cycles where the item will be charged | Integer getCycles() | setCycles(Integer cycles) |

@@ -10,8 +10,8 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `StatementDescriptor` | `String` | Required | Descrição na fatura | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
-| `Installments` | [`List<GetCheckoutCardInstallmentOptionsResponse>`](/doc/models/get-checkout-card-installment-options-response.md) | Required | Parcelas | List<GetCheckoutCardInstallmentOptionsResponse> getInstallments() | setInstallments(List<GetCheckoutCardInstallmentOptionsResponse> installments) |
-| `Authentication` | [`GetPaymentAuthenticationResponse`](/doc/models/get-payment-authentication-response.md) | Required | Payment Authentication response | GetPaymentAuthenticationResponse getAuthentication() | setAuthentication(GetPaymentAuthenticationResponse authentication) |
+| `Installments` | [`List<GetCheckoutCardInstallmentOptionsResponse>`](../../doc/models/get-checkout-card-installment-options-response.md) | Required | Parcelas | List<GetCheckoutCardInstallmentOptionsResponse> getInstallments() | setInstallments(List<GetCheckoutCardInstallmentOptionsResponse> installments) |
+| `Authentication` | [`GetPaymentAuthenticationResponse`](../../doc/models/get-payment-authentication-response.md) | Required | Payment Authentication response | GetPaymentAuthenticationResponse getAuthentication() | setAuthentication(GetPaymentAuthenticationResponse authentication) |
 
 ## Example (as JSON)
 

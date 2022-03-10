@@ -13,7 +13,7 @@ The ApplePay Token Payment Request
 |  --- | --- | --- | --- | --- | --- |
 | `Version` | `String` | Required | The token version | String getVersion() | setVersion(String version) |
 | `Data` | `String` | Required | The cryptography data | String getData() | setData(String data) |
-| `Header` | [`CreateApplePayHeaderRequest`](/doc/models/create-apple-pay-header-request.md) | Required | The ApplePay header request | CreateApplePayHeaderRequest getHeader() | setHeader(CreateApplePayHeaderRequest header) |
+| `Header` | [`CreateApplePayHeaderRequest`](../../doc/models/create-apple-pay-header-request.md) | Required | The ApplePay header request | CreateApplePayHeaderRequest getHeader() | setHeader(CreateApplePayHeaderRequest header) |
 | `Signature` | `String` | Required | Detached PKCS #7 signature, Base64 encoded as string | String getSignature() | setSignature(String signature) |
 | `MerchantIdentifier` | `String` | Required | ApplePay Merchant identifier | String getMerchantIdentifier() | setMerchantIdentifier(String merchantIdentifier) |
 

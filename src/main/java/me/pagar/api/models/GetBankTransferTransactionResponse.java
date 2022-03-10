@@ -33,9 +33,7 @@ public class GetBankTransferTransactionResponse
     private String url;
     private String bankTid;
     private String bank;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime paidAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer paidAmount;
 
     /**
@@ -168,6 +166,7 @@ public class GetBankTransferTransactionResponse
      * @return Returns the LocalDateTime
      */
     @JsonGetter("paid_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getPaidAt() {
         return paidAt;
@@ -190,6 +189,7 @@ public class GetBankTransferTransactionResponse
      * @return Returns the Integer
      */
     @JsonGetter("paid_amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getPaidAmount() {
         return paidAmount;
     }

@@ -18,7 +18,6 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for CreatePeriodRequest type.
  */
 public class CreatePeriodRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime endAt;
 
     /**
@@ -41,6 +40,7 @@ public class CreatePeriodRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("end_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getEndAt() {
         return endAt;

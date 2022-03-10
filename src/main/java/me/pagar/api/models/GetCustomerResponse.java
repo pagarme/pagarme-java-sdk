@@ -31,7 +31,6 @@ public class GetCustomerResponse {
     private GetAddressResponse address;
     private Map<String, String> metadata;
     private GetPhonesResponse phones;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long fbId;
     private String code;
     private String documentType;
@@ -318,6 +317,7 @@ public class GetCustomerResponse {
      * @return Returns the Long
      */
     @JsonGetter("fb_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Long getFbId() {
         return fbId;
     }

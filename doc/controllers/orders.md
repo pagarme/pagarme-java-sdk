@@ -10,16 +10,16 @@ OrdersController ordersController = client.getOrdersController();
 
 ## Methods
 
-* [Get Orders](/doc/controllers/orders.md#get-orders)
-* [Update Order Item](/doc/controllers/orders.md#update-order-item)
-* [Delete All Order Items](/doc/controllers/orders.md#delete-all-order-items)
-* [Delete Order Item](/doc/controllers/orders.md#delete-order-item)
-* [Close Order](/doc/controllers/orders.md#close-order)
-* [Create Order](/doc/controllers/orders.md#create-order)
-* [Create Order Item](/doc/controllers/orders.md#create-order-item)
-* [Get Order Item](/doc/controllers/orders.md#get-order-item)
-* [Update Order Metadata](/doc/controllers/orders.md#update-order-metadata)
-* [Get Order](/doc/controllers/orders.md#get-order)
+* [Get Orders](../../doc/controllers/orders.md#get-orders)
+* [Update Order Item](../../doc/controllers/orders.md#update-order-item)
+* [Delete All Order Items](../../doc/controllers/orders.md#delete-all-order-items)
+* [Delete Order Item](../../doc/controllers/orders.md#delete-order-item)
+* [Close Order](../../doc/controllers/orders.md#close-order)
+* [Create Order](../../doc/controllers/orders.md#create-order)
+* [Create Order Item](../../doc/controllers/orders.md#create-order-item)
+* [Get Order Item](../../doc/controllers/orders.md#get-order-item)
+* [Update Order Metadata](../../doc/controllers/orders.md#update-order-metadata)
+* [Get Order](../../doc/controllers/orders.md#get-order)
 
 
 # Get Orders
@@ -51,7 +51,7 @@ CompletableFuture<ListOrderResponse> getOrders(
 
 ## Response Type
 
-[`ListOrderResponse`](/doc/models/list-order-response.md)
+[`ListOrderResponse`](../../doc/models/list-order-response.md)
 
 ## Example Usage
 
@@ -82,12 +82,12 @@ CompletableFuture<GetOrderItemResponse> updateOrderItem(
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
 | `itemId` | `String` | Template, Required | Item Id |
-| `request` | [`UpdateOrderItemRequest`](/doc/models/update-order-item-request.md) | Body, Required | Item Model |
+| `request` | [`UpdateOrderItemRequest`](../../doc/models/update-order-item-request.md) | Body, Required | Item Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
@@ -127,7 +127,7 @@ CompletableFuture<GetOrderResponse> deleteAllOrderItems(
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -163,7 +163,7 @@ CompletableFuture<GetOrderItemResponse> deleteOrderItem(
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
@@ -195,12 +195,12 @@ CompletableFuture<GetOrderResponse> closeOrder(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `id` | `String` | Template, Required | Order Id |
-| `request` | [`UpdateOrderStatusRequest`](/doc/models/update-order-status-request.md) | Body, Required | Update Order Model |
+| `request` | [`UpdateOrderStatusRequest`](../../doc/models/update-order-status-request.md) | Body, Required | Update Order Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -233,12 +233,12 @@ CompletableFuture<GetOrderResponse> createOrder(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreateOrderRequest`](/doc/models/create-order-request.md) | Body, Required | Request for creating an order |
+| `body` | [`CreateOrderRequest`](../../doc/models/create-order-request.md) | Body, Required | Request for creating an order |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -334,12 +334,12 @@ CompletableFuture<GetOrderItemResponse> createOrderItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
-| `request` | [`CreateOrderItemRequest`](/doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
+| `request` | [`CreateOrderItemRequest`](../../doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
@@ -378,7 +378,7 @@ CompletableFuture<GetOrderItemResponse> getOrderItem(
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
@@ -412,12 +412,12 @@ CompletableFuture<GetOrderResponse> updateOrderMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | The order id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the order metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the order metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -454,7 +454,7 @@ CompletableFuture<GetOrderResponse> getOrder(
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 

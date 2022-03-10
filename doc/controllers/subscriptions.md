@@ -10,42 +10,42 @@ SubscriptionsController subscriptionsController = client.getSubscriptionsControl
 
 ## Methods
 
-* [Renew Subscription](/doc/controllers/subscriptions.md#renew-subscription)
-* [Update Subscription Card](/doc/controllers/subscriptions.md#update-subscription-card)
-* [Delete Usage](/doc/controllers/subscriptions.md#delete-usage)
-* [Create Discount](/doc/controllers/subscriptions.md#create-discount)
-* [Create an Usage](/doc/controllers/subscriptions.md#create-an-usage)
-* [Update Current Cycle Status](/doc/controllers/subscriptions.md#update-current-cycle-status)
-* [Delete Discount](/doc/controllers/subscriptions.md#delete-discount)
-* [Get Subscription Items](/doc/controllers/subscriptions.md#get-subscription-items)
-* [Update Subscription Payment Method](/doc/controllers/subscriptions.md#update-subscription-payment-method)
-* [Get Subscription Item](/doc/controllers/subscriptions.md#get-subscription-item)
-* [Get Subscriptions](/doc/controllers/subscriptions.md#get-subscriptions)
-* [Cancel Subscription](/doc/controllers/subscriptions.md#cancel-subscription)
-* [Create Increment](/doc/controllers/subscriptions.md#create-increment)
-* [Create Usage](/doc/controllers/subscriptions.md#create-usage)
-* [Get Discount by Id](/doc/controllers/subscriptions.md#get-discount-by-id)
-* [Create Subscription](/doc/controllers/subscriptions.md#create-subscription)
-* [Get Increment by Id](/doc/controllers/subscriptions.md#get-increment-by-id)
-* [Update Subscription Affiliation Id](/doc/controllers/subscriptions.md#update-subscription-affiliation-id)
-* [Update Subscription Metadata](/doc/controllers/subscriptions.md#update-subscription-metadata)
-* [Delete Increment](/doc/controllers/subscriptions.md#delete-increment)
-* [Get Subscription Cycles](/doc/controllers/subscriptions.md#get-subscription-cycles)
-* [Get Discounts](/doc/controllers/subscriptions.md#get-discounts)
-* [Update Subscription Billing Date](/doc/controllers/subscriptions.md#update-subscription-billing-date)
-* [Delete Subscription Item](/doc/controllers/subscriptions.md#delete-subscription-item)
-* [Get Increments](/doc/controllers/subscriptions.md#get-increments)
-* [Update Subscription Due Days](/doc/controllers/subscriptions.md#update-subscription-due-days)
-* [Update Subscription Start At](/doc/controllers/subscriptions.md#update-subscription-start-at)
-* [Update Subscription Item](/doc/controllers/subscriptions.md#update-subscription-item)
-* [Create Subscription Item](/doc/controllers/subscriptions.md#create-subscription-item)
-* [Get Subscription](/doc/controllers/subscriptions.md#get-subscription)
-* [Get Usages](/doc/controllers/subscriptions.md#get-usages)
-* [Update Latest Period End At](/doc/controllers/subscriptions.md#update-latest-period-end-at)
-* [Update Subscription Minium Price](/doc/controllers/subscriptions.md#update-subscription-minium-price)
-* [Get Subscription Cycle by Id](/doc/controllers/subscriptions.md#get-subscription-cycle-by-id)
-* [Get Usage Report](/doc/controllers/subscriptions.md#get-usage-report)
-* [Update Split Subscription](/doc/controllers/subscriptions.md#update-split-subscription)
+* [Renew Subscription](../../doc/controllers/subscriptions.md#renew-subscription)
+* [Update Subscription Card](../../doc/controllers/subscriptions.md#update-subscription-card)
+* [Delete Usage](../../doc/controllers/subscriptions.md#delete-usage)
+* [Create Discount](../../doc/controllers/subscriptions.md#create-discount)
+* [Create an Usage](../../doc/controllers/subscriptions.md#create-an-usage)
+* [Update Current Cycle Status](../../doc/controllers/subscriptions.md#update-current-cycle-status)
+* [Delete Discount](../../doc/controllers/subscriptions.md#delete-discount)
+* [Get Subscription Items](../../doc/controllers/subscriptions.md#get-subscription-items)
+* [Update Subscription Payment Method](../../doc/controllers/subscriptions.md#update-subscription-payment-method)
+* [Get Subscription Item](../../doc/controllers/subscriptions.md#get-subscription-item)
+* [Get Subscriptions](../../doc/controllers/subscriptions.md#get-subscriptions)
+* [Cancel Subscription](../../doc/controllers/subscriptions.md#cancel-subscription)
+* [Create Increment](../../doc/controllers/subscriptions.md#create-increment)
+* [Create Usage](../../doc/controllers/subscriptions.md#create-usage)
+* [Get Discount by Id](../../doc/controllers/subscriptions.md#get-discount-by-id)
+* [Create Subscription](../../doc/controllers/subscriptions.md#create-subscription)
+* [Get Increment by Id](../../doc/controllers/subscriptions.md#get-increment-by-id)
+* [Update Subscription Affiliation Id](../../doc/controllers/subscriptions.md#update-subscription-affiliation-id)
+* [Update Subscription Metadata](../../doc/controllers/subscriptions.md#update-subscription-metadata)
+* [Delete Increment](../../doc/controllers/subscriptions.md#delete-increment)
+* [Get Subscription Cycles](../../doc/controllers/subscriptions.md#get-subscription-cycles)
+* [Get Discounts](../../doc/controllers/subscriptions.md#get-discounts)
+* [Update Subscription Billing Date](../../doc/controllers/subscriptions.md#update-subscription-billing-date)
+* [Delete Subscription Item](../../doc/controllers/subscriptions.md#delete-subscription-item)
+* [Get Increments](../../doc/controllers/subscriptions.md#get-increments)
+* [Update Subscription Due Days](../../doc/controllers/subscriptions.md#update-subscription-due-days)
+* [Update Subscription Start At](../../doc/controllers/subscriptions.md#update-subscription-start-at)
+* [Update Subscription Item](../../doc/controllers/subscriptions.md#update-subscription-item)
+* [Create Subscription Item](../../doc/controllers/subscriptions.md#create-subscription-item)
+* [Get Subscription](../../doc/controllers/subscriptions.md#get-subscription)
+* [Get Usages](../../doc/controllers/subscriptions.md#get-usages)
+* [Update Latest Period End At](../../doc/controllers/subscriptions.md#update-latest-period-end-at)
+* [Update Subscription Minium Price](../../doc/controllers/subscriptions.md#update-subscription-minium-price)
+* [Get Subscription Cycle by Id](../../doc/controllers/subscriptions.md#get-subscription-cycle-by-id)
+* [Get Usage Report](../../doc/controllers/subscriptions.md#get-usage-report)
+* [Update Split Subscription](../../doc/controllers/subscriptions.md#update-split-subscription)
 
 
 # Renew Subscription
@@ -65,7 +65,7 @@ CompletableFuture<GetPeriodResponse> renewSubscription(
 
 ## Response Type
 
-[`GetPeriodResponse`](/doc/models/get-period-response.md)
+[`GetPeriodResponse`](../../doc/models/get-period-response.md)
 
 ## Example Usage
 
@@ -98,12 +98,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionCard(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription id |
-| `request` | [`UpdateSubscriptionCardRequest`](/doc/models/update-subscription-card-request.md) | Body, Required | Request for updating a card |
+| `request` | [`UpdateSubscriptionCardRequest`](../../doc/models/update-subscription-card-request.md) | Body, Required | Request for updating a card |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -175,7 +175,7 @@ CompletableFuture<GetUsageResponse> deleteUsage(
 
 ## Response Type
 
-[`GetUsageResponse`](/doc/models/get-usage-response.md)
+[`GetUsageResponse`](../../doc/models/get-usage-response.md)
 
 ## Example Usage
 
@@ -210,12 +210,12 @@ CompletableFuture<GetDiscountResponse> createDiscount(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription id |
-| `request` | [`CreateDiscountRequest`](/doc/models/create-discount-request.md) | Body, Required | Request for creating a discount |
+| `request` | [`CreateDiscountRequest`](../../doc/models/create-discount-request.md) | Body, Required | Request for creating a discount |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetDiscountResponse`](/doc/models/get-discount-response.md)
+[`GetDiscountResponse`](../../doc/models/get-discount-response.md)
 
 ## Example Usage
 
@@ -257,7 +257,7 @@ CompletableFuture<GetUsageResponse> createAnUsage(
 
 ## Response Type
 
-[`GetUsageResponse`](/doc/models/get-usage-response.md)
+[`GetUsageResponse`](../../doc/models/get-usage-response.md)
 
 ## Example Usage
 
@@ -289,7 +289,7 @@ CompletableFuture<Void> updateCurrentCycleStatus(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription Id |
-| `request` | [`UpdateCurrentCycleStatusRequest`](/doc/models/update-current-cycle-status-request.md) | Body, Required | Request for updating the end date of the subscription current status |
+| `request` | [`UpdateCurrentCycleStatusRequest`](../../doc/models/update-current-cycle-status-request.md) | Body, Required | Request for updating the end date of the subscription current status |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
@@ -334,7 +334,7 @@ CompletableFuture<GetDiscountResponse> deleteDiscount(
 
 ## Response Type
 
-[`GetDiscountResponse`](/doc/models/get-discount-response.md)
+[`GetDiscountResponse`](../../doc/models/get-discount-response.md)
 
 ## Example Usage
 
@@ -385,7 +385,7 @@ CompletableFuture<ListSubscriptionItemsResponse> getSubscriptionItems(
 
 ## Response Type
 
-[`ListSubscriptionItemsResponse`](/doc/models/list-subscription-items-response.md)
+[`ListSubscriptionItemsResponse`](../../doc/models/list-subscription-items-response.md)
 
 ## Example Usage
 
@@ -418,12 +418,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionPaymentMethod(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription id |
-| `request` | [`UpdateSubscriptionPaymentMethodRequest`](/doc/models/update-subscription-payment-method-request.md) | Body, Required | Request for updating the paymentmethod from a subscription |
+| `request` | [`UpdateSubscriptionPaymentMethodRequest`](../../doc/models/update-subscription-payment-method-request.md) | Body, Required | Request for updating the paymentmethod from a subscription |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -492,7 +492,7 @@ CompletableFuture<GetSubscriptionItemResponse> getSubscriptionItem(
 
 ## Response Type
 
-[`GetSubscriptionItemResponse`](/doc/models/get-subscription-item-response.md)
+[`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md)
 
 ## Example Usage
 
@@ -549,7 +549,7 @@ CompletableFuture<ListSubscriptionsResponse> getSubscriptions(
 
 ## Response Type
 
-[`ListSubscriptionsResponse`](/doc/models/list-subscriptions-response.md)
+[`ListSubscriptionsResponse`](../../doc/models/list-subscriptions-response.md)
 
 ## Example Usage
 
@@ -580,12 +580,12 @@ CompletableFuture<GetSubscriptionResponse> cancelSubscription(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription id |
-| `request` | [`CreateCancelSubscriptionRequest`](/doc/models/create-cancel-subscription-request.md) | Body, Optional | Request for cancelling a subscription |
+| `request` | [`CreateCancelSubscriptionRequest`](../../doc/models/create-cancel-subscription-request.md) | Body, Optional | Request for cancelling a subscription |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -620,12 +620,12 @@ CompletableFuture<GetIncrementResponse> createIncrement(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription id |
-| `request` | [`CreateIncrementRequest`](/doc/models/create-increment-request.md) | Body, Required | Request for creating a increment |
+| `request` | [`CreateIncrementRequest`](../../doc/models/create-increment-request.md) | Body, Required | Request for creating a increment |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetIncrementResponse`](/doc/models/get-increment-response.md)
+[`GetIncrementResponse`](../../doc/models/get-increment-response.md)
 
 ## Example Usage
 
@@ -664,12 +664,12 @@ CompletableFuture<GetUsageResponse> createUsage(
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription Id |
 | `itemId` | `String` | Template, Required | Item id |
-| `body` | [`CreateUsageRequest`](/doc/models/create-usage-request.md) | Body, Required | Request for creating a usage |
+| `body` | [`CreateUsageRequest`](../../doc/models/create-usage-request.md) | Body, Required | Request for creating a usage |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetUsageResponse`](/doc/models/get-usage-response.md)
+[`GetUsageResponse`](../../doc/models/get-usage-response.md)
 
 ## Example Usage
 
@@ -708,7 +708,7 @@ CompletableFuture<GetDiscountResponse> getDiscountById(
 
 ## Response Type
 
-[`GetDiscountResponse`](/doc/models/get-discount-response.md)
+[`GetDiscountResponse`](../../doc/models/get-discount-response.md)
 
 ## Example Usage
 
@@ -740,12 +740,12 @@ CompletableFuture<GetSubscriptionResponse> createSubscription(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreateSubscriptionRequest`](/doc/models/create-subscription-request.md) | Body, Required | Request for creating a subscription |
+| `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Required | Request for creating a subscription |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1021,7 +1021,7 @@ CompletableFuture<GetIncrementResponse> getIncrementById(
 
 ## Response Type
 
-[`GetIncrementResponse`](/doc/models/get-increment-response.md)
+[`GetIncrementResponse`](../../doc/models/get-increment-response.md)
 
 ## Example Usage
 
@@ -1053,12 +1053,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionAffiliationId(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | - |
-| `request` | [`UpdateSubscriptionAffiliationIdRequest`](/doc/models/update-subscription-affiliation-id-request.md) | Body, Required | Request for updating a subscription affiliation id |
+| `request` | [`UpdateSubscriptionAffiliationIdRequest`](../../doc/models/update-subscription-affiliation-id-request.md) | Body, Required | Request for updating a subscription affiliation id |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1093,12 +1093,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | The subscription id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the subscrption metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the subscrption metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1139,7 +1139,7 @@ CompletableFuture<GetIncrementResponse> deleteIncrement(
 
 ## Response Type
 
-[`GetIncrementResponse`](/doc/models/get-increment-response.md)
+[`GetIncrementResponse`](../../doc/models/get-increment-response.md)
 
 ## Example Usage
 
@@ -1176,7 +1176,7 @@ CompletableFuture<ListCyclesResponse> getSubscriptionCycles(
 
 ## Response Type
 
-[`ListCyclesResponse`](/doc/models/list-cycles-response.md)
+[`ListCyclesResponse`](../../doc/models/list-cycles-response.md)
 
 ## Example Usage
 
@@ -1214,7 +1214,7 @@ CompletableFuture<ListDiscountsResponse> getDiscounts(
 
 ## Response Type
 
-[`ListDiscountsResponse`](/doc/models/list-discounts-response.md)
+[`ListDiscountsResponse`](../../doc/models/list-discounts-response.md)
 
 ## Example Usage
 
@@ -1249,12 +1249,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionBillingDate(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | The subscription id |
-| `request` | [`UpdateSubscriptionBillingDateRequest`](/doc/models/update-subscription-billing-date-request.md) | Body, Required | Request for updating the subscription billing date |
+| `request` | [`UpdateSubscriptionBillingDateRequest`](../../doc/models/update-subscription-billing-date-request.md) | Body, Required | Request for updating the subscription billing date |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1294,7 +1294,7 @@ CompletableFuture<GetSubscriptionItemResponse> deleteSubscriptionItem(
 
 ## Response Type
 
-[`GetSubscriptionItemResponse`](/doc/models/get-subscription-item-response.md)
+[`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md)
 
 ## Example Usage
 
@@ -1331,7 +1331,7 @@ CompletableFuture<ListIncrementsResponse> getIncrements(
 
 ## Response Type
 
-[`ListIncrementsResponse`](/doc/models/list-increments-response.md)
+[`ListIncrementsResponse`](../../doc/models/list-increments-response.md)
 
 ## Example Usage
 
@@ -1364,12 +1364,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionDueDays(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription Id |
-| `request` | [`UpdateSubscriptionDueDaysRequest`](/doc/models/update-subscription-due-days-request.md) | Body, Required | - |
+| `request` | [`UpdateSubscriptionDueDaysRequest`](../../doc/models/update-subscription-due-days-request.md) | Body, Required | - |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1404,12 +1404,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionStartAt(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | The subscription id |
-| `request` | [`UpdateSubscriptionStartAtRequest`](/doc/models/update-subscription-start-at-request.md) | Body, Required | Request for updating the subscription start date |
+| `request` | [`UpdateSubscriptionStartAtRequest`](../../doc/models/update-subscription-start-at-request.md) | Body, Required | Request for updating the subscription start date |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1446,12 +1446,12 @@ CompletableFuture<GetSubscriptionItemResponse> updateSubscriptionItem(
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription Id |
 | `itemId` | `String` | Template, Required | Item id |
-| `body` | [`UpdateSubscriptionItemRequest`](/doc/models/update-subscription-item-request.md) | Body, Required | Request for updating a subscription item |
+| `body` | [`UpdateSubscriptionItemRequest`](../../doc/models/update-subscription-item-request.md) | Body, Required | Request for updating a subscription item |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionItemResponse`](/doc/models/get-subscription-item-response.md)
+[`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md)
 
 ## Example Usage
 
@@ -1503,12 +1503,12 @@ CompletableFuture<GetSubscriptionItemResponse> createSubscriptionItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription id |
-| `request` | [`CreateSubscriptionItemRequest`](/doc/models/create-subscription-item-request.md) | Body, Required | Request for creating a subscription item |
+| `request` | [`CreateSubscriptionItemRequest`](../../doc/models/create-subscription-item-request.md) | Body, Required | Request for creating a subscription item |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionItemResponse`](/doc/models/get-subscription-item-response.md)
+[`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md)
 
 ## Example Usage
 
@@ -1570,7 +1570,7 @@ CompletableFuture<GetSubscriptionResponse> getSubscription(
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1618,7 +1618,7 @@ CompletableFuture<ListUsagesResponse> getUsages(
 
 ## Response Type
 
-[`ListUsagesResponse`](/doc/models/list-usages-response.md)
+[`ListUsagesResponse`](../../doc/models/list-usages-response.md)
 
 ## Example Usage
 
@@ -1650,12 +1650,12 @@ CompletableFuture<GetSubscriptionResponse> updateLatestPeriodEndAt(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | - |
-| `request` | [`UpdateCurrentCycleEndDateRequest`](/doc/models/update-current-cycle-end-date-request.md) | Body, Required | Request for updating the end date of the current signature cycle |
+| `request` | [`UpdateCurrentCycleEndDateRequest`](../../doc/models/update-current-cycle-end-date-request.md) | Body, Required | Request for updating the end date of the current signature cycle |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1689,12 +1689,12 @@ CompletableFuture<GetSubscriptionResponse> updateSubscriptionMiniumPrice(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `String` | Template, Required | Subscription Id |
-| `request` | [`UpdateSubscriptionMinimumPriceRequest`](/doc/models/update-subscription-minimum-price-request.md) | Body, Required | Request da requisição com o valor mínimo que será configurado |
+| `request` | [`UpdateSubscriptionMinimumPriceRequest`](../../doc/models/update-subscription-minimum-price-request.md) | Body, Required | Request da requisição com o valor mínimo que será configurado |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 
@@ -1729,7 +1729,7 @@ CompletableFuture<GetPeriodResponse> getSubscriptionCycleById(
 
 ## Response Type
 
-[`GetPeriodResponse`](/doc/models/get-period-response.md)
+[`GetPeriodResponse`](../../doc/models/get-period-response.md)
 
 ## Example Usage
 
@@ -1764,7 +1764,7 @@ CompletableFuture<GetUsageReportResponse> getUsageReport(
 
 ## Response Type
 
-[`GetUsageReportResponse`](/doc/models/get-usage-report-response.md)
+[`GetUsageReportResponse`](../../doc/models/get-usage-report-response.md)
 
 ## Example Usage
 
@@ -1795,11 +1795,11 @@ CompletableFuture<GetSubscriptionResponse> updateSplitSubscription(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `id` | `String` | Template, Required | Subscription's id |
-| `request` | [`UpdateSubscriptionSplitRequest`](/doc/models/update-subscription-split-request.md) | Body, Required | - |
+| `request` | [`UpdateSubscriptionSplitRequest`](../../doc/models/update-subscription-split-request.md) | Body, Required | - |
 
 ## Response Type
 
-[`GetSubscriptionResponse`](/doc/models/get-subscription-response.md)
+[`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md)
 
 ## Example Usage
 

@@ -11,8 +11,8 @@ Response object for listing order objects
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Data` | [`List<GetOrderResponse>`](/doc/models/get-order-response.md) | Required | The order object | List<GetOrderResponse> getData() | setData(List<GetOrderResponse> data) |
-| `Paging` | [`PagingResponse`](/doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
+| `Data` | [`List<GetOrderResponse>`](../../doc/models/get-order-response.md) | Required | The order object | List<GetOrderResponse> getData() | setData(List<GetOrderResponse> data) |
+| `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
 ## Example (as JSON)
 

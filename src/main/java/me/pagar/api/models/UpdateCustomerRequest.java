@@ -15,25 +15,15 @@ import java.util.Map;
  * This is a model class for UpdateCustomerRequest type.
  */
 public class UpdateCustomerRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String email;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String document;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String type;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateAddressRequest address;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePhonesRequest phones;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String code;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String gender;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String documentType;
 
     /**
@@ -84,6 +74,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getName() {
         return name;
     }
@@ -104,6 +95,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("email")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getEmail() {
         return email;
     }
@@ -124,6 +116,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("document")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDocument() {
         return document;
     }
@@ -144,6 +137,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getType() {
         return type;
     }
@@ -164,6 +158,7 @@ public class UpdateCustomerRequest {
      * @return Returns the CreateAddressRequest
      */
     @JsonGetter("address")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateAddressRequest getAddress() {
         return address;
     }
@@ -184,6 +179,7 @@ public class UpdateCustomerRequest {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }
@@ -203,6 +199,7 @@ public class UpdateCustomerRequest {
      * @return Returns the CreatePhonesRequest
      */
     @JsonGetter("phones")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePhonesRequest getPhones() {
         return phones;
     }
@@ -222,6 +219,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCode() {
         return code;
     }
@@ -242,6 +240,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("gender")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGender() {
         return gender;
     }
@@ -261,6 +260,7 @@ public class UpdateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("document_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDocumentType() {
         return documentType;
     }

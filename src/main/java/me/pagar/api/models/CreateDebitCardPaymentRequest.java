@@ -14,19 +14,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateDebitCardPaymentRequest type.
  */
 public class CreateDebitCardPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String statementDescriptor;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardRequest card;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardToken;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean recurrence;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePaymentAuthenticationRequest authentication;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardPaymentContactlessRequest token;
 
     /**
@@ -68,6 +61,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getStatementDescriptor() {
         return statementDescriptor;
     }
@@ -88,6 +82,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the CreateCardRequest
      */
     @JsonGetter("card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardRequest getCard() {
         return card;
     }
@@ -108,6 +103,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardId() {
         return cardId;
     }
@@ -128,6 +124,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardToken() {
         return cardToken;
     }
@@ -148,6 +145,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("recurrence")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getRecurrence() {
         return recurrence;
     }
@@ -168,6 +166,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the CreatePaymentAuthenticationRequest
      */
     @JsonGetter("authentication")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePaymentAuthenticationRequest getAuthentication() {
         return authentication;
     }
@@ -188,6 +187,7 @@ public class CreateDebitCardPaymentRequest {
      * @return Returns the CreateCardPaymentContactlessRequest
      */
     @JsonGetter("token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardPaymentContactlessRequest getToken() {
         return token;
     }

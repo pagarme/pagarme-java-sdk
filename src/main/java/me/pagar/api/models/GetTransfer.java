@@ -25,13 +25,9 @@ public class GetTransfer {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer fee;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime fundingDate;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime fundingEstimatedDate;
     private String type;
     private GetTransferSourceResponse source;
@@ -205,6 +201,7 @@ public class GetTransfer {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }
@@ -223,6 +220,7 @@ public class GetTransfer {
      * @return Returns the Integer
      */
     @JsonGetter("fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getFee() {
         return fee;
     }
@@ -241,6 +239,7 @@ public class GetTransfer {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("funding_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getFundingDate() {
         return fundingDate;
@@ -261,6 +260,7 @@ public class GetTransfer {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("funding_estimated_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getFundingEstimatedDate() {
         return fundingEstimatedDate;

@@ -9,7 +9,7 @@ Response object for getting a private label transaction
 
 ## Inherits From
 
-[`GetTransactionResponse`](/doc/models/get-transaction-response.md)
+[`GetTransactionResponse`](../../doc/models/get-transaction-response.md)
 
 ## Fields
 
@@ -22,7 +22,7 @@ Response object for getting a private label transaction
 | `AcquirerNsu` | `String` | Required | Acquirer NSU | String getAcquirerNsu() | setAcquirerNsu(String acquirerNsu) |
 | `AcquirerAuthCode` | `String` | Required | Acquirer authorization code | String getAcquirerAuthCode() | setAcquirerAuthCode(String acquirerAuthCode) |
 | `OperationType` | `String` | Required | Operation type | String getOperationType() | setOperationType(String operationType) |
-| `Card` | [`GetCardResponse`](/doc/models/get-card-response.md) | Required | Card data | GetCardResponse getCard() | setCard(GetCardResponse card) |
+| `Card` | [`GetCardResponse`](../../doc/models/get-card-response.md) | Required | Card data | GetCardResponse getCard() | setCard(GetCardResponse card) |
 | `AcquirerMessage` | `String` | Required | Acquirer message | String getAcquirerMessage() | setAcquirerMessage(String acquirerMessage) |
 | `AcquirerReturnCode` | `String` | Required | Acquirer Return Code | String getAcquirerReturnCode() | setAcquirerReturnCode(String acquirerReturnCode) |
 | `Installments` | `Integer` | Optional | Number of installments | Integer getInstallments() | setInstallments(Integer installments) |

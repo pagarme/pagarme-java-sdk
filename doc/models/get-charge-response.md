@@ -21,10 +21,10 @@ Response object for getting a charge
 | `DueAt` | `LocalDateTime` | Required | - | LocalDateTime getDueAt() | setDueAt(LocalDateTime dueAt) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `LastTransaction` | [`GetTransactionResponse`](/doc/models/get-transaction-response.md) | Optional | - | GetTransactionResponse getLastTransaction() | setLastTransaction(GetTransactionResponse lastTransaction) |
-| `Invoice` | [`GetInvoiceResponse`](/doc/models/get-invoice-response.md) | Optional | - | GetInvoiceResponse getInvoice() | setInvoice(GetInvoiceResponse invoice) |
-| `Order` | [`GetOrderResponse`](/doc/models/get-order-response.md) | Optional | - | GetOrderResponse getOrder() | setOrder(GetOrderResponse order) |
-| `Customer` | [`GetCustomerResponse`](/doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
+| `LastTransaction` | [`GetTransactionResponse`](../../doc/models/get-transaction-response.md) | Optional | - | GetTransactionResponse getLastTransaction() | setLastTransaction(GetTransactionResponse lastTransaction) |
+| `Invoice` | [`GetInvoiceResponse`](../../doc/models/get-invoice-response.md) | Optional | - | GetInvoiceResponse getInvoice() | setInvoice(GetInvoiceResponse invoice) |
+| `Order` | [`GetOrderResponse`](../../doc/models/get-order-response.md) | Optional | - | GetOrderResponse getOrder() | setOrder(GetOrderResponse order) |
+| `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `PaidAt` | `LocalDateTime` | Optional | - | LocalDateTime getPaidAt() | setPaidAt(LocalDateTime paidAt) |
 | `CanceledAt` | `LocalDateTime` | Optional | - | LocalDateTime getCanceledAt() | setCanceledAt(LocalDateTime canceledAt) |

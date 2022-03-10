@@ -10,16 +10,16 @@ PlansController plansController = client.getPlansController();
 
 ## Methods
 
-* [Get Plan](/doc/controllers/plans.md#get-plan)
-* [Delete Plan](/doc/controllers/plans.md#delete-plan)
-* [Update Plan Metadata](/doc/controllers/plans.md#update-plan-metadata)
-* [Update Plan Item](/doc/controllers/plans.md#update-plan-item)
-* [Create Plan Item](/doc/controllers/plans.md#create-plan-item)
-* [Get Plan Item](/doc/controllers/plans.md#get-plan-item)
-* [Create Plan](/doc/controllers/plans.md#create-plan)
-* [Delete Plan Item](/doc/controllers/plans.md#delete-plan-item)
-* [Get Plans](/doc/controllers/plans.md#get-plans)
-* [Update Plan](/doc/controllers/plans.md#update-plan)
+* [Get Plan](../../doc/controllers/plans.md#get-plan)
+* [Delete Plan](../../doc/controllers/plans.md#delete-plan)
+* [Update Plan Metadata](../../doc/controllers/plans.md#update-plan-metadata)
+* [Update Plan Item](../../doc/controllers/plans.md#update-plan-item)
+* [Create Plan Item](../../doc/controllers/plans.md#create-plan-item)
+* [Get Plan Item](../../doc/controllers/plans.md#get-plan-item)
+* [Create Plan](../../doc/controllers/plans.md#create-plan)
+* [Delete Plan Item](../../doc/controllers/plans.md#delete-plan-item)
+* [Get Plans](../../doc/controllers/plans.md#get-plans)
+* [Update Plan](../../doc/controllers/plans.md#update-plan)
 
 
 # Get Plan
@@ -39,7 +39,7 @@ CompletableFuture<GetPlanResponse> getPlan(
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -75,7 +75,7 @@ CompletableFuture<GetPlanResponse> deletePlan(
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -108,12 +108,12 @@ CompletableFuture<GetPlanResponse> updatePlanMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | The plan id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the plan metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the plan metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -151,12 +151,12 @@ CompletableFuture<GetPlanItemResponse> updatePlanItem(
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | Plan id |
 | `planItemId` | `String` | Template, Required | Plan item id |
-| `body` | [`UpdatePlanItemRequest`](/doc/models/update-plan-item-request.md) | Body, Required | Request for updating the plan item |
+| `body` | [`UpdatePlanItemRequest`](../../doc/models/update-plan-item-request.md) | Body, Required | Request for updating the plan item |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
@@ -208,12 +208,12 @@ CompletableFuture<GetPlanItemResponse> createPlanItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | Plan id |
-| `request` | [`CreatePlanItemRequest`](/doc/models/create-plan-item-request.md) | Body, Required | Request for creating a plan item |
+| `request` | [`CreatePlanItemRequest`](../../doc/models/create-plan-item-request.md) | Body, Required | Request for creating a plan item |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
@@ -262,7 +262,7 @@ CompletableFuture<GetPlanItemResponse> getPlanItem(
 
 ## Response Type
 
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
@@ -294,12 +294,12 @@ CompletableFuture<GetPlanResponse> createPlan(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreatePlanRequest`](/doc/models/create-plan-request.md) | Body, Required | Request for creating a plan |
+| `body` | [`CreatePlanRequest`](../../doc/models/create-plan-request.md) | Body, Required | Request for creating a plan |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -431,7 +431,7 @@ CompletableFuture<GetPlanItemResponse> deletePlanItem(
 
 ## Response Type
 
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
@@ -478,7 +478,7 @@ CompletableFuture<ListPlansResponse> getPlans(
 
 ## Response Type
 
-[`ListPlansResponse`](/doc/models/list-plans-response.md)
+[`ListPlansResponse`](../../doc/models/list-plans-response.md)
 
 ## Example Usage
 
@@ -509,12 +509,12 @@ CompletableFuture<GetPlanResponse> updatePlan(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | Plan id |
-| `request` | [`UpdatePlanRequest`](/doc/models/update-plan-request.md) | Body, Required | Request for updating a plan |
+| `request` | [`UpdatePlanRequest`](../../doc/models/update-plan-request.md) | Body, Required | Request for updating a plan |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 

@@ -10,7 +10,7 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
-| `Clearsale` | [`CreateClearSaleRequest`](/doc/models/create-clear-sale-request.md) | Required | - | CreateClearSaleRequest getClearsale() | setClearsale(CreateClearSaleRequest clearsale) |
+| `Clearsale` | [`CreateClearSaleRequest`](../../doc/models/create-clear-sale-request.md) | Required | - | CreateClearSaleRequest getClearsale() | setClearsale(CreateClearSaleRequest clearsale) |
 
 ## Example (as JSON)
 

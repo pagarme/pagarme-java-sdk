@@ -11,7 +11,7 @@ Updates the default bank account for a recipient
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `BankAccount` | [`CreateBankAccountRequest`](/doc/models/create-bank-account-request.md) | Required | Bank account | CreateBankAccountRequest getBankAccount() | setBankAccount(CreateBankAccountRequest bankAccount) |
+| `BankAccount` | [`CreateBankAccountRequest`](../../doc/models/create-bank-account-request.md) | Required | Bank account | CreateBankAccountRequest getBankAccount() | setBankAccount(CreateBankAccountRequest bankAccount) |
 | `PaymentMode` | `String` | Required | Payment mode<br>**Default**: `"bank_transfer"` | String getPaymentMode() | setPaymentMode(String paymentMode) |
 
 ## Example (as JSON)

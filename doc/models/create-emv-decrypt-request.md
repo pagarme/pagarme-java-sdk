@@ -11,8 +11,8 @@
 |  --- | --- | --- | --- | --- | --- |
 | `IccData` | `String` | Required | - | String getIccData() | setIccData(String iccData) |
 | `CardSequenceNumber` | `String` | Required | - | String getCardSequenceNumber() | setCardSequenceNumber(String cardSequenceNumber) |
-| `Data` | [`CreateEmvDataDecryptRequest`](/doc/models/create-emv-data-decrypt-request.md) | Required | - | CreateEmvDataDecryptRequest getData() | setData(CreateEmvDataDecryptRequest data) |
-| `Poi` | [`CreateCardPaymentContactlessPOIRequest`](/doc/models/create-card-payment-contactless-poi-request.md) | Optional | - | CreateCardPaymentContactlessPOIRequest getPoi() | setPoi(CreateCardPaymentContactlessPOIRequest poi) |
+| `Data` | [`CreateEmvDataDecryptRequest`](../../doc/models/create-emv-data-decrypt-request.md) | Required | - | CreateEmvDataDecryptRequest getData() | setData(CreateEmvDataDecryptRequest data) |
+| `Poi` | [`CreateCardPaymentContactlessPOIRequest`](../../doc/models/create-card-payment-contactless-poi-request.md) | Optional | - | CreateCardPaymentContactlessPOIRequest getPoi() | setPoi(CreateCardPaymentContactlessPOIRequest poi) |
 
 ## Example (as JSON)
 

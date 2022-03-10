@@ -25,7 +25,6 @@ public class CreateChargeRequest {
     private CreateCustomerRequest customer;
     private CreatePaymentRequest payment;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime dueAt;
     private CreateAntifraudRequest antifraud;
     private String orderId;
@@ -195,6 +194,7 @@ public class CreateChargeRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
         return dueAt;

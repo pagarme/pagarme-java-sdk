@@ -13,7 +13,7 @@ Balance
 |  --- | --- | --- | --- | --- | --- |
 | `Currency` | `String` | Required | Currency | String getCurrency() | setCurrency(String currency) |
 | `AvailableAmount` | `long` | Required | Amount available for transferring | long getAvailableAmount() | setAvailableAmount(long availableAmount) |
-| `Recipient` | [`GetRecipientResponse`](/doc/models/get-recipient-response.md) | Optional | Recipient | GetRecipientResponse getRecipient() | setRecipient(GetRecipientResponse recipient) |
+| `Recipient` | [`GetRecipientResponse`](../../doc/models/get-recipient-response.md) | Optional | Recipient | GetRecipientResponse getRecipient() | setRecipient(GetRecipientResponse recipient) |
 | `TransferredAmount` | `long` | Required | - | long getTransferredAmount() | setTransferredAmount(long transferredAmount) |
 | `WaitingFundsAmount` | `long` | Required | - | long getWaitingFundsAmount() | setWaitingFundsAmount(long waitingFundsAmount) |
 

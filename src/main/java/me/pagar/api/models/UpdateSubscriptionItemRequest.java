@@ -18,11 +18,8 @@ public class UpdateSubscriptionItemRequest {
     private String status;
     private UpdatePricingSchemeRequest pricingScheme;
     private String name;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
 
     /**
@@ -144,6 +141,7 @@ public class UpdateSubscriptionItemRequest {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -164,6 +162,7 @@ public class UpdateSubscriptionItemRequest {
      * @return Returns the Integer
      */
     @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getQuantity() {
         return quantity;
     }
@@ -184,6 +183,7 @@ public class UpdateSubscriptionItemRequest {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }

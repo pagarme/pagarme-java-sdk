@@ -13,7 +13,7 @@ Checkout pix payment request
 |  --- | --- | --- | --- | --- | --- |
 | `ExpiresAt` | `LocalDateTime` | Optional | Expires at | LocalDateTime getExpiresAt() | setExpiresAt(LocalDateTime expiresAt) |
 | `ExpiresIn` | `Integer` | Optional | Expires in | Integer getExpiresIn() | setExpiresIn(Integer expiresIn) |
-| `AdditionalInformation` | [`List<PixAdditionalInformation>`](/doc/models/pix-additional-information.md) | Optional | Additional information | List<PixAdditionalInformation> getAdditionalInformation() | setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) |
+| `AdditionalInformation` | [`List<PixAdditionalInformation>`](../../doc/models/pix-additional-information.md) | Optional | Additional information | List<PixAdditionalInformation> getAdditionalInformation() | setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) |
 
 ## Example (as JSON)
 

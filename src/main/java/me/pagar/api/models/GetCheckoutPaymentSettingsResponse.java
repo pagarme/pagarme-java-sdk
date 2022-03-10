@@ -19,13 +19,9 @@ public class GetCheckoutPaymentSettingsResponse {
     private String paymentUrl;
     private List<String> acceptedPaymentMethods;
     private String status;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String defaultPaymentMethod;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String gatewayAffiliationId;
 
     /**
@@ -150,6 +146,7 @@ public class GetCheckoutPaymentSettingsResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }
@@ -170,6 +167,7 @@ public class GetCheckoutPaymentSettingsResponse {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }
@@ -190,6 +188,7 @@ public class GetCheckoutPaymentSettingsResponse {
      * @return Returns the String
      */
     @JsonGetter("default_payment_method")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDefaultPaymentMethod() {
         return defaultPaymentMethod;
     }
@@ -210,6 +209,7 @@ public class GetCheckoutPaymentSettingsResponse {
      * @return Returns the String
      */
     @JsonGetter("gateway_affiliation_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGatewayAffiliationId() {
         return gatewayAffiliationId;
     }

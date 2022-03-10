@@ -9,7 +9,7 @@
 
   <groupId>PagarmeApiSDKLib</groupId>
   <artifactId>pagarme-api-sdklib</artifactId>
-  <version>6.4.0</version>
+  <version>6.5.0</version>
   <packaging>jar</packaging>
 
   <name>PagarmeApiSDKLib</name>

@@ -15,13 +15,9 @@ import java.util.List;
  * This is a model class for CreateCheckoutCreditCardPaymentRequest type.
  */
 public class CreateCheckoutCreditCardPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String statementDescriptor;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CreateCheckoutCardInstallmentOptionRequest> installments;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePaymentAuthenticationRequest authentication;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean capture;
 
     /**
@@ -55,6 +51,7 @@ public class CreateCheckoutCreditCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getStatementDescriptor() {
         return statementDescriptor;
     }
@@ -75,6 +72,7 @@ public class CreateCheckoutCreditCardPaymentRequest {
      * @return Returns the List of CreateCheckoutCardInstallmentOptionRequest
      */
     @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<CreateCheckoutCardInstallmentOptionRequest> getInstallments() {
         return installments;
     }
@@ -95,6 +93,7 @@ public class CreateCheckoutCreditCardPaymentRequest {
      * @return Returns the CreatePaymentAuthenticationRequest
      */
     @JsonGetter("authentication")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePaymentAuthenticationRequest getAuthentication() {
         return authentication;
     }
@@ -115,6 +114,7 @@ public class CreateCheckoutCreditCardPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("capture")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getCapture() {
         return capture;
     }

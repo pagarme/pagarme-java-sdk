@@ -10,27 +10,27 @@ RecipientsController recipientsController = client.getRecipientsController();
 
 ## Methods
 
-* [Update Recipient](/doc/controllers/recipients.md#update-recipient)
-* [Create Anticipation](/doc/controllers/recipients.md#create-anticipation)
-* [Get Anticipation Limits](/doc/controllers/recipients.md#get-anticipation-limits)
-* [Get Recipients](/doc/controllers/recipients.md#get-recipients)
-* [Get Withdraw by Id](/doc/controllers/recipients.md#get-withdraw-by-id)
-* [Update Recipient Default Bank Account](/doc/controllers/recipients.md#update-recipient-default-bank-account)
-* [Update Recipient Metadata](/doc/controllers/recipients.md#update-recipient-metadata)
-* [Get Transfers](/doc/controllers/recipients.md#get-transfers)
-* [Get Transfer](/doc/controllers/recipients.md#get-transfer)
-* [Create Withdraw](/doc/controllers/recipients.md#create-withdraw)
-* [Update Automatic Anticipation Settings](/doc/controllers/recipients.md#update-automatic-anticipation-settings)
-* [Get Anticipation](/doc/controllers/recipients.md#get-anticipation)
-* [Update Recipient Transfer Settings](/doc/controllers/recipients.md#update-recipient-transfer-settings)
-* [Get Anticipations](/doc/controllers/recipients.md#get-anticipations)
-* [Get Recipient](/doc/controllers/recipients.md#get-recipient)
-* [Get Balance](/doc/controllers/recipients.md#get-balance)
-* [Get Withdrawals](/doc/controllers/recipients.md#get-withdrawals)
-* [Create Transfer](/doc/controllers/recipients.md#create-transfer)
-* [Create Recipient](/doc/controllers/recipients.md#create-recipient)
-* [Get Recipient by Code](/doc/controllers/recipients.md#get-recipient-by-code)
-* [Get Default Recipient](/doc/controllers/recipients.md#get-default-recipient)
+* [Update Recipient](../../doc/controllers/recipients.md#update-recipient)
+* [Create Anticipation](../../doc/controllers/recipients.md#create-anticipation)
+* [Get Anticipation Limits](../../doc/controllers/recipients.md#get-anticipation-limits)
+* [Get Recipients](../../doc/controllers/recipients.md#get-recipients)
+* [Get Withdraw by Id](../../doc/controllers/recipients.md#get-withdraw-by-id)
+* [Update Recipient Default Bank Account](../../doc/controllers/recipients.md#update-recipient-default-bank-account)
+* [Update Recipient Metadata](../../doc/controllers/recipients.md#update-recipient-metadata)
+* [Get Transfers](../../doc/controllers/recipients.md#get-transfers)
+* [Get Transfer](../../doc/controllers/recipients.md#get-transfer)
+* [Create Withdraw](../../doc/controllers/recipients.md#create-withdraw)
+* [Update Automatic Anticipation Settings](../../doc/controllers/recipients.md#update-automatic-anticipation-settings)
+* [Get Anticipation](../../doc/controllers/recipients.md#get-anticipation)
+* [Update Recipient Transfer Settings](../../doc/controllers/recipients.md#update-recipient-transfer-settings)
+* [Get Anticipations](../../doc/controllers/recipients.md#get-anticipations)
+* [Get Recipient](../../doc/controllers/recipients.md#get-recipient)
+* [Get Balance](../../doc/controllers/recipients.md#get-balance)
+* [Get Withdrawals](../../doc/controllers/recipients.md#get-withdrawals)
+* [Create Transfer](../../doc/controllers/recipients.md#create-transfer)
+* [Create Recipient](../../doc/controllers/recipients.md#create-recipient)
+* [Get Recipient by Code](../../doc/controllers/recipients.md#get-recipient-by-code)
+* [Get Default Recipient](../../doc/controllers/recipients.md#get-default-recipient)
 
 
 # Update Recipient
@@ -49,12 +49,12 @@ CompletableFuture<GetRecipientResponse> updateRecipient(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateRecipientRequest`](/doc/models/update-recipient-request.md) | Body, Required | Recipient data |
+| `request` | [`UpdateRecipientRequest`](../../doc/models/update-recipient-request.md) | Body, Required | Recipient data |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -95,12 +95,12 @@ CompletableFuture<GetAnticipationResponse> createAnticipation(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`CreateAnticipationRequest`](/doc/models/create-anticipation-request.md) | Body, Required | Anticipation data |
+| `request` | [`CreateAnticipationRequest`](../../doc/models/create-anticipation-request.md) | Body, Required | Anticipation data |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetAnticipationResponse`](/doc/models/get-anticipation-response.md)
+[`GetAnticipationResponse`](../../doc/models/get-anticipation-response.md)
 
 ## Example Usage
 
@@ -142,7 +142,7 @@ CompletableFuture<GetAnticipationLimitResponse> getAnticipationLimits(
 
 ## Response Type
 
-[`GetAnticipationLimitResponse`](/doc/models/get-anticipation-limit-response.md)
+[`GetAnticipationLimitResponse`](../../doc/models/get-anticipation-limit-response.md)
 
 ## Example Usage
 
@@ -180,7 +180,7 @@ CompletableFuture<ListRecipientResponse> getRecipients(
 
 ## Response Type
 
-[`ListRecipientResponse`](/doc/models/list-recipient-response.md)
+[`ListRecipientResponse`](../../doc/models/list-recipient-response.md)
 
 ## Example Usage
 
@@ -212,7 +212,7 @@ CompletableFuture<GetWithdrawResponse> getWithdrawById(
 
 ## Response Type
 
-[`GetWithdrawResponse`](/doc/models/get-withdraw-response.md)
+[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
 
 ## Example Usage
 
@@ -246,12 +246,12 @@ CompletableFuture<GetRecipientResponse> updateRecipientDefaultBankAccount(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateRecipientBankAccountRequest`](/doc/models/update-recipient-bank-account-request.md) | Body, Required | Bank account data |
+| `request` | [`UpdateRecipientBankAccountRequest`](../../doc/models/update-recipient-bank-account-request.md) | Body, Required | Bank account data |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -300,12 +300,12 @@ CompletableFuture<GetRecipientResponse> updateRecipientMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -352,7 +352,7 @@ CompletableFuture<ListTransferResponse> getTransfers(
 
 ## Response Type
 
-[`ListTransferResponse`](/doc/models/list-transfer-response.md)
+[`ListTransferResponse`](../../doc/models/list-transfer-response.md)
 
 ## Example Usage
 
@@ -388,7 +388,7 @@ CompletableFuture<GetTransferResponse> getTransfer(
 
 ## Response Type
 
-[`GetTransferResponse`](/doc/models/get-transfer-response.md)
+[`GetTransferResponse`](../../doc/models/get-transfer-response.md)
 
 ## Example Usage
 
@@ -419,11 +419,11 @@ CompletableFuture<GetWithdrawResponse> createWithdraw(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | - |
-| `request` | [`CreateWithdrawRequest`](/doc/models/create-withdraw-request.md) | Body, Required | - |
+| `request` | [`CreateWithdrawRequest`](../../doc/models/create-withdraw-request.md) | Body, Required | - |
 
 ## Response Type
 
-[`GetWithdrawResponse`](/doc/models/get-withdraw-response.md)
+[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
 
 ## Example Usage
 
@@ -458,12 +458,12 @@ CompletableFuture<GetRecipientResponse> updateAutomaticAnticipationSettings(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateAutomaticAnticipationSettingsRequest`](/doc/models/update-automatic-anticipation-settings-request.md) | Body, Required | Metadata |
+| `request` | [`UpdateAutomaticAnticipationSettingsRequest`](../../doc/models/update-automatic-anticipation-settings-request.md) | Body, Required | Metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -500,7 +500,7 @@ CompletableFuture<GetAnticipationResponse> getAnticipation(
 
 ## Response Type
 
-[`GetAnticipationResponse`](/doc/models/get-anticipation-response.md)
+[`GetAnticipationResponse`](../../doc/models/get-anticipation-response.md)
 
 ## Example Usage
 
@@ -532,12 +532,12 @@ CompletableFuture<GetRecipientResponse> updateRecipientTransferSettings(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient Identificator |
-| `request` | [`UpdateTransferSettingsRequest`](/doc/models/update-transfer-settings-request.md) | Body, Required | - |
+| `request` | [`UpdateTransferSettingsRequest`](../../doc/models/update-transfer-settings-request.md) | Body, Required | - |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -591,7 +591,7 @@ CompletableFuture<ListAnticipationResponse> getAnticipations(
 
 ## Response Type
 
-[`ListAnticipationResponse`](/doc/models/list-anticipation-response.md)
+[`ListAnticipationResponse`](../../doc/models/list-anticipation-response.md)
 
 ## Example Usage
 
@@ -625,7 +625,7 @@ CompletableFuture<GetRecipientResponse> getRecipient(
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -659,7 +659,7 @@ CompletableFuture<GetBalanceResponse> getBalance(
 
 ## Response Type
 
-[`GetBalanceResponse`](/doc/models/get-balance-response.md)
+[`GetBalanceResponse`](../../doc/models/get-balance-response.md)
 
 ## Example Usage
 
@@ -703,7 +703,7 @@ CompletableFuture<ListWithdrawals> getWithdrawals(
 
 ## Response Type
 
-[`ListWithdrawals`](/doc/models/list-withdrawals.md)
+[`ListWithdrawals`](../../doc/models/list-withdrawals.md)
 
 ## Example Usage
 
@@ -736,12 +736,12 @@ CompletableFuture<GetTransferResponse> createTransfer(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `recipientId` | `String` | Template, Required | Recipient Id |
-| `request` | [`CreateTransferRequest`](/doc/models/create-transfer-request.md) | Body, Required | Transfer data |
+| `request` | [`CreateTransferRequest`](../../doc/models/create-transfer-request.md) | Body, Required | Transfer data |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetTransferResponse`](/doc/models/get-transfer-response.md)
+[`GetTransferResponse`](../../doc/models/get-transfer-response.md)
 
 ## Example Usage
 
@@ -776,12 +776,12 @@ CompletableFuture<GetRecipientResponse> createRecipient(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `request` | [`CreateRecipientRequest`](/doc/models/create-recipient-request.md) | Body, Required | Recipient data |
+| `request` | [`CreateRecipientRequest`](../../doc/models/create-recipient-request.md) | Body, Required | Recipient data |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -837,7 +837,7 @@ CompletableFuture<GetRecipientResponse> getRecipientByCode(
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 
@@ -862,7 +862,7 @@ CompletableFuture<GetRecipientResponse> getDefaultRecipient()
 
 ## Response Type
 
-[`GetRecipientResponse`](/doc/models/get-recipient-response.md)
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
 

@@ -25,13 +25,9 @@ public class GetWithdrawResponse {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer fee;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime fundingDate;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime fundingEstimatedDate;
     private String type;
     private GetWithdrawSourceResponse source;
@@ -205,6 +201,7 @@ public class GetWithdrawResponse {
      * @return Returns the List of String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<String> getMetadata() {
         return metadata;
     }
@@ -223,6 +220,7 @@ public class GetWithdrawResponse {
      * @return Returns the Integer
      */
     @JsonGetter("fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getFee() {
         return fee;
     }
@@ -241,6 +239,7 @@ public class GetWithdrawResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("funding_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getFundingDate() {
         return fundingDate;
@@ -261,6 +260,7 @@ public class GetWithdrawResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("funding_estimated_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getFundingEstimatedDate() {
         return fundingEstimatedDate;

@@ -11,8 +11,8 @@ Response object for listing charges
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Data` | [`List<GetChargeResponse>`](/doc/models/get-charge-response.md) | Required | The charge objects | List<GetChargeResponse> getData() | setData(List<GetChargeResponse> data) |
-| `Paging` | [`PagingResponse`](/doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
+| `Data` | [`List<GetChargeResponse>`](../../doc/models/get-charge-response.md) | Required | The charge objects | List<GetChargeResponse> getData() | setData(List<GetChargeResponse> data) |
+| `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
 ## Example (as JSON)
 

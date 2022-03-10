@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateCheckoutDebitCardPaymentRequest type.
  */
 public class CreateCheckoutDebitCardPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String statementDescriptor;
     private CreatePaymentAuthenticationRequest authentication;
 
@@ -42,6 +41,7 @@ public class CreateCheckoutDebitCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getStatementDescriptor() {
         return statementDescriptor;
     }

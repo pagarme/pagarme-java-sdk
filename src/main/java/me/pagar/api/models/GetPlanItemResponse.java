@@ -26,11 +26,8 @@ public class GetPlanItemResponse {
     private GetPricingSchemeResponse pricingScheme;
     private String description;
     private GetPlanResponse plan;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer quantity;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime deletedAt;
 
     /**
@@ -231,6 +228,7 @@ public class GetPlanItemResponse {
      * @return Returns the Integer
      */
     @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getQuantity() {
         return quantity;
     }
@@ -249,6 +247,7 @@ public class GetPlanItemResponse {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -267,6 +266,7 @@ public class GetPlanItemResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
         return deletedAt;

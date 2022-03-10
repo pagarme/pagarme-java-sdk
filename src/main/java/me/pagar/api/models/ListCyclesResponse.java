@@ -15,9 +15,7 @@ import java.util.List;
  * This is a model class for ListCyclesResponse type.
  */
 public class ListCyclesResponse {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<GetPeriodResponse> data;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private PagingResponse paging;
 
     /**
@@ -44,6 +42,7 @@ public class ListCyclesResponse {
      * @return Returns the List of GetPeriodResponse
      */
     @JsonGetter("data")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<GetPeriodResponse> getData() {
         return data;
     }
@@ -64,6 +63,7 @@ public class ListCyclesResponse {
      * @return Returns the PagingResponse
      */
     @JsonGetter("paging")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public PagingResponse getPaging() {
         return paging;
     }

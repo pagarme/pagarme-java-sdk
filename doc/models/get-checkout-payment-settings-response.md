@@ -15,7 +15,7 @@ Checkout Payment Settings Response
 | `PaymentUrl` | `String` | Required | Payment Url | String getPaymentUrl() | setPaymentUrl(String paymentUrl) |
 | `AcceptedPaymentMethods` | `List<String>` | Required | Accepted Payment Methods | List<String> getAcceptedPaymentMethods() | setAcceptedPaymentMethods(List<String> acceptedPaymentMethods) |
 | `Status` | `String` | Required | Status | String getStatus() | setStatus(String status) |
-| `Customer` | [`GetCustomerResponse`](/doc/models/get-customer-response.md) | Optional | Customer | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
+| `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | Customer | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
 | `Amount` | `Integer` | Optional | Payment amount | Integer getAmount() | setAmount(Integer amount) |
 | `DefaultPaymentMethod` | `String` | Optional | Default Payment Method | String getDefaultPaymentMethod() | setDefaultPaymentMethod(String defaultPaymentMethod) |
 | `GatewayAffiliationId` | `String` | Optional | Gateway Affiliation Id | String getGatewayAffiliationId() | setGatewayAffiliationId(String gatewayAffiliationId) |

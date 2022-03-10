@@ -11,8 +11,8 @@ Response object for listing plans
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Data` | [`List<GetPlanResponse>`](/doc/models/get-plan-response.md) | Required | The plan objects | List<GetPlanResponse> getData() | setData(List<GetPlanResponse> data) |
-| `Paging` | [`PagingResponse`](/doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
+| `Data` | [`List<GetPlanResponse>`](../../doc/models/get-plan-response.md) | Required | The plan objects | List<GetPlanResponse> getData() | setData(List<GetPlanResponse> data) |
+| `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
 ## Example (as JSON)
 

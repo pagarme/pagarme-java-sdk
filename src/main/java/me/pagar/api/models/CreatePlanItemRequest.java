@@ -18,9 +18,7 @@ public class CreatePlanItemRequest {
     private CreatePricingSchemeRequest pricingScheme;
     private String id;
     private String description;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer quantity;
 
     /**
@@ -139,6 +137,7 @@ public class CreatePlanItemRequest {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -159,6 +158,7 @@ public class CreatePlanItemRequest {
      * @return Returns the Integer
      */
     @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getQuantity() {
         return quantity;
     }

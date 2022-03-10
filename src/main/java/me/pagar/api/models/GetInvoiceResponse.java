@@ -28,27 +28,19 @@ public class GetInvoiceResponse {
     private String paymentMethod;
     private LocalDateTime createdAt;
     private List<GetInvoiceItemResponse> items;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
     private GetChargeResponse charge;
     private int installments;
     private GetBillingAddressResponse billingAddress;
     private GetSubscriptionResponse subscription;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetPeriodResponse cycle;
     private GetShippingResponse shipping;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime dueAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime canceledAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime billingAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime seenAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer totalDiscount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer totalIncrement;
     private String subscriptionId;
 
@@ -284,6 +276,7 @@ public class GetInvoiceResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }
@@ -374,6 +367,7 @@ public class GetInvoiceResponse {
      * @return Returns the GetPeriodResponse
      */
     @JsonGetter("cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetPeriodResponse getCycle() {
         return cycle;
     }
@@ -428,6 +422,7 @@ public class GetInvoiceResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
         return dueAt;
@@ -448,6 +443,7 @@ public class GetInvoiceResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("canceled_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCanceledAt() {
         return canceledAt;
@@ -468,6 +464,7 @@ public class GetInvoiceResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("billing_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getBillingAt() {
         return billingAt;
@@ -488,6 +485,7 @@ public class GetInvoiceResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("seen_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getSeenAt() {
         return seenAt;
@@ -509,6 +507,7 @@ public class GetInvoiceResponse {
      * @return Returns the Integer
      */
     @JsonGetter("total_discount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getTotalDiscount() {
         return totalDiscount;
     }
@@ -529,6 +528,7 @@ public class GetInvoiceResponse {
      * @return Returns the Integer
      */
     @JsonGetter("total_increment")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getTotalIncrement() {
         return totalIncrement;
     }

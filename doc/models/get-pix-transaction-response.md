@@ -9,7 +9,7 @@ Response object when getting a pix transaction
 
 ## Inherits From
 
-[`GetTransactionResponse`](/doc/models/get-transaction-response.md)
+[`GetTransactionResponse`](../../doc/models/get-transaction-response.md)
 
 ## Fields
 
@@ -18,7 +18,9 @@ Response object when getting a pix transaction
 | `QrCode` | `String` | Required | - | String getQrCode() | setQrCode(String qrCode) |
 | `QrCodeUrl` | `String` | Required | - | String getQrCodeUrl() | setQrCodeUrl(String qrCodeUrl) |
 | `ExpiresAt` | `LocalDateTime` | Required | - | LocalDateTime getExpiresAt() | setExpiresAt(LocalDateTime expiresAt) |
-| `AdditionalInformation` | [`List<PixAdditionalInformation>`](/doc/models/pix-additional-information.md) | Required | - | List<PixAdditionalInformation> getAdditionalInformation() | setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) |
+| `AdditionalInformation` | [`List<PixAdditionalInformation>`](../../doc/models/pix-additional-information.md) | Required | - | List<PixAdditionalInformation> getAdditionalInformation() | setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) |
+| `EndToEndId` | `String` | Required | - | String getEndToEndId() | setEndToEndId(String endToEndId) |
+| `Payer` | [`GetPixPayerResponse`](../../doc/models/get-pix-payer-response.md) | Required | - | GetPixPayerResponse getPayer() | setPayer(GetPixPayerResponse payer) |
 
 ## Example (as JSON)
 
@@ -37,6 +39,18 @@ Response object when getting a pix transaction
       "Value": "Value6"
     }
   ],
+  "end_to_end_id": "end_to_end_id0",
+  "payer": {
+    "name": "name8",
+    "document": "document2",
+    "document_type": "document_type6",
+    "bank_account": {
+      "bank_name": "bank_name8",
+      "ispb": "ispb6",
+      "branch_code": "branch_code0",
+      "account_number": "account_number2"
+    }
+  },
   "gateway_id": "gateway_id0",
   "amount": 46,
   "status": "status8",

@@ -16,9 +16,9 @@ Response object for getting a plan item
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `PricingScheme` | [`GetPricingSchemeResponse`](/doc/models/get-pricing-scheme-response.md) | Required | - | GetPricingSchemeResponse getPricingScheme() | setPricingScheme(GetPricingSchemeResponse pricingScheme) |
+| `PricingScheme` | [`GetPricingSchemeResponse`](../../doc/models/get-pricing-scheme-response.md) | Required | - | GetPricingSchemeResponse getPricingScheme() | setPricingScheme(GetPricingSchemeResponse pricingScheme) |
 | `Description` | `String` | Required | - | String getDescription() | setDescription(String description) |
-| `Plan` | [`GetPlanResponse`](/doc/models/get-plan-response.md) | Required | - | GetPlanResponse getPlan() | setPlan(GetPlanResponse plan) |
+| `Plan` | [`GetPlanResponse`](../../doc/models/get-plan-response.md) | Required | - | GetPlanResponse getPlan() | setPlan(GetPlanResponse plan) |
 | `Quantity` | `Integer` | Optional | - | Integer getQuantity() | setQuantity(Integer quantity) |
 | `Cycles` | `Integer` | Optional | - | Integer getCycles() | setCycles(Integer cycles) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
