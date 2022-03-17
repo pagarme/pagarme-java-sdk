@@ -29,9 +29,7 @@ public class UpdatePlanRequest {
     private boolean shippable;
     private List<Integer> billingDays;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer trialPeriodDays;
 
     /**
@@ -357,6 +355,7 @@ public class UpdatePlanRequest {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }
@@ -377,6 +376,7 @@ public class UpdatePlanRequest {
      * @return Returns the Integer
      */
     @JsonGetter("trial_period_days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getTrialPeriodDays() {
         return trialPeriodDays;
     }

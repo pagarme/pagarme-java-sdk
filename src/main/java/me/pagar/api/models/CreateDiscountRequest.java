@@ -17,9 +17,7 @@ public class CreateDiscountRequest {
     private double value;
     private String discountType;
     private String itemId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String description;
 
     /**
@@ -115,6 +113,7 @@ public class CreateDiscountRequest {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -135,6 +134,7 @@ public class CreateDiscountRequest {
      * @return Returns the String
      */
     @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDescription() {
         return description;
     }

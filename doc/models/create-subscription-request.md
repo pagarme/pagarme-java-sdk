@@ -11,8 +11,8 @@ Request for creating a subcription
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Customer` | [`CreateCustomerRequest`](/doc/models/create-customer-request.md) | Required | Customer | CreateCustomerRequest getCustomer() | setCustomer(CreateCustomerRequest customer) |
-| `Card` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Required | Card | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
+| `Customer` | [`CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Required | Customer | CreateCustomerRequest getCustomer() | setCustomer(CreateCustomerRequest customer) |
+| `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Required | Card | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `Code` | `String` | Required | Subscription code | String getCode() | setCode(String code) |
 | `PaymentMethod` | `String` | Required | Payment method | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
 | `BillingType` | `String` | Required | Billing type | String getBillingType() | setBillingType(String billingType) |
@@ -21,12 +21,12 @@ Request for creating a subcription
 | `Currency` | `String` | Required | Currency | String getCurrency() | setCurrency(String currency) |
 | `Interval` | `String` | Required | Interval | String getInterval() | setInterval(String interval) |
 | `IntervalCount` | `int` | Required | Interval count | int getIntervalCount() | setIntervalCount(int intervalCount) |
-| `PricingScheme` | [`CreatePricingSchemeRequest`](/doc/models/create-pricing-scheme-request.md) | Required | Subscription pricing scheme | CreatePricingSchemeRequest getPricingScheme() | setPricingScheme(CreatePricingSchemeRequest pricingScheme) |
-| `Items` | [`List<CreateSubscriptionItemRequest>`](/doc/models/create-subscription-item-request.md) | Required | Subscription items | List<CreateSubscriptionItemRequest> getItems() | setItems(List<CreateSubscriptionItemRequest> items) |
-| `Shipping` | [`CreateShippingRequest`](/doc/models/create-shipping-request.md) | Required | Shipping | CreateShippingRequest getShipping() | setShipping(CreateShippingRequest shipping) |
-| `Discounts` | [`List<CreateDiscountRequest>`](/doc/models/create-discount-request.md) | Required | Discounts | List<CreateDiscountRequest> getDiscounts() | setDiscounts(List<CreateDiscountRequest> discounts) |
+| `PricingScheme` | [`CreatePricingSchemeRequest`](../../doc/models/create-pricing-scheme-request.md) | Required | Subscription pricing scheme | CreatePricingSchemeRequest getPricingScheme() | setPricingScheme(CreatePricingSchemeRequest pricingScheme) |
+| `Items` | [`List<CreateSubscriptionItemRequest>`](../../doc/models/create-subscription-item-request.md) | Required | Subscription items | List<CreateSubscriptionItemRequest> getItems() | setItems(List<CreateSubscriptionItemRequest> items) |
+| `Shipping` | [`CreateShippingRequest`](../../doc/models/create-shipping-request.md) | Required | Shipping | CreateShippingRequest getShipping() | setShipping(CreateShippingRequest shipping) |
+| `Discounts` | [`List<CreateDiscountRequest>`](../../doc/models/create-discount-request.md) | Required | Discounts | List<CreateDiscountRequest> getDiscounts() | setDiscounts(List<CreateDiscountRequest> discounts) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Setup` | [`CreateSetupRequest`](/doc/models/create-setup-request.md) | Required | Setup data | CreateSetupRequest getSetup() | setSetup(CreateSetupRequest setup) |
+| `Setup` | [`CreateSetupRequest`](../../doc/models/create-setup-request.md) | Required | Setup data | CreateSetupRequest getSetup() | setSetup(CreateSetupRequest setup) |
 | `PlanId` | `String` | Optional | Plan id | String getPlanId() | setPlanId(String planId) |
 | `CustomerId` | `String` | Optional | Customer id | String getCustomerId() | setCustomerId(String customerId) |
 | `CardId` | `String` | Optional | Card id | String getCardId() | setCardId(String cardId) |
@@ -39,10 +39,10 @@ Request for creating a subcription
 | `GatewayAffiliationId` | `String` | Optional | Gateway Affiliation code | String getGatewayAffiliationId() | setGatewayAffiliationId(String gatewayAffiliationId) |
 | `Quantity` | `Integer` | Optional | Quantity | Integer getQuantity() | setQuantity(Integer quantity) |
 | `BoletoDueDays` | `Integer` | Optional | Days until boleto expires | Integer getBoletoDueDays() | setBoletoDueDays(Integer boletoDueDays) |
-| `Increments` | [`List<CreateIncrementRequest>`](/doc/models/create-increment-request.md) | Required | Increments | List<CreateIncrementRequest> getIncrements() | setIncrements(List<CreateIncrementRequest> increments) |
-| `Period` | [`CreatePeriodRequest`](/doc/models/create-period-request.md) | Optional | - | CreatePeriodRequest getPeriod() | setPeriod(CreatePeriodRequest period) |
-| `Submerchant` | [`CreateSubMerchantRequest`](/doc/models/create-sub-merchant-request.md) | Optional | SubMerchant | CreateSubMerchantRequest getSubmerchant() | setSubmerchant(CreateSubMerchantRequest submerchant) |
-| `Split` | [`CreateSubscriptionSplitRequest`](/doc/models/create-subscription-split-request.md) | Optional | Subscription's split | CreateSubscriptionSplitRequest getSplit() | setSplit(CreateSubscriptionSplitRequest split) |
+| `Increments` | [`List<CreateIncrementRequest>`](../../doc/models/create-increment-request.md) | Required | Increments | List<CreateIncrementRequest> getIncrements() | setIncrements(List<CreateIncrementRequest> increments) |
+| `Period` | [`CreatePeriodRequest`](../../doc/models/create-period-request.md) | Optional | - | CreatePeriodRequest getPeriod() | setPeriod(CreatePeriodRequest period) |
+| `Submerchant` | [`CreateSubMerchantRequest`](../../doc/models/create-sub-merchant-request.md) | Optional | SubMerchant | CreateSubMerchantRequest getSubmerchant() | setSubmerchant(CreateSubMerchantRequest submerchant) |
+| `Split` | [`CreateSubscriptionSplitRequest`](../../doc/models/create-subscription-split-request.md) | Optional | Subscription's split | CreateSubscriptionSplitRequest getSplit() | setSplit(CreateSubscriptionSplitRequest split) |
 
 ## Example (as JSON)
 

@@ -19,14 +19,14 @@ Generic response object for getting a transaction.
 | `UpdatedAt` | `LocalDateTime` | Required | Last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
 | `AttemptCount` | `int` | Required | Number of attempts tried | int getAttemptCount() | setAttemptCount(int attemptCount) |
 | `MaxAttempts` | `int` | Required | Max attempts | int getMaxAttempts() | setMaxAttempts(int maxAttempts) |
-| `Splits` | [`List<GetSplitResponse>`](/doc/models/get-split-response.md) | Required | Splits | List<GetSplitResponse> getSplits() | setSplits(List<GetSplitResponse> splits) |
+| `Splits` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | Splits | List<GetSplitResponse> getSplits() | setSplits(List<GetSplitResponse> splits) |
 | `NextAttempt` | `LocalDateTime` | Optional | Date and time of the next attempt | LocalDateTime getNextAttempt() | setNextAttempt(LocalDateTime nextAttempt) |
 | `TransactionType` | `String` | Optional | - | String getTransactionType() | setTransactionType(String transactionType) |
 | `Id` | `String` | Required | Código da transação | String getId() | setId(String id) |
-| `GatewayResponse` | [`GetGatewayResponseResponse`](/doc/models/get-gateway-response-response.md) | Required | The Gateway Response | GetGatewayResponseResponse getGatewayResponse() | setGatewayResponse(GetGatewayResponseResponse gatewayResponse) |
-| `AntifraudResponse` | [`GetAntifraudResponse`](/doc/models/get-antifraud-response.md) | Required | - | GetAntifraudResponse getAntifraudResponse() | setAntifraudResponse(GetAntifraudResponse antifraudResponse) |
+| `GatewayResponse` | [`GetGatewayResponseResponse`](../../doc/models/get-gateway-response-response.md) | Required | The Gateway Response | GetGatewayResponseResponse getGatewayResponse() | setGatewayResponse(GetGatewayResponseResponse gatewayResponse) |
+| `AntifraudResponse` | [`GetAntifraudResponse`](../../doc/models/get-antifraud-response.md) | Required | - | GetAntifraudResponse getAntifraudResponse() | setAntifraudResponse(GetAntifraudResponse antifraudResponse) |
 | `Metadata` | `Map<String, String>` | Optional | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Split` | [`List<GetSplitResponse>`](/doc/models/get-split-response.md) | Required | - | List<GetSplitResponse> getSplit() | setSplit(List<GetSplitResponse> split) |
+| `Split` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | - | List<GetSplitResponse> getSplit() | setSplit(List<GetSplitResponse> split) |
 
 ## Example (as JSON)
 

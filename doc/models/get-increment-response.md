@@ -19,8 +19,8 @@ Response object for getting a increment
 | `Cycles` | `Integer` | Optional | - | Integer getCycles() | setCycles(Integer cycles) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
 | `Description` | `String` | Optional | - | String getDescription() | setDescription(String description) |
-| `Subscription` | [`GetSubscriptionResponse`](/doc/models/get-subscription-response.md) | Optional | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
-| `SubscriptionItem` | [`GetSubscriptionItemResponse`](/doc/models/get-subscription-item-response.md) | Optional | The Subscription Item | GetSubscriptionItemResponse getSubscriptionItem() | setSubscriptionItem(GetSubscriptionItemResponse subscriptionItem) |
+| `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Optional | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
+| `SubscriptionItem` | [`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md) | Optional | The Subscription Item | GetSubscriptionItemResponse getSubscriptionItem() | setSubscriptionItem(GetSubscriptionItemResponse subscriptionItem) |
 
 ## Example (as JSON)
 

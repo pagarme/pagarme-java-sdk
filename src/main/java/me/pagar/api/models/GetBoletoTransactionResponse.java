@@ -37,17 +37,14 @@ public class GetBoletoTransactionResponse
     private String documentNumber;
     private String instructions;
     private GetBillingAddressResponse billingAddress;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime dueAt;
     private String qrCode;
     private String line;
     private String pdfPassword;
     private String pdf;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime paidAt;
     private String paidAmount;
     private String type;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime creditAt;
     private String statementDescriptor;
 
@@ -282,6 +279,7 @@ public class GetBoletoTransactionResponse
      * @return Returns the LocalDateTime
      */
     @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
         return dueAt;
@@ -374,6 +372,7 @@ public class GetBoletoTransactionResponse
      * @return Returns the LocalDateTime
      */
     @JsonGetter("paid_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getPaidAt() {
         return paidAt;
@@ -430,6 +429,7 @@ public class GetBoletoTransactionResponse
      * @return Returns the LocalDateTime
      */
     @JsonGetter("credit_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreditAt() {
         return creditAt;

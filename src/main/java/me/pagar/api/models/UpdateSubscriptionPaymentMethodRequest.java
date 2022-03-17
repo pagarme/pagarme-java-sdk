@@ -17,7 +17,6 @@ public class UpdateSubscriptionPaymentMethodRequest {
     private String paymentMethod;
     private String cardId;
     private CreateCardRequest card;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardToken;
 
     /**
@@ -110,6 +109,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
      * @return Returns the String
      */
     @JsonGetter("card_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardToken() {
         return cardToken;
     }

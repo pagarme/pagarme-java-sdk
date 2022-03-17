@@ -19,9 +19,7 @@ import me.pagar.api.DateTimeHelper;
  */
 public class CreateTransactionReportFileRequest {
     private String name;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime startAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String endAt;
 
     /**
@@ -68,6 +66,7 @@ public class CreateTransactionReportFileRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("start_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getStartAt() {
         return startAt;
@@ -88,6 +87,7 @@ public class CreateTransactionReportFileRequest {
      * @return Returns the String
      */
     @JsonGetter("end_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getEndAt() {
         return endAt;
     }

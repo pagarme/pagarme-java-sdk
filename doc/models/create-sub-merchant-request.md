@@ -17,8 +17,8 @@ SubMerchant
 | `MerchantCategoryCode` | `String` | Required | Merchant Category Code | String getMerchantCategoryCode() | setMerchantCategoryCode(String merchantCategoryCode) |
 | `Document` | `String` | Required | Document number. Only numbers, no special characters. | String getDocument() | setDocument(String document) |
 | `Type` | `String` | Required | Document type. Can be either 'individual' or 'company' | String getType() | setType(String type) |
-| `Phone` | [`CreatePhoneRequest`](/doc/models/create-phone-request.md) | Required | Phone | CreatePhoneRequest getPhone() | setPhone(CreatePhoneRequest phone) |
-| `Address` | [`CreateAddressRequest`](/doc/models/create-address-request.md) | Required | Address | CreateAddressRequest getAddress() | setAddress(CreateAddressRequest address) |
+| `Phone` | [`CreatePhoneRequest`](../../doc/models/create-phone-request.md) | Required | Phone | CreatePhoneRequest getPhone() | setPhone(CreatePhoneRequest phone) |
+| `Address` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Required | Address | CreateAddressRequest getAddress() | setAddress(CreateAddressRequest address) |
 
 ## Example (as JSON)
 

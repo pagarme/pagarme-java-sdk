@@ -26,7 +26,6 @@ public class GetSubscriptionResponse {
     private String interval;
     private int intervalCount;
     private String billingType;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetPeriodResponse currentCycle;
     private String paymentMethod;
     private String currency;
@@ -34,7 +33,6 @@ public class GetSubscriptionResponse {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
     private GetCardResponse card;
     private List<GetSubscriptionItemResponse> items;
@@ -42,18 +40,12 @@ public class GetSubscriptionResponse {
     private Map<String, String> metadata;
     private GetSetupResponse setup;
     private String gatewayAffiliationId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime nextBillingAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer billingDay;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime canceledAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<GetDiscountResponse> discounts;
     private List<GetIncrementResponse> increments;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer boletoDueDays;
     private GetSubscriptionSplitResponse split;
 
@@ -268,6 +260,7 @@ public class GetSubscriptionResponse {
      * @return Returns the GetPeriodResponse
      */
     @JsonGetter("current_cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetPeriodResponse getCurrentCycle() {
         return currentCycle;
     }
@@ -398,6 +391,7 @@ public class GetSubscriptionResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }
@@ -526,6 +520,7 @@ public class GetSubscriptionResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("next_billing_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getNextBillingAt() {
         return nextBillingAt;
@@ -546,6 +541,7 @@ public class GetSubscriptionResponse {
      * @return Returns the Integer
      */
     @JsonGetter("billing_day")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getBillingDay() {
         return billingDay;
     }
@@ -564,6 +560,7 @@ public class GetSubscriptionResponse {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }
@@ -582,6 +579,7 @@ public class GetSubscriptionResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("canceled_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCanceledAt() {
         return canceledAt;
@@ -603,6 +601,7 @@ public class GetSubscriptionResponse {
      * @return Returns the List of GetDiscountResponse
      */
     @JsonGetter("discounts")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<GetDiscountResponse> getDiscounts() {
         return discounts;
     }
@@ -643,6 +642,7 @@ public class GetSubscriptionResponse {
      * @return Returns the Integer
      */
     @JsonGetter("boleto_due_days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getBoletoDueDays() {
         return boletoDueDays;
     }

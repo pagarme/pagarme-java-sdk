@@ -15,7 +15,7 @@ Response object for getting a period
 | `EndAt` | `LocalDateTime` | Required | - | LocalDateTime getEndAt() | setEndAt(LocalDateTime endAt) |
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `BillingAt` | `LocalDateTime` | Required | - | LocalDateTime getBillingAt() | setBillingAt(LocalDateTime billingAt) |
-| `Subscription` | [`GetSubscriptionResponse`](/doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
+| `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `Duration` | `int` | Required | - | int getDuration() | setDuration(int duration) |
 | `CreatedAt` | `String` | Required | - | String getCreatedAt() | setCreatedAt(String createdAt) |

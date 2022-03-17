@@ -16,17 +16,17 @@ Checkout payment request
 | `SuccessUrl` | `String` | Required | Success url | String getSuccessUrl() | setSuccessUrl(String successUrl) |
 | `DefaultPaymentMethod` | `String` | Optional | Default payment method | String getDefaultPaymentMethod() | setDefaultPaymentMethod(String defaultPaymentMethod) |
 | `GatewayAffiliationId` | `String` | Optional | Gateway Affiliation Id | String getGatewayAffiliationId() | setGatewayAffiliationId(String gatewayAffiliationId) |
-| `CreditCard` | [`CreateCheckoutCreditCardPaymentRequest`](/doc/models/create-checkout-credit-card-payment-request.md) | Optional | Credit Card payment request | CreateCheckoutCreditCardPaymentRequest getCreditCard() | setCreditCard(CreateCheckoutCreditCardPaymentRequest creditCard) |
-| `DebitCard` | [`CreateCheckoutDebitCardPaymentRequest`](/doc/models/create-checkout-debit-card-payment-request.md) | Optional | Debit Card payment request | CreateCheckoutDebitCardPaymentRequest getDebitCard() | setDebitCard(CreateCheckoutDebitCardPaymentRequest debitCard) |
-| `Boleto` | [`CreateCheckoutBoletoPaymentRequest`](/doc/models/create-checkout-boleto-payment-request.md) | Optional | Boleto payment request | CreateCheckoutBoletoPaymentRequest getBoleto() | setBoleto(CreateCheckoutBoletoPaymentRequest boleto) |
+| `CreditCard` | [`CreateCheckoutCreditCardPaymentRequest`](../../doc/models/create-checkout-credit-card-payment-request.md) | Optional | Credit Card payment request | CreateCheckoutCreditCardPaymentRequest getCreditCard() | setCreditCard(CreateCheckoutCreditCardPaymentRequest creditCard) |
+| `DebitCard` | [`CreateCheckoutDebitCardPaymentRequest`](../../doc/models/create-checkout-debit-card-payment-request.md) | Optional | Debit Card payment request | CreateCheckoutDebitCardPaymentRequest getDebitCard() | setDebitCard(CreateCheckoutDebitCardPaymentRequest debitCard) |
+| `Boleto` | [`CreateCheckoutBoletoPaymentRequest`](../../doc/models/create-checkout-boleto-payment-request.md) | Optional | Boleto payment request | CreateCheckoutBoletoPaymentRequest getBoleto() | setBoleto(CreateCheckoutBoletoPaymentRequest boleto) |
 | `CustomerEditable` | `Boolean` | Optional | Customer is editable? | Boolean getCustomerEditable() | setCustomerEditable(Boolean customerEditable) |
 | `ExpiresIn` | `Integer` | Optional | Time in minutes for expiration | Integer getExpiresIn() | setExpiresIn(Integer expiresIn) |
 | `SkipCheckoutSuccessPage` | `boolean` | Required | Skip postpay success screen? | boolean getSkipCheckoutSuccessPage() | setSkipCheckoutSuccessPage(boolean skipCheckoutSuccessPage) |
 | `BillingAddressEditable` | `boolean` | Required | Billing Address is editable? | boolean getBillingAddressEditable() | setBillingAddressEditable(boolean billingAddressEditable) |
-| `BillingAddress` | [`CreateAddressRequest`](/doc/models/create-address-request.md) | Required | Billing Address | CreateAddressRequest getBillingAddress() | setBillingAddress(CreateAddressRequest billingAddress) |
-| `BankTransfer` | [`CreateCheckoutBankTransferRequest`](/doc/models/create-checkout-bank-transfer-request.md) | Optional | Bank Transfer payment request | CreateCheckoutBankTransferRequest getBankTransfer() | setBankTransfer(CreateCheckoutBankTransferRequest bankTransfer) |
+| `BillingAddress` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Required | Billing Address | CreateAddressRequest getBillingAddress() | setBillingAddress(CreateAddressRequest billingAddress) |
+| `BankTransfer` | [`CreateCheckoutBankTransferRequest`](../../doc/models/create-checkout-bank-transfer-request.md) | Optional | Bank Transfer payment request | CreateCheckoutBankTransferRequest getBankTransfer() | setBankTransfer(CreateCheckoutBankTransferRequest bankTransfer) |
 | `AcceptedBrands` | `List<String>` | Required | Accepted Brands | List<String> getAcceptedBrands() | setAcceptedBrands(List<String> acceptedBrands) |
-| `Pix` | [`CreateCheckoutPixPaymentRequest`](/doc/models/create-checkout-pix-payment-request.md) | Optional | Pix payment request | CreateCheckoutPixPaymentRequest getPix() | setPix(CreateCheckoutPixPaymentRequest pix) |
+| `Pix` | [`CreateCheckoutPixPaymentRequest`](../../doc/models/create-checkout-pix-payment-request.md) | Optional | Pix payment request | CreateCheckoutPixPaymentRequest getPix() | setPix(CreateCheckoutPixPaymentRequest pix) |
 
 ## Example (as JSON)
 

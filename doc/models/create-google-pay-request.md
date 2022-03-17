@@ -13,7 +13,7 @@ The GooglePay Token Payment Request
 |  --- | --- | --- | --- | --- | --- |
 | `Version` | `String` | Required | The token version | String getVersion() | setVersion(String version) |
 | `Data` | `String` | Required | The cryptography data | String getData() | setData(String data) |
-| `Header` | [`CreateGooglePayHeaderRequest`](/doc/models/create-google-pay-header-request.md) | Required | The GooglePay header request | CreateGooglePayHeaderRequest getHeader() | setHeader(CreateGooglePayHeaderRequest header) |
+| `Header` | [`CreateGooglePayHeaderRequest`](../../doc/models/create-google-pay-header-request.md) | Required | The GooglePay header request | CreateGooglePayHeaderRequest getHeader() | setHeader(CreateGooglePayHeaderRequest header) |
 | `Signature` | `String` | Required | Detached PKCS #7 signature, Base64 encoded as string | String getSignature() | setSignature(String signature) |
 | `MerchantIdentifier` | `String` | Required | GooglePay Merchant identifier | String getMerchantIdentifier() | setMerchantIdentifier(String merchantIdentifier) |
 

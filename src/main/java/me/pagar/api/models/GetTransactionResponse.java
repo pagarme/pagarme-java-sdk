@@ -30,15 +30,15 @@ import me.pagar.api.DateTimeHelper;
         defaultImpl = GetTransactionResponse.class,
         visible = true)
 @JsonSubTypes({
+    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
     @Type(value = GetBankTransferTransactionResponse.class, name = "bank_transfer"),
     @Type(value = GetSafetyPayTransactionResponse.class, name = "safetypay"),
-    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
-    @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
     @Type(value = GetDebitCardTransactionResponse.class, name = "debit_card"),
-    @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
+    @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
     @Type(value = GetCashTransactionResponse.class, name = "cash"),
-    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card"),
-    @Type(value = GetPixTransactionResponse.class, name = "pix")
+    @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
+    @Type(value = GetPixTransactionResponse.class, name = "pix"),
+    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card")
 })
 @JsonInclude(Include.ALWAYS)
 public class GetTransactionResponse {
@@ -51,14 +51,11 @@ public class GetTransactionResponse {
     private int attemptCount;
     private int maxAttempts;
     private List<GetSplitResponse> splits;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime nextAttempt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String transactionType;
     private String id;
     private GetGatewayResponseResponse gatewayResponse;
     private GetAntifraudResponse antifraudResponse;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> metadata;
     private List<GetSplitResponse> split;
 
@@ -313,6 +310,7 @@ public class GetTransactionResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("next_attempt")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getNextAttempt() {
         return nextAttempt;
@@ -334,6 +332,7 @@ public class GetTransactionResponse {
      * @return Returns the String
      */
     @JsonGetter("transaction_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getTransactionType() {
         return transactionType;
     }
@@ -410,6 +409,7 @@ public class GetTransactionResponse {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }

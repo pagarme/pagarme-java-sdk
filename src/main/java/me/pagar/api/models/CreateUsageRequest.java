@@ -21,11 +21,8 @@ public class CreateUsageRequest {
     private int quantity;
     private String description;
     private LocalDateTime usedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String code;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String group;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
 
     /**
@@ -120,6 +117,7 @@ public class CreateUsageRequest {
      * @return Returns the String
      */
     @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCode() {
         return code;
     }
@@ -140,6 +138,7 @@ public class CreateUsageRequest {
      * @return Returns the String
      */
     @JsonGetter("group")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGroup() {
         return group;
     }
@@ -160,6 +159,7 @@ public class CreateUsageRequest {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }

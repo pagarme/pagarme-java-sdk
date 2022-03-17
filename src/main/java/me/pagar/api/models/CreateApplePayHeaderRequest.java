@@ -14,10 +14,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateApplePayHeaderRequest type.
  */
 public class CreateApplePayHeaderRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publicKeyHash;
     private String ephemeralPublicKey;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String transactionId;
 
     /**
@@ -47,6 +45,7 @@ public class CreateApplePayHeaderRequest {
      * @return Returns the String
      */
     @JsonGetter("public_key_hash")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getPublicKeyHash() {
         return publicKeyHash;
     }
@@ -87,6 +86,7 @@ public class CreateApplePayHeaderRequest {
      * @return Returns the String
      */
     @JsonGetter("transaction_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getTransactionId() {
         return transactionId;
     }

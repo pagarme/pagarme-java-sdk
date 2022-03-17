@@ -10,9 +10,34 @@ TransfersController transfersController = client.getTransfersController();
 
 ## Methods
 
-* [Get Transfer by Id](/doc/controllers/transfers.md#get-transfer-by-id)
-* [Create Transfer](/doc/controllers/transfers.md#create-transfer)
-* [Get Transfers](/doc/controllers/transfers.md#get-transfers)
+* [Get Transfers](../../doc/controllers/transfers.md#get-transfers)
+* [Get Transfer by Id](../../doc/controllers/transfers.md#get-transfer-by-id)
+* [Create Transfer](../../doc/controllers/transfers.md#create-transfer)
+
+
+# Get Transfers
+
+Gets all transfers
+
+```java
+CompletableFuture<ListTransfers> getTransfers()
+```
+
+## Response Type
+
+[`ListTransfers`](../../doc/models/list-transfers.md)
+
+## Example Usage
+
+```java
+try {
+    ListTransfers response = transfersController.getTransfers();
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
 
 
 # Get Transfer by Id
@@ -30,7 +55,7 @@ CompletableFuture<GetTransfer> getTransferById(
 
 ## Response Type
 
-[`GetTransfer`](/doc/models/get-transfer.md)
+[`GetTransfer`](../../doc/models/get-transfer.md)
 
 ## Example Usage
 
@@ -58,11 +83,11 @@ CompletableFuture<GetTransfer> createTransfer(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `request` | [`CreateTransfer`](/doc/models/create-transfer.md) | Body, Required | - |
+| `request` | [`CreateTransfer`](../../doc/models/create-transfer.md) | Body, Required | - |
 
 ## Response Type
 
-[`GetTransfer`](/doc/models/get-transfer.md)
+[`GetTransfer`](../../doc/models/get-transfer.md)
 
 ## Example Usage
 
@@ -74,31 +99,6 @@ request.setTargetId("target_id6");
 
 try {
     GetTransfer response = transfersController.createTransfer(request);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Transfers
-
-Gets all transfers
-
-```java
-CompletableFuture<ListTransfers> getTransfers()
-```
-
-## Response Type
-
-[`ListTransfers`](/doc/models/list-transfers.md)
-
-## Example Usage
-
-```java
-try {
-    ListTransfers response = transfersController.getTransfers();
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

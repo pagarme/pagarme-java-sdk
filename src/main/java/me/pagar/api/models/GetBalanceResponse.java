@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class GetBalanceResponse {
     private String currency;
     private long availableAmount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetRecipientResponse recipient;
     private long transferredAmount;
     private long waitingFundsAmount;
@@ -94,6 +93,7 @@ public class GetBalanceResponse {
      * @return Returns the GetRecipientResponse
      */
     @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
         return recipient;
     }

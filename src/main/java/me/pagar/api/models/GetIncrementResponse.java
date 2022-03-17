@@ -23,15 +23,10 @@ public class GetIncrementResponse {
     private String incrementType;
     private String status;
     private LocalDateTime createdAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer cycles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime deletedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String description;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetSubscriptionResponse subscription;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetSubscriptionItemResponse subscriptionItem;
 
     /**
@@ -173,6 +168,7 @@ public class GetIncrementResponse {
      * @return Returns the Integer
      */
     @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
         return cycles;
     }
@@ -191,6 +187,7 @@ public class GetIncrementResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
         return deletedAt;
@@ -211,6 +208,7 @@ public class GetIncrementResponse {
      * @return Returns the String
      */
     @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDescription() {
         return description;
     }
@@ -229,6 +227,7 @@ public class GetIncrementResponse {
      * @return Returns the GetSubscriptionResponse
      */
     @JsonGetter("subscription")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetSubscriptionResponse getSubscription() {
         return subscription;
     }
@@ -248,6 +247,7 @@ public class GetIncrementResponse {
      * @return Returns the GetSubscriptionItemResponse
      */
     @JsonGetter("subscription_item")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetSubscriptionItemResponse getSubscriptionItem() {
         return subscriptionItem;
     }

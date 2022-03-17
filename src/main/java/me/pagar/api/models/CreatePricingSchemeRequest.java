@@ -17,11 +17,8 @@ import java.util.List;
 public class CreatePricingSchemeRequest {
     private String schemeType;
     private List<CreatePriceBracketRequest> priceBrackets;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer price;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Double percentage;
 
     /**
@@ -97,6 +94,7 @@ public class CreatePricingSchemeRequest {
      * @return Returns the Integer
      */
     @JsonGetter("price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getPrice() {
         return price;
     }
@@ -117,6 +115,7 @@ public class CreatePricingSchemeRequest {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }
@@ -137,6 +136,7 @@ public class CreatePricingSchemeRequest {
      * @return Returns the Double
      */
     @JsonGetter("percentage")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Double getPercentage() {
         return percentage;
     }

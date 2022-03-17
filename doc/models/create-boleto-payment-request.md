@@ -15,7 +15,7 @@ Contains the settings for creating a boleto payment
 | `Bank` | `String` | Required | The bank code, containing three characters. The available codes are on the API specification | String getBank() | setBank(String bank) |
 | `Instructions` | `String` | Required | The instructions field that will be printed on the boleto. | String getInstructions() | setInstructions(String instructions) |
 | `DueAt` | `LocalDateTime` | Optional | Boleto due date | LocalDateTime getDueAt() | setDueAt(LocalDateTime dueAt) |
-| `BillingAddress` | [`CreateAddressRequest`](/doc/models/create-address-request.md) | Required | Card's billing address | CreateAddressRequest getBillingAddress() | setBillingAddress(CreateAddressRequest billingAddress) |
+| `BillingAddress` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Required | Card's billing address | CreateAddressRequest getBillingAddress() | setBillingAddress(CreateAddressRequest billingAddress) |
 | `BillingAddressId` | `String` | Required | The address id for the billing address | String getBillingAddressId() | setBillingAddressId(String billingAddressId) |
 | `NossoNumero` | `String` | Optional | Customer identification number with the bank | String getNossoNumero() | setNossoNumero(String nossoNumero) |
 | `DocumentNumber` | `String` | Required | Boleto identification | String getDocumentNumber() | setDocumentNumber(String documentNumber) |

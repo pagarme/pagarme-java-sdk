@@ -24,14 +24,10 @@ public class GetUsageResponse {
     private LocalDateTime usedAt;
     private LocalDateTime createdAt;
     private String status;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime deletedAt;
     private GetSubscriptionItemResponse subscriptionItem;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String code;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String group;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
 
     /**
@@ -208,6 +204,7 @@ public class GetUsageResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
         return deletedAt;
@@ -249,6 +246,7 @@ public class GetUsageResponse {
      * @return Returns the String
      */
     @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCode() {
         return code;
     }
@@ -269,6 +267,7 @@ public class GetUsageResponse {
      * @return Returns the String
      */
     @JsonGetter("group")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGroup() {
         return group;
     }
@@ -289,6 +288,7 @@ public class GetUsageResponse {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }

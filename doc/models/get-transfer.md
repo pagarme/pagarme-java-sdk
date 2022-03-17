@@ -20,8 +20,8 @@
 | `FundingDate` | `LocalDateTime` | Optional | - | LocalDateTime getFundingDate() | setFundingDate(LocalDateTime fundingDate) |
 | `FundingEstimatedDate` | `LocalDateTime` | Optional | - | LocalDateTime getFundingEstimatedDate() | setFundingEstimatedDate(LocalDateTime fundingEstimatedDate) |
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
-| `Source` | [`GetTransferSourceResponse`](/doc/models/get-transfer-source-response.md) | Required | - | GetTransferSourceResponse getSource() | setSource(GetTransferSourceResponse source) |
-| `Target` | [`GetTransferTargetResponse`](/doc/models/get-transfer-target-response.md) | Required | - | GetTransferTargetResponse getTarget() | setTarget(GetTransferTargetResponse target) |
+| `Source` | [`GetTransferSourceResponse`](../../doc/models/get-transfer-source-response.md) | Required | - | GetTransferSourceResponse getSource() | setSource(GetTransferSourceResponse source) |
+| `Target` | [`GetTransferTargetResponse`](../../doc/models/get-transfer-target-response.md) | Required | - | GetTransferTargetResponse getTarget() | setTarget(GetTransferTargetResponse target) |
 
 ## Example (as JSON)
 

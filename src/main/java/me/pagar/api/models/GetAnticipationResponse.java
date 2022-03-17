@@ -21,7 +21,6 @@ public class GetAnticipationResponse {
     private String id;
     private int requestedAmount;
     private int approvedAmount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetRecipientResponse recipient;
     private String pgid;
     private LocalDateTime createdAt;
@@ -138,6 +137,7 @@ public class GetAnticipationResponse {
      * @return Returns the GetRecipientResponse
      */
     @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
         return recipient;
     }

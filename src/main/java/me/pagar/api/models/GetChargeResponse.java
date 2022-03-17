@@ -29,18 +29,12 @@ public class GetChargeResponse {
     private LocalDateTime dueAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetTransactionResponse lastTransaction;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetInvoiceResponse invoice;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetOrderResponse order;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetCustomerResponse customer;
     private Map<String, String> metadata;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime paidAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime canceledAt;
     private int canceledAmount;
     private int paidAmount;
@@ -305,6 +299,7 @@ public class GetChargeResponse {
      * @return Returns the GetTransactionResponse
      */
     @JsonGetter("last_transaction")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetTransactionResponse getLastTransaction() {
         return lastTransaction;
     }
@@ -323,6 +318,7 @@ public class GetChargeResponse {
      * @return Returns the GetInvoiceResponse
      */
     @JsonGetter("invoice")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetInvoiceResponse getInvoice() {
         return invoice;
     }
@@ -341,6 +337,7 @@ public class GetChargeResponse {
      * @return Returns the GetOrderResponse
      */
     @JsonGetter("order")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetOrderResponse getOrder() {
         return order;
     }
@@ -359,6 +356,7 @@ public class GetChargeResponse {
      * @return Returns the GetCustomerResponse
      */
     @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
         return customer;
     }
@@ -395,6 +393,7 @@ public class GetChargeResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("paid_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getPaidAt() {
         return paidAt;
@@ -415,6 +414,7 @@ public class GetChargeResponse {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("canceled_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCanceledAt() {
         return canceledAt;

@@ -24,9 +24,7 @@ public class CreateShippingRequest {
     private String recipientPhone;
     private String addressId;
     private CreateAddressRequest address;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime maxDeliveryDate;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime estimatedDeliveryDate;
     private String type;
 
@@ -195,6 +193,7 @@ public class CreateShippingRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("max_delivery_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getMaxDeliveryDate() {
         return maxDeliveryDate;
@@ -217,6 +216,7 @@ public class CreateShippingRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("estimated_delivery_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getEstimatedDeliveryDate() {
         return estimatedDeliveryDate;

@@ -21,11 +21,9 @@ public class CreateBoletoPaymentRequest {
     private int retries;
     private String bank;
     private String instructions;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime dueAt;
     private CreateAddressRequest billingAddress;
     private String billingAddressId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nossoNumero;
     private String documentNumber;
     private String statementDescriptor;
@@ -135,6 +133,7 @@ public class CreateBoletoPaymentRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
         return dueAt;
@@ -197,6 +196,7 @@ public class CreateBoletoPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("nosso_numero")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getNossoNumero() {
         return nossoNumero;
     }

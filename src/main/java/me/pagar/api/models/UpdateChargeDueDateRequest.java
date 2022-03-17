@@ -18,7 +18,6 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for UpdateChargeDueDateRequest type.
  */
 public class UpdateChargeDueDateRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime dueAt;
 
     /**
@@ -42,6 +41,7 @@ public class UpdateChargeDueDateRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
         return dueAt;

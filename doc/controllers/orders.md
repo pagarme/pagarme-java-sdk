@@ -10,16 +10,16 @@ OrdersController ordersController = client.getOrdersController();
 
 ## Methods
 
-* [Get Orders](/doc/controllers/orders.md#get-orders)
-* [Update Order Item](/doc/controllers/orders.md#update-order-item)
-* [Delete All Order Items](/doc/controllers/orders.md#delete-all-order-items)
-* [Delete Order Item](/doc/controllers/orders.md#delete-order-item)
-* [Close Order](/doc/controllers/orders.md#close-order)
-* [Create Order](/doc/controllers/orders.md#create-order)
-* [Create Order Item](/doc/controllers/orders.md#create-order-item)
-* [Get Order Item](/doc/controllers/orders.md#get-order-item)
-* [Update Order Metadata](/doc/controllers/orders.md#update-order-metadata)
-* [Get Order](/doc/controllers/orders.md#get-order)
+* [Get Orders](../../doc/controllers/orders.md#get-orders)
+* [Get Order Item](../../doc/controllers/orders.md#get-order-item)
+* [Get Order](../../doc/controllers/orders.md#get-order)
+* [Close Order](../../doc/controllers/orders.md#close-order)
+* [Create Order](../../doc/controllers/orders.md#create-order)
+* [Update Order Item](../../doc/controllers/orders.md#update-order-item)
+* [Delete All Order Items](../../doc/controllers/orders.md#delete-all-order-items)
+* [Update Order Metadata](../../doc/controllers/orders.md#update-order-metadata)
+* [Delete Order Item](../../doc/controllers/orders.md#delete-order-item)
+* [Create Order Item](../../doc/controllers/orders.md#create-order-item)
 
 
 # Get Orders
@@ -51,7 +51,7 @@ CompletableFuture<ListOrderResponse> getOrders(
 
 ## Response Type
 
-[`ListOrderResponse`](/doc/models/list-order-response.md)
+[`ListOrderResponse`](../../doc/models/list-order-response.md)
 
 ## Example Usage
 
@@ -66,14 +66,12 @@ try {
 ```
 
 
-# Update Order Item
+# Get Order Item
 
 ```java
-CompletableFuture<GetOrderItemResponse> updateOrderItem(
+CompletableFuture<GetOrderItemResponse> getOrderItem(
     final String orderId,
-    final String itemId,
-    final UpdateOrderItemRequest request,
-    final String idempotencyKey)
+    final String itemId)
 ```
 
 ## Parameters
@@ -82,88 +80,10 @@ CompletableFuture<GetOrderItemResponse> updateOrderItem(
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
 | `itemId` | `String` | Template, Required | Item Id |
-| `request` | [`UpdateOrderItemRequest`](/doc/models/update-order-item-request.md) | Body, Required | Item Model |
-| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
-
-## Example Usage
-
-```java
-String orderId = "orderId2";
-String itemId = "itemId8";
-UpdateOrderItemRequest request = new UpdateOrderItemRequest();
-request.setAmount(242);
-request.setDescription("description6");
-request.setQuantity(100);
-request.setCategory("category4");
-
-try {
-    GetOrderItemResponse response = ordersController.updateOrderItem(orderId, itemId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Delete All Order Items
-
-```java
-CompletableFuture<GetOrderResponse> deleteAllOrderItems(
-    final String orderId,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order Id |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetOrderResponse`](/doc/models/get-order-response.md)
-
-## Example Usage
-
-```java
-String orderId = "orderId2";
-
-try {
-    GetOrderResponse response = ordersController.deleteAllOrderItems(orderId, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Delete Order Item
-
-```java
-CompletableFuture<GetOrderItemResponse> deleteOrderItem(
-    final String orderId,
-    final String itemId,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order Id |
-| `itemId` | `String` | Template, Required | Item Id |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
@@ -172,7 +92,41 @@ String orderId = "orderId2";
 String itemId = "itemId8";
 
 try {
-    GetOrderItemResponse response = ordersController.deleteOrderItem(orderId, itemId, null);
+    GetOrderItemResponse response = ordersController.getOrderItem(orderId, itemId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Order
+
+Gets an order
+
+```java
+CompletableFuture<GetOrderResponse> getOrder(
+    final String orderId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `orderId` | `String` | Template, Required | Order id |
+
+## Response Type
+
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
+
+## Example Usage
+
+```java
+String orderId = "order_id6";
+
+try {
+    GetOrderResponse response = ordersController.getOrder(orderId);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -195,12 +149,12 @@ CompletableFuture<GetOrderResponse> closeOrder(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `id` | `String` | Template, Required | Order Id |
-| `request` | [`UpdateOrderStatusRequest`](/doc/models/update-order-status-request.md) | Body, Required | Update Order Model |
+| `request` | [`UpdateOrderStatusRequest`](../../doc/models/update-order-status-request.md) | Body, Required | Update Order Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -233,12 +187,12 @@ CompletableFuture<GetOrderResponse> createOrder(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreateOrderRequest`](/doc/models/create-order-request.md) | Body, Required | Request for creating an order |
+| `body` | [`CreateOrderRequest`](../../doc/models/create-order-request.md) | Body, Required | Request for creating an order |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -320,12 +274,13 @@ try {
 ```
 
 
-# Create Order Item
+# Update Order Item
 
 ```java
-CompletableFuture<GetOrderItemResponse> createOrderItem(
+CompletableFuture<GetOrderItemResponse> updateOrderItem(
     final String orderId,
-    final CreateOrderItemRequest request,
+    final String itemId,
+    final UpdateOrderItemRequest request,
     final String idempotencyKey)
 ```
 
@@ -334,25 +289,27 @@ CompletableFuture<GetOrderItemResponse> createOrderItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
-| `request` | [`CreateOrderItemRequest`](/doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
+| `itemId` | `String` | Template, Required | Item Id |
+| `request` | [`UpdateOrderItemRequest`](../../doc/models/update-order-item-request.md) | Body, Required | Item Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
 ```java
 String orderId = "orderId2";
-CreateOrderItemRequest request = new CreateOrderItemRequest();
+String itemId = "itemId8";
+UpdateOrderItemRequest request = new UpdateOrderItemRequest();
 request.setAmount(242);
 request.setDescription("description6");
 request.setQuantity(100);
 request.setCategory("category4");
 
 try {
-    GetOrderItemResponse response = ordersController.createOrderItem(orderId, request, null);
+    GetOrderItemResponse response = ordersController.updateOrderItem(orderId, itemId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -361,12 +318,12 @@ try {
 ```
 
 
-# Get Order Item
+# Delete All Order Items
 
 ```java
-CompletableFuture<GetOrderItemResponse> getOrderItem(
+CompletableFuture<GetOrderResponse> deleteAllOrderItems(
     final String orderId,
-    final String itemId)
+    final String idempotencyKey)
 ```
 
 ## Parameters
@@ -374,20 +331,19 @@ CompletableFuture<GetOrderItemResponse> getOrderItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
-| `itemId` | `String` | Template, Required | Item Id |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderItemResponse`](/doc/models/get-order-item-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
 ```java
 String orderId = "orderId2";
-String itemId = "itemId8";
 
 try {
-    GetOrderItemResponse response = ordersController.getOrderItem(orderId, itemId);
+    GetOrderResponse response = ordersController.deleteAllOrderItems(orderId, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -412,12 +368,12 @@ CompletableFuture<GetOrderResponse> updateOrderMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | The order id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the order metadata |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the order metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
@@ -437,32 +393,76 @@ try {
 ```
 
 
-# Get Order
-
-Gets an order
+# Delete Order Item
 
 ```java
-CompletableFuture<GetOrderResponse> getOrder(
-    final String orderId)
+CompletableFuture<GetOrderItemResponse> deleteOrderItem(
+    final String orderId,
+    final String itemId,
+    final String idempotencyKey)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order id |
+| `orderId` | `String` | Template, Required | Order Id |
+| `itemId` | `String` | Template, Required | Item Id |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderResponse`](/doc/models/get-order-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
 ```java
-String orderId = "order_id6";
+String orderId = "orderId2";
+String itemId = "itemId8";
 
 try {
-    GetOrderResponse response = ordersController.getOrder(orderId);
+    GetOrderItemResponse response = ordersController.deleteOrderItem(orderId, itemId, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Create Order Item
+
+```java
+CompletableFuture<GetOrderItemResponse> createOrderItem(
+    final String orderId,
+    final CreateOrderItemRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `orderId` | `String` | Template, Required | Order Id |
+| `request` | [`CreateOrderItemRequest`](../../doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
+
+## Example Usage
+
+```java
+String orderId = "orderId2";
+CreateOrderItemRequest request = new CreateOrderItemRequest();
+request.setAmount(242);
+request.setDescription("description6");
+request.setQuantity(100);
+request.setCategory("category4");
+
+try {
+    GetOrderItemResponse response = ordersController.createOrderItem(orderId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

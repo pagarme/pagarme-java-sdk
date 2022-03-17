@@ -23,9 +23,7 @@ public class CreateCustomerRequest {
     private Map<String, String> metadata;
     private CreatePhonesRequest phones;
     private String code;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String gender;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String documentType;
 
     /**
@@ -234,6 +232,7 @@ public class CreateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("gender")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGender() {
         return gender;
     }
@@ -253,6 +252,7 @@ public class CreateCustomerRequest {
      * @return Returns the String
      */
     @JsonGetter("document_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDocumentType() {
         return documentType;
     }

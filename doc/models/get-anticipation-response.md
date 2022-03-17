@@ -14,7 +14,7 @@ Anticipation
 | `Id` | `String` | Required | Id | String getId() | setId(String id) |
 | `RequestedAmount` | `int` | Required | Requested amount | int getRequestedAmount() | setRequestedAmount(int requestedAmount) |
 | `ApprovedAmount` | `int` | Required | Approved amount | int getApprovedAmount() | setApprovedAmount(int approvedAmount) |
-| `Recipient` | [`GetRecipientResponse`](/doc/models/get-recipient-response.md) | Optional | Recipient | GetRecipientResponse getRecipient() | setRecipient(GetRecipientResponse recipient) |
+| `Recipient` | [`GetRecipientResponse`](../../doc/models/get-recipient-response.md) | Optional | Recipient | GetRecipientResponse getRecipient() | setRecipient(GetRecipientResponse recipient) |
 | `Pgid` | `String` | Required | Anticipation id on the gateway | String getPgid() | setPgid(String pgid) |
 | `CreatedAt` | `LocalDateTime` | Required | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | Last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |

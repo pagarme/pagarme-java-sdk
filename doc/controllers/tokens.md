@@ -10,8 +10,8 @@ TokensController tokensController = client.getTokensController();
 
 ## Methods
 
-* [Create Token](/doc/controllers/tokens.md#create-token)
-* [Get Token](/doc/controllers/tokens.md#get-token)
+* [Create Token](../../doc/controllers/tokens.md#create-token)
+* [Get Token](../../doc/controllers/tokens.md#get-token)
 
 
 # Create Token
@@ -30,12 +30,12 @@ CompletableFuture<GetTokenResponse> createToken(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `publicKey` | `String` | Template, Required | Public key |
-| `request` | [`CreateTokenRequest`](/doc/models/create-token-request.md) | Body, Required | Request for creating a token |
+| `request` | [`CreateTokenRequest`](../../doc/models/create-token-request.md) | Body, Required | Request for creating a token |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetTokenResponse`](/doc/models/get-token-response.md)
+[`GetTokenResponse`](../../doc/models/get-token-response.md)
 
 ## Example Usage
 
@@ -83,7 +83,7 @@ CompletableFuture<GetTokenResponse> getToken(
 
 ## Response Type
 
-[`GetTokenResponse`](/doc/models/get-token-response.md)
+[`GetTokenResponse`](../../doc/models/get-token-response.md)
 
 ## Example Usage
 

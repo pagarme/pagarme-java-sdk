@@ -15,7 +15,7 @@ Response object for getting the shipping data
 | `Description` | `String` | Required | - | String getDescription() | setDescription(String description) |
 | `RecipientName` | `String` | Required | - | String getRecipientName() | setRecipientName(String recipientName) |
 | `RecipientPhone` | `String` | Required | - | String getRecipientPhone() | setRecipientPhone(String recipientPhone) |
-| `Address` | [`GetAddressResponse`](/doc/models/get-address-response.md) | Required | - | GetAddressResponse getAddress() | setAddress(GetAddressResponse address) |
+| `Address` | [`GetAddressResponse`](../../doc/models/get-address-response.md) | Required | - | GetAddressResponse getAddress() | setAddress(GetAddressResponse address) |
 | `MaxDeliveryDate` | `LocalDateTime` | Optional | Data máxima de entrega | LocalDateTime getMaxDeliveryDate() | setMaxDeliveryDate(LocalDateTime maxDeliveryDate) |
 | `EstimatedDeliveryDate` | `LocalDateTime` | Optional | Prazo estimado de entrega | LocalDateTime getEstimatedDeliveryDate() | setEstimatedDeliveryDate(LocalDateTime estimatedDeliveryDate) |
 | `Type` | `String` | Required | Shipping Type | String getType() | setType(String type) |

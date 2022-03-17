@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for UpdateSubscriptionMinimumPriceRequest type.
  */
 public class UpdateSubscriptionMinimumPriceRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer minimumPrice;
 
     /**
@@ -38,6 +37,7 @@ public class UpdateSubscriptionMinimumPriceRequest {
      * @return Returns the Integer
      */
     @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
         return minimumPrice;
     }

@@ -10,7 +10,7 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Enabled` | `boolean` | Required | Defines if the split is enabled | boolean getEnabled() | setEnabled(boolean enabled) |
-| `Rules` | [`List<CreateSplitRequest>`](/doc/models/create-split-request.md) | Required | Split | List<CreateSplitRequest> getRules() | setRules(List<CreateSplitRequest> rules) |
+| `Rules` | [`List<CreateSplitRequest>`](../../doc/models/create-split-request.md) | Required | Split | List<CreateSplitRequest> getRules() | setRules(List<CreateSplitRequest> rules) |
 
 ## Example (as JSON)
 

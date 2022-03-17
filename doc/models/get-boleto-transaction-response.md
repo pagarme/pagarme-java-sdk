@@ -9,7 +9,7 @@ Response object for getting a boleto transaction
 
 ## Inherits From
 
-[`GetTransactionResponse`](/doc/models/get-transaction-response.md)
+[`GetTransactionResponse`](../../doc/models/get-transaction-response.md)
 
 ## Fields
 
@@ -21,7 +21,7 @@ Response object for getting a boleto transaction
 | `Bank` | `String` | Required | - | String getBank() | setBank(String bank) |
 | `DocumentNumber` | `String` | Required | - | String getDocumentNumber() | setDocumentNumber(String documentNumber) |
 | `Instructions` | `String` | Required | - | String getInstructions() | setInstructions(String instructions) |
-| `BillingAddress` | [`GetBillingAddressResponse`](/doc/models/get-billing-address-response.md) | Required | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
+| `BillingAddress` | [`GetBillingAddressResponse`](../../doc/models/get-billing-address-response.md) | Required | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
 | `DueAt` | `LocalDateTime` | Optional | - | LocalDateTime getDueAt() | setDueAt(LocalDateTime dueAt) |
 | `QrCode` | `String` | Required | - | String getQrCode() | setQrCode(String qrCode) |
 | `Line` | `String` | Required | - | String getLine() | setLine(String line) |

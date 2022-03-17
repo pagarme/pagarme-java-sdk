@@ -14,10 +14,10 @@
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `PricingScheme` | [`GetPricingSchemeResponse`](/doc/models/get-pricing-scheme-response.md) | Required | - | GetPricingSchemeResponse getPricingScheme() | setPricingScheme(GetPricingSchemeResponse pricingScheme) |
-| `Discounts` | [`List<GetDiscountResponse>`](/doc/models/get-discount-response.md) | Required | - | List<GetDiscountResponse> getDiscounts() | setDiscounts(List<GetDiscountResponse> discounts) |
-| `Increments` | [`List<GetIncrementResponse>`](/doc/models/get-increment-response.md) | Required | - | List<GetIncrementResponse> getIncrements() | setIncrements(List<GetIncrementResponse> increments) |
-| `Subscription` | [`GetSubscriptionResponse`](/doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
+| `PricingScheme` | [`GetPricingSchemeResponse`](../../doc/models/get-pricing-scheme-response.md) | Required | - | GetPricingSchemeResponse getPricingScheme() | setPricingScheme(GetPricingSchemeResponse pricingScheme) |
+| `Discounts` | [`List<GetDiscountResponse>`](../../doc/models/get-discount-response.md) | Required | - | List<GetDiscountResponse> getDiscounts() | setDiscounts(List<GetDiscountResponse> discounts) |
+| `Increments` | [`List<GetIncrementResponse>`](../../doc/models/get-increment-response.md) | Required | - | List<GetIncrementResponse> getIncrements() | setIncrements(List<GetIncrementResponse> increments) |
+| `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
 | `Name` | `String` | Required | Item name | String getName() | setName(String name) |
 | `Quantity` | `Integer` | Optional | - | Integer getQuantity() | setQuantity(Integer quantity) |
 | `Cycles` | `Integer` | Optional | - | Integer getCycles() | setCycles(Integer cycles) |

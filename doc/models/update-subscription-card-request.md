@@ -11,7 +11,7 @@ Request for updating the card from a subscription
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Card` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Required | Credit card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
+| `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Required | Credit card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `CardId` | `String` | Required | Credit card id | String getCardId() | setCardId(String cardId) |
 
 ## Example (as JSON)

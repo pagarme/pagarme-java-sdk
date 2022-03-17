@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `HomePhone` | [`CreatePhoneRequest`](/doc/models/create-phone-request.md) | Optional | - | CreatePhoneRequest getHomePhone() | setHomePhone(CreatePhoneRequest homePhone) |
-| `MobilePhone` | [`CreatePhoneRequest`](/doc/models/create-phone-request.md) | Optional | - | CreatePhoneRequest getMobilePhone() | setMobilePhone(CreatePhoneRequest mobilePhone) |
+| `HomePhone` | [`CreatePhoneRequest`](../../doc/models/create-phone-request.md) | Optional | - | CreatePhoneRequest getHomePhone() | setHomePhone(CreatePhoneRequest homePhone) |
+| `MobilePhone` | [`CreatePhoneRequest`](../../doc/models/create-phone-request.md) | Optional | - | CreatePhoneRequest getMobilePhone() | setMobilePhone(CreatePhoneRequest mobilePhone) |
 
 ## Example (as JSON)
 

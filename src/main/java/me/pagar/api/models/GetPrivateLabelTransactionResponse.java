@@ -40,7 +40,6 @@ public class GetPrivateLabelTransactionResponse
     private GetCardResponse card;
     private String acquirerMessage;
     private String acquirerReturnCode;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer installments;
 
     /**
@@ -331,6 +330,7 @@ public class GetPrivateLabelTransactionResponse
      * @return Returns the Integer
      */
     @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getInstallments() {
         return installments;
     }

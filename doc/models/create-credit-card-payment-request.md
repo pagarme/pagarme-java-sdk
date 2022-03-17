@@ -13,7 +13,7 @@ The settings for creating a credit card payment
 |  --- | --- | --- | --- | --- | --- |
 | `Installments` | `Integer` | Optional | Number of installments<br>**Default**: `1` | Integer getInstallments() | setInstallments(Integer installments) |
 | `StatementDescriptor` | `String` | Optional | The text that will be shown on the credit card's statement | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
-| `Card` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Optional | Credit card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
+| `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Optional | Credit card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `CardId` | `String` | Optional | The credit card id | String getCardId() | setCardId(String cardId) |
 | `CardToken` | `String` | Optional | - | String getCardToken() | setCardToken(String cardToken) |
 | `Recurrence` | `Boolean` | Optional | Indicates a recurrence | Boolean getRecurrence() | setRecurrence(Boolean recurrence) |
@@ -21,8 +21,8 @@ The settings for creating a credit card payment
 | `ExtendedLimitEnabled` | `Boolean` | Optional | Indicates whether the extended label (private label) is enabled | Boolean getExtendedLimitEnabled() | setExtendedLimitEnabled(Boolean extendedLimitEnabled) |
 | `ExtendedLimitCode` | `String` | Optional | Extended Limit Code | String getExtendedLimitCode() | setExtendedLimitCode(String extendedLimitCode) |
 | `MerchantCategoryCode` | `Long` | Optional | Customer business segment code | Long getMerchantCategoryCode() | setMerchantCategoryCode(Long merchantCategoryCode) |
-| `Authentication` | [`CreatePaymentAuthenticationRequest`](/doc/models/create-payment-authentication-request.md) | Optional | The payment authentication request | CreatePaymentAuthenticationRequest getAuthentication() | setAuthentication(CreatePaymentAuthenticationRequest authentication) |
-| `Contactless` | [`CreateCardPaymentContactlessRequest`](/doc/models/create-card-payment-contactless-request.md) | Optional | The Credit card payment contactless request | CreateCardPaymentContactlessRequest getContactless() | setContactless(CreateCardPaymentContactlessRequest contactless) |
+| `Authentication` | [`CreatePaymentAuthenticationRequest`](../../doc/models/create-payment-authentication-request.md) | Optional | The payment authentication request | CreatePaymentAuthenticationRequest getAuthentication() | setAuthentication(CreatePaymentAuthenticationRequest authentication) |
+| `Contactless` | [`CreateCardPaymentContactlessRequest`](../../doc/models/create-card-payment-contactless-request.md) | Optional | The Credit card payment contactless request | CreateCardPaymentContactlessRequest getContactless() | setContactless(CreateCardPaymentContactlessRequest contactless) |
 | `AutoRecovery` | `Boolean` | Optional | Indicates whether a particular payment will enter the offline retry flow | Boolean getAutoRecovery() | setAutoRecovery(Boolean autoRecovery) |
 | `OperationType` | `String` | Optional | AuthOnly, AuthAndCapture, PreAuth | String getOperationType() | setOperationType(String operationType) |
 

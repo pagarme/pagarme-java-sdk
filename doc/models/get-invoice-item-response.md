@@ -13,8 +13,8 @@ Response object for getting an invoice item
 |  --- | --- | --- | --- | --- | --- |
 | `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
 | `Description` | `String` | Required | - | String getDescription() | setDescription(String description) |
-| `PricingScheme` | [`GetPricingSchemeResponse`](/doc/models/get-pricing-scheme-response.md) | Required | - | GetPricingSchemeResponse getPricingScheme() | setPricingScheme(GetPricingSchemeResponse pricingScheme) |
-| `PriceBracket` | [`GetPriceBracketResponse`](/doc/models/get-price-bracket-response.md) | Required | - | GetPriceBracketResponse getPriceBracket() | setPriceBracket(GetPriceBracketResponse priceBracket) |
+| `PricingScheme` | [`GetPricingSchemeResponse`](../../doc/models/get-pricing-scheme-response.md) | Required | - | GetPricingSchemeResponse getPricingScheme() | setPricingScheme(GetPricingSchemeResponse pricingScheme) |
+| `PriceBracket` | [`GetPriceBracketResponse`](../../doc/models/get-price-bracket-response.md) | Required | - | GetPriceBracketResponse getPriceBracket() | setPriceBracket(GetPriceBracketResponse priceBracket) |
 | `Quantity` | `Integer` | Optional | - | Integer getQuantity() | setQuantity(Integer quantity) |
 | `Name` | `String` | Optional | - | String getName() | setName(String name) |
 | `SubscriptionItemId` | `String` | Required | Subscription Item Id | String getSubscriptionItemId() | setSubscriptionItemId(String subscriptionItemId) |

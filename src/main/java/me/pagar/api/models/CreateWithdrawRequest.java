@@ -16,7 +16,6 @@ import java.util.Map;
  */
 public class CreateWithdrawRequest {
     private int amount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> metadata;
 
     /**
@@ -60,6 +59,7 @@ public class CreateWithdrawRequest {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }
