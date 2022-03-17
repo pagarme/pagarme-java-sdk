@@ -16,7 +16,7 @@ Transfer response
 | `Status` | `String` | Required | Transfer status | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | Transfer creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | Transfer last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `BankAccount` | [`GetBankAccountResponse`](/doc/models/get-bank-account-response.md) | Required | Bank account | GetBankAccountResponse getBankAccount() | setBankAccount(GetBankAccountResponse bankAccount) |
+| `BankAccount` | [`GetBankAccountResponse`](../../doc/models/get-bank-account-response.md) | Required | Bank account | GetBankAccountResponse getBankAccount() | setBankAccount(GetBankAccountResponse bankAccount) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 
 ## Example (as JSON)

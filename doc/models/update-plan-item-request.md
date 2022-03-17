@@ -14,7 +14,7 @@ Request for updating a plan item
 | `Name` | `String` | Required | Item name | String getName() | setName(String name) |
 | `Description` | `String` | Required | Description | String getDescription() | setDescription(String description) |
 | `Status` | `String` | Required | Item status | String getStatus() | setStatus(String status) |
-| `PricingScheme` | [`UpdatePricingSchemeRequest`](/doc/models/update-pricing-scheme-request.md) | Required | Pricing scheme | UpdatePricingSchemeRequest getPricingScheme() | setPricingScheme(UpdatePricingSchemeRequest pricingScheme) |
+| `PricingScheme` | [`UpdatePricingSchemeRequest`](../../doc/models/update-pricing-scheme-request.md) | Required | Pricing scheme | UpdatePricingSchemeRequest getPricingScheme() | setPricingScheme(UpdatePricingSchemeRequest pricingScheme) |
 | `Quantity` | `Integer` | Optional | Quantity | Integer getQuantity() | setQuantity(Integer quantity) |
 | `Cycles` | `Integer` | Optional | Number of cycles that the item will be charged | Integer getCycles() | setCycles(Integer cycles) |
 

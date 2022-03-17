@@ -16,9 +16,7 @@ import java.util.List;
  */
 public class CreateCaptureChargeRequest {
     private String code;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer amount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CreateSplitRequest> split;
     private String operationReference;
 
@@ -74,6 +72,7 @@ public class CreateCaptureChargeRequest {
      * @return Returns the Integer
      */
     @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
         return amount;
     }
@@ -94,6 +93,7 @@ public class CreateCaptureChargeRequest {
      * @return Returns the List of CreateSplitRequest
      */
     @JsonGetter("split")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<CreateSplitRequest> getSplit() {
         return split;
     }

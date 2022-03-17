@@ -18,7 +18,7 @@ Response object for getting a usage
 | `CreatedAt` | `LocalDateTime` | Required | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `Status` | `String` | Required | Status | String getStatus() | setStatus(String status) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
-| `SubscriptionItem` | [`GetSubscriptionItemResponse`](/doc/models/get-subscription-item-response.md) | Required | Subscription item | GetSubscriptionItemResponse getSubscriptionItem() | setSubscriptionItem(GetSubscriptionItemResponse subscriptionItem) |
+| `SubscriptionItem` | [`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md) | Required | Subscription item | GetSubscriptionItemResponse getSubscriptionItem() | setSubscriptionItem(GetSubscriptionItemResponse subscriptionItem) |
 | `Code` | `String` | Optional | Identification code in the client system | String getCode() | setCode(String code) |
 | `Group` | `String` | Optional | Identification group in the client system | String getGroup() | setGroup(String group) |
 | `Amount` | `Integer` | Optional | Field used in item scheme type 'Percent' | Integer getAmount() | setAmount(Integer amount) |

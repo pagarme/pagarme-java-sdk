@@ -21,11 +21,11 @@ Recipient response
 | `CreatedAt` | `LocalDateTime` | Required | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | Last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
 | `DeletedAt` | `LocalDateTime` | Required | Deletion date | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
-| `DefaultBankAccount` | [`GetBankAccountResponse`](/doc/models/get-bank-account-response.md) | Required | Default bank account | GetBankAccountResponse getDefaultBankAccount() | setDefaultBankAccount(GetBankAccountResponse defaultBankAccount) |
-| `GatewayRecipients` | [`List<GetGatewayRecipientResponse>`](/doc/models/get-gateway-recipient-response.md) | Required | Info about the recipient on the gateway | List<GetGatewayRecipientResponse> getGatewayRecipients() | setGatewayRecipients(List<GetGatewayRecipientResponse> gatewayRecipients) |
+| `DefaultBankAccount` | [`GetBankAccountResponse`](../../doc/models/get-bank-account-response.md) | Required | Default bank account | GetBankAccountResponse getDefaultBankAccount() | setDefaultBankAccount(GetBankAccountResponse defaultBankAccount) |
+| `GatewayRecipients` | [`List<GetGatewayRecipientResponse>`](../../doc/models/get-gateway-recipient-response.md) | Required | Info about the recipient on the gateway | List<GetGatewayRecipientResponse> getGatewayRecipients() | setGatewayRecipients(List<GetGatewayRecipientResponse> gatewayRecipients) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `AutomaticAnticipationSettings` | [`GetAutomaticAnticipationResponse`](/doc/models/get-automatic-anticipation-response.md) | Optional | - | GetAutomaticAnticipationResponse getAutomaticAnticipationSettings() | setAutomaticAnticipationSettings(GetAutomaticAnticipationResponse automaticAnticipationSettings) |
-| `TransferSettings` | [`GetTransferSettingsResponse`](/doc/models/get-transfer-settings-response.md) | Optional | - | GetTransferSettingsResponse getTransferSettings() | setTransferSettings(GetTransferSettingsResponse transferSettings) |
+| `AutomaticAnticipationSettings` | [`GetAutomaticAnticipationResponse`](../../doc/models/get-automatic-anticipation-response.md) | Optional | - | GetAutomaticAnticipationResponse getAutomaticAnticipationSettings() | setAutomaticAnticipationSettings(GetAutomaticAnticipationResponse automaticAnticipationSettings) |
+| `TransferSettings` | [`GetTransferSettingsResponse`](../../doc/models/get-transfer-settings-response.md) | Optional | - | GetTransferSettingsResponse getTransferSettings() | setTransferSettings(GetTransferSettingsResponse transferSettings) |
 | `Code` | `String` | Required | Recipient code | String getCode() | setCode(String code) |
 | `PaymentMode` | `String` | Required | Payment mode<br>**Default**: `"bank_transfer"` | String getPaymentMode() | setPaymentMode(String paymentMode) |
 

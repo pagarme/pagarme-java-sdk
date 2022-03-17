@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `HomePhone` | [`GetPhoneResponse`](/doc/models/get-phone-response.md) | Required | - | GetPhoneResponse getHomePhone() | setHomePhone(GetPhoneResponse homePhone) |
-| `MobilePhone` | [`GetPhoneResponse`](/doc/models/get-phone-response.md) | Required | - | GetPhoneResponse getMobilePhone() | setMobilePhone(GetPhoneResponse mobilePhone) |
+| `HomePhone` | [`GetPhoneResponse`](../../doc/models/get-phone-response.md) | Required | - | GetPhoneResponse getHomePhone() | setHomePhone(GetPhoneResponse homePhone) |
+| `MobilePhone` | [`GetPhoneResponse`](../../doc/models/get-phone-response.md) | Required | - | GetPhoneResponse getMobilePhone() | setMobilePhone(GetPhoneResponse mobilePhone) |
 
 ## Example (as JSON)
 

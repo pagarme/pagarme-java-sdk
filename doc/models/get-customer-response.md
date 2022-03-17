@@ -20,9 +20,9 @@ Response object for getting a customer
 | `Document` | `String` | Required | - | String getDocument() | setDocument(String document) |
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
 | `FbAccessToken` | `String` | Required | - | String getFbAccessToken() | setFbAccessToken(String fbAccessToken) |
-| `Address` | [`GetAddressResponse`](/doc/models/get-address-response.md) | Required | - | GetAddressResponse getAddress() | setAddress(GetAddressResponse address) |
+| `Address` | [`GetAddressResponse`](../../doc/models/get-address-response.md) | Required | - | GetAddressResponse getAddress() | setAddress(GetAddressResponse address) |
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Phones` | [`GetPhonesResponse`](/doc/models/get-phones-response.md) | Required | - | GetPhonesResponse getPhones() | setPhones(GetPhonesResponse phones) |
+| `Phones` | [`GetPhonesResponse`](../../doc/models/get-phones-response.md) | Required | - | GetPhonesResponse getPhones() | setPhones(GetPhonesResponse phones) |
 | `FbId` | `Long` | Optional | - | Long getFbId() | setFbId(Long fbId) |
 | `Code` | `String` | Required | Código de referência do cliente no sistema da loja. Max: 52 caracteres | String getCode() | setCode(String code) |
 | `DocumentType` | `String` | Required | - | String getDocumentType() | setDocumentType(String documentType) |

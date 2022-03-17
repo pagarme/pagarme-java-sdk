@@ -40,7 +40,6 @@ public class GetCreditCardTransactionResponse
     private GetCardResponse card;
     private String acquirerMessage;
     private String acquirerReturnCode;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer installments;
     private String threedAuthenticationUrl;
 
@@ -335,6 +334,7 @@ public class GetCreditCardTransactionResponse
      * @return Returns the Integer
      */
     @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getInstallments() {
         return installments;
     }

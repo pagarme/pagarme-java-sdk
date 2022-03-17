@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Data` | [`List<GetIncrementResponse>`](/doc/models/get-increment-response.md) | Required | The Increments response | List<GetIncrementResponse> getData() | setData(List<GetIncrementResponse> data) |
-| `Paging` | [`PagingResponse`](/doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
+| `Data` | [`List<GetIncrementResponse>`](../../doc/models/get-increment-response.md) | Required | The Increments response | List<GetIncrementResponse> getData() | setData(List<GetIncrementResponse> data) |
+| `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
 ## Example (as JSON)
 

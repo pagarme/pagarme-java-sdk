@@ -16,10 +16,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class GetSplitResponse {
     private String type;
     private int amount;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetRecipientResponse recipient;
     private String gatewayId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetSplitOptionsResponse options;
     private String id;
 
@@ -99,6 +97,7 @@ public class GetSplitResponse {
      * @return Returns the GetRecipientResponse
      */
     @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
         return recipient;
     }
@@ -138,6 +137,7 @@ public class GetSplitResponse {
      * @return Returns the GetSplitOptionsResponse
      */
     @JsonGetter("options")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetSplitOptionsResponse getOptions() {
         return options;
     }

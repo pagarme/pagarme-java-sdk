@@ -18,14 +18,14 @@ Response object for getting an invoice
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `PaymentMethod` | `String` | Required | - | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
-| `Items` | [`List<GetInvoiceItemResponse>`](/doc/models/get-invoice-item-response.md) | Required | - | List<GetInvoiceItemResponse> getItems() | setItems(List<GetInvoiceItemResponse> items) |
-| `Customer` | [`GetCustomerResponse`](/doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
-| `Charge` | [`GetChargeResponse`](/doc/models/get-charge-response.md) | Required | - | GetChargeResponse getCharge() | setCharge(GetChargeResponse charge) |
+| `Items` | [`List<GetInvoiceItemResponse>`](../../doc/models/get-invoice-item-response.md) | Required | - | List<GetInvoiceItemResponse> getItems() | setItems(List<GetInvoiceItemResponse> items) |
+| `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
+| `Charge` | [`GetChargeResponse`](../../doc/models/get-charge-response.md) | Required | - | GetChargeResponse getCharge() | setCharge(GetChargeResponse charge) |
 | `Installments` | `int` | Required | - | int getInstallments() | setInstallments(int installments) |
-| `BillingAddress` | [`GetBillingAddressResponse`](/doc/models/get-billing-address-response.md) | Required | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
-| `Subscription` | [`GetSubscriptionResponse`](/doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
-| `Cycle` | [`GetPeriodResponse`](/doc/models/get-period-response.md) | Optional | - | GetPeriodResponse getCycle() | setCycle(GetPeriodResponse cycle) |
-| `Shipping` | [`GetShippingResponse`](/doc/models/get-shipping-response.md) | Required | - | GetShippingResponse getShipping() | setShipping(GetShippingResponse shipping) |
+| `BillingAddress` | [`GetBillingAddressResponse`](../../doc/models/get-billing-address-response.md) | Required | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
+| `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
+| `Cycle` | [`GetPeriodResponse`](../../doc/models/get-period-response.md) | Optional | - | GetPeriodResponse getCycle() | setCycle(GetPeriodResponse cycle) |
+| `Shipping` | [`GetShippingResponse`](../../doc/models/get-shipping-response.md) | Required | - | GetShippingResponse getShipping() | setShipping(GetShippingResponse shipping) |
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `DueAt` | `LocalDateTime` | Optional | - | LocalDateTime getDueAt() | setDueAt(LocalDateTime dueAt) |
 | `CanceledAt` | `LocalDateTime` | Optional | - | LocalDateTime getCanceledAt() | setCanceledAt(LocalDateTime canceledAt) |

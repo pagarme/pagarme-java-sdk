@@ -34,6 +34,8 @@ public class GetPixTransactionResponse
     private String qrCodeUrl;
     private LocalDateTime expiresAt;
     private List<PixAdditionalInformation> additionalInformation;
+    private String endToEndId;
+    private GetPixPayerResponse payer;
 
     /**
      * Default constructor.
@@ -63,6 +65,8 @@ public class GetPixTransactionResponse
      * @param  expiresAt  LocalDateTime value for expiresAt.
      * @param  additionalInformation  List of PixAdditionalInformation value for
      *         additionalInformation.
+     * @param  endToEndId  String value for endToEndId.
+     * @param  payer  GetPixPayerResponse value for payer.
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
@@ -85,6 +89,8 @@ public class GetPixTransactionResponse
             String qrCodeUrl,
             LocalDateTime expiresAt,
             List<PixAdditionalInformation> additionalInformation,
+            String endToEndId,
+            GetPixPayerResponse payer,
             LocalDateTime nextAttempt,
             String transactionType,
             Map<String, String> metadata) {
@@ -95,6 +101,8 @@ public class GetPixTransactionResponse
         this.qrCodeUrl = qrCodeUrl;
         this.expiresAt = expiresAt;
         this.additionalInformation = additionalInformation;
+        this.endToEndId = endToEndId;
+        this.payer = payer;
     }
 
     /**
@@ -172,6 +180,42 @@ public class GetPixTransactionResponse
     }
 
     /**
+     * Getter for EndToEndId.
+     * @return Returns the String
+     */
+    @JsonGetter("end_to_end_id")
+    public String getEndToEndId() {
+        return endToEndId;
+    }
+
+    /**
+     * Setter for EndToEndId.
+     * @param endToEndId Value for String
+     */
+    @JsonSetter("end_to_end_id")
+    public void setEndToEndId(String endToEndId) {
+        this.endToEndId = endToEndId;
+    }
+
+    /**
+     * Getter for Payer.
+     * @return Returns the GetPixPayerResponse
+     */
+    @JsonGetter("payer")
+    public GetPixPayerResponse getPayer() {
+        return payer;
+    }
+
+    /**
+     * Setter for Payer.
+     * @param payer Value for GetPixPayerResponse
+     */
+    @JsonSetter("payer")
+    public void setPayer(GetPixPayerResponse payer) {
+        this.payer = payer;
+    }
+
+    /**
      * Converts this GetPixTransactionResponse into string format.
      * @return String representation of this class
      */
@@ -179,11 +223,12 @@ public class GetPixTransactionResponse
     public String toString() {
         return "GetPixTransactionResponse [" + "qrCode=" + qrCode + ", qrCodeUrl=" + qrCodeUrl
                 + ", expiresAt=" + expiresAt + ", additionalInformation=" + additionalInformation
-                + ", gatewayId=" + getGatewayId() + ", amount=" + getAmount() + ", status="
-                + getStatus() + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt()
-                + ", updatedAt=" + getUpdatedAt() + ", attemptCount=" + getAttemptCount()
-                + ", maxAttempts=" + getMaxAttempts() + ", splits=" + getSplits() + ", id="
-                + getId() + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
+                + ", endToEndId=" + endToEndId + ", payer=" + payer + ", gatewayId="
+                + getGatewayId() + ", amount=" + getAmount() + ", status=" + getStatus()
+                + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt="
+                + getUpdatedAt() + ", attemptCount=" + getAttemptCount() + ", maxAttempts="
+                + getMaxAttempts() + ", splits=" + getSplits() + ", id=" + getId()
+                + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", split=" + getSplit() + ", nextAttempt="
                 + getNextAttempt() + ", transactionType=" + getTransactionType() + ", metadata="
                 + getMetadata() + "]";
@@ -198,7 +243,7 @@ public class GetPixTransactionResponse
         Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), qrCode,
-                qrCodeUrl, expiresAt, additionalInformation)
+                qrCodeUrl, expiresAt, additionalInformation, endToEndId, payer)
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
                 .metadata(getMetadata());
@@ -213,6 +258,8 @@ public class GetPixTransactionResponse
         private String qrCodeUrl;
         private LocalDateTime expiresAt;
         private List<PixAdditionalInformation> additionalInformation;
+        private String endToEndId;
+        private GetPixPayerResponse payer;
         private String gatewayId;
         private int amount;
         private String status;
@@ -256,13 +303,16 @@ public class GetPixTransactionResponse
          * @param  expiresAt  LocalDateTime value for expiresAt.
          * @param  additionalInformation  List of PixAdditionalInformation value for
          *         additionalInformation.
+         * @param  endToEndId  String value for endToEndId.
+         * @param  payer  GetPixPayerResponse value for payer.
          */
         public Builder(String gatewayId, int amount, String status, boolean success,
                 LocalDateTime createdAt, LocalDateTime updatedAt, int attemptCount, int maxAttempts,
                 List<GetSplitResponse> splits, String id,
                 GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
                 List<GetSplitResponse> split, String qrCode, String qrCodeUrl,
-                LocalDateTime expiresAt, List<PixAdditionalInformation> additionalInformation) {
+                LocalDateTime expiresAt, List<PixAdditionalInformation> additionalInformation,
+                String endToEndId, GetPixPayerResponse payer) {
             this.gatewayId = gatewayId;
             this.amount = amount;
             this.status = status;
@@ -280,6 +330,8 @@ public class GetPixTransactionResponse
             this.qrCodeUrl = qrCodeUrl;
             this.expiresAt = expiresAt;
             this.additionalInformation = additionalInformation;
+            this.endToEndId = endToEndId;
+            this.payer = payer;
         }
 
         /**
@@ -321,6 +373,26 @@ public class GetPixTransactionResponse
         public Builder additionalInformation(
                 List<PixAdditionalInformation> additionalInformation) {
             this.additionalInformation = additionalInformation;
+            return this;
+        }
+
+        /**
+         * Setter for endToEndId.
+         * @param  endToEndId  String value for endToEndId.
+         * @return Builder
+         */
+        public Builder endToEndId(String endToEndId) {
+            this.endToEndId = endToEndId;
+            return this;
+        }
+
+        /**
+         * Setter for payer.
+         * @param  payer  GetPixPayerResponse value for payer.
+         * @return Builder
+         */
+        public Builder payer(GetPixPayerResponse payer) {
+            this.payer = payer;
             return this;
         }
 
@@ -492,7 +564,7 @@ public class GetPixTransactionResponse
             return new GetPixTransactionResponse(gatewayId, amount, status, success, createdAt,
                     updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
                     antifraudResponse, split, qrCode, qrCodeUrl, expiresAt, additionalInformation,
-                    nextAttempt, transactionType, metadata);
+                    endToEndId, payer, nextAttempt, transactionType, metadata);
         }
     }
 }

@@ -16,7 +16,7 @@ Shipping data
 | `RecipientName` | `String` | Required | Recipient name | String getRecipientName() | setRecipientName(String recipientName) |
 | `RecipientPhone` | `String` | Required | Recipient phone number | String getRecipientPhone() | setRecipientPhone(String recipientPhone) |
 | `AddressId` | `String` | Required | The id of the address that will be used for shipping | String getAddressId() | setAddressId(String addressId) |
-| `Address` | [`CreateAddressRequest`](/doc/models/create-address-request.md) | Required | Address data | CreateAddressRequest getAddress() | setAddress(CreateAddressRequest address) |
+| `Address` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Required | Address data | CreateAddressRequest getAddress() | setAddress(CreateAddressRequest address) |
 | `MaxDeliveryDate` | `LocalDateTime` | Optional | Data máxima de entrega | LocalDateTime getMaxDeliveryDate() | setMaxDeliveryDate(LocalDateTime maxDeliveryDate) |
 | `EstimatedDeliveryDate` | `LocalDateTime` | Optional | Prazo estimado de entrega | LocalDateTime getEstimatedDeliveryDate() | setEstimatedDeliveryDate(LocalDateTime estimatedDeliveryDate) |
 | `Type` | `String` | Required | Shipping type | String getType() | setType(String type) |

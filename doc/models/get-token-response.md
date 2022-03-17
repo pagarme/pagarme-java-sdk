@@ -15,7 +15,7 @@ Token data
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `ExpiresAt` | `String` | Required | - | String getExpiresAt() | setExpiresAt(String expiresAt) |
-| `Card` | [`GetCardTokenResponse`](/doc/models/get-card-token-response.md) | Required | - | GetCardTokenResponse getCard() | setCard(GetCardTokenResponse card) |
+| `Card` | [`GetCardTokenResponse`](../../doc/models/get-card-token-response.md) | Required | - | GetCardTokenResponse getCard() | setCard(GetCardTokenResponse card) |
 
 ## Example (as JSON)
 

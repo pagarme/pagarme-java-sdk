@@ -13,7 +13,7 @@ Request for updating card data
 |  --- | --- | --- | --- | --- | --- |
 | `UpdateSubscription` | `boolean` | Required | Indicates if the subscriptions using this card must also be updated | boolean getUpdateSubscription() | setUpdateSubscription(boolean updateSubscription) |
 | `CardId` | `String` | Required | Card id | String getCardId() | setCardId(String cardId) |
-| `Card` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Required | Card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
+| `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Required | Card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `Recurrence` | `boolean` | Required | Indicates a recurrence | boolean getRecurrence() | setRecurrence(boolean recurrence) |
 
 ## Example (as JSON)

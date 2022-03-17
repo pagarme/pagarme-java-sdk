@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateAccessTokenRequest type.
  */
 public class CreateAccessTokenRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer expiresIn;
 
     /**
@@ -38,6 +37,7 @@ public class CreateAccessTokenRequest {
      * @return Returns the Integer
      */
     @JsonGetter("expires_in")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getExpiresIn() {
         return expiresIn;
     }

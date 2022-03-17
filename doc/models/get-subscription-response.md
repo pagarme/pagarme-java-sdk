@@ -15,28 +15,28 @@
 | `Interval` | `String` | Required | - | String getInterval() | setInterval(String interval) |
 | `IntervalCount` | `int` | Required | - | int getIntervalCount() | setIntervalCount(int intervalCount) |
 | `BillingType` | `String` | Required | - | String getBillingType() | setBillingType(String billingType) |
-| `CurrentCycle` | [`GetPeriodResponse`](/doc/models/get-period-response.md) | Optional | - | GetPeriodResponse getCurrentCycle() | setCurrentCycle(GetPeriodResponse currentCycle) |
+| `CurrentCycle` | [`GetPeriodResponse`](../../doc/models/get-period-response.md) | Optional | - | GetPeriodResponse getCurrentCycle() | setCurrentCycle(GetPeriodResponse currentCycle) |
 | `PaymentMethod` | `String` | Required | - | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
 | `Currency` | `String` | Required | - | String getCurrency() | setCurrency(String currency) |
 | `Installments` | `int` | Required | - | int getInstallments() | setInstallments(int installments) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `Customer` | [`GetCustomerResponse`](/doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
-| `Card` | [`GetCardResponse`](/doc/models/get-card-response.md) | Required | - | GetCardResponse getCard() | setCard(GetCardResponse card) |
-| `Items` | [`List<GetSubscriptionItemResponse>`](/doc/models/get-subscription-item-response.md) | Required | - | List<GetSubscriptionItemResponse> getItems() | setItems(List<GetSubscriptionItemResponse> items) |
+| `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
+| `Card` | [`GetCardResponse`](../../doc/models/get-card-response.md) | Required | - | GetCardResponse getCard() | setCard(GetCardResponse card) |
+| `Items` | [`List<GetSubscriptionItemResponse>`](../../doc/models/get-subscription-item-response.md) | Required | - | List<GetSubscriptionItemResponse> getItems() | setItems(List<GetSubscriptionItemResponse> items) |
 | `StatementDescriptor` | `String` | Required | - | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Setup` | [`GetSetupResponse`](/doc/models/get-setup-response.md) | Required | - | GetSetupResponse getSetup() | setSetup(GetSetupResponse setup) |
+| `Setup` | [`GetSetupResponse`](../../doc/models/get-setup-response.md) | Required | - | GetSetupResponse getSetup() | setSetup(GetSetupResponse setup) |
 | `GatewayAffiliationId` | `String` | Required | Affiliation Code | String getGatewayAffiliationId() | setGatewayAffiliationId(String gatewayAffiliationId) |
 | `NextBillingAt` | `LocalDateTime` | Optional | - | LocalDateTime getNextBillingAt() | setNextBillingAt(LocalDateTime nextBillingAt) |
 | `BillingDay` | `Integer` | Optional | - | Integer getBillingDay() | setBillingDay(Integer billingDay) |
 | `MinimumPrice` | `Integer` | Optional | - | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 | `CanceledAt` | `LocalDateTime` | Optional | - | LocalDateTime getCanceledAt() | setCanceledAt(LocalDateTime canceledAt) |
-| `Discounts` | [`List<GetDiscountResponse>`](/doc/models/get-discount-response.md) | Optional | Subscription discounts | List<GetDiscountResponse> getDiscounts() | setDiscounts(List<GetDiscountResponse> discounts) |
-| `Increments` | [`List<GetIncrementResponse>`](/doc/models/get-increment-response.md) | Required | Subscription increments | List<GetIncrementResponse> getIncrements() | setIncrements(List<GetIncrementResponse> increments) |
+| `Discounts` | [`List<GetDiscountResponse>`](../../doc/models/get-discount-response.md) | Optional | Subscription discounts | List<GetDiscountResponse> getDiscounts() | setDiscounts(List<GetDiscountResponse> discounts) |
+| `Increments` | [`List<GetIncrementResponse>`](../../doc/models/get-increment-response.md) | Required | Subscription increments | List<GetIncrementResponse> getIncrements() | setIncrements(List<GetIncrementResponse> increments) |
 | `BoletoDueDays` | `Integer` | Optional | Days until boleto expires | Integer getBoletoDueDays() | setBoletoDueDays(Integer boletoDueDays) |
-| `Split` | [`GetSubscriptionSplitResponse`](/doc/models/get-subscription-split-response.md) | Required | Subscription's split response | GetSubscriptionSplitResponse getSplit() | setSplit(GetSubscriptionSplitResponse split) |
+| `Split` | [`GetSubscriptionSplitResponse`](../../doc/models/get-subscription-split-response.md) | Required | Subscription's split response | GetSubscriptionSplitResponse getSplit() | setSplit(GetSubscriptionSplitResponse split) |
 
 ## Example (as JSON)
 

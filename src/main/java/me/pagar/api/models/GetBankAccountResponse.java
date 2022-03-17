@@ -32,7 +32,6 @@ public class GetBankAccountResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GetRecipientResponse recipient;
     private Map<String, String> metadata;
     private String pixKey;
@@ -369,6 +368,7 @@ public class GetBankAccountResponse {
      * @return Returns the GetRecipientResponse
      */
     @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
         return recipient;
     }

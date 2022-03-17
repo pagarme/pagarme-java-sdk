@@ -13,7 +13,7 @@ The settings for creating a private label payment
 |  --- | --- | --- | --- | --- | --- |
 | `Installments` | `Integer` | Optional | Number of installments<br>**Default**: `1` | Integer getInstallments() | setInstallments(Integer installments) |
 | `StatementDescriptor` | `String` | Optional | The text that will be shown on the private label's statement | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
-| `Card` | [`CreateCardRequest`](/doc/models/create-card-request.md) | Optional | Card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
+| `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Optional | Card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `CardId` | `String` | Optional | The Card id | String getCardId() | setCardId(String cardId) |
 | `CardToken` | `String` | Optional | - | String getCardToken() | setCardToken(String cardToken) |
 | `Recurrence` | `Boolean` | Optional | Indicates a recurrence | Boolean getRecurrence() | setRecurrence(Boolean recurrence) |

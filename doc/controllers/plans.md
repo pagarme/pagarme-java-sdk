@@ -10,16 +10,16 @@ PlansController plansController = client.getPlansController();
 
 ## Methods
 
-* [Get Plan](/doc/controllers/plans.md#get-plan)
-* [Delete Plan](/doc/controllers/plans.md#delete-plan)
-* [Update Plan Metadata](/doc/controllers/plans.md#update-plan-metadata)
-* [Update Plan Item](/doc/controllers/plans.md#update-plan-item)
-* [Create Plan Item](/doc/controllers/plans.md#create-plan-item)
-* [Get Plan Item](/doc/controllers/plans.md#get-plan-item)
-* [Create Plan](/doc/controllers/plans.md#create-plan)
-* [Delete Plan Item](/doc/controllers/plans.md#delete-plan-item)
-* [Get Plans](/doc/controllers/plans.md#get-plans)
-* [Update Plan](/doc/controllers/plans.md#update-plan)
+* [Get Plan](../../doc/controllers/plans.md#get-plan)
+* [Update Plan](../../doc/controllers/plans.md#update-plan)
+* [Update Plan Metadata](../../doc/controllers/plans.md#update-plan-metadata)
+* [Delete Plan Item](../../doc/controllers/plans.md#delete-plan-item)
+* [Get Plans](../../doc/controllers/plans.md#get-plans)
+* [Get Plan Item](../../doc/controllers/plans.md#get-plan-item)
+* [Delete Plan](../../doc/controllers/plans.md#delete-plan)
+* [Update Plan Item](../../doc/controllers/plans.md#update-plan-item)
+* [Create Plan Item](../../doc/controllers/plans.md#create-plan-item)
+* [Create Plan](../../doc/controllers/plans.md#create-plan)
 
 
 # Get Plan
@@ -39,7 +39,7 @@ CompletableFuture<GetPlanResponse> getPlan(
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -48,6 +48,226 @@ String planId = "plan_id8";
 
 try {
     GetPlanResponse response = plansController.getPlan(planId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Update Plan
+
+Updates a plan
+
+```java
+CompletableFuture<GetPlanResponse> updatePlan(
+    final String planId,
+    final UpdatePlanRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `planId` | `String` | Template, Required | Plan id |
+| `request` | [`UpdatePlanRequest`](../../doc/models/update-plan-request.md) | Body, Required | Request for updating a plan |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
+
+## Example Usage
+
+```java
+String planId = "plan_id8";
+UpdatePlanRequest request = new UpdatePlanRequest();
+request.setName("name6");
+request.setDescription("description6");
+request.setInstallments(new LinkedList<>());
+request.getInstallments().add(151);
+request.getInstallments().add(152);
+request.setStatementDescriptor("statement_descriptor6");
+request.setCurrency("currency6");
+request.setInterval("interval4");
+request.setIntervalCount(114);
+request.setPaymentMethods(new LinkedList<>());
+request.getPaymentMethods().add("payment_methods1");
+request.getPaymentMethods().add("payment_methods0");
+request.getPaymentMethods().add("payment_methods9");
+request.setBillingType("billing_type0");
+request.setStatus("status8");
+request.setShippable(false);
+request.setBillingDays(new LinkedList<>());
+request.getBillingDays().add(115);
+request.setMetadata(new LinkedHashMap<>());
+request.getMetadata().put("key0", "metadata3");
+
+try {
+    GetPlanResponse response = plansController.updatePlan(planId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Update Plan Metadata
+
+Updates the metadata from a plan
+
+```java
+CompletableFuture<GetPlanResponse> updatePlanMetadata(
+    final String planId,
+    final UpdateMetadataRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `planId` | `String` | Template, Required | The plan id |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the plan metadata |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
+
+## Example Usage
+
+```java
+String planId = "plan_id8";
+UpdateMetadataRequest request = new UpdateMetadataRequest();
+request.setMetadata(new LinkedHashMap<>());
+request.getMetadata().put("key0", "metadata3");
+
+try {
+    GetPlanResponse response = plansController.updatePlanMetadata(planId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Delete Plan Item
+
+Removes an item from a plan
+
+```java
+CompletableFuture<GetPlanItemResponse> deletePlanItem(
+    final String planId,
+    final String planItemId,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `planId` | `String` | Template, Required | Plan id |
+| `planItemId` | `String` | Template, Required | Plan item id |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
+
+## Example Usage
+
+```java
+String planId = "plan_id8";
+String planItemId = "plan_item_id0";
+
+try {
+    GetPlanItemResponse response = plansController.deletePlanItem(planId, planItemId, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Plans
+
+Gets all plans
+
+```java
+CompletableFuture<ListPlansResponse> getPlans(
+    final Integer page,
+    final Integer size,
+    final String name,
+    final String status,
+    final String billingType,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+| `name` | `String` | Query, Optional | Filter for Plan's name |
+| `status` | `String` | Query, Optional | Filter for Plan's status |
+| `billingType` | `String` | Query, Optional | Filter for plan's billing type |
+| `createdSince` | `LocalDateTime` | Query, Optional | Filter for plan's creation date start range |
+| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for plan's creation date end range |
+
+## Response Type
+
+[`ListPlansResponse`](../../doc/models/list-plans-response.md)
+
+## Example Usage
+
+```java
+try {
+    ListPlansResponse response = plansController.getPlans(null, null, null, null, null, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Plan Item
+
+Gets a plan item
+
+```java
+CompletableFuture<GetPlanItemResponse> getPlanItem(
+    final String planId,
+    final String planItemId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `planId` | `String` | Template, Required | Plan id |
+| `planItemId` | `String` | Template, Required | Plan item id |
+
+## Response Type
+
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
+
+## Example Usage
+
+```java
+String planId = "plan_id8";
+String planItemId = "plan_item_id0";
+
+try {
+    GetPlanItemResponse response = plansController.getPlanItem(planId, planItemId);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -75,7 +295,7 @@ CompletableFuture<GetPlanResponse> deletePlan(
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -84,47 +304,6 @@ String planId = "plan_id8";
 
 try {
     GetPlanResponse response = plansController.deletePlan(planId, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Plan Metadata
-
-Updates the metadata from a plan
-
-```java
-CompletableFuture<GetPlanResponse> updatePlanMetadata(
-    final String planId,
-    final UpdateMetadataRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | The plan id |
-| `request` | [`UpdateMetadataRequest`](/doc/models/update-metadata-request.md) | Body, Required | Request for updating the plan metadata |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
-
-## Example Usage
-
-```java
-String planId = "plan_id8";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-request.setMetadata(new LinkedHashMap<>());
-request.getMetadata().put("key0", "metadata3");
-
-try {
-    GetPlanResponse response = plansController.updatePlanMetadata(planId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -151,12 +330,12 @@ CompletableFuture<GetPlanItemResponse> updatePlanItem(
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | Plan id |
 | `planItemId` | `String` | Template, Required | Plan item id |
-| `body` | [`UpdatePlanItemRequest`](/doc/models/update-plan-item-request.md) | Body, Required | Request for updating the plan item |
+| `body` | [`UpdatePlanItemRequest`](../../doc/models/update-plan-item-request.md) | Body, Required | Request for updating the plan item |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
@@ -208,12 +387,12 @@ CompletableFuture<GetPlanItemResponse> createPlanItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | Plan id |
-| `request` | [`CreatePlanItemRequest`](/doc/models/create-plan-item-request.md) | Body, Required | Request for creating a plan item |
+| `request` | [`CreatePlanItemRequest`](../../doc/models/create-plan-item-request.md) | Body, Required | Request for creating a plan item |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
@@ -243,43 +422,6 @@ try {
 ```
 
 
-# Get Plan Item
-
-Gets a plan item
-
-```java
-CompletableFuture<GetPlanItemResponse> getPlanItem(
-    final String planId,
-    final String planItemId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | Plan id |
-| `planItemId` | `String` | Template, Required | Plan item id |
-
-## Response Type
-
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
-
-## Example Usage
-
-```java
-String planId = "plan_id8";
-String planItemId = "plan_item_id0";
-
-try {
-    GetPlanItemResponse response = plansController.getPlanItem(planId, planItemId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
 # Create Plan
 
 Creates a new plan
@@ -294,12 +436,12 @@ CompletableFuture<GetPlanResponse> createPlan(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreatePlanRequest`](/doc/models/create-plan-request.md) | Body, Required | Request for creating a plan |
+| `body` | [`CreatePlanRequest`](../../doc/models/create-plan-request.md) | Body, Required | Request for creating a plan |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
@@ -402,148 +544,6 @@ body.getMetadata().put("key1", "metadata8");
 
 try {
     GetPlanResponse response = plansController.createPlan(body, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Delete Plan Item
-
-Removes an item from a plan
-
-```java
-CompletableFuture<GetPlanItemResponse> deletePlanItem(
-    final String planId,
-    final String planItemId,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | Plan id |
-| `planItemId` | `String` | Template, Required | Plan item id |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetPlanItemResponse`](/doc/models/get-plan-item-response.md)
-
-## Example Usage
-
-```java
-String planId = "plan_id8";
-String planItemId = "plan_item_id0";
-
-try {
-    GetPlanItemResponse response = plansController.deletePlanItem(planId, planItemId, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Plans
-
-Gets all plans
-
-```java
-CompletableFuture<ListPlansResponse> getPlans(
-    final Integer page,
-    final Integer size,
-    final String name,
-    final String status,
-    final String billingType,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-| `name` | `String` | Query, Optional | Filter for Plan's name |
-| `status` | `String` | Query, Optional | Filter for Plan's status |
-| `billingType` | `String` | Query, Optional | Filter for plan's billing type |
-| `createdSince` | `LocalDateTime` | Query, Optional | Filter for plan's creation date start range |
-| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for plan's creation date end range |
-
-## Response Type
-
-[`ListPlansResponse`](/doc/models/list-plans-response.md)
-
-## Example Usage
-
-```java
-try {
-    ListPlansResponse response = plansController.getPlans(null, null, null, null, null, null, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Plan
-
-Updates a plan
-
-```java
-CompletableFuture<GetPlanResponse> updatePlan(
-    final String planId,
-    final UpdatePlanRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | Plan id |
-| `request` | [`UpdatePlanRequest`](/doc/models/update-plan-request.md) | Body, Required | Request for updating a plan |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetPlanResponse`](/doc/models/get-plan-response.md)
-
-## Example Usage
-
-```java
-String planId = "plan_id8";
-UpdatePlanRequest request = new UpdatePlanRequest();
-request.setName("name6");
-request.setDescription("description6");
-request.setInstallments(new LinkedList<>());
-request.getInstallments().add(151);
-request.getInstallments().add(152);
-request.setStatementDescriptor("statement_descriptor6");
-request.setCurrency("currency6");
-request.setInterval("interval4");
-request.setIntervalCount(114);
-request.setPaymentMethods(new LinkedList<>());
-request.getPaymentMethods().add("payment_methods1");
-request.getPaymentMethods().add("payment_methods0");
-request.getPaymentMethods().add("payment_methods9");
-request.setBillingType("billing_type0");
-request.setStatus("status8");
-request.setShippable(false);
-request.setBillingDays(new LinkedList<>());
-request.getBillingDays().add(115);
-request.setMetadata(new LinkedHashMap<>());
-request.getMetadata().put("key0", "metadata3");
-
-try {
-    GetPlanResponse response = plansController.updatePlan(planId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

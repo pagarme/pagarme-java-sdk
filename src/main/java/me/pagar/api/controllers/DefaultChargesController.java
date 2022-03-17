@@ -208,6 +208,222 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
+     * Updates the card from a charge.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  request  Required parameter: Request for updating a charge's card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse updateChargeCard(
+            final String chargeId,
+            final UpdateChargeCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildUpdateChargeCardRequest(chargeId, request,
+                idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleUpdateChargeCardResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for updateChargeCard.
+     */
+    private HttpRequest buildUpdateChargeCardRequest(
+            final String chargeId,
+            final UpdateChargeCardRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/charges/{charge_id}/card");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("charge_id",
+                new SimpleEntry<Object, Boolean>(chargeId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for updateChargeCard.
+     * @return An object of type GetChargeResponse
+     */
+    private GetChargeResponse handleUpdateChargeCardResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargeResponse result = ApiHelper.deserialize(responseBody,
+                GetChargeResponse.class);
+
+        return result;
+    }
+
+    /**
+     * @param  status  Required parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @return    Returns the GetChargesSummaryResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargesSummaryResponse getChargesSummary(
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException {
+        HttpRequest request = buildGetChargesSummaryRequest(status, createdSince, createdUntil);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetChargesSummaryResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getChargesSummary.
+     */
+    private HttpRequest buildGetChargesSummaryRequest(
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/charges/summary");
+
+        //load all query parameters
+        Map<String, Object> queryParameters = new HashMap<>();
+        queryParameters.put("status", status);
+        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
+        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
+                null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getChargesSummary.
+     * @return An object of type GetChargesSummaryResponse
+     */
+    private GetChargesSummaryResponse handleGetChargesSummaryResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargesSummaryResponse result = ApiHelper.deserialize(responseBody,
+                GetChargesSummaryResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Creates a new charge.
+     * @param  request  Required parameter: Request for creating a charge
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse createCharge(
+            final CreateChargeRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildCreateChargeRequest(request, idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleCreateChargeResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for createCharge.
+     */
+    private HttpRequest buildCreateChargeRequest(
+            final CreateChargeRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/Charges");
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for createCharge.
+     * @return An object of type GetChargeResponse
+     */
+    private GetChargeResponse handleCreateChargeResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargeResponse result = ApiHelper.deserialize(responseBody,
+                GetChargeResponse.class);
+
+        return result;
+    }
+
+    /**
      * @param  chargeId  Required parameter: Charge Id
      * @param  page  Optional parameter: Page number
      * @param  size  Optional parameter: Page size
@@ -285,41 +501,40 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
-     * Updates the due date from a charge.
-     * @param  chargeId  Required parameter: Charge Id
-     * @param  request  Required parameter: Request for updating the due date
+     * Captures a charge.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  request  Optional parameter: Request for capturing a charge
      * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetChargeResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetChargeResponse updateChargeDueDate(
+    public GetChargeResponse captureCharge(
             final String chargeId,
-            final UpdateChargeDueDateRequest request,
+            final CreateCaptureChargeRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateChargeDueDateRequest(chargeId, request,
-                idempotencyKey);
+        HttpRequest internalRequest = buildCaptureChargeRequest(chargeId, request, idempotencyKey);
         authManagers.get("global").apply(internalRequest);
 
         HttpResponse response = getClientInstance().execute(internalRequest, false);
         HttpContext context = new HttpContext(internalRequest, response);
 
-        return handleUpdateChargeDueDateResponse(context);
+        return handleCaptureChargeResponse(context);
     }
 
     /**
-     * Builds the HttpRequest object for updateChargeDueDate.
+     * Builds the HttpRequest object for captureCharge.
      */
-    private HttpRequest buildUpdateChargeDueDateRequest(
+    private HttpRequest buildCaptureChargeRequest(
             final String chargeId,
-            final UpdateChargeDueDateRequest request,
+            final CreateCaptureChargeRequest request,
             final String idempotencyKey) throws JsonProcessingException {
         //the base uri for api requests
         String baseUri = config.getBaseUri();
 
         //prepare query string for API call
         final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/Charges/{charge_id}/due-date");
+                + "/charges/{charge_id}/capture");
 
         //process template parameters
         Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
@@ -336,17 +551,159 @@ public final class DefaultChargesController extends BaseController implements Ch
 
         //prepare and invoke the API call request to fetch the response
         String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
+        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
                 bodyJson);
 
         return internalRequest;
     }
 
     /**
-     * Processes the response for updateChargeDueDate.
+     * Processes the response for captureCharge.
      * @return An object of type GetChargeResponse
      */
-    private GetChargeResponse handleUpdateChargeDueDateResponse(
+    private GetChargeResponse handleCaptureChargeResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargeResponse result = ApiHelper.deserialize(responseBody,
+                GetChargeResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Get a charge from its id.
+     * @param  chargeId  Required parameter: Charge id
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse getCharge(
+            final String chargeId) throws ApiException, IOException {
+        HttpRequest request = buildGetChargeRequest(chargeId);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleGetChargeResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for getCharge.
+     */
+    private HttpRequest buildGetChargeRequest(
+            final String chargeId) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/charges/{charge_id}");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("charge_id",
+                new SimpleEntry<Object, Boolean>(chargeId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for getCharge.
+     * @return An object of type GetChargeResponse
+     */
+    private GetChargeResponse handleGetChargeResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargeResponse result = ApiHelper.deserialize(responseBody,
+                GetChargeResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Cancel a charge.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  request  Optional parameter: Request for cancelling a charge
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse cancelCharge(
+            final String chargeId,
+            final CreateCancelChargeRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildCancelChargeRequest(chargeId, request, idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleCancelChargeResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for cancelCharge.
+     */
+    private HttpRequest buildCancelChargeRequest(
+            final String chargeId,
+            final CreateCancelChargeRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/charges/{charge_id}");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("charge_id",
+                new SimpleEntry<Object, Boolean>(chargeId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().deleteBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for cancelCharge.
+     * @return An object of type GetChargeResponse
+     */
+    private GetChargeResponse handleCancelChargeResponse(
             HttpContext context) throws ApiException, IOException {
         HttpResponse response = context.getResponse();
 
@@ -462,510 +819,6 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
-     * Captures a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  request  Optional parameter: Request for capturing a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse captureCharge(
-            final String chargeId,
-            final CreateCaptureChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCaptureChargeRequest(chargeId, request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCaptureChargeResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for captureCharge.
-     */
-    private HttpRequest buildCaptureChargeRequest(
-            final String chargeId,
-            final CreateCaptureChargeRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/charges/{charge_id}/capture");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("charge_id",
-                new SimpleEntry<Object, Boolean>(chargeId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for captureCharge.
-     * @return An object of type GetChargeResponse
-     */
-    private GetChargeResponse handleCaptureChargeResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargeResponse result = ApiHelper.deserialize(responseBody,
-                GetChargeResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the card from a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  request  Required parameter: Request for updating a charge's card
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse updateChargeCard(
-            final String chargeId,
-            final UpdateChargeCardRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateChargeCardRequest(chargeId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateChargeCardResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateChargeCard.
-     */
-    private HttpRequest buildUpdateChargeCardRequest(
-            final String chargeId,
-            final UpdateChargeCardRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/charges/{charge_id}/card");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("charge_id",
-                new SimpleEntry<Object, Boolean>(chargeId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateChargeCard.
-     * @return An object of type GetChargeResponse
-     */
-    private GetChargeResponse handleUpdateChargeCardResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargeResponse result = ApiHelper.deserialize(responseBody,
-                GetChargeResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Get a charge from its id.
-     * @param  chargeId  Required parameter: Charge id
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse getCharge(
-            final String chargeId) throws ApiException, IOException {
-        HttpRequest request = buildGetChargeRequest(chargeId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetChargeResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getCharge.
-     */
-    private HttpRequest buildGetChargeRequest(
-            final String chargeId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/charges/{charge_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("charge_id",
-                new SimpleEntry<Object, Boolean>(chargeId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getCharge.
-     * @return An object of type GetChargeResponse
-     */
-    private GetChargeResponse handleGetChargeResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargeResponse result = ApiHelper.deserialize(responseBody,
-                GetChargeResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  status  Required parameter: Example:
-     * @param  createdSince  Optional parameter: Example:
-     * @param  createdUntil  Optional parameter: Example:
-     * @return    Returns the GetChargesSummaryResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargesSummaryResponse getChargesSummary(
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException {
-        HttpRequest request = buildGetChargesSummaryRequest(status, createdSince, createdUntil);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetChargesSummaryResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getChargesSummary.
-     */
-    private HttpRequest buildGetChargesSummaryRequest(
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/charges/summary");
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("status", status);
-        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
-        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getChargesSummary.
-     * @return An object of type GetChargesSummaryResponse
-     */
-    private GetChargesSummaryResponse handleGetChargesSummaryResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargesSummaryResponse result = ApiHelper.deserialize(responseBody,
-                GetChargesSummaryResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Retries a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse retryCharge(
-            final String chargeId,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildRetryChargeRequest(chargeId, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleRetryChargeResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for retryCharge.
-     */
-    private HttpRequest buildRetryChargeRequest(
-            final String chargeId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/charges/{charge_id}/retry");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("charge_id",
-                new SimpleEntry<Object, Boolean>(chargeId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().post(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for retryCharge.
-     * @return An object of type GetChargeResponse
-     */
-    private GetChargeResponse handleRetryChargeResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargeResponse result = ApiHelper.deserialize(responseBody,
-                GetChargeResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Cancel a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  request  Optional parameter: Request for cancelling a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse cancelCharge(
-            final String chargeId,
-            final CreateCancelChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCancelChargeRequest(chargeId, request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCancelChargeResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for cancelCharge.
-     */
-    private HttpRequest buildCancelChargeRequest(
-            final String chargeId,
-            final CreateCancelChargeRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/charges/{charge_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("charge_id",
-                new SimpleEntry<Object, Boolean>(chargeId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().deleteBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for cancelCharge.
-     * @return An object of type GetChargeResponse
-     */
-    private GetChargeResponse handleCancelChargeResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargeResponse result = ApiHelper.deserialize(responseBody,
-                GetChargeResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Creates a new charge.
-     * @param  request  Required parameter: Request for creating a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse createCharge(
-            final CreateChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateChargeRequest(request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateChargeResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createCharge.
-     */
-    private HttpRequest buildCreateChargeRequest(
-            final CreateChargeRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/Charges");
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for createCharge.
-     * @return An object of type GetChargeResponse
-     */
-    private GetChargeResponse handleCreateChargeResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetChargeResponse result = ApiHelper.deserialize(responseBody,
-                GetChargeResponse.class);
-
-        return result;
-    }
-
-    /**
      * @param  chargeId  Required parameter: Example:
      * @param  request  Optional parameter: Request for confirm payment
      * @param  idempotencyKey  Optional parameter: Example:
@@ -1026,6 +879,153 @@ public final class DefaultChargesController extends BaseController implements Ch
      * @return An object of type GetChargeResponse
      */
     private GetChargeResponse handleConfirmPaymentResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargeResponse result = ApiHelper.deserialize(responseBody,
+                GetChargeResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Updates the due date from a charge.
+     * @param  chargeId  Required parameter: Charge Id
+     * @param  request  Required parameter: Request for updating the due date
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse updateChargeDueDate(
+            final String chargeId,
+            final UpdateChargeDueDateRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest internalRequest = buildUpdateChargeDueDateRequest(chargeId, request,
+                idempotencyKey);
+        authManagers.get("global").apply(internalRequest);
+
+        HttpResponse response = getClientInstance().execute(internalRequest, false);
+        HttpContext context = new HttpContext(internalRequest, response);
+
+        return handleUpdateChargeDueDateResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for updateChargeDueDate.
+     */
+    private HttpRequest buildUpdateChargeDueDateRequest(
+            final String chargeId,
+            final UpdateChargeDueDateRequest request,
+            final String idempotencyKey) throws JsonProcessingException {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/Charges/{charge_id}/due-date");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("charge_id",
+                new SimpleEntry<Object, Boolean>(chargeId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+        headers.add("content-type", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        String bodyJson = ApiHelper.serialize(request);
+        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
+                bodyJson);
+
+        return internalRequest;
+    }
+
+    /**
+     * Processes the response for updateChargeDueDate.
+     * @return An object of type GetChargeResponse
+     */
+    private GetChargeResponse handleUpdateChargeDueDateResponse(
+            HttpContext context) throws ApiException, IOException {
+        HttpResponse response = context.getResponse();
+
+        //handle errors defined at the API level
+        validateResponse(response, context);
+
+        //extract result from the http response
+        String responseBody = ((HttpStringResponse) response).getBody();
+        GetChargeResponse result = ApiHelper.deserialize(responseBody,
+                GetChargeResponse.class);
+
+        return result;
+    }
+
+    /**
+     * Retries a charge.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse retryCharge(
+            final String chargeId,
+            final String idempotencyKey) throws ApiException, IOException {
+        HttpRequest request = buildRetryChargeRequest(chargeId, idempotencyKey);
+        authManagers.get("global").apply(request);
+
+        HttpResponse response = getClientInstance().execute(request, false);
+        HttpContext context = new HttpContext(request, response);
+
+        return handleRetryChargeResponse(context);
+    }
+
+    /**
+     * Builds the HttpRequest object for retryCharge.
+     */
+    private HttpRequest buildRetryChargeRequest(
+            final String chargeId,
+            final String idempotencyKey) {
+        //the base uri for api requests
+        String baseUri = config.getBaseUri();
+
+        //prepare query string for API call
+        final StringBuilder queryBuilder = new StringBuilder(baseUri
+                + "/charges/{charge_id}/retry");
+
+        //process template parameters
+        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
+        templateParameters.put("charge_id",
+                new SimpleEntry<Object, Boolean>(chargeId, true));
+        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
+
+        //load all headers for the outgoing API request
+        Headers headers = new Headers();
+        headers.add("idempotency-key", idempotencyKey);
+        headers.add("user-agent", BaseController.userAgent);
+        headers.add("accept", "application/json");
+
+        //prepare and invoke the API call request to fetch the response
+        HttpRequest request = getClientInstance().post(queryBuilder, headers, null, null);
+
+        return request;
+    }
+
+    /**
+     * Processes the response for retryCharge.
+     * @return An object of type GetChargeResponse
+     */
+    private GetChargeResponse handleRetryChargeResponse(
             HttpContext context) throws ApiException, IOException {
         HttpResponse response = context.getResponse();
 

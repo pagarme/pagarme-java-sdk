@@ -14,20 +14,20 @@ Response object for getting an Order
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `Code` | `String` | Required | - | String getCode() | setCode(String code) |
 | `Currency` | `String` | Required | - | String getCurrency() | setCurrency(String currency) |
-| `Items` | [`List<GetOrderItemResponse>`](/doc/models/get-order-item-response.md) | Required | - | List<GetOrderItemResponse> getItems() | setItems(List<GetOrderItemResponse> items) |
-| `Customer` | [`GetCustomerResponse`](/doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
+| `Items` | [`List<GetOrderItemResponse>`](../../doc/models/get-order-item-response.md) | Required | - | List<GetOrderItemResponse> getItems() | setItems(List<GetOrderItemResponse> items) |
+| `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `Charges` | [`List<GetChargeResponse>`](/doc/models/get-charge-response.md) | Required | - | List<GetChargeResponse> getCharges() | setCharges(List<GetChargeResponse> charges) |
+| `Charges` | [`List<GetChargeResponse>`](../../doc/models/get-charge-response.md) | Required | - | List<GetChargeResponse> getCharges() | setCharges(List<GetChargeResponse> charges) |
 | `InvoiceUrl` | `String` | Required | - | String getInvoiceUrl() | setInvoiceUrl(String invoiceUrl) |
-| `Shipping` | [`GetShippingResponse`](/doc/models/get-shipping-response.md) | Required | - | GetShippingResponse getShipping() | setShipping(GetShippingResponse shipping) |
+| `Shipping` | [`GetShippingResponse`](../../doc/models/get-shipping-response.md) | Required | - | GetShippingResponse getShipping() | setShipping(GetShippingResponse shipping) |
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Checkouts` | [`List<GetCheckoutPaymentResponse>`](/doc/models/get-checkout-payment-response.md) | Optional | Checkout Payment Settings Response | List<GetCheckoutPaymentResponse> getCheckouts() | setCheckouts(List<GetCheckoutPaymentResponse> checkouts) |
+| `Checkouts` | [`List<GetCheckoutPaymentResponse>`](../../doc/models/get-checkout-payment-response.md) | Optional | Checkout Payment Settings Response | List<GetCheckoutPaymentResponse> getCheckouts() | setCheckouts(List<GetCheckoutPaymentResponse> checkouts) |
 | `Ip` | `String` | Optional | Ip address | String getIp() | setIp(String ip) |
 | `SessionId` | `String` | Optional | Session id | String getSessionId() | setSessionId(String sessionId) |
-| `Location` | [`GetLocationResponse`](/doc/models/get-location-response.md) | Optional | Location | GetLocationResponse getLocation() | setLocation(GetLocationResponse location) |
-| `Device` | [`GetDeviceResponse`](/doc/models/get-device-response.md) | Optional | Device's informations | GetDeviceResponse getDevice() | setDevice(GetDeviceResponse device) |
+| `Location` | [`GetLocationResponse`](../../doc/models/get-location-response.md) | Optional | Location | GetLocationResponse getLocation() | setLocation(GetLocationResponse location) |
+| `Device` | [`GetDeviceResponse`](../../doc/models/get-device-response.md) | Optional | Device's informations | GetDeviceResponse getDevice() | setDevice(GetDeviceResponse device) |
 | `Closed` | `boolean` | Required | Indicates whether the order is closed | boolean getClosed() | setClosed(boolean closed) |
 
 ## Example (as JSON)

@@ -89,31 +89,6 @@ public interface RecipientsController {
             final Integer size) throws ApiException, IOException;
 
     /**
-     * @param  recipientId  Required parameter: Example:
-     * @param  withdrawalId  Required parameter: Example:
-     * @return    Returns the GetWithdrawResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetWithdrawResponse getWithdrawById(
-            final String recipientId,
-            final String withdrawalId) throws ApiException, IOException;
-
-    /**
-     * Updates the default bank account from a recipient.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Bank account data
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetRecipientResponse updateRecipientDefaultBankAccount(
-            final String recipientId,
-            final UpdateRecipientBankAccountRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
      * Updates recipient metadata.
      * @param  recipientId  Required parameter: Recipient id
      * @param  request  Required parameter: Metadata
@@ -128,26 +103,6 @@ public interface RecipientsController {
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
-     * Gets a paginated list of transfers for the recipient.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  status  Optional parameter: Filter for transfer status
-     * @param  createdSince  Optional parameter: Filter for start range of transfer creation date
-     * @param  createdUntil  Optional parameter: Filter for end range of transfer creation date
-     * @return    Returns the ListTransferResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    ListTransferResponse getTransfers(
-            final String recipientId,
-            final Integer page,
-            final Integer size,
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException;
-
-    /**
      * Gets a transfer.
      * @param  recipientId  Required parameter: Recipient id
      * @param  transferId  Required parameter: Transfer id
@@ -158,31 +113,6 @@ public interface RecipientsController {
     GetTransferResponse getTransfer(
             final String recipientId,
             final String transferId) throws ApiException, IOException;
-
-    /**
-     * @param  recipientId  Required parameter: Example:
-     * @param  request  Required parameter: Example:
-     * @return    Returns the GetWithdrawResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetWithdrawResponse createWithdraw(
-            final String recipientId,
-            final CreateWithdrawRequest request) throws ApiException, IOException;
-
-    /**
-     * Updates recipient metadata.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetRecipientResponse updateAutomaticAnticipationSettings(
-            final String recipientId,
-            final UpdateAutomaticAnticipationSettingsRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
 
     /**
      * Gets an anticipation.
@@ -239,14 +169,29 @@ public interface RecipientsController {
             final LocalDateTime createdUntil) throws ApiException, IOException;
 
     /**
-     * Retrieves recipient information.
-     * @param  recipientId  Required parameter: Recipiend id
+     * Updates the default bank account from a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Bank account data
+     * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetRecipientResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetRecipientResponse getRecipient(
-            final String recipientId) throws ApiException, IOException;
+    GetRecipientResponse updateRecipientDefaultBankAccount(
+            final String recipientId,
+            final UpdateRecipientBankAccountRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  request  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetWithdrawResponse createWithdraw(
+            final String recipientId,
+            final CreateWithdrawRequest request) throws ApiException, IOException;
 
     /**
      * Get balance information for a recipient.
@@ -257,26 +202,6 @@ public interface RecipientsController {
      */
     GetBalanceResponse getBalance(
             final String recipientId) throws ApiException, IOException;
-
-    /**
-     * Gets a paginated list of transfers for the recipient.
-     * @param  recipientId  Required parameter: Example:
-     * @param  page  Optional parameter: Example:
-     * @param  size  Optional parameter: Example:
-     * @param  status  Optional parameter: Example:
-     * @param  createdSince  Optional parameter: Example:
-     * @param  createdUntil  Optional parameter: Example:
-     * @return    Returns the ListWithdrawals response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    ListWithdrawals getWithdrawals(
-            final String recipientId,
-            final Integer page,
-            final Integer size,
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException;
 
     /**
      * Creates a transfer for a recipient.
@@ -303,6 +228,81 @@ public interface RecipientsController {
     GetRecipientResponse createRecipient(
             final CreateRecipientRequest request,
             final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Updates recipient metadata.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetRecipientResponse updateAutomaticAnticipationSettings(
+            final String recipientId,
+            final UpdateAutomaticAnticipationSettingsRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Retrieves recipient information.
+     * @param  recipientId  Required parameter: Recipiend id
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetRecipientResponse getRecipient(
+            final String recipientId) throws ApiException, IOException;
+
+    /**
+     * Gets a paginated list of transfers for the recipient.
+     * @param  recipientId  Required parameter: Example:
+     * @param  page  Optional parameter: Example:
+     * @param  size  Optional parameter: Example:
+     * @param  status  Optional parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @return    Returns the ListWithdrawals response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListWithdrawals getWithdrawals(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException;
+
+    /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  withdrawalId  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetWithdrawResponse getWithdrawById(
+            final String recipientId,
+            final String withdrawalId) throws ApiException, IOException;
+
+    /**
+     * Gets a paginated list of transfers for the recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  status  Optional parameter: Filter for transfer status
+     * @param  createdSince  Optional parameter: Filter for start range of transfer creation date
+     * @param  createdUntil  Optional parameter: Filter for end range of transfer creation date
+     * @return    Returns the ListTransferResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListTransferResponse getTransfers(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException;
 
     /**
      * Retrieves recipient information.

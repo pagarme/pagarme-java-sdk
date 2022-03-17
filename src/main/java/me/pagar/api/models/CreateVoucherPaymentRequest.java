@@ -14,13 +14,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateVoucherPaymentRequest type.
  */
 public class CreateVoucherPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String statementDescriptor;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardToken;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardRequest card;
 
     /**
@@ -53,6 +49,7 @@ public class CreateVoucherPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getStatementDescriptor() {
         return statementDescriptor;
     }
@@ -73,6 +70,7 @@ public class CreateVoucherPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardId() {
         return cardId;
     }
@@ -93,6 +91,7 @@ public class CreateVoucherPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardToken() {
         return cardToken;
     }
@@ -113,6 +112,7 @@ public class CreateVoucherPaymentRequest {
      * @return Returns the CreateCardRequest
      */
     @JsonGetter("Card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardRequest getCard() {
         return card;
     }

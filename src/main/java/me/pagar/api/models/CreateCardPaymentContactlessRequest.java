@@ -15,11 +15,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  */
 public class CreateCardPaymentContactlessRequest {
     private String type;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateApplePayRequest applePay;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateGooglePayRequest googlePay;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateEmvDecryptRequest emv;
 
     /**
@@ -72,6 +69,7 @@ public class CreateCardPaymentContactlessRequest {
      * @return Returns the CreateApplePayRequest
      */
     @JsonGetter("apple_pay")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateApplePayRequest getApplePay() {
         return applePay;
     }
@@ -92,6 +90,7 @@ public class CreateCardPaymentContactlessRequest {
      * @return Returns the CreateGooglePayRequest
      */
     @JsonGetter("google_pay")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateGooglePayRequest getGooglePay() {
         return googlePay;
     }
@@ -112,6 +111,7 @@ public class CreateCardPaymentContactlessRequest {
      * @return Returns the CreateEmvDecryptRequest
      */
     @JsonGetter("emv")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateEmvDecryptRequest getEmv() {
         return emv;
     }

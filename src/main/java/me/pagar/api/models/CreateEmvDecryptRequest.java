@@ -17,7 +17,6 @@ public class CreateEmvDecryptRequest {
     private String iccData;
     private String cardSequenceNumber;
     private CreateEmvDataDecryptRequest data;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardPaymentContactlessPOIRequest poi;
 
     /**
@@ -103,6 +102,7 @@ public class CreateEmvDecryptRequest {
      * @return Returns the CreateCardPaymentContactlessPOIRequest
      */
     @JsonGetter("poi")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardPaymentContactlessPOIRequest getPoi() {
         return poi;
     }

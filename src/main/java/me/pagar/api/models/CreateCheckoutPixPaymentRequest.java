@@ -19,11 +19,8 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for CreateCheckoutPixPaymentRequest type.
  */
 public class CreateCheckoutPixPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime expiresAt;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer expiresIn;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<PixAdditionalInformation> additionalInformation;
 
     /**
@@ -54,6 +51,7 @@ public class CreateCheckoutPixPaymentRequest {
      * @return Returns the LocalDateTime
      */
     @JsonGetter("expires_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getExpiresAt() {
         return expiresAt;
@@ -76,6 +74,7 @@ public class CreateCheckoutPixPaymentRequest {
      * @return Returns the Integer
      */
     @JsonGetter("expires_in")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getExpiresIn() {
         return expiresIn;
     }
@@ -96,6 +95,7 @@ public class CreateCheckoutPixPaymentRequest {
      * @return Returns the List of PixAdditionalInformation
      */
     @JsonGetter("additional_information")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<PixAdditionalInformation> getAdditionalInformation() {
         return additionalInformation;
     }

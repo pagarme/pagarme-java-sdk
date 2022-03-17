@@ -13,7 +13,7 @@ Response object for getting a pricing scheme
 |  --- | --- | --- | --- | --- | --- |
 | `Price` | `int` | Required | - | int getPrice() | setPrice(int price) |
 | `SchemeType` | `String` | Required | - | String getSchemeType() | setSchemeType(String schemeType) |
-| `PriceBrackets` | [`List<GetPriceBracketResponse>`](/doc/models/get-price-bracket-response.md) | Required | - | List<GetPriceBracketResponse> getPriceBrackets() | setPriceBrackets(List<GetPriceBracketResponse> priceBrackets) |
+| `PriceBrackets` | [`List<GetPriceBracketResponse>`](../../doc/models/get-price-bracket-response.md) | Required | - | List<GetPriceBracketResponse> getPriceBrackets() | setPriceBrackets(List<GetPriceBracketResponse> priceBrackets) |
 | `MinimumPrice` | `Integer` | Optional | - | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 | `Percentage` | `Double` | Optional | percentual value used in pricing_scheme Percent | Double getPercentage() | setPercentage(Double percentage) |
 

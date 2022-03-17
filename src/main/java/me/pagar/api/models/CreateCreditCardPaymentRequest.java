@@ -14,33 +14,19 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for CreateCreditCardPaymentRequest type.
  */
 public class CreateCreditCardPaymentRequest {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer installments;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String statementDescriptor;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardRequest card;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cardToken;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean recurrence;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean capture;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean extendedLimitEnabled;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String extendedLimitCode;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long merchantCategoryCode;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreatePaymentAuthenticationRequest authentication;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CreateCardPaymentContactlessRequest contactless;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean autoRecovery;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String operationType;
 
     /**
@@ -105,6 +91,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the Integer
      */
     @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getInstallments() {
         return installments;
     }
@@ -125,6 +112,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getStatementDescriptor() {
         return statementDescriptor;
     }
@@ -145,6 +133,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the CreateCardRequest
      */
     @JsonGetter("card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardRequest getCard() {
         return card;
     }
@@ -165,6 +154,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardId() {
         return cardId;
     }
@@ -184,6 +174,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("card_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCardToken() {
         return cardToken;
     }
@@ -203,6 +194,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("recurrence")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getRecurrence() {
         return recurrence;
     }
@@ -223,6 +215,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("capture")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getCapture() {
         return capture;
     }
@@ -243,6 +236,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("extended_limit_enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getExtendedLimitEnabled() {
         return extendedLimitEnabled;
     }
@@ -263,6 +257,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("extended_limit_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getExtendedLimitCode() {
         return extendedLimitCode;
     }
@@ -283,6 +278,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the Long
      */
     @JsonGetter("merchant_category_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Long getMerchantCategoryCode() {
         return merchantCategoryCode;
     }
@@ -303,6 +299,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the CreatePaymentAuthenticationRequest
      */
     @JsonGetter("authentication")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePaymentAuthenticationRequest getAuthentication() {
         return authentication;
     }
@@ -323,6 +320,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the CreateCardPaymentContactlessRequest
      */
     @JsonGetter("contactless")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardPaymentContactlessRequest getContactless() {
         return contactless;
     }
@@ -343,6 +341,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the Boolean
      */
     @JsonGetter("auto_recovery")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getAutoRecovery() {
         return autoRecovery;
     }
@@ -363,6 +362,7 @@ public class CreateCreditCardPaymentRequest {
      * @return Returns the String
      */
     @JsonGetter("operation_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getOperationType() {
         return operationType;
     }

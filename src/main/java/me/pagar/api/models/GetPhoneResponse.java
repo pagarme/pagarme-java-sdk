@@ -14,11 +14,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * This is a model class for GetPhoneResponse type.
  */
 public class GetPhoneResponse {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String countryCode;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String number;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String areaCode;
 
     /**
@@ -47,6 +44,7 @@ public class GetPhoneResponse {
      * @return Returns the String
      */
     @JsonGetter("country_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCountryCode() {
         return countryCode;
     }
@@ -65,6 +63,7 @@ public class GetPhoneResponse {
      * @return Returns the String
      */
     @JsonGetter("number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getNumber() {
         return number;
     }
@@ -83,6 +82,7 @@ public class GetPhoneResponse {
      * @return Returns the String
      */
     @JsonGetter("area_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getAreaCode() {
         return areaCode;
     }
