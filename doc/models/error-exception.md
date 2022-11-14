@@ -11,7 +11,7 @@ Api Error Exception
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Message` | `String` | Required | - | String getMessage() | setMessage(String message) |
+| `Message` | `String` | Required | - | String getMessageField() | setMessageField(String messageField) |
 | `Errors` | `Object` | Required | - | Object getErrors() | setErrors(Object errors) |
 | `Request` | `Object` | Required | - | Object getRequest() | setRequest(Object request) |
 

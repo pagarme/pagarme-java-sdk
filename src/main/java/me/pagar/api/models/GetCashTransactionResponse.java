@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,9 @@ public class GetCashTransactionResponse
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      */
     public GetCashTransactionResponse(
             String gatewayId,
@@ -77,10 +81,13 @@ public class GetCashTransactionResponse
             String description,
             LocalDateTime nextAttempt,
             String transactionType,
-            Map<String, String> metadata) {
+            Map<String, String> metadata,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata);
+                metadata, interest, fine, maxDaysToPayPastDue);
         this.description = description;
     }
 
@@ -118,7 +125,8 @@ public class GetCashTransactionResponse
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", split=" + getSplit() + ", nextAttempt="
                 + getNextAttempt() + ", transactionType=" + getTransactionType() + ", metadata="
-                + getMetadata() + "]";
+                + getMetadata() + ", interest=" + getInterest() + ", fine=" + getFine()
+                + ", maxDaysToPayPastDue=" + getMaxDaysToPayPastDue() + "]";
     }
 
     /**
@@ -132,7 +140,10 @@ public class GetCashTransactionResponse
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), description)
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
-                .metadata(getMetadata());
+                .metadata(getMetadata())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -140,7 +151,6 @@ public class GetCashTransactionResponse
      * Class to build instances of {@link GetCashTransactionResponse}.
      */
     public static class Builder {
-        private String description;
         private String gatewayId;
         private int amount;
         private String status;
@@ -154,9 +164,13 @@ public class GetCashTransactionResponse
         private GetGatewayResponseResponse gatewayResponse;
         private GetAntifraudResponse antifraudResponse;
         private List<GetSplitResponse> split;
+        private String description;
         private LocalDateTime nextAttempt;
         private String transactionType = "cash";
         private Map<String, String> metadata;
+        private GetInterestResponse interest;
+        private GetFineResponse fine;
+        private Integer maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -200,16 +214,6 @@ public class GetCashTransactionResponse
             this.antifraudResponse = antifraudResponse;
             this.split = split;
             this.description = description;
-        }
-
-        /**
-         * Setter for description.
-         * @param  description  String value for description.
-         * @return Builder
-         */
-        public Builder description(String description) {
-            this.description = description;
-            return this;
         }
 
         /**
@@ -343,6 +347,16 @@ public class GetCashTransactionResponse
         }
 
         /**
+         * Setter for description.
+         * @param  description  String value for description.
+         * @return Builder
+         */
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
          * Setter for nextAttempt.
          * @param  nextAttempt  LocalDateTime value for nextAttempt.
          * @return Builder
@@ -373,13 +387,44 @@ public class GetCashTransactionResponse
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  GetInterestResponse value for interest.
+         * @return Builder
+         */
+        public Builder interest(GetInterestResponse interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  GetFineResponse value for fine.
+         * @return Builder
+         */
+        public Builder fine(GetFineResponse fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetCashTransactionResponse} object using the set fields.
          * @return {@link GetCashTransactionResponse}
          */
         public GetCashTransactionResponse build() {
             return new GetCashTransactionResponse(gatewayId, amount, status, success, createdAt,
                     updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
-                    antifraudResponse, split, description, nextAttempt, transactionType, metadata);
+                    antifraudResponse, split, description, nextAttempt, transactionType, metadata,
+                    interest, fine, maxDaysToPayPastDue);
         }
     }
 }

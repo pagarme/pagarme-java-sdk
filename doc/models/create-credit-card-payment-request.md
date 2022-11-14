@@ -25,6 +25,7 @@ The settings for creating a credit card payment
 | `Contactless` | [`CreateCardPaymentContactlessRequest`](../../doc/models/create-card-payment-contactless-request.md) | Optional | The Credit card payment contactless request | CreateCardPaymentContactlessRequest getContactless() | setContactless(CreateCardPaymentContactlessRequest contactless) |
 | `AutoRecovery` | `Boolean` | Optional | Indicates whether a particular payment will enter the offline retry flow | Boolean getAutoRecovery() | setAutoRecovery(Boolean autoRecovery) |
 | `OperationType` | `String` | Optional | AuthOnly, AuthAndCapture, PreAuth | String getOperationType() | setOperationType(String operationType) |
+| `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 
 ## Example (as JSON)
 
@@ -43,7 +44,8 @@ The settings for creating a credit card payment
   "authentication": null,
   "contactless": null,
   "auto_recovery": null,
-  "operation_type": null
+  "operation_type": null,
+  "recurrency_cycle": null
 }
 ```
 

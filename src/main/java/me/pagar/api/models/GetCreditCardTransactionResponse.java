@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +81,9 @@ public class GetCreditCardTransactionResponse
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      * @param  installments  Integer value for installments.
      */
     public GetCreditCardTransactionResponse(
@@ -110,10 +114,13 @@ public class GetCreditCardTransactionResponse
             LocalDateTime nextAttempt,
             String transactionType,
             Map<String, String> metadata,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue,
             Integer installments) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata);
+                metadata, interest, fine, maxDaysToPayPastDue);
         this.statementDescriptor = statementDescriptor;
         this.acquirerName = acquirerName;
         this.acquirerAffiliationCode = acquirerAffiliationCode;
@@ -389,7 +396,8 @@ public class GetCreditCardTransactionResponse
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", split=" + getSplit() + ", nextAttempt="
                 + getNextAttempt() + ", transactionType=" + getTransactionType() + ", metadata="
-                + getMetadata() + "]";
+                + getMetadata() + ", interest=" + getInterest() + ", fine=" + getFine()
+                + ", maxDaysToPayPastDue=" + getMaxDaysToPayPastDue() + "]";
     }
 
     /**
@@ -407,7 +415,10 @@ public class GetCreditCardTransactionResponse
                 .installments(getInstallments())
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
-                .metadata(getMetadata());
+                .metadata(getMetadata())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -415,18 +426,6 @@ public class GetCreditCardTransactionResponse
      * Class to build instances of {@link GetCreditCardTransactionResponse}.
      */
     public static class Builder {
-        private String statementDescriptor;
-        private String acquirerName;
-        private String acquirerAffiliationCode;
-        private String acquirerTid;
-        private String acquirerNsu;
-        private String acquirerAuthCode;
-        private String operationType;
-        private GetCardResponse card;
-        private String acquirerMessage;
-        private String acquirerReturnCode;
-        private String threedAuthenticationUrl;
-        private Integer installments;
         private String gatewayId;
         private int amount;
         private String status;
@@ -440,9 +439,24 @@ public class GetCreditCardTransactionResponse
         private GetGatewayResponseResponse gatewayResponse;
         private GetAntifraudResponse antifraudResponse;
         private List<GetSplitResponse> split;
+        private String statementDescriptor;
+        private String acquirerName;
+        private String acquirerAffiliationCode;
+        private String acquirerTid;
+        private String acquirerNsu;
+        private String acquirerAuthCode;
+        private String operationType;
+        private GetCardResponse card;
+        private String acquirerMessage;
+        private String acquirerReturnCode;
+        private String threedAuthenticationUrl;
         private LocalDateTime nextAttempt;
         private String transactionType = "credit_card";
         private Map<String, String> metadata;
+        private GetInterestResponse interest;
+        private GetFineResponse fine;
+        private Integer maxDaysToPayPastDue;
+        private Integer installments;
 
         /**
          * Initialization constructor.
@@ -509,126 +523,6 @@ public class GetCreditCardTransactionResponse
             this.acquirerMessage = acquirerMessage;
             this.acquirerReturnCode = acquirerReturnCode;
             this.threedAuthenticationUrl = threedAuthenticationUrl;
-        }
-
-        /**
-         * Setter for statementDescriptor.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @return Builder
-         */
-        public Builder statementDescriptor(String statementDescriptor) {
-            this.statementDescriptor = statementDescriptor;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerName.
-         * @param  acquirerName  String value for acquirerName.
-         * @return Builder
-         */
-        public Builder acquirerName(String acquirerName) {
-            this.acquirerName = acquirerName;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerAffiliationCode.
-         * @param  acquirerAffiliationCode  String value for acquirerAffiliationCode.
-         * @return Builder
-         */
-        public Builder acquirerAffiliationCode(String acquirerAffiliationCode) {
-            this.acquirerAffiliationCode = acquirerAffiliationCode;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerTid.
-         * @param  acquirerTid  String value for acquirerTid.
-         * @return Builder
-         */
-        public Builder acquirerTid(String acquirerTid) {
-            this.acquirerTid = acquirerTid;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerNsu.
-         * @param  acquirerNsu  String value for acquirerNsu.
-         * @return Builder
-         */
-        public Builder acquirerNsu(String acquirerNsu) {
-            this.acquirerNsu = acquirerNsu;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerAuthCode.
-         * @param  acquirerAuthCode  String value for acquirerAuthCode.
-         * @return Builder
-         */
-        public Builder acquirerAuthCode(String acquirerAuthCode) {
-            this.acquirerAuthCode = acquirerAuthCode;
-            return this;
-        }
-
-        /**
-         * Setter for operationType.
-         * @param  operationType  String value for operationType.
-         * @return Builder
-         */
-        public Builder operationType(String operationType) {
-            this.operationType = operationType;
-            return this;
-        }
-
-        /**
-         * Setter for card.
-         * @param  card  GetCardResponse value for card.
-         * @return Builder
-         */
-        public Builder card(GetCardResponse card) {
-            this.card = card;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerMessage.
-         * @param  acquirerMessage  String value for acquirerMessage.
-         * @return Builder
-         */
-        public Builder acquirerMessage(String acquirerMessage) {
-            this.acquirerMessage = acquirerMessage;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerReturnCode.
-         * @param  acquirerReturnCode  String value for acquirerReturnCode.
-         * @return Builder
-         */
-        public Builder acquirerReturnCode(String acquirerReturnCode) {
-            this.acquirerReturnCode = acquirerReturnCode;
-            return this;
-        }
-
-        /**
-         * Setter for threedAuthenticationUrl.
-         * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
-         * @return Builder
-         */
-        public Builder threedAuthenticationUrl(String threedAuthenticationUrl) {
-            this.threedAuthenticationUrl = threedAuthenticationUrl;
-            return this;
-        }
-
-        /**
-         * Setter for installments.
-         * @param  installments  Integer value for installments.
-         * @return Builder
-         */
-        public Builder installments(Integer installments) {
-            this.installments = installments;
-            return this;
         }
 
         /**
@@ -762,6 +656,116 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for statementDescriptor.
+         * @param  statementDescriptor  String value for statementDescriptor.
+         * @return Builder
+         */
+        public Builder statementDescriptor(String statementDescriptor) {
+            this.statementDescriptor = statementDescriptor;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerName.
+         * @param  acquirerName  String value for acquirerName.
+         * @return Builder
+         */
+        public Builder acquirerName(String acquirerName) {
+            this.acquirerName = acquirerName;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerAffiliationCode.
+         * @param  acquirerAffiliationCode  String value for acquirerAffiliationCode.
+         * @return Builder
+         */
+        public Builder acquirerAffiliationCode(String acquirerAffiliationCode) {
+            this.acquirerAffiliationCode = acquirerAffiliationCode;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerTid.
+         * @param  acquirerTid  String value for acquirerTid.
+         * @return Builder
+         */
+        public Builder acquirerTid(String acquirerTid) {
+            this.acquirerTid = acquirerTid;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerNsu.
+         * @param  acquirerNsu  String value for acquirerNsu.
+         * @return Builder
+         */
+        public Builder acquirerNsu(String acquirerNsu) {
+            this.acquirerNsu = acquirerNsu;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerAuthCode.
+         * @param  acquirerAuthCode  String value for acquirerAuthCode.
+         * @return Builder
+         */
+        public Builder acquirerAuthCode(String acquirerAuthCode) {
+            this.acquirerAuthCode = acquirerAuthCode;
+            return this;
+        }
+
+        /**
+         * Setter for operationType.
+         * @param  operationType  String value for operationType.
+         * @return Builder
+         */
+        public Builder operationType(String operationType) {
+            this.operationType = operationType;
+            return this;
+        }
+
+        /**
+         * Setter for card.
+         * @param  card  GetCardResponse value for card.
+         * @return Builder
+         */
+        public Builder card(GetCardResponse card) {
+            this.card = card;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerMessage.
+         * @param  acquirerMessage  String value for acquirerMessage.
+         * @return Builder
+         */
+        public Builder acquirerMessage(String acquirerMessage) {
+            this.acquirerMessage = acquirerMessage;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerReturnCode.
+         * @param  acquirerReturnCode  String value for acquirerReturnCode.
+         * @return Builder
+         */
+        public Builder acquirerReturnCode(String acquirerReturnCode) {
+            this.acquirerReturnCode = acquirerReturnCode;
+            return this;
+        }
+
+        /**
+         * Setter for threedAuthenticationUrl.
+         * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
+         * @return Builder
+         */
+        public Builder threedAuthenticationUrl(String threedAuthenticationUrl) {
+            this.threedAuthenticationUrl = threedAuthenticationUrl;
+            return this;
+        }
+
+        /**
          * Setter for nextAttempt.
          * @param  nextAttempt  LocalDateTime value for nextAttempt.
          * @return Builder
@@ -792,6 +796,46 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  GetInterestResponse value for interest.
+         * @return Builder
+         */
+        public Builder interest(GetInterestResponse interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  GetFineResponse value for fine.
+         * @return Builder
+         */
+        public Builder fine(GetFineResponse fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
+         * Setter for installments.
+         * @param  installments  Integer value for installments.
+         * @return Builder
+         */
+        public Builder installments(Integer installments) {
+            this.installments = installments;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetCreditCardTransactionResponse} object using the set fields.
          * @return {@link GetCreditCardTransactionResponse}
          */
@@ -801,7 +845,8 @@ public class GetCreditCardTransactionResponse
                     antifraudResponse, split, statementDescriptor, acquirerName,
                     acquirerAffiliationCode, acquirerTid, acquirerNsu, acquirerAuthCode,
                     operationType, card, acquirerMessage, acquirerReturnCode,
-                    threedAuthenticationUrl, nextAttempt, transactionType, metadata, installments);
+                    threedAuthenticationUrl, nextAttempt, transactionType, metadata, interest, fine,
+                    maxDaysToPayPastDue, installments);
         }
     }
 }

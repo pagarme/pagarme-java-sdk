@@ -8,13 +8,12 @@ package me.pagar.api.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import me.pagar.api.http.client.HttpContext;
+import io.apimatic.coreinterfaces.http.Context;
 
 /**
  * This is a model class for ErrorException type.
  */
-public class ErrorException
-        extends ApiException {
+public class ErrorException extends ApiException {
     private static final long serialVersionUID = -6622563774218833022L;
     private String message;
     private Object errors;
@@ -23,9 +22,9 @@ public class ErrorException
     /**
      * Initialization constructor.
      * @param   reason  The reason for throwing exception
-     * @param   context The http context of the API exception
+     * @param   context The context of the API exception
      */
-    public ErrorException(String reason, HttpContext context) {
+    public ErrorException(String reason, Context context) {
         super(reason, context);
     }
 
@@ -35,17 +34,17 @@ public class ErrorException
      * @return Returns the String
      */
     @JsonGetter("message")
-    public String getMessage() {
+    public String getMessageField() {
         return this.message;
     }
 
     /**
      * Setter for Message.
-     * @param message Value for String
+     * @param messageField Value for String
      */
     @JsonSetter("message")
-    private void setMessage(String message) {
-        this.message = message;
+    private void setMessageField(String messageField) {
+        this.message = messageField;
     }
 
     /**

@@ -7,20 +7,13 @@
 package me.pagar.api.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.apimatic.core.ApiCall;
+import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.HashMap;
-import java.util.Map;
 import me.pagar.api.ApiHelper;
-import me.pagar.api.AuthManager;
-import me.pagar.api.Configuration;
+import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
-import me.pagar.api.http.Headers;
-import me.pagar.api.http.client.HttpClient;
-import me.pagar.api.http.client.HttpContext;
-import me.pagar.api.http.request.HttpRequest;
-import me.pagar.api.http.response.HttpResponse;
-import me.pagar.api.http.response.HttpStringResponse;
+import me.pagar.api.http.request.HttpMethod;
 import me.pagar.api.models.CreateTokenRequest;
 import me.pagar.api.models.GetTokenResponse;
 
@@ -31,15 +24,11 @@ public final class DefaultTokensController extends BaseController implements Tok
 
     /**
      * Initializes the controller.
-     * @param config    Configurations added in client.
-     * @param httpClient    Send HTTP requests and read the responses.
-     * @param authManagers    Apply authorization to requests.
+     * @param globalConfig    Configurations added in client.
      */
-    public DefaultTokensController(Configuration config, HttpClient httpClient,
-            Map<String, AuthManager> authManagers) {
-        super(config, httpClient, authManagers);
+    public DefaultTokensController(GlobalConfiguration globalConfig) {
+        super(globalConfig);
     }
-
 
     /**
      * @param  publicKey  Required parameter: Public key
@@ -53,65 +42,36 @@ public final class DefaultTokensController extends BaseController implements Tok
             final String publicKey,
             final CreateTokenRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateTokenRequest(publicKey, request, idempotencyKey);
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateTokenResponse(context);
+        return prepareCreateTokenRequest(publicKey, request, idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for createToken.
+     * Builds the ApiCall object for createToken.
      */
-    private HttpRequest buildCreateTokenRequest(
+    private ApiCall<GetTokenResponse, ApiException> prepareCreateTokenRequest(
             final String publicKey,
             final CreateTokenRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/tokens?appId={public_key}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("public_key",
-                new SimpleEntry<Object, Boolean>(publicKey, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for createToken.
-     * @return An object of type GetTokenResponse
-     */
-    private GetTokenResponse handleCreateTokenResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetTokenResponse result = ApiHelper.deserialize(responseBody,
-                GetTokenResponse.class);
-
-        return result;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetTokenResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/tokens?appId={public_key}")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("public_key").value(publicKey)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTokenResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -125,62 +85,31 @@ public final class DefaultTokensController extends BaseController implements Tok
     public GetTokenResponse getToken(
             final String id,
             final String publicKey) throws ApiException, IOException {
-        HttpRequest request = buildGetTokenRequest(id, publicKey);
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetTokenResponse(context);
+        return prepareGetTokenRequest(id, publicKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getToken.
+     * Builds the ApiCall object for getToken.
      */
-    private HttpRequest buildGetTokenRequest(
+    private ApiCall<GetTokenResponse, ApiException> prepareGetTokenRequest(
             final String id,
-            final String publicKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/tokens/{id}?appId={public_key}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("id",
-                new SimpleEntry<Object, Boolean>(id, true));
-        templateParameters.put("public_key",
-                new SimpleEntry<Object, Boolean>(publicKey, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
+            final String publicKey) throws IOException {
+        return new ApiCall.Builder<GetTokenResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/tokens/{id}?appId={public_key}")
+                        .templateParam(param -> param.key("id").value(id)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("public_key").value(publicKey)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTokenResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
-
-    /**
-     * Processes the response for getToken.
-     * @return An object of type GetTokenResponse
-     */
-    private GetTokenResponse handleGetTokenResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetTokenResponse result = ApiHelper.deserialize(responseBody,
-                GetTokenResponse.class);
-
-        return result;
-    }
-
 }

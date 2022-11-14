@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,9 @@ public class GetPixTransactionResponse
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      */
     public GetPixTransactionResponse(
             String gatewayId,
@@ -93,10 +97,13 @@ public class GetPixTransactionResponse
             GetPixPayerResponse payer,
             LocalDateTime nextAttempt,
             String transactionType,
-            Map<String, String> metadata) {
+            Map<String, String> metadata,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata);
+                metadata, interest, fine, maxDaysToPayPastDue);
         this.qrCode = qrCode;
         this.qrCodeUrl = qrCodeUrl;
         this.expiresAt = expiresAt;
@@ -231,7 +238,8 @@ public class GetPixTransactionResponse
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", split=" + getSplit() + ", nextAttempt="
                 + getNextAttempt() + ", transactionType=" + getTransactionType() + ", metadata="
-                + getMetadata() + "]";
+                + getMetadata() + ", interest=" + getInterest() + ", fine=" + getFine()
+                + ", maxDaysToPayPastDue=" + getMaxDaysToPayPastDue() + "]";
     }
 
     /**
@@ -246,7 +254,10 @@ public class GetPixTransactionResponse
                 qrCodeUrl, expiresAt, additionalInformation, endToEndId, payer)
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
-                .metadata(getMetadata());
+                .metadata(getMetadata())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -254,12 +265,6 @@ public class GetPixTransactionResponse
      * Class to build instances of {@link GetPixTransactionResponse}.
      */
     public static class Builder {
-        private String qrCode;
-        private String qrCodeUrl;
-        private LocalDateTime expiresAt;
-        private List<PixAdditionalInformation> additionalInformation;
-        private String endToEndId;
-        private GetPixPayerResponse payer;
         private String gatewayId;
         private int amount;
         private String status;
@@ -273,9 +278,18 @@ public class GetPixTransactionResponse
         private GetGatewayResponseResponse gatewayResponse;
         private GetAntifraudResponse antifraudResponse;
         private List<GetSplitResponse> split;
+        private String qrCode;
+        private String qrCodeUrl;
+        private LocalDateTime expiresAt;
+        private List<PixAdditionalInformation> additionalInformation;
+        private String endToEndId;
+        private GetPixPayerResponse payer;
         private LocalDateTime nextAttempt;
         private String transactionType = "pix";
         private Map<String, String> metadata;
+        private GetInterestResponse interest;
+        private GetFineResponse fine;
+        private Integer maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -332,68 +346,6 @@ public class GetPixTransactionResponse
             this.additionalInformation = additionalInformation;
             this.endToEndId = endToEndId;
             this.payer = payer;
-        }
-
-        /**
-         * Setter for qrCode.
-         * @param  qrCode  String value for qrCode.
-         * @return Builder
-         */
-        public Builder qrCode(String qrCode) {
-            this.qrCode = qrCode;
-            return this;
-        }
-
-        /**
-         * Setter for qrCodeUrl.
-         * @param  qrCodeUrl  String value for qrCodeUrl.
-         * @return Builder
-         */
-        public Builder qrCodeUrl(String qrCodeUrl) {
-            this.qrCodeUrl = qrCodeUrl;
-            return this;
-        }
-
-        /**
-         * Setter for expiresAt.
-         * @param  expiresAt  LocalDateTime value for expiresAt.
-         * @return Builder
-         */
-        public Builder expiresAt(LocalDateTime expiresAt) {
-            this.expiresAt = expiresAt;
-            return this;
-        }
-
-        /**
-         * Setter for additionalInformation.
-         * @param  additionalInformation  List of PixAdditionalInformation value for
-         *         additionalInformation.
-         * @return Builder
-         */
-        public Builder additionalInformation(
-                List<PixAdditionalInformation> additionalInformation) {
-            this.additionalInformation = additionalInformation;
-            return this;
-        }
-
-        /**
-         * Setter for endToEndId.
-         * @param  endToEndId  String value for endToEndId.
-         * @return Builder
-         */
-        public Builder endToEndId(String endToEndId) {
-            this.endToEndId = endToEndId;
-            return this;
-        }
-
-        /**
-         * Setter for payer.
-         * @param  payer  GetPixPayerResponse value for payer.
-         * @return Builder
-         */
-        public Builder payer(GetPixPayerResponse payer) {
-            this.payer = payer;
-            return this;
         }
 
         /**
@@ -527,6 +479,68 @@ public class GetPixTransactionResponse
         }
 
         /**
+         * Setter for qrCode.
+         * @param  qrCode  String value for qrCode.
+         * @return Builder
+         */
+        public Builder qrCode(String qrCode) {
+            this.qrCode = qrCode;
+            return this;
+        }
+
+        /**
+         * Setter for qrCodeUrl.
+         * @param  qrCodeUrl  String value for qrCodeUrl.
+         * @return Builder
+         */
+        public Builder qrCodeUrl(String qrCodeUrl) {
+            this.qrCodeUrl = qrCodeUrl;
+            return this;
+        }
+
+        /**
+         * Setter for expiresAt.
+         * @param  expiresAt  LocalDateTime value for expiresAt.
+         * @return Builder
+         */
+        public Builder expiresAt(LocalDateTime expiresAt) {
+            this.expiresAt = expiresAt;
+            return this;
+        }
+
+        /**
+         * Setter for additionalInformation.
+         * @param  additionalInformation  List of PixAdditionalInformation value for
+         *         additionalInformation.
+         * @return Builder
+         */
+        public Builder additionalInformation(
+                List<PixAdditionalInformation> additionalInformation) {
+            this.additionalInformation = additionalInformation;
+            return this;
+        }
+
+        /**
+         * Setter for endToEndId.
+         * @param  endToEndId  String value for endToEndId.
+         * @return Builder
+         */
+        public Builder endToEndId(String endToEndId) {
+            this.endToEndId = endToEndId;
+            return this;
+        }
+
+        /**
+         * Setter for payer.
+         * @param  payer  GetPixPayerResponse value for payer.
+         * @return Builder
+         */
+        public Builder payer(GetPixPayerResponse payer) {
+            this.payer = payer;
+            return this;
+        }
+
+        /**
          * Setter for nextAttempt.
          * @param  nextAttempt  LocalDateTime value for nextAttempt.
          * @return Builder
@@ -557,6 +571,36 @@ public class GetPixTransactionResponse
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  GetInterestResponse value for interest.
+         * @return Builder
+         */
+        public Builder interest(GetInterestResponse interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  GetFineResponse value for fine.
+         * @return Builder
+         */
+        public Builder fine(GetFineResponse fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetPixTransactionResponse} object using the set fields.
          * @return {@link GetPixTransactionResponse}
          */
@@ -564,7 +608,8 @@ public class GetPixTransactionResponse
             return new GetPixTransactionResponse(gatewayId, amount, status, success, createdAt,
                     updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
                     antifraudResponse, split, qrCode, qrCodeUrl, expiresAt, additionalInformation,
-                    endToEndId, payer, nextAttempt, transactionType, metadata);
+                    endToEndId, payer, nextAttempt, transactionType, metadata, interest, fine,
+                    maxDaysToPayPastDue);
         }
     }
 }

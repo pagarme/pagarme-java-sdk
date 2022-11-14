@@ -8,6 +8,7 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import io.apimatic.core.types.BaseModel;
 
 /**
  * This is a model class for GetBillingAddressResponse type.

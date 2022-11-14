@@ -6,159 +6,57 @@
 
 package me.pagar.api.controllers;
 
-import java.io.IOException;
+import io.apimatic.core.ErrorCase;
+import io.apimatic.core.GlobalConfiguration;
+import io.apimatic.coreinterfaces.http.HttpClient;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import me.pagar.api.AuthManager;
-import me.pagar.api.Configuration;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.exceptions.ErrorException;
-import me.pagar.api.http.client.HttpClient;
-import me.pagar.api.http.client.HttpContext;
-import me.pagar.api.http.request.HttpRequest;
-import me.pagar.api.http.response.HttpResponse;
 
 /**
  * Base class for all Controllers.
  */
 public abstract class BaseController {
-    protected static String userAgent = "PagarmeCoreApi - Java 6.5.0";
-
-    /**
-     * Protected variables to hold an instance of Configuration.
-     */
-    protected final Configuration config;
-
-    protected Map<String, AuthManager> authManagers;
-
-    private HttpClient httpClient;
-    
-    protected BaseController(Configuration config, HttpClient httpClient,
-            Map<String, AuthManager> authManagers) {
-        this.config = config;
-        this.httpClient = httpClient;
-        this.authManagers = authManagers;
+    protected final static String AUTHENTICATION_KEY = "global";
+    protected static final Map<String, ErrorCase<ApiException>> GLOBAL_ERROR_CASES =
+            new HashMap<String, ErrorCase<ApiException>>();
+    private GlobalConfiguration globalConfig;
+    static {
+        GLOBAL_ERROR_CASES.put("400", ErrorCase.create("Invalid request",
+                (reason, context) -> new ErrorException(reason, context)));
+        GLOBAL_ERROR_CASES.put("401", ErrorCase.create("Invalid API key",
+                (reason, context) -> new ErrorException(reason, context)));
+        GLOBAL_ERROR_CASES.put("404", ErrorCase.create("An informed resource was not found",
+                (reason, context) -> new ErrorException(reason, context)));
+        GLOBAL_ERROR_CASES.put("412", ErrorCase.create("Business validation error",
+                (reason, context) -> new ErrorException(reason, context)));
+        GLOBAL_ERROR_CASES.put("422", ErrorCase.create("Contract validation error",
+                (reason, context) -> new ErrorException(reason, context)));
+        GLOBAL_ERROR_CASES.put("500", ErrorCase.create("Internal server error",
+                (reason, context) -> new ErrorException(reason, context)));
+        GLOBAL_ERROR_CASES.put(ErrorCase.DEFAULT, ErrorCase.create("HTTP Response Not OK",
+                (reason, context) -> new ApiException(reason, context)));
     }
-    
+
+    protected BaseController(GlobalConfiguration globalConfig) {
+        this.globalConfig = globalConfig;
+    }
+
     
     /**
      * Shared instance of the Http client.
      * @return The shared instance of the http client 
      */
     public HttpClient getClientInstance() {
-        return httpClient;
+        return globalConfig.getHttpClient();
     }
 
     /**
-     * Validates the response against HTTP errors defined at the API level.
-     * @param   response    The response recieved
-     * @param   context     Context of the request and the recieved response
-     * @throws    ApiException    Represents error response from the server.
+     * Instance of the Global Configuration
+     * @return The instance of the global configuration 
      */
-    protected void validateResponse(HttpResponse response, HttpContext context) 
-            throws ApiException {
-        //get response status code to validate
-        int responseCode = response.getStatusCode();
-        if (responseCode == 400) {
-            throw new ErrorException("Invalid request", context);
-        }
-
-        if (responseCode == 401) {
-            throw new ErrorException("Invalid API key", context);
-        }
-
-        if (responseCode == 404) {
-            throw new ErrorException("An informed resource was not found", context);
-        }
-
-        if (responseCode == 412) {
-            throw new ErrorException("Business validation error", context);
-        }
-
-        if (responseCode == 422) {
-            throw new ErrorException("Contract validation error", context);
-        }
-
-        if (responseCode == 500) {
-            throw new ErrorException("Internal server error", context);
-        }
-
-        if ((responseCode < 200) || (responseCode > 208)) { //[200,208] = HTTP OK
-            throw new ApiException("HTTP Response Not OK", context);
-        }
-
-    }
-
-    /**
-     * RequestSupplier.
-     */
-    protected interface RequestSupplier {
-        
-        /**
-         * Supplies the HttpRequest object.
-         * @return    An object of type HttpRequest
-         * @throws    ApiException    Represents error response from the server.
-         * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-        */
-        HttpRequest supply() throws ApiException, IOException;
-    }
-
-    /**
-     * RequestExecutor.
-     */
-    protected interface RequestExecutor {
-
-        /**
-         * Execute a given HttpRequest to get the response back.
-         * @param   request    The given HttpRequest to execute
-         * @return  CompletableFuture of HttpResponse after execution
-         */
-        CompletableFuture<HttpResponse> execute(HttpRequest request);
-    }
-
-    /**
-     * ResponseHandler.
-     */
-    protected interface ResponseHandler<T> {
-        
-        /**
-         * Handles the response for an endpoint.
-         * @param   context    HttpContext of the request and the received response
-         * @return   An object of type T .
-         * @throws    ApiException    Represents error response from the server.
-         * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-         */
-        T handle(HttpContext context) throws ApiException, IOException;
-    }
-    
-    /**
-     * Make an asynchronous HTTP endpoint call.
-     * @param   <T>    The type of the object for response
-     * @param   requestSupplier    An object of RequestSupplier to supply an instance of HttpRequest
-     * @param   requestExecutor    An object of RequestExecutor to execute the given request
-     * @param   responseHandler    An object of ResponseHandler to handle the endpoint response
-     * @return  An object of type CompletableFuture of T
-     */
-    public <T> CompletableFuture<T> makeHttpCallAsync(RequestSupplier requestSupplier,
-            RequestExecutor requestExecutor, ResponseHandler<T> responseHandler) {
-        final HttpRequest request;
-        try {
-            request = requestSupplier.supply();
-        } catch (Exception e) {
-            CompletableFuture<T> futureResponse = new CompletableFuture<>();
-            futureResponse.completeExceptionally(e);
-            return futureResponse;
-        }
-
-        // Invoke request and get response
-        return requestExecutor.execute(request).thenApplyAsync(response -> {
-            HttpContext context = new HttpContext(request, response);
-            try {
-                return responseHandler.handle(context);
-            } catch (Exception e) {
-                throw new CompletionException(e);
-            }
-        });
+    protected GlobalConfiguration getGlobalConfiguration() {
+        return globalConfig;
     }
 }

@@ -6,13 +6,14 @@
 
 package me.pagar.api.http.client;
 
+import io.apimatic.coreinterfaces.http.Context;
 import me.pagar.api.http.request.HttpRequest;
 import me.pagar.api.http.response.HttpResponse;
 
 /**
  * Class to wrap the request sent to the server and the response received from the server.
  */
-public class HttpContext {
+public class HttpContext implements Context {
     private HttpRequest request;
     private HttpResponse response;
 

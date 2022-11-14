@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -38,6 +39,8 @@ public class GetChargeResponse {
     private LocalDateTime canceledAt;
     private int canceledAmount;
     private int paidAmount;
+    private Integer interestAndFinePaid;
+    private String recurrencyCycle;
 
     /**
      * Default constructor.
@@ -66,6 +69,8 @@ public class GetChargeResponse {
      * @param  customer  GetCustomerResponse value for customer.
      * @param  paidAt  LocalDateTime value for paidAt.
      * @param  canceledAt  LocalDateTime value for canceledAt.
+     * @param  interestAndFinePaid  Integer value for interestAndFinePaid.
+     * @param  recurrencyCycle  String value for recurrencyCycle.
      */
     public GetChargeResponse(
             String id,
@@ -86,7 +91,9 @@ public class GetChargeResponse {
             GetOrderResponse order,
             GetCustomerResponse customer,
             LocalDateTime paidAt,
-            LocalDateTime canceledAt) {
+            LocalDateTime canceledAt,
+            Integer interestAndFinePaid,
+            String recurrencyCycle) {
         this.id = id;
         this.code = code;
         this.gatewayId = gatewayId;
@@ -106,6 +113,8 @@ public class GetChargeResponse {
         this.canceledAt = canceledAt;
         this.canceledAmount = canceledAmount;
         this.paidAmount = paidAmount;
+        this.interestAndFinePaid = interestAndFinePaid;
+        this.recurrencyCycle = recurrencyCycle;
     }
 
     /**
@@ -471,6 +480,48 @@ public class GetChargeResponse {
     }
 
     /**
+     * Getter for InterestAndFinePaid.
+     * interest and fine paid
+     * @return Returns the Integer
+     */
+    @JsonGetter("interest_and_fine_paid")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Integer getInterestAndFinePaid() {
+        return interestAndFinePaid;
+    }
+
+    /**
+     * Setter for InterestAndFinePaid.
+     * interest and fine paid
+     * @param interestAndFinePaid Value for Integer
+     */
+    @JsonSetter("interest_and_fine_paid")
+    public void setInterestAndFinePaid(Integer interestAndFinePaid) {
+        this.interestAndFinePaid = interestAndFinePaid;
+    }
+
+    /**
+     * Getter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @return Returns the String
+     */
+    @JsonGetter("recurrency_cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getRecurrencyCycle() {
+        return recurrencyCycle;
+    }
+
+    /**
+     * Setter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @param recurrencyCycle Value for String
+     */
+    @JsonSetter("recurrency_cycle")
+    public void setRecurrencyCycle(String recurrencyCycle) {
+        this.recurrencyCycle = recurrencyCycle;
+    }
+
+    /**
      * Converts this GetChargeResponse into string format.
      * @return String representation of this class
      */
@@ -483,7 +534,8 @@ public class GetChargeResponse {
                 + ", canceledAmount=" + canceledAmount + ", paidAmount=" + paidAmount
                 + ", lastTransaction=" + lastTransaction + ", invoice=" + invoice + ", order="
                 + order + ", customer=" + customer + ", paidAt=" + paidAt + ", canceledAt="
-                + canceledAt + "]";
+                + canceledAt + ", interestAndFinePaid=" + interestAndFinePaid + ", recurrencyCycle="
+                + recurrencyCycle + "]";
     }
 
     /**
@@ -499,7 +551,9 @@ public class GetChargeResponse {
                 .order(getOrder())
                 .customer(getCustomer())
                 .paidAt(getPaidAt())
-                .canceledAt(getCanceledAt());
+                .canceledAt(getCanceledAt())
+                .interestAndFinePaid(getInterestAndFinePaid())
+                .recurrencyCycle(getRecurrencyCycle());
         return builder;
     }
 
@@ -526,6 +580,8 @@ public class GetChargeResponse {
         private GetCustomerResponse customer;
         private LocalDateTime paidAt;
         private LocalDateTime canceledAt;
+        private Integer interestAndFinePaid;
+        private String recurrencyCycle;
 
         /**
          * Initialization constructor.
@@ -759,13 +815,34 @@ public class GetChargeResponse {
         }
 
         /**
+         * Setter for interestAndFinePaid.
+         * @param  interestAndFinePaid  Integer value for interestAndFinePaid.
+         * @return Builder
+         */
+        public Builder interestAndFinePaid(Integer interestAndFinePaid) {
+            this.interestAndFinePaid = interestAndFinePaid;
+            return this;
+        }
+
+        /**
+         * Setter for recurrencyCycle.
+         * @param  recurrencyCycle  String value for recurrencyCycle.
+         * @return Builder
+         */
+        public Builder recurrencyCycle(String recurrencyCycle) {
+            this.recurrencyCycle = recurrencyCycle;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetChargeResponse} object using the set fields.
          * @return {@link GetChargeResponse}
          */
         public GetChargeResponse build() {
             return new GetChargeResponse(id, code, gatewayId, amount, status, currency,
                     paymentMethod, dueAt, createdAt, updatedAt, metadata, canceledAmount,
-                    paidAmount, lastTransaction, invoice, order, customer, paidAt, canceledAt);
+                    paidAmount, lastTransaction, invoice, order, customer, paidAt, canceledAt,
+                    interestAndFinePaid, recurrencyCycle);
         }
     }
 }

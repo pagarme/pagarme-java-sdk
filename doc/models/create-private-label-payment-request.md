@@ -20,6 +20,7 @@ The settings for creating a private label payment
 | `Capture` | `Boolean` | Optional | Indicates if the operation should be only authorization or auth and capture.<br>**Default**: `true` | Boolean getCapture() | setCapture(Boolean capture) |
 | `ExtendedLimitEnabled` | `Boolean` | Optional | Indicates whether the extended label (private label) is enabled | Boolean getExtendedLimitEnabled() | setExtendedLimitEnabled(Boolean extendedLimitEnabled) |
 | `ExtendedLimitCode` | `String` | Optional | Extended Limit Code | String getExtendedLimitCode() | setExtendedLimitCode(String extendedLimitCode) |
+| `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 
 ## Example (as JSON)
 
@@ -33,7 +34,8 @@ The settings for creating a private label payment
   "recurrence": null,
   "capture": null,
   "extended_limit_enabled": null,
-  "extended_limit_code": null
+  "extended_limit_code": null,
+  "recurrency_cycle": null
 }
 ```
 

@@ -6,13 +6,13 @@
 
 package me.pagar.api;
 
-import java.util.Base64;
-import me.pagar.api.http.request.HttpRequest;
+import io.apimatic.core.authentication.HeaderAuth;
+import java.util.Collections;
 
 /**
  * Utility class for authorization and token management.
  */
-public class BasicAuthManager implements AuthManager, BasicAuthCredentials {
+public class BasicAuthManager extends HeaderAuth implements BasicAuthCredentials {
 
     private String basicAuthUserName;
 
@@ -24,6 +24,8 @@ public class BasicAuthManager implements AuthManager, BasicAuthCredentials {
      * @param password String value for password.
      */
     public BasicAuthManager(String username, String password) {
+        super(Collections.singletonMap("Authorization",
+                ApiHelper.getBase64EncodedCredentials(username, password)));
         this.basicAuthUserName = username;
         this.basicAuthPassword = password;
     }
@@ -65,12 +67,4 @@ public class BasicAuthManager implements AuthManager, BasicAuthCredentials {
                 + ", basicAuthPassword=" + basicAuthPassword + "]";
     }
 
-    /**
-     * Adds authentication to the given HttpRequest.
-     */
-    public HttpRequest apply(HttpRequest httpRequest) {
-        String authCredentials = basicAuthUserName + ":" + basicAuthPassword;
-        httpRequest.getHeaders().add("Authorization", "Basic " + Base64.getEncoder().encodeToString(authCredentials.getBytes()));
-        return httpRequest;
-    }
 }

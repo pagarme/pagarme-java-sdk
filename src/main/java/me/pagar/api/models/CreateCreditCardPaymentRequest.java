@@ -9,6 +9,7 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import io.apimatic.core.types.BaseModel;
 
 /**
  * This is a model class for CreateCreditCardPaymentRequest type.
@@ -28,6 +29,7 @@ public class CreateCreditCardPaymentRequest {
     private CreateCardPaymentContactlessRequest contactless;
     private Boolean autoRecovery;
     private String operationType;
+    private String recurrencyCycle;
 
     /**
      * Default constructor.
@@ -53,6 +55,7 @@ public class CreateCreditCardPaymentRequest {
      * @param  contactless  CreateCardPaymentContactlessRequest value for contactless.
      * @param  autoRecovery  Boolean value for autoRecovery.
      * @param  operationType  String value for operationType.
+     * @param  recurrencyCycle  String value for recurrencyCycle.
      */
     public CreateCreditCardPaymentRequest(
             Integer installments,
@@ -68,7 +71,8 @@ public class CreateCreditCardPaymentRequest {
             CreatePaymentAuthenticationRequest authentication,
             CreateCardPaymentContactlessRequest contactless,
             Boolean autoRecovery,
-            String operationType) {
+            String operationType,
+            String recurrencyCycle) {
         this.installments = installments;
         this.statementDescriptor = statementDescriptor;
         this.card = card;
@@ -83,6 +87,7 @@ public class CreateCreditCardPaymentRequest {
         this.contactless = contactless;
         this.autoRecovery = autoRecovery;
         this.operationType = operationType;
+        this.recurrencyCycle = recurrencyCycle;
     }
 
     /**
@@ -378,6 +383,27 @@ public class CreateCreditCardPaymentRequest {
     }
 
     /**
+     * Getter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @return Returns the String
+     */
+    @JsonGetter("recurrency_cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getRecurrencyCycle() {
+        return recurrencyCycle;
+    }
+
+    /**
+     * Setter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @param recurrencyCycle Value for String
+     */
+    @JsonSetter("recurrency_cycle")
+    public void setRecurrencyCycle(String recurrencyCycle) {
+        this.recurrencyCycle = recurrencyCycle;
+    }
+
+    /**
      * Converts this CreateCreditCardPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -390,7 +416,7 @@ public class CreateCreditCardPaymentRequest {
                 + ", extendedLimitCode=" + extendedLimitCode + ", merchantCategoryCode="
                 + merchantCategoryCode + ", authentication=" + authentication + ", contactless="
                 + contactless + ", autoRecovery=" + autoRecovery + ", operationType="
-                + operationType + "]";
+                + operationType + ", recurrencyCycle=" + recurrencyCycle + "]";
     }
 
     /**
@@ -413,7 +439,8 @@ public class CreateCreditCardPaymentRequest {
                 .authentication(getAuthentication())
                 .contactless(getContactless())
                 .autoRecovery(getAutoRecovery())
-                .operationType(getOperationType());
+                .operationType(getOperationType())
+                .recurrencyCycle(getRecurrencyCycle());
         return builder;
     }
 
@@ -435,6 +462,7 @@ public class CreateCreditCardPaymentRequest {
         private CreateCardPaymentContactlessRequest contactless;
         private Boolean autoRecovery;
         private String operationType;
+        private String recurrencyCycle;
 
 
 
@@ -579,13 +607,24 @@ public class CreateCreditCardPaymentRequest {
         }
 
         /**
+         * Setter for recurrencyCycle.
+         * @param  recurrencyCycle  String value for recurrencyCycle.
+         * @return Builder
+         */
+        public Builder recurrencyCycle(String recurrencyCycle) {
+            this.recurrencyCycle = recurrencyCycle;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateCreditCardPaymentRequest} object using the set fields.
          * @return {@link CreateCreditCardPaymentRequest}
          */
         public CreateCreditCardPaymentRequest build() {
             return new CreateCreditCardPaymentRequest(installments, statementDescriptor, card,
                     cardId, cardToken, recurrence, capture, extendedLimitEnabled, extendedLimitCode,
-                    merchantCategoryCode, authentication, contactless, autoRecovery, operationType);
+                    merchantCategoryCode, authentication, contactless, autoRecovery, operationType,
+                    recurrencyCycle);
         }
     }
 }

@@ -6,6 +6,11 @@
 
 package me.pagar.api;
 
+import io.apimatic.core.GlobalConfiguration;
+import io.apimatic.coreinterfaces.authentication.Authentication;
+import io.apimatic.coreinterfaces.compatibility.CompatibilityFactory;
+import io.apimatic.coreinterfaces.http.HttpClient;
+import io.apimatic.okhttpclient.adapter.OkClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -29,9 +34,7 @@ import me.pagar.api.controllers.SubscriptionsController;
 import me.pagar.api.controllers.TokensController;
 import me.pagar.api.controllers.TransactionsController;
 import me.pagar.api.controllers.TransfersController;
-import me.pagar.api.http.client.HttpClient;
 import me.pagar.api.http.client.HttpClientConfiguration;
-import me.pagar.api.http.client.OkClient;
 import me.pagar.api.http.client.ReadonlyHttpClientConfiguration;
 
 /**
@@ -44,16 +47,20 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     /**
      * Private store for controllers.
      */
-    private OrdersController orders;
     private PlansController plans;
     private SubscriptionsController subscriptions;
     private InvoicesController invoices;
+    private OrdersController orders;
     private CustomersController customers;
     private RecipientsController recipients;
     private ChargesController charges;
-    private TokensController tokens;
     private TransfersController transfers;
+    private TokensController tokens;
     private TransactionsController transactions;
+
+    private static final CompatibilityFactory compatibilityFactory = new CompatibilityFactoryImpl();
+
+    private static String userAgent = "PagarmeCoreApi - Java 6.6.0";
 
     /**
      * Current API environment.
@@ -78,37 +85,42 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     /**
      * Map of authentication Managers.
      */
-    private Map<String, AuthManager> authManagers;
+    private Map<String, Authentication> authentications;
+
 
     private PagarmeApiSDKClient(Environment environment, HttpClient httpClient,
             ReadonlyHttpClientConfiguration httpClientConfig, String basicAuthUserName,
-            String basicAuthPassword, Map<String, AuthManager> authManagers) {
+            String basicAuthPassword, Map<String, Authentication> authentications) {
         this.environment = environment;
         this.httpClient = httpClient;
         this.httpClientConfig = httpClientConfig;
-
-        this.authManagers = (authManagers == null) ? new HashMap<>() : new HashMap<>(authManagers);
-        if (this.authManagers.containsKey("global")) {
-            this.basicAuthManager = (BasicAuthManager) this.authManagers.get("global");
+        this.authentications = 
+                (authentications == null) ? new HashMap<>() : new HashMap<>(authentications);
+        if (this.authentications.containsKey("global")) {
+            this.basicAuthManager = (BasicAuthManager) this.authentications.get("global");
         }
 
-        if (!this.authManagers.containsKey("global")
+        if (!this.authentications.containsKey("global")
                 || !getBasicAuthCredentials().equals(basicAuthUserName, basicAuthPassword)) {
             this.basicAuthManager = new BasicAuthManager(basicAuthUserName, basicAuthPassword);
-            this.authManagers.put("global", basicAuthManager);
+            this.authentications.put("global", basicAuthManager);
         }
 
-        orders = new DefaultOrdersController(this, this.httpClient, this.authManagers);
-        plans = new DefaultPlansController(this, this.httpClient, this.authManagers);
-        subscriptions = new DefaultSubscriptionsController(this, this.httpClient,
-                this.authManagers);
-        invoices = new DefaultInvoicesController(this, this.httpClient, this.authManagers);
-        customers = new DefaultCustomersController(this, this.httpClient, this.authManagers);
-        recipients = new DefaultRecipientsController(this, this.httpClient, this.authManagers);
-        charges = new DefaultChargesController(this, this.httpClient, this.authManagers);
-        tokens = new DefaultTokensController(this, this.httpClient, this.authManagers);
-        transfers = new DefaultTransfersController(this, this.httpClient, this.authManagers);
-        transactions = new DefaultTransactionsController(this, this.httpClient, this.authManagers);
+        GlobalConfiguration globalConfig = new GlobalConfiguration.Builder()
+                .authentication(this.authentications).compatibilityFactory(compatibilityFactory)
+                .httpClient(httpClient).baseUri(server -> getBaseUri(server))
+                .userAgent(userAgent)
+                .build();
+        plans = new DefaultPlansController(globalConfig);
+        subscriptions = new DefaultSubscriptionsController(globalConfig);
+        invoices = new DefaultInvoicesController(globalConfig);
+        orders = new DefaultOrdersController(globalConfig);
+        customers = new DefaultCustomersController(globalConfig);
+        recipients = new DefaultRecipientsController(globalConfig);
+        charges = new DefaultChargesController(globalConfig);
+        transfers = new DefaultTransfersController(globalConfig);
+        tokens = new DefaultTokensController(globalConfig);
+        transactions = new DefaultTransactionsController(globalConfig);
     }
 
     /**
@@ -116,14 +128,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
      */
     public static void shutdown() {
         OkClient.shutdown();
-    }
-
-    /**
-     * Get the instance of OrdersController.
-     * @return orders
-     */
-    public OrdersController getOrdersController() {
-        return orders;
     }
 
     /**
@@ -151,6 +155,14 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
+     * Get the instance of OrdersController.
+     * @return orders
+     */
+    public OrdersController getOrdersController() {
+        return orders;
+    }
+
+    /**
      * Get the instance of CustomersController.
      * @return customers
      */
@@ -175,19 +187,19 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of TokensController.
-     * @return tokens
-     */
-    public TokensController getTokensController() {
-        return tokens;
-    }
-
-    /**
      * Get the instance of TransfersController.
      * @return transfers
      */
     public TransfersController getTransfersController() {
         return transfers;
+    }
+
+    /**
+     * Get the instance of TokensController.
+     * @return tokens
+     */
+    public TokensController getTokensController() {
+        return tokens;
     }
 
     /**
@@ -229,7 +241,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     public BasicAuthCredentials getBasicAuthCredentials() {
         return basicAuthManager;
     }
-
     /**
      * The timeout to use for making HTTP requests.
      * @deprecated This method will be removed in a future version. Use
@@ -259,6 +270,18 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
         return getBaseUri(Server.ENUM_DEFAULT);
     }
 
+
+    /**
+     * Get base URI by current environment.
+     * 
+     * @param server string for which to get the base URI
+     * @return Processed base URI
+     */
+    public String getBaseUri(String server) {
+        return getBaseUri(Server.fromString(server));
+    }
+
+
     /**
      * Base URLs by environment and server aliases.
      * @param environment Environment for which to get the base URI
@@ -281,7 +304,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     @Override
     public String toString() {
         return "PagarmeApiSDKClient [" + "environment=" + environment + ", httpClientConfig="
-                + httpClientConfig + ", authManagers=" + authManagers + "]";
+                + httpClientConfig + ", authentications=" + authentications + "]";
     }
 
     /**
@@ -295,7 +318,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
         builder.httpClient = getHttpClient();
         builder.basicAuthUserName = getBasicAuthCredentials().getBasicAuthUserName();
         builder.basicAuthPassword = getBasicAuthCredentials().getBasicAuthPassword();
-        builder.authManagers = authManagers;
+        builder.authentications = authentications;
         builder.httpClientConfig(configBldr -> configBldr =
                 ((HttpClientConfiguration) httpClientConfig).newBuilder());
         return builder;
@@ -310,7 +333,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
         private HttpClient httpClient;
         private String basicAuthUserName = "TODO: Replace";
         private String basicAuthPassword = "TODO: Replace";
-        private Map<String, AuthManager> authManagers = null;
+        private Map<String, Authentication> authentications = null;
         private HttpClientConfiguration.Builder httpClientConfigBuilder =
                 new HttpClientConfiguration.Builder();
 
@@ -374,10 +397,10 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
          */
         public PagarmeApiSDKClient build() {
             HttpClientConfiguration httpClientConfig = httpClientConfigBuilder.build();
-            httpClient = new OkClient(httpClientConfig);
+            httpClient = new OkClient(httpClientConfig.getConfiguration(), compatibilityFactory);
 
             return new PagarmeApiSDKClient(environment, httpClient, httpClientConfig,
-                    basicAuthUserName, basicAuthPassword, authManagers);
+                    basicAuthUserName, basicAuthPassword, authentications);
         }
     }
 }
