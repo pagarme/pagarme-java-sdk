@@ -19,7 +19,7 @@ TokensController tokensController = client.getTokensController();
 :information_source: **Note** This endpoint does not require authentication.
 
 ```java
-CompletableFuture<GetTokenResponse> createToken(
+GetTokenResponse createToken(
     final String publicKey,
     final CreateTokenRequest request,
     final String idempotencyKey)
@@ -43,14 +43,17 @@ CompletableFuture<GetTokenResponse> createToken(
 String publicKey = "public_key6";
 CreateTokenRequest request = new CreateTokenRequest();
 request.setType("card");
-request.setCard(new CreateCardTokenRequest());
-request.getCard().setNumber("number2");
-request.getCard().setHolderName("holder_name6");
-request.getCard().setExpMonth(80);
-request.getCard().setExpYear(216);
-request.getCard().setCvv("cvv8");
-request.getCard().setBrand("brand4");
-request.getCard().setLabel("label0");
+CreateCardTokenRequest card = new CreateCardTokenRequest();
+card.setNumber("number2");
+card.setHolderName("holder_name6");
+card.setExpMonth(80);
+card.setExpYear(216);
+card.setCvv("cvv8");
+card.setBrand("brand4");
+card.setLabel("label0");
+
+request.setCard(card);
+
 
 try {
     GetTokenResponse response = tokensController.createToken(publicKey, request, null);
@@ -69,7 +72,7 @@ Gets a token from its id
 :information_source: **Note** This endpoint does not require authentication.
 
 ```java
-CompletableFuture<GetTokenResponse> getToken(
+GetTokenResponse getToken(
     final String id,
     final String publicKey)
 ```

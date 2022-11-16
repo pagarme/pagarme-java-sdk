@@ -12,17 +12,17 @@ ChargesController chargesController = client.getChargesController();
 
 * [Update Charge Metadata](../../doc/controllers/charges.md#update-charge-metadata)
 * [Update Charge Payment Method](../../doc/controllers/charges.md#update-charge-payment-method)
-* [Update Charge Card](../../doc/controllers/charges.md#update-charge-card)
-* [Get Charges Summary](../../doc/controllers/charges.md#get-charges-summary)
-* [Create Charge](../../doc/controllers/charges.md#create-charge)
 * [Get Charge Transactions](../../doc/controllers/charges.md#get-charge-transactions)
-* [Capture Charge](../../doc/controllers/charges.md#capture-charge)
-* [Get Charge](../../doc/controllers/charges.md#get-charge)
-* [Cancel Charge](../../doc/controllers/charges.md#cancel-charge)
-* [Get Charges](../../doc/controllers/charges.md#get-charges)
-* [Confirm Payment](../../doc/controllers/charges.md#confirm-payment)
 * [Update Charge Due Date](../../doc/controllers/charges.md#update-charge-due-date)
+* [Get Charges](../../doc/controllers/charges.md#get-charges)
+* [Capture Charge](../../doc/controllers/charges.md#capture-charge)
+* [Update Charge Card](../../doc/controllers/charges.md#update-charge-card)
+* [Get Charge](../../doc/controllers/charges.md#get-charge)
+* [Get Charges Summary](../../doc/controllers/charges.md#get-charges-summary)
 * [Retry Charge](../../doc/controllers/charges.md#retry-charge)
+* [Cancel Charge](../../doc/controllers/charges.md#cancel-charge)
+* [Create Charge](../../doc/controllers/charges.md#create-charge)
+* [Confirm Payment](../../doc/controllers/charges.md#confirm-payment)
 
 
 # Update Charge Metadata
@@ -30,7 +30,7 @@ ChargesController chargesController = client.getChargesController();
 Updates the metadata from a charge
 
 ```java
-CompletableFuture<GetChargeResponse> updateChargeMetadata(
+GetChargeResponse updateChargeMetadata(
     final String chargeId,
     final UpdateMetadataRequest request,
     final String idempotencyKey)
@@ -53,8 +53,11 @@ CompletableFuture<GetChargeResponse> updateChargeMetadata(
 ```java
 String chargeId = "charge_id8";
 UpdateMetadataRequest request = new UpdateMetadataRequest();
-request.setMetadata(new LinkedHashMap<>());
-request.getMetadata().put("key0", "metadata3");
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata3");
+
+request.setMetadata(metadata);
+
 
 try {
     GetChargeResponse response = chargesController.updateChargeMetadata(chargeId, request, null);
@@ -71,7 +74,7 @@ try {
 Updates a charge's payment method
 
 ```java
-CompletableFuture<GetChargeResponse> updateChargePaymentMethod(
+GetChargeResponse updateChargePaymentMethod(
     final String chargeId,
     final UpdateChargePaymentMethodRequest request,
     final String idempotencyKey)
@@ -96,36 +99,55 @@ String chargeId = "charge_id8";
 UpdateChargePaymentMethodRequest request = new UpdateChargePaymentMethodRequest();
 request.setUpdateSubscription(false);
 request.setPaymentMethod("payment_method4");
-request.setCreditCard(new CreateCreditCardPaymentRequest());
-request.setDebitCard(new CreateDebitCardPaymentRequest());
-request.setBoleto(new CreateBoletoPaymentRequest());
-request.getBoleto().setRetries(10);
-request.getBoleto().setBank("bank4");
-request.getBoleto().setInstructions("instructions4");
-request.getBoleto().setBillingAddress(new CreateAddressRequest());
-request.getBoleto().getBillingAddress().setStreet("street8");
-request.getBoleto().getBillingAddress().setNumber("number4");
-request.getBoleto().getBillingAddress().setZipCode("zip_code2");
-request.getBoleto().getBillingAddress().setNeighborhood("neighborhood4");
-request.getBoleto().getBillingAddress().setCity("city2");
-request.getBoleto().getBillingAddress().setState("state6");
-request.getBoleto().getBillingAddress().setCountry("country2");
-request.getBoleto().getBillingAddress().setComplement("complement6");
-request.getBoleto().getBillingAddress().setMetadata(new LinkedHashMap<>());
-request.getBoleto().getBillingAddress().getMetadata().put("key0", "metadata5");
-request.getBoleto().getBillingAddress().setLine1("line_18");
-request.getBoleto().getBillingAddress().setLine2("line_26");
-request.getBoleto().setBillingAddressId("billing_address_id2");
-request.getBoleto().setDocumentNumber("document_number0");
-request.getBoleto().setStatementDescriptor("statement_descriptor6");
-request.setVoucher(new CreateVoucherPaymentRequest());
-request.setCash(new CreateCashPaymentRequest());
-request.getCash().setDescription("description6");
-request.getCash().setConfirm(false);
-request.setBankTransfer(new CreateBankTransferPaymentRequest());
-request.getBankTransfer().setBank("bank4");
-request.getBankTransfer().setRetries(204);
-request.setPrivateLabel(new CreatePrivateLabelPaymentRequest());
+CreateCreditCardPaymentRequest creditCard = new CreateCreditCardPaymentRequest();
+
+request.setCreditCard(creditCard);
+CreateDebitCardPaymentRequest debitCard = new CreateDebitCardPaymentRequest();
+
+request.setDebitCard(debitCard);
+CreateBoletoPaymentRequest boleto = new CreateBoletoPaymentRequest();
+boleto.setRetries(10);
+boleto.setBank("bank4");
+boleto.setInstructions("instructions4");
+CreateAddressRequest billingAddress = new CreateAddressRequest();
+billingAddress.setStreet("street8");
+billingAddress.setNumber("number4");
+billingAddress.setZipCode("zip_code2");
+billingAddress.setNeighborhood("neighborhood4");
+billingAddress.setCity("city2");
+billingAddress.setState("state6");
+billingAddress.setCountry("country2");
+billingAddress.setComplement("complement6");
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata5");
+
+billingAddress.setMetadata(metadata);
+billingAddress.setLine1("line_18");
+billingAddress.setLine2("line_26");
+
+boleto.setBillingAddress(billingAddress);
+boleto.setBillingAddressId("billing_address_id2");
+boleto.setDocumentNumber("document_number0");
+boleto.setStatementDescriptor("statement_descriptor6");
+
+request.setBoleto(boleto);
+CreateVoucherPaymentRequest voucher = new CreateVoucherPaymentRequest();
+
+request.setVoucher(voucher);
+CreateCashPaymentRequest cash = new CreateCashPaymentRequest();
+cash.setDescription("description6");
+cash.setConfirm(false);
+
+request.setCash(cash);
+CreateBankTransferPaymentRequest bankTransfer = new CreateBankTransferPaymentRequest();
+bankTransfer.setBank("bank4");
+bankTransfer.setRetries(204);
+
+request.setBankTransfer(bankTransfer);
+CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
+
+request.setPrivateLabel(privateLabel);
+
 
 try {
     GetChargeResponse response = chargesController.updateChargePaymentMethod(chargeId, request, null);
@@ -137,192 +159,10 @@ try {
 ```
 
 
-# Update Charge Card
-
-Updates the card from a charge
-
-```java
-CompletableFuture<GetChargeResponse> updateChargeCard(
-    final String chargeId,
-    final UpdateChargeCardRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`UpdateChargeCardRequest`](../../doc/models/update-charge-card-request.md) | Body, Required | Request for updating a charge's card |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-UpdateChargeCardRequest request = new UpdateChargeCardRequest();
-request.setUpdateSubscription(false);
-request.setCardId("card_id2");
-request.setCard(new CreateCardRequest());
-request.getCard().setNumber("number2");
-request.getCard().setHolderName("holder_name6");
-request.getCard().setExpMonth(80);
-request.getCard().setExpYear(216);
-request.getCard().setCvv("cvv8");
-request.getCard().setBillingAddress(new CreateAddressRequest());
-request.getCard().getBillingAddress().setStreet("street2");
-request.getCard().getBillingAddress().setNumber("number0");
-request.getCard().getBillingAddress().setZipCode("zip_code6");
-request.getCard().getBillingAddress().setNeighborhood("neighborhood8");
-request.getCard().getBillingAddress().setCity("city8");
-request.getCard().getBillingAddress().setState("state2");
-request.getCard().getBillingAddress().setCountry("country6");
-request.getCard().getBillingAddress().setComplement("complement2");
-request.getCard().getBillingAddress().setMetadata(new LinkedHashMap<>());
-request.getCard().getBillingAddress().getMetadata().put("key0", "metadata1");
-request.getCard().getBillingAddress().setLine1("line_14");
-request.getCard().getBillingAddress().setLine2("line_20");
-request.getCard().setBrand("brand4");
-request.getCard().setBillingAddressId("billing_address_id6");
-request.getCard().setMetadata(new LinkedHashMap<>());
-request.getCard().getMetadata().put("key0", "metadata3");
-request.getCard().getMetadata().put("key1", "metadata4");
-request.getCard().getMetadata().put("key2", "metadata5");
-request.getCard().setType("credit");
-request.getCard().setOptions(new CreateCardOptionsRequest());
-request.getCard().getOptions().setVerifyCard(false);
-request.getCard().setPrivateLabel(false);
-request.getCard().setLabel("label0");
-request.setRecurrence(false);
-
-try {
-    GetChargeResponse response = chargesController.updateChargeCard(chargeId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Charges Summary
-
-```java
-CompletableFuture<GetChargesSummaryResponse> getChargesSummary(
-    final String status,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `status` | `String` | Query, Required | - |
-| `createdSince` | `LocalDateTime` | Query, Optional | - |
-| `createdUntil` | `LocalDateTime` | Query, Optional | - |
-
-## Response Type
-
-[`GetChargesSummaryResponse`](../../doc/models/get-charges-summary-response.md)
-
-## Example Usage
-
-```java
-String status = "status8";
-
-try {
-    GetChargesSummaryResponse response = chargesController.getChargesSummary(status, null, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Charge
-
-Creates a new charge
-
-```java
-CompletableFuture<GetChargeResponse> createCharge(
-    final CreateChargeRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `request` | [`CreateChargeRequest`](../../doc/models/create-charge-request.md) | Body, Required | Request for creating a charge |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-CreateChargeRequest request = new CreateChargeRequest();
-request.setCode("code4");
-request.setAmount(242);
-request.setCustomerId("customer_id4");
-request.setCustomer(new CreateCustomerRequest());
-request.getCustomer().setName("{\\n    \"name\": \"Tony Stark\"\\n}");
-request.getCustomer().setEmail("email0");
-request.getCustomer().setDocument("document0");
-request.getCustomer().setType("type4");
-request.getCustomer().setAddress(new CreateAddressRequest());
-request.getCustomer().getAddress().setStreet("street2");
-request.getCustomer().getAddress().setNumber("number0");
-request.getCustomer().getAddress().setZipCode("zip_code6");
-request.getCustomer().getAddress().setNeighborhood("neighborhood8");
-request.getCustomer().getAddress().setCity("city2");
-request.getCustomer().getAddress().setState("state8");
-request.getCustomer().getAddress().setCountry("country6");
-request.getCustomer().getAddress().setComplement("complement8");
-request.getCustomer().getAddress().setMetadata(new LinkedHashMap<>());
-request.getCustomer().getAddress().getMetadata().put("key0", "metadata7");
-request.getCustomer().getAddress().getMetadata().put("key1", "metadata6");
-request.getCustomer().getAddress().setLine1("line_16");
-request.getCustomer().getAddress().setLine2("line_20");
-request.getCustomer().setMetadata(new LinkedHashMap<>());
-request.getCustomer().getMetadata().put("key0", "metadata3");
-request.getCustomer().getMetadata().put("key1", "metadata2");
-request.getCustomer().getMetadata().put("key2", "metadata1");
-request.getCustomer().setPhones(new CreatePhonesRequest());
-request.getCustomer().setCode("code4");
-request.setPayment(new CreatePaymentRequest());
-request.getPayment().setPaymentMethod("payment_method2");
-request.getPayment().setPrivateLabel(new CreatePrivateLabelPaymentRequest());
-request.setMetadata(new LinkedHashMap<>());
-request.getMetadata().put("key0", "metadata3");
-request.setAntifraud(new CreateAntifraudRequest());
-request.getAntifraud().setType("type0");
-request.getAntifraud().setClearsale(new CreateClearSaleRequest());
-request.getAntifraud().getClearsale().setCustomSla(52);
-request.setOrderId("order_id0");
-
-try {
-    GetChargeResponse response = chargesController.createCharge(request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
 # Get Charge Transactions
 
 ```java
-CompletableFuture<ListChargeTransactionsResponse> getChargeTransactions(
+ListChargeTransactionsResponse getChargeTransactions(
     final String chargeId,
     final Integer page,
     final Integer size)
@@ -355,14 +195,14 @@ try {
 ```
 
 
-# Capture Charge
+# Update Charge Due Date
 
-Captures a charge
+Updates the due date from a charge
 
 ```java
-CompletableFuture<GetChargeResponse> captureCharge(
+GetChargeResponse updateChargeDueDate(
     final String chargeId,
-    final CreateCaptureChargeRequest request,
+    final UpdateChargeDueDateRequest request,
     final String idempotencyKey)
 ```
 
@@ -370,8 +210,8 @@ CompletableFuture<GetChargeResponse> captureCharge(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`CreateCaptureChargeRequest`](../../doc/models/create-capture-charge-request.md) | Body, Optional | Request for capturing a charge |
+| `chargeId` | `String` | Template, Required | Charge Id |
+| `request` | [`UpdateChargeDueDateRequest`](../../doc/models/update-charge-due-date-request.md) | Body, Required | Request for updating the due date |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
@@ -382,81 +222,11 @@ CompletableFuture<GetChargeResponse> captureCharge(
 
 ```java
 String chargeId = "charge_id8";
+UpdateChargeDueDateRequest request = new UpdateChargeDueDateRequest();
+
 
 try {
-    GetChargeResponse response = chargesController.captureCharge(chargeId, null, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Charge
-
-Get a charge from its id
-
-```java
-CompletableFuture<GetChargeResponse> getCharge(
-    final String chargeId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-
-try {
-    GetChargeResponse response = chargesController.getCharge(chargeId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Cancel Charge
-
-Cancel a charge
-
-```java
-CompletableFuture<GetChargeResponse> cancelCharge(
-    final String chargeId,
-    final CreateCancelChargeRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`CreateCancelChargeRequest`](../../doc/models/create-cancel-charge-request.md) | Body, Optional | Request for cancelling a charge |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-
-try {
-    GetChargeResponse response = chargesController.cancelCharge(chargeId, null, null);
+    GetChargeResponse response = chargesController.updateChargeDueDate(chargeId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -470,7 +240,7 @@ try {
 Lists all charges
 
 ```java
-CompletableFuture<ListChargesResponse> getCharges(
+ListChargesResponse getCharges(
     final Integer page,
     final Integer size,
     final String code,
@@ -513,10 +283,370 @@ try {
 ```
 
 
+# Capture Charge
+
+Captures a charge
+
+```java
+GetChargeResponse captureCharge(
+    final String chargeId,
+    final CreateCaptureChargeRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `request` | [`CreateCaptureChargeRequest`](../../doc/models/create-capture-charge-request.md) | Body, Optional | Request for capturing a charge |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+
+try {
+    GetChargeResponse response = chargesController.captureCharge(chargeId, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Update Charge Card
+
+Updates the card from a charge
+
+```java
+GetChargeResponse updateChargeCard(
+    final String chargeId,
+    final UpdateChargeCardRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `request` | [`UpdateChargeCardRequest`](../../doc/models/update-charge-card-request.md) | Body, Required | Request for updating a charge's card |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+UpdateChargeCardRequest request = new UpdateChargeCardRequest();
+request.setUpdateSubscription(false);
+request.setCardId("card_id2");
+CreateCardRequest card = new CreateCardRequest();
+card.setNumber("number2");
+card.setHolderName("holder_name6");
+card.setExpMonth(80);
+card.setExpYear(216);
+card.setCvv("cvv8");
+CreateAddressRequest billingAddress = new CreateAddressRequest();
+billingAddress.setStreet("street2");
+billingAddress.setNumber("number0");
+billingAddress.setZipCode("zip_code6");
+billingAddress.setNeighborhood("neighborhood8");
+billingAddress.setCity("city8");
+billingAddress.setState("state2");
+billingAddress.setCountry("country6");
+billingAddress.setComplement("complement2");
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata1");
+
+billingAddress.setMetadata(metadata);
+billingAddress.setLine1("line_14");
+billingAddress.setLine2("line_20");
+
+card.setBillingAddress(billingAddress);
+card.setBrand("brand4");
+card.setBillingAddressId("billing_address_id6");
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata3");
+metadata.put("key1", "metadata4");
+metadata.put("key2", "metadata5");
+
+card.setMetadata(metadata);
+card.setType("credit");
+CreateCardOptionsRequest options = new CreateCardOptionsRequest();
+options.setVerifyCard(false);
+
+card.setOptions(options);
+card.setPrivateLabel(false);
+card.setLabel("label0");
+
+request.setCard(card);
+request.setRecurrence(false);
+
+
+try {
+    GetChargeResponse response = chargesController.updateChargeCard(chargeId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Charge
+
+Get a charge from its id
+
+```java
+GetChargeResponse getCharge(
+    final String chargeId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+
+try {
+    GetChargeResponse response = chargesController.getCharge(chargeId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Charges Summary
+
+```java
+GetChargesSummaryResponse getChargesSummary(
+    final String status,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `status` | `String` | Query, Required | - |
+| `createdSince` | `LocalDateTime` | Query, Optional | - |
+| `createdUntil` | `LocalDateTime` | Query, Optional | - |
+
+## Response Type
+
+[`GetChargesSummaryResponse`](../../doc/models/get-charges-summary-response.md)
+
+## Example Usage
+
+```java
+String status = "status8";
+
+try {
+    GetChargesSummaryResponse response = chargesController.getChargesSummary(status, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Retry Charge
+
+Retries a charge
+
+```java
+GetChargeResponse retryCharge(
+    final String chargeId,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+
+try {
+    GetChargeResponse response = chargesController.retryCharge(chargeId, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Cancel Charge
+
+Cancel a charge
+
+```java
+GetChargeResponse cancelCharge(
+    final String chargeId,
+    final CreateCancelChargeRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `request` | [`CreateCancelChargeRequest`](../../doc/models/create-cancel-charge-request.md) | Body, Optional | Request for cancelling a charge |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+
+try {
+    GetChargeResponse response = chargesController.cancelCharge(chargeId, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Create Charge
+
+Creates a new charge
+
+```java
+GetChargeResponse createCharge(
+    final CreateChargeRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `request` | [`CreateChargeRequest`](../../doc/models/create-charge-request.md) | Body, Required | Request for creating a charge |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+CreateChargeRequest request = new CreateChargeRequest();
+request.setCode("code4");
+request.setAmount(242);
+request.setCustomerId("customer_id4");
+CreateCustomerRequest customer = new CreateCustomerRequest();
+customer.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
+customer.setEmail("email0");
+customer.setDocument("document0");
+customer.setType("type4");
+CreateAddressRequest address = new CreateAddressRequest();
+address.setStreet("street2");
+address.setNumber("number0");
+address.setZipCode("zip_code6");
+address.setNeighborhood("neighborhood8");
+address.setCity("city2");
+address.setState("state8");
+address.setCountry("country6");
+address.setComplement("complement8");
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata7");
+metadata.put("key1", "metadata6");
+
+address.setMetadata(metadata);
+address.setLine1("line_16");
+address.setLine2("line_20");
+
+customer.setAddress(address);
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata3");
+metadata.put("key1", "metadata2");
+metadata.put("key2", "metadata1");
+
+customer.setMetadata(metadata);
+CreatePhonesRequest phones = new CreatePhonesRequest();
+
+customer.setPhones(phones);
+customer.setCode("code4");
+
+request.setCustomer(customer);
+CreatePaymentRequest payment = new CreatePaymentRequest();
+payment.setPaymentMethod("payment_method2");
+CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
+
+payment.setPrivateLabel(privateLabel);
+
+request.setPayment(payment);
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata3");
+
+request.setMetadata(metadata);
+CreateAntifraudRequest antifraud = new CreateAntifraudRequest();
+antifraud.setType("type0");
+CreateClearSaleRequest clearsale = new CreateClearSaleRequest();
+clearsale.setCustomSla(52);
+
+antifraud.setClearsale(clearsale);
+
+request.setAntifraud(antifraud);
+request.setOrderId("order_id0");
+
+
+try {
+    GetChargeResponse response = chargesController.createCharge(request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
 # Confirm Payment
 
 ```java
-CompletableFuture<GetChargeResponse> confirmPayment(
+GetChargeResponse confirmPayment(
     final String chargeId,
     final CreateConfirmPaymentRequest request,
     final String idempotencyKey)
@@ -541,81 +671,6 @@ String chargeId = "charge_id8";
 
 try {
     GetChargeResponse response = chargesController.confirmPayment(chargeId, null, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Charge Due Date
-
-Updates the due date from a charge
-
-```java
-CompletableFuture<GetChargeResponse> updateChargeDueDate(
-    final String chargeId,
-    final UpdateChargeDueDateRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge Id |
-| `request` | [`UpdateChargeDueDateRequest`](../../doc/models/update-charge-due-date-request.md) | Body, Required | Request for updating the due date |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-UpdateChargeDueDateRequest request = new UpdateChargeDueDateRequest();
-
-try {
-    GetChargeResponse response = chargesController.updateChargeDueDate(chargeId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Retry Charge
-
-Retries a charge
-
-```java
-CompletableFuture<GetChargeResponse> retryCharge(
-    final String chargeId,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-
-try {
-    GetChargeResponse response = chargesController.retryCharge(chargeId, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

@@ -27,6 +27,9 @@ Generic response object for getting a transaction.
 | `AntifraudResponse` | [`GetAntifraudResponse`](../../doc/models/get-antifraud-response.md) | Required | - | GetAntifraudResponse getAntifraudResponse() | setAntifraudResponse(GetAntifraudResponse antifraudResponse) |
 | `Metadata` | `Map<String, String>` | Optional | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `Split` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | - | List<GetSplitResponse> getSplit() | setSplit(List<GetSplitResponse> split) |
+| `Interest` | [`GetInterestResponse`](../../doc/models/get-interest-response.md) | Optional | - | GetInterestResponse getInterest() | setInterest(GetInterestResponse interest) |
+| `Fine` | [`GetFineResponse`](../../doc/models/get-fine-response.md) | Optional | - | GetFineResponse getFine() | setFine(GetFineResponse fine) |
+| `MaxDaysToPayPastDue` | `Integer` | Optional | - | Integer getMaxDaysToPayPastDue() | setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) |
 
 ## Example (as JSON)
 
@@ -59,7 +62,6 @@ Generic response object for getting a transaction.
     }
   ],
   "next_attempt": null,
-  "transaction_type": null,
   "id": "id0",
   "gateway_response": {
     "code": "code6",
@@ -108,7 +110,11 @@ Generic response object for getting a transaction.
       "options": null,
       "id": "id6"
     }
-  ]
+  ],
+  "interest": null,
+  "fine": null,
+  "max_days_to_pay_past_due": null,
+  "transaction_type": "transaction"
 }
 ```
 

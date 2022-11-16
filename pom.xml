@@ -9,7 +9,7 @@
 
   <groupId>PagarmeApiSDKLib</groupId>
   <artifactId>pagarme-api-sdklib</artifactId>
-  <version>6.5.0</version>
+  <version>6.6.0</version>
   <packaging>jar</packaging>
 
   <name>PagarmeApiSDKLib</name>
@@ -88,33 +88,26 @@
   </build>
 
   <properties>
-    <jackson.version>2.12.3</jackson.version>
-    <jackson.databind.version>2.12.3</jackson.databind.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp</artifactId>
-        <version>4.9.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson.databind.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
+   	<dependency>
+	  <groupId>io.apimatic</groupId>
+	  <artifactId>core-interfaces</artifactId>
+	  <version>[0.1, 0.2)</version>
+	</dependency>
+	<dependency>
+	  <groupId>io.apimatic</groupId>
+	  <artifactId>core</artifactId>
+	  <version>[0.3, 0.4)</version>
+	</dependency>
+	<dependency>
+	  <groupId>io.apimatic</groupId>
+	  <artifactId>okhttp-client-adapter</artifactId>
+	  <version>[0.1, 0.2)</version>
+	</dependency>
   </dependencies>
 </project>

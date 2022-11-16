@@ -7,20 +7,13 @@
 package me.pagar.api.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.apimatic.core.ApiCall;
+import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.HashMap;
-import java.util.Map;
 import me.pagar.api.ApiHelper;
-import me.pagar.api.AuthManager;
-import me.pagar.api.Configuration;
+import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
-import me.pagar.api.http.Headers;
-import me.pagar.api.http.client.HttpClient;
-import me.pagar.api.http.client.HttpContext;
-import me.pagar.api.http.request.HttpRequest;
-import me.pagar.api.http.response.HttpResponse;
-import me.pagar.api.http.response.HttpStringResponse;
+import me.pagar.api.http.request.HttpMethod;
 import me.pagar.api.models.CreateTransfer;
 import me.pagar.api.models.GetTransfer;
 import me.pagar.api.models.ListTransfers;
@@ -32,71 +25,10 @@ public final class DefaultTransfersController extends BaseController implements 
 
     /**
      * Initializes the controller.
-     * @param config    Configurations added in client.
-     * @param httpClient    Send HTTP requests and read the responses.
-     * @param authManagers    Apply authorization to requests.
+     * @param globalConfig    Configurations added in client.
      */
-    public DefaultTransfersController(Configuration config, HttpClient httpClient,
-            Map<String, AuthManager> authManagers) {
-        super(config, httpClient, authManagers);
-    }
-
-
-    /**
-     * Gets all transfers.
-     * @return    Returns the ListTransfers response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListTransfers getTransfers() throws ApiException, IOException {
-        HttpRequest request = buildGetTransfersRequest();
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetTransfersResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getTransfers.
-     */
-    private HttpRequest buildGetTransfersRequest() {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/transfers");
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getTransfers.
-     * @return An object of type ListTransfers
-     */
-    private ListTransfers handleGetTransfersResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListTransfers result = ApiHelper.deserialize(responseBody,
-                ListTransfers.class);
-
-        return result;
+    public DefaultTransfersController(GlobalConfiguration globalConfig) {
+        super(globalConfig);
     }
 
     /**
@@ -107,61 +39,30 @@ public final class DefaultTransfersController extends BaseController implements 
      */
     public GetTransfer getTransferById(
             final String transferId) throws ApiException, IOException {
-        HttpRequest request = buildGetTransferByIdRequest(transferId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetTransferByIdResponse(context);
+        return prepareGetTransferByIdRequest(transferId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getTransferById.
+     * Builds the ApiCall object for getTransferById.
      */
-    private HttpRequest buildGetTransferByIdRequest(
-            final String transferId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/transfers/{transfer_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("transfer_id",
-                new SimpleEntry<Object, Boolean>(transferId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getTransferById.
-     * @return An object of type GetTransfer
-     */
-    private GetTransfer handleGetTransferByIdResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetTransfer result = ApiHelper.deserialize(responseBody,
-                GetTransfer.class);
-
-        return result;
+    private ApiCall<GetTransfer, ApiException> prepareGetTransferByIdRequest(
+            final String transferId) throws IOException {
+        return new ApiCall.Builder<GetTransfer, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/transfers/{transfer_id}")
+                        .templateParam(param -> param.key("transfer_id").value(transferId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTransfer.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -172,58 +73,60 @@ public final class DefaultTransfersController extends BaseController implements 
      */
     public GetTransfer createTransfer(
             final CreateTransfer request) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateTransferRequest(request);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateTransferResponse(context);
+        return prepareCreateTransferRequest(request).execute();
     }
 
     /**
-     * Builds the HttpRequest object for createTransfer.
+     * Builds the ApiCall object for createTransfer.
      */
-    private HttpRequest buildCreateTransferRequest(
-            final CreateTransfer request) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/transfers/recipients");
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
+    private ApiCall<GetTransfer, ApiException> prepareCreateTransferRequest(
+            final CreateTransfer request) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetTransfer, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/transfers/recipients")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTransfer.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for createTransfer.
-     * @return An object of type GetTransfer
+     * Gets all transfers.
+     * @return    Returns the ListTransfers response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private GetTransfer handleCreateTransferResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetTransfer result = ApiHelper.deserialize(responseBody,
-                GetTransfer.class);
-
-        return result;
+    public ListTransfers getTransfers() throws ApiException, IOException {
+        return prepareGetTransfersRequest().execute();
     }
 
+    /**
+     * Builds the ApiCall object for getTransfers.
+     */
+    private ApiCall<ListTransfers, ApiException> prepareGetTransfersRequest() throws IOException {
+        return new ApiCall.Builder<ListTransfers, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/transfers")
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListTransfers.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
 }

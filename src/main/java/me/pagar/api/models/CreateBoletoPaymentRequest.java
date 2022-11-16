@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -27,6 +28,9 @@ public class CreateBoletoPaymentRequest {
     private String nossoNumero;
     private String documentNumber;
     private String statementDescriptor;
+    private CreateInterestRequest interest;
+    private CreateFineRequest fine;
+    private Integer maxDaysToPayPastDue;
 
     /**
      * Default constructor.
@@ -45,6 +49,9 @@ public class CreateBoletoPaymentRequest {
      * @param  statementDescriptor  String value for statementDescriptor.
      * @param  dueAt  LocalDateTime value for dueAt.
      * @param  nossoNumero  String value for nossoNumero.
+     * @param  interest  CreateInterestRequest value for interest.
+     * @param  fine  CreateFineRequest value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      */
     public CreateBoletoPaymentRequest(
             int retries,
@@ -55,7 +62,10 @@ public class CreateBoletoPaymentRequest {
             String documentNumber,
             String statementDescriptor,
             LocalDateTime dueAt,
-            String nossoNumero) {
+            String nossoNumero,
+            CreateInterestRequest interest,
+            CreateFineRequest fine,
+            Integer maxDaysToPayPastDue) {
         this.retries = retries;
         this.bank = bank;
         this.instructions = instructions;
@@ -65,6 +75,9 @@ public class CreateBoletoPaymentRequest {
         this.nossoNumero = nossoNumero;
         this.documentNumber = documentNumber;
         this.statementDescriptor = statementDescriptor;
+        this.interest = interest;
+        this.fine = fine;
+        this.maxDaysToPayPastDue = maxDaysToPayPastDue;
     }
 
     /**
@@ -252,6 +265,63 @@ public class CreateBoletoPaymentRequest {
     }
 
     /**
+     * Getter for Interest.
+     * @return Returns the CreateInterestRequest
+     */
+    @JsonGetter("interest")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreateInterestRequest getInterest() {
+        return interest;
+    }
+
+    /**
+     * Setter for Interest.
+     * @param interest Value for CreateInterestRequest
+     */
+    @JsonSetter("interest")
+    public void setInterest(CreateInterestRequest interest) {
+        this.interest = interest;
+    }
+
+    /**
+     * Getter for Fine.
+     * @return Returns the CreateFineRequest
+     */
+    @JsonGetter("fine")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreateFineRequest getFine() {
+        return fine;
+    }
+
+    /**
+     * Setter for Fine.
+     * @param fine Value for CreateFineRequest
+     */
+    @JsonSetter("fine")
+    public void setFine(CreateFineRequest fine) {
+        this.fine = fine;
+    }
+
+    /**
+     * Getter for MaxDaysToPayPastDue.
+     * @return Returns the Integer
+     */
+    @JsonGetter("max_days_to_pay_past_due")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Integer getMaxDaysToPayPastDue() {
+        return maxDaysToPayPastDue;
+    }
+
+    /**
+     * Setter for MaxDaysToPayPastDue.
+     * @param maxDaysToPayPastDue Value for Integer
+     */
+    @JsonSetter("max_days_to_pay_past_due")
+    public void setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+        this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+    }
+
+    /**
      * Converts this CreateBoletoPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -261,7 +331,8 @@ public class CreateBoletoPaymentRequest {
                 + ", instructions=" + instructions + ", billingAddress=" + billingAddress
                 + ", billingAddressId=" + billingAddressId + ", documentNumber=" + documentNumber
                 + ", statementDescriptor=" + statementDescriptor + ", dueAt=" + dueAt
-                + ", nossoNumero=" + nossoNumero + "]";
+                + ", nossoNumero=" + nossoNumero + ", interest=" + interest + ", fine=" + fine
+                + ", maxDaysToPayPastDue=" + maxDaysToPayPastDue + "]";
     }
 
     /**
@@ -273,7 +344,10 @@ public class CreateBoletoPaymentRequest {
         Builder builder = new Builder(retries, bank, instructions, billingAddress, billingAddressId,
                 documentNumber, statementDescriptor)
                 .dueAt(getDueAt())
-                .nossoNumero(getNossoNumero());
+                .nossoNumero(getNossoNumero())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -290,6 +364,9 @@ public class CreateBoletoPaymentRequest {
         private String statementDescriptor;
         private LocalDateTime dueAt;
         private String nossoNumero;
+        private CreateInterestRequest interest;
+        private CreateFineRequest fine;
+        private Integer maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -410,12 +487,43 @@ public class CreateBoletoPaymentRequest {
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  CreateInterestRequest value for interest.
+         * @return Builder
+         */
+        public Builder interest(CreateInterestRequest interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  CreateFineRequest value for fine.
+         * @return Builder
+         */
+        public Builder fine(CreateFineRequest fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateBoletoPaymentRequest} object using the set fields.
          * @return {@link CreateBoletoPaymentRequest}
          */
         public CreateBoletoPaymentRequest build() {
             return new CreateBoletoPaymentRequest(retries, bank, instructions, billingAddress,
-                    billingAddressId, documentNumber, statementDescriptor, dueAt, nossoNumero);
+                    billingAddressId, documentNumber, statementDescriptor, dueAt, nossoNumero,
+                    interest, fine, maxDaysToPayPastDue);
         }
     }
 }

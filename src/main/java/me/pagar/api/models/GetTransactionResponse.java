@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +31,15 @@ import me.pagar.api.DateTimeHelper;
         defaultImpl = GetTransactionResponse.class,
         visible = true)
 @JsonSubTypes({
-    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
     @Type(value = GetBankTransferTransactionResponse.class, name = "bank_transfer"),
     @Type(value = GetSafetyPayTransactionResponse.class, name = "safetypay"),
-    @Type(value = GetDebitCardTransactionResponse.class, name = "debit_card"),
+    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
     @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
-    @Type(value = GetCashTransactionResponse.class, name = "cash"),
+    @Type(value = GetDebitCardTransactionResponse.class, name = "debit_card"),
     @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
-    @Type(value = GetPixTransactionResponse.class, name = "pix"),
-    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card")
+    @Type(value = GetCashTransactionResponse.class, name = "cash"),
+    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card"),
+    @Type(value = GetPixTransactionResponse.class, name = "pix")
 })
 @JsonInclude(Include.ALWAYS)
 public class GetTransactionResponse {
@@ -58,6 +59,9 @@ public class GetTransactionResponse {
     private GetAntifraudResponse antifraudResponse;
     private Map<String, String> metadata;
     private List<GetSplitResponse> split;
+    private GetInterestResponse interest;
+    private GetFineResponse fine;
+    private Integer maxDaysToPayPastDue;
 
     /**
      * Default constructor.
@@ -84,6 +88,9 @@ public class GetTransactionResponse {
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      */
     public GetTransactionResponse(
             String gatewayId,
@@ -101,7 +108,10 @@ public class GetTransactionResponse {
             List<GetSplitResponse> split,
             LocalDateTime nextAttempt,
             String transactionType,
-            Map<String, String> metadata) {
+            Map<String, String> metadata,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue) {
         this.gatewayId = gatewayId;
         this.amount = amount;
         this.status = status;
@@ -118,6 +128,9 @@ public class GetTransactionResponse {
         this.antifraudResponse = antifraudResponse;
         this.metadata = metadata;
         this.split = split;
+        this.interest = interest;
+        this.fine = fine;
+        this.maxDaysToPayPastDue = maxDaysToPayPastDue;
     }
 
     /**
@@ -442,6 +455,63 @@ public class GetTransactionResponse {
     }
 
     /**
+     * Getter for Interest.
+     * @return Returns the GetInterestResponse
+     */
+    @JsonGetter("interest")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public GetInterestResponse getInterest() {
+        return interest;
+    }
+
+    /**
+     * Setter for Interest.
+     * @param interest Value for GetInterestResponse
+     */
+    @JsonSetter("interest")
+    public void setInterest(GetInterestResponse interest) {
+        this.interest = interest;
+    }
+
+    /**
+     * Getter for Fine.
+     * @return Returns the GetFineResponse
+     */
+    @JsonGetter("fine")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public GetFineResponse getFine() {
+        return fine;
+    }
+
+    /**
+     * Setter for Fine.
+     * @param fine Value for GetFineResponse
+     */
+    @JsonSetter("fine")
+    public void setFine(GetFineResponse fine) {
+        this.fine = fine;
+    }
+
+    /**
+     * Getter for MaxDaysToPayPastDue.
+     * @return Returns the Integer
+     */
+    @JsonGetter("max_days_to_pay_past_due")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Integer getMaxDaysToPayPastDue() {
+        return maxDaysToPayPastDue;
+    }
+
+    /**
+     * Setter for MaxDaysToPayPastDue.
+     * @param maxDaysToPayPastDue Value for Integer
+     */
+    @JsonSetter("max_days_to_pay_past_due")
+    public void setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+        this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+    }
+
+    /**
      * Converts this GetTransactionResponse into string format.
      * @return String representation of this class
      */
@@ -453,7 +523,8 @@ public class GetTransactionResponse {
                 + maxAttempts + ", splits=" + splits + ", id=" + id + ", gatewayResponse="
                 + gatewayResponse + ", antifraudResponse=" + antifraudResponse + ", split=" + split
                 + ", nextAttempt=" + nextAttempt + ", transactionType=" + transactionType
-                + ", metadata=" + metadata + "]";
+                + ", metadata=" + metadata + ", interest=" + interest + ", fine=" + fine
+                + ", maxDaysToPayPastDue=" + maxDaysToPayPastDue + "]";
     }
 
     /**
@@ -466,7 +537,10 @@ public class GetTransactionResponse {
                 attemptCount, maxAttempts, splits, id, gatewayResponse, antifraudResponse, split)
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
-                .metadata(getMetadata());
+                .metadata(getMetadata())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -490,6 +564,9 @@ public class GetTransactionResponse {
         private LocalDateTime nextAttempt;
         private String transactionType = "transaction";
         private Map<String, String> metadata;
+        private GetInterestResponse interest;
+        private GetFineResponse fine;
+        private Integer maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -694,13 +771,44 @@ public class GetTransactionResponse {
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  GetInterestResponse value for interest.
+         * @return Builder
+         */
+        public Builder interest(GetInterestResponse interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  GetFineResponse value for fine.
+         * @return Builder
+         */
+        public Builder fine(GetFineResponse fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetTransactionResponse} object using the set fields.
          * @return {@link GetTransactionResponse}
          */
         public GetTransactionResponse build() {
             return new GetTransactionResponse(gatewayId, amount, status, success, createdAt,
                     updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
-                    antifraudResponse, split, nextAttempt, transactionType, metadata);
+                    antifraudResponse, split, nextAttempt, transactionType, metadata, interest,
+                    fine, maxDaysToPayPastDue);
         }
     }
 }

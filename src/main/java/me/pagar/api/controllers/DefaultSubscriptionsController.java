@@ -7,22 +7,15 @@
 package me.pagar.api.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.apimatic.core.ApiCall;
+import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.HashMap;
-import java.util.Map;
 import me.pagar.api.ApiHelper;
-import me.pagar.api.AuthManager;
-import me.pagar.api.Configuration;
 import me.pagar.api.DateTimeHelper;
+import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
-import me.pagar.api.http.Headers;
-import me.pagar.api.http.client.HttpClient;
-import me.pagar.api.http.client.HttpContext;
-import me.pagar.api.http.request.HttpRequest;
-import me.pagar.api.http.response.HttpResponse;
-import me.pagar.api.http.response.HttpStringResponse;
+import me.pagar.api.http.request.HttpMethod;
 import me.pagar.api.models.CreateCancelSubscriptionRequest;
 import me.pagar.api.models.CreateDiscountRequest;
 import me.pagar.api.models.CreateIncrementRequest;
@@ -62,15 +55,11 @@ public final class DefaultSubscriptionsController extends BaseController impleme
 
     /**
      * Initializes the controller.
-     * @param config    Configurations added in client.
-     * @param httpClient    Send HTTP requests and read the responses.
-     * @param authManagers    Apply authorization to requests.
+     * @param globalConfig    Configurations added in client.
      */
-    public DefaultSubscriptionsController(Configuration config, HttpClient httpClient,
-            Map<String, AuthManager> authManagers) {
-        super(config, httpClient, authManagers);
+    public DefaultSubscriptionsController(GlobalConfiguration globalConfig) {
+        super(globalConfig);
     }
-
 
     /**
      * @param  subscriptionId  Required parameter: Example:
@@ -82,63 +71,263 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetPeriodResponse renewSubscription(
             final String subscriptionId,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildRenewSubscriptionRequest(subscriptionId, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleRenewSubscriptionResponse(context);
+        return prepareRenewSubscriptionRequest(subscriptionId, idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for renewSubscription.
+     * Builds the ApiCall object for renewSubscription.
      */
-    private HttpRequest buildRenewSubscriptionRequest(
+    private ApiCall<GetPeriodResponse, ApiException> prepareRenewSubscriptionRequest(
             final String subscriptionId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/cycles");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().post(queryBuilder, headers, null, null);
-
-        return request;
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetPeriodResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycles")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetPeriodResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for renewSubscription.
-     * @return An object of type GetPeriodResponse
+     * Updates the credit card from a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for updating a card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private GetPeriodResponse handleRenewSubscriptionResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public GetSubscriptionResponse updateSubscriptionCard(
+            final String subscriptionId,
+            final UpdateSubscriptionCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionCardRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
+    /**
+     * Builds the ApiCall object for updateSubscriptionCard.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionCardRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionCardRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/card")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
 
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetPeriodResponse result = ApiHelper.deserialize(responseBody,
-                GetPeriodResponse.class);
+    /**
+     * Deletes a usage.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  itemId  Required parameter: The subscription item id
+     * @param  usageId  Required parameter: The usage id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetUsageResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetUsageResponse deleteUsage(
+            final String subscriptionId,
+            final String itemId,
+            final String usageId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeleteUsageRequest(subscriptionId, itemId, usageId, idempotencyKey).execute();
+    }
 
-        return result;
+    /**
+     * Builds the ApiCall object for deleteUsage.
+     */
+    private ApiCall<GetUsageResponse, ApiException> prepareDeleteUsageRequest(
+            final String subscriptionId,
+            final String itemId,
+            final String usageId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetUsageResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("usage_id").value(usageId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a discount.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for creating a discount
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetDiscountResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetDiscountResponse createDiscount(
+            final String subscriptionId,
+            final CreateDiscountRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateDiscountRequest(subscriptionId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createDiscount.
+     */
+    private ApiCall<GetDiscountResponse, ApiException> prepareCreateDiscountRequest(
+            final String subscriptionId,
+            final CreateDiscountRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetDiscountResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/discounts")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetDiscountResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Create Usage.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  itemId  Required parameter: Item id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetUsageResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetUsageResponse createAnUsage(
+            final String subscriptionId,
+            final String itemId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateAnUsageRequest(subscriptionId, itemId, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createAnUsage.
+     */
+    private ApiCall<GetUsageResponse, ApiException> prepareCreateAnUsageRequest(
+            final String subscriptionId,
+            final String itemId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetUsageResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  request  Required parameter: Request for updating the end date of the subscription
+     *         current status
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public void updateCurrentCycleStatus(
+            final String subscriptionId,
+            final UpdateCurrentCycleStatusRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        prepareUpdateCurrentCycleStatusRequest(subscriptionId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateCurrentCycleStatus.
+     */
+    private ApiCall<Void, ApiException> prepareUpdateCurrentCycleStatusRequest(
+            final String subscriptionId,
+            final UpdateCurrentCycleStatusRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<Void, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycle-status")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -154,67 +343,200 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String subscriptionId,
             final String discountId,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildDeleteDiscountRequest(subscriptionId, discountId,
-                idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleDeleteDiscountResponse(context);
+        return prepareDeleteDiscountRequest(subscriptionId, discountId, idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for deleteDiscount.
+     * Builds the ApiCall object for deleteDiscount.
      */
-    private HttpRequest buildDeleteDiscountRequest(
+    private ApiCall<GetDiscountResponse, ApiException> prepareDeleteDiscountRequest(
             final String subscriptionId,
             final String discountId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/discounts/{discount_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("discount_id",
-                new SimpleEntry<Object, Boolean>(discountId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
-
-        return request;
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetDiscountResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/discounts/{discount_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("discount_id").value(discountId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetDiscountResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for deleteDiscount.
-     * @return An object of type GetDiscountResponse
+     * Get Subscription Items.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  name  Optional parameter: The item name
+     * @param  code  Optional parameter: Identification code in the client system
+     * @param  status  Optional parameter: The item statis
+     * @param  description  Optional parameter: The item description
+     * @param  createdSince  Optional parameter: Filter for item's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for item's creation date end range
+     * @return    Returns the ListSubscriptionItemsResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private GetDiscountResponse handleDeleteDiscountResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public ListSubscriptionItemsResponse getSubscriptionItems(
+            final String subscriptionId,
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String code,
+            final String status,
+            final String description,
+            final String createdSince,
+            final String createdUntil) throws ApiException, IOException {
+        return prepareGetSubscriptionItemsRequest(subscriptionId, page, size, name, code, status,
+                description, createdSince, createdUntil).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
+    /**
+     * Builds the ApiCall object for getSubscriptionItems.
+     */
+    private ApiCall<ListSubscriptionItemsResponse, ApiException> prepareGetSubscriptionItemsRequest(
+            final String subscriptionId,
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String code,
+            final String status,
+            final String description,
+            final String createdSince,
+            final String createdUntil) throws IOException {
+        return new ApiCall.Builder<ListSubscriptionItemsResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("name")
+                                .value(name).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("status")
+                                .value(status).isRequired(false))
+                        .queryParam(param -> param.key("description")
+                                .value(description).isRequired(false))
+                        .queryParam(param -> param.key("created_since")
+                                .value(createdSince).isRequired(false))
+                        .queryParam(param -> param.key("created_until")
+                                .value(createdUntil).isRequired(false))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListSubscriptionItemsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
 
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetDiscountResponse result = ApiHelper.deserialize(responseBody,
-                GetDiscountResponse.class);
+    /**
+     * Updates the payment method from a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for updating the paymentmethod from a
+     *         subscription
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionPaymentMethod(
+            final String subscriptionId,
+            final UpdateSubscriptionPaymentMethodRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionPaymentMethodRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
 
-        return result;
+    /**
+     * Builds the ApiCall object for updateSubscriptionPaymentMethod.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionPaymentMethodRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionPaymentMethodRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/payment-method")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get Subscription Item.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  itemId  Required parameter: Item id
+     * @return    Returns the GetSubscriptionItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionItemResponse getSubscriptionItem(
+            final String subscriptionId,
+            final String itemId) throws ApiException, IOException {
+        return prepareGetSubscriptionItemRequest(subscriptionId, itemId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getSubscriptionItem.
+     */
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareGetSubscriptionItemRequest(
+            final String subscriptionId,
+            final String itemId) throws IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -250,21 +572,15 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final LocalDateTime nextBillingUntil,
             final LocalDateTime createdSince,
             final LocalDateTime createdUntil) throws ApiException, IOException {
-        HttpRequest request = buildGetSubscriptionsRequest(page, size, code, billingType,
-                customerId, planId, cardId, status, nextBillingSince, nextBillingUntil,
-                createdSince, createdUntil);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetSubscriptionsResponse(context);
+        return prepareGetSubscriptionsRequest(page, size, code, billingType, customerId, planId,
+                cardId, status, nextBillingSince, nextBillingUntil, createdSince,
+                createdUntil).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getSubscriptions.
+     * Builds the ApiCall object for getSubscriptions.
      */
-    private HttpRequest buildGetSubscriptionsRequest(
+    private ApiCall<ListSubscriptionsResponse, ApiException> prepareGetSubscriptionsRequest(
             final Integer page,
             final Integer size,
             final String code,
@@ -276,58 +592,188 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final LocalDateTime nextBillingSince,
             final LocalDateTime nextBillingUntil,
             final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions");
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-        queryParameters.put("code", code);
-        queryParameters.put("billing_type", billingType);
-        queryParameters.put("customer_id", customerId);
-        queryParameters.put("plan_id", planId);
-        queryParameters.put("card_id", cardId);
-        queryParameters.put("status", status);
-        queryParameters.put("next_billing_since", DateTimeHelper.toRfc8601DateTime(nextBillingSince));
-        queryParameters.put("next_billing_until", DateTimeHelper.toRfc8601DateTime(nextBillingUntil));
-        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
-        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
+            final LocalDateTime createdUntil) throws IOException {
+        return new ApiCall.Builder<ListSubscriptionsResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("billing_type")
+                                .value(billingType).isRequired(false))
+                        .queryParam(param -> param.key("customer_id")
+                                .value(customerId).isRequired(false))
+                        .queryParam(param -> param.key("plan_id")
+                                .value(planId).isRequired(false))
+                        .queryParam(param -> param.key("card_id")
+                                .value(cardId).isRequired(false))
+                        .queryParam(param -> param.key("status")
+                                .value(status).isRequired(false))
+                        .queryParam(param -> param.key("next_billing_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(nextBillingSince)).isRequired(false))
+                        .queryParam(param -> param.key("next_billing_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(nextBillingUntil)).isRequired(false))
+                        .queryParam(param -> param.key("created_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdSince)).isRequired(false))
+                        .queryParam(param -> param.key("created_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdUntil)).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListSubscriptionsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for getSubscriptions.
-     * @return An object of type ListSubscriptionsResponse
+     * Cancels a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Optional parameter: Request for cancelling a subscription
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private ListSubscriptionsResponse handleGetSubscriptionsResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public GetSubscriptionResponse cancelSubscription(
+            final String subscriptionId,
+            final CreateCancelSubscriptionRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCancelSubscriptionRequest(subscriptionId, request, idempotencyKey).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
+    /**
+     * Builds the ApiCall object for cancelSubscription.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareCancelSubscriptionRequest(
+            final String subscriptionId,
+            final CreateCancelSubscriptionRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}")
+                        .bodyParam(param -> param.value(request).isRequired(false))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
 
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListSubscriptionsResponse result = ApiHelper.deserialize(responseBody,
-                ListSubscriptionsResponse.class);
+    /**
+     * Creates a increment.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for creating a increment
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetIncrementResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetIncrementResponse createIncrement(
+            final String subscriptionId,
+            final CreateIncrementRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateIncrementRequest(subscriptionId, request, idempotencyKey).execute();
+    }
 
-        return result;
+    /**
+     * Builds the ApiCall object for createIncrement.
+     */
+    private ApiCall<GetIncrementResponse, ApiException> prepareCreateIncrementRequest(
+            final String subscriptionId,
+            final CreateIncrementRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetIncrementResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/increments")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetIncrementResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a usage.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  itemId  Required parameter: Item id
+     * @param  body  Required parameter: Request for creating a usage
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetUsageResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetUsageResponse createUsage(
+            final String subscriptionId,
+            final String itemId,
+            final CreateUsageRequest body,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateUsageRequest(subscriptionId, itemId, body, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createUsage.
+     */
+    private ApiCall<GetUsageResponse, ApiException> prepareCreateUsageRequest(
+            final String subscriptionId,
+            final String itemId,
+            final CreateUsageRequest body,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetUsageResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
+                        .bodyParam(param -> param.value(body))
+                        .bodySerializer(() ->  ApiHelper.serialize(body))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -340,64 +786,33 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetDiscountResponse getDiscountById(
             final String subscriptionId,
             final String discountId) throws ApiException, IOException {
-        HttpRequest request = buildGetDiscountByIdRequest(subscriptionId, discountId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetDiscountByIdResponse(context);
+        return prepareGetDiscountByIdRequest(subscriptionId, discountId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getDiscountById.
+     * Builds the ApiCall object for getDiscountById.
      */
-    private HttpRequest buildGetDiscountByIdRequest(
+    private ApiCall<GetDiscountResponse, ApiException> prepareGetDiscountByIdRequest(
             final String subscriptionId,
-            final String discountId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/discounts/{discountId}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("discountId",
-                new SimpleEntry<Object, Boolean>(discountId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getDiscountById.
-     * @return An object of type GetDiscountResponse
-     */
-    private GetDiscountResponse handleGetDiscountByIdResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetDiscountResponse result = ApiHelper.deserialize(responseBody,
-                GetDiscountResponse.class);
-
-        return result;
+            final String discountId) throws IOException {
+        return new ApiCall.Builder<GetDiscountResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/discounts/{discountId}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("discountId").value(discountId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetDiscountResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -411,59 +826,34 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetSubscriptionResponse createSubscription(
             final CreateSubscriptionRequest body,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildCreateSubscriptionRequest(body, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleCreateSubscriptionResponse(context);
+        return prepareCreateSubscriptionRequest(body, idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for createSubscription.
+     * Builds the ApiCall object for createSubscription.
      */
-    private HttpRequest buildCreateSubscriptionRequest(
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareCreateSubscriptionRequest(
             final CreateSubscriptionRequest body,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions");
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(body);
-        HttpRequest request = getClientInstance().postBody(queryBuilder, headers, null, bodyJson);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for createSubscription.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleCreateSubscriptionResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions")
+                        .bodyParam(param -> param.value(body))
+                        .bodySerializer(() ->  ApiHelper.serialize(body))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -476,64 +866,79 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetIncrementResponse getIncrementById(
             final String subscriptionId,
             final String incrementId) throws ApiException, IOException {
-        HttpRequest request = buildGetIncrementByIdRequest(subscriptionId, incrementId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetIncrementByIdResponse(context);
+        return prepareGetIncrementByIdRequest(subscriptionId, incrementId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getIncrementById.
+     * Builds the ApiCall object for getIncrementById.
      */
-    private HttpRequest buildGetIncrementByIdRequest(
+    private ApiCall<GetIncrementResponse, ApiException> prepareGetIncrementByIdRequest(
             final String subscriptionId,
-            final String incrementId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/increments/{increment_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("increment_id",
-                new SimpleEntry<Object, Boolean>(incrementId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
+            final String incrementId) throws IOException {
+        return new ApiCall.Builder<GetIncrementResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/increments/{increment_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("increment_id").value(incrementId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetIncrementResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for getIncrementById.
-     * @return An object of type GetIncrementResponse
+     * @param  subscriptionId  Required parameter: Example:
+     * @param  request  Required parameter: Request for updating a subscription affiliation id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private GetIncrementResponse handleGetIncrementByIdResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public GetSubscriptionResponse updateSubscriptionAffiliationId(
+            final String subscriptionId,
+            final UpdateSubscriptionAffiliationIdRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionAffiliationIdRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetIncrementResponse result = ApiHelper.deserialize(responseBody,
-                GetIncrementResponse.class);
-
-        return result;
+    /**
+     * Builds the ApiCall object for updateSubscriptionAffiliationId.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionAffiliationIdRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionAffiliationIdRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/gateway-affiliation-id")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -549,68 +954,38 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String subscriptionId,
             final UpdateMetadataRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionMetadataRequest(subscriptionId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionMetadataResponse(context);
+        return prepareUpdateSubscriptionMetadataRequest(subscriptionId, request,
+                idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for updateSubscriptionMetadata.
+     * Builds the ApiCall object for updateSubscriptionMetadata.
      */
-    private HttpRequest buildUpdateSubscriptionMetadataRequest(
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionMetadataRequest(
             final String subscriptionId,
             final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/Subscriptions/{subscription_id}/metadata");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionMetadata.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionMetadataResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/Subscriptions/{subscription_id}/metadata")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -626,530 +1001,80 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String subscriptionId,
             final String incrementId,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildDeleteIncrementRequest(subscriptionId, incrementId,
-                idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleDeleteIncrementResponse(context);
+        return prepareDeleteIncrementRequest(subscriptionId, incrementId, idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for deleteIncrement.
+     * Builds the ApiCall object for deleteIncrement.
      */
-    private HttpRequest buildDeleteIncrementRequest(
+    private ApiCall<GetIncrementResponse, ApiException> prepareDeleteIncrementRequest(
             final String subscriptionId,
             final String incrementId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/increments/{increment_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("increment_id",
-                new SimpleEntry<Object, Boolean>(incrementId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for deleteIncrement.
-     * @return An object of type GetIncrementResponse
-     */
-    private GetIncrementResponse handleDeleteIncrementResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetIncrementResponse result = ApiHelper.deserialize(responseBody,
-                GetIncrementResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Gets a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse getSubscription(
-            final String subscriptionId) throws ApiException, IOException {
-        HttpRequest request = buildGetSubscriptionRequest(subscriptionId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetSubscriptionResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getSubscription.
-     */
-    private HttpRequest buildGetSubscriptionRequest(
-            final String subscriptionId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getSubscription.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleGetSubscriptionResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Example:
-     * @param  request  Required parameter: Request for updating the end date of the current
-     *         signature cycle
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateLatestPeriodEndAt(
-            final String subscriptionId,
-            final UpdateCurrentCycleEndDateRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateLatestPeriodEndAtRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateLatestPeriodEndAtResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateLatestPeriodEndAt.
-     */
-    private HttpRequest buildUpdateLatestPeriodEndAtRequest(
-            final String subscriptionId,
-            final UpdateCurrentCycleEndDateRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/periods/latest/end-at");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateLatestPeriodEndAt.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateLatestPeriodEndAtResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetIncrementResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/increments/{increment_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("increment_id").value(incrementId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetIncrementResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
      * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  request  Required parameter: Request for updating the end date of the subscription
-     *         current status
-     * @param  idempotencyKey  Optional parameter: Example:
+     * @param  page  Required parameter: Page number
+     * @param  size  Required parameter: Page size
+     * @return    Returns the ListCyclesResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public void updateCurrentCycleStatus(
+    public ListCyclesResponse getSubscriptionCycles(
             final String subscriptionId,
-            final UpdateCurrentCycleStatusRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateCurrentCycleStatusRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        handleUpdateCurrentCycleStatusResponse(context);
+            final String page,
+            final String size) throws ApiException, IOException {
+        return prepareGetSubscriptionCyclesRequest(subscriptionId, page, size).execute();
     }
 
     /**
-     * Builds the HttpRequest object for updateCurrentCycleStatus.
+     * Builds the ApiCall object for getSubscriptionCycles.
      */
-    private HttpRequest buildUpdateCurrentCycleStatusRequest(
+    private ApiCall<ListCyclesResponse, ApiException> prepareGetSubscriptionCyclesRequest(
             final String subscriptionId,
-            final UpdateCurrentCycleStatusRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/cycle-status");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateCurrentCycleStatus.
-     * @return An object of type void
-     */
-    private Void handleUpdateCurrentCycleStatusResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        return null;
-    }
-
-    /**
-     * Get Subscription Items.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  name  Optional parameter: The item name
-     * @param  code  Optional parameter: Identification code in the client system
-     * @param  status  Optional parameter: The item statis
-     * @param  description  Optional parameter: The item description
-     * @param  createdSince  Optional parameter: Filter for item's creation date start range
-     * @param  createdUntil  Optional parameter: Filter for item's creation date end range
-     * @return    Returns the ListSubscriptionItemsResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListSubscriptionItemsResponse getSubscriptionItems(
-            final String subscriptionId,
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String code,
-            final String status,
-            final String description,
-            final String createdSince,
-            final String createdUntil) throws ApiException, IOException {
-        HttpRequest request = buildGetSubscriptionItemsRequest(subscriptionId, page, size, name,
-                code, status, description, createdSince, createdUntil);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetSubscriptionItemsResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getSubscriptionItems.
-     */
-    private HttpRequest buildGetSubscriptionItemsRequest(
-            final String subscriptionId,
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String code,
-            final String status,
-            final String description,
-            final String createdSince,
-            final String createdUntil) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-        queryParameters.put("name", name);
-        queryParameters.put("code", code);
-        queryParameters.put("status", status);
-        queryParameters.put("description", description);
-        queryParameters.put("created_since", createdSince);
-        queryParameters.put("created_until", createdUntil);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getSubscriptionItems.
-     * @return An object of type ListSubscriptionItemsResponse
-     */
-    private ListSubscriptionItemsResponse handleGetSubscriptionItemsResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListSubscriptionItemsResponse result = ApiHelper.deserialize(responseBody,
-                ListSubscriptionItemsResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Get Subscription Item.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  itemId  Required parameter: Item id
-     * @return    Returns the GetSubscriptionItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionItemResponse getSubscriptionItem(
-            final String subscriptionId,
-            final String itemId) throws ApiException, IOException {
-        HttpRequest request = buildGetSubscriptionItemRequest(subscriptionId, itemId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetSubscriptionItemResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getSubscriptionItem.
-     */
-    private HttpRequest buildGetSubscriptionItemRequest(
-            final String subscriptionId,
-            final String itemId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{item_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("item_id",
-                new SimpleEntry<Object, Boolean>(itemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getSubscriptionItem.
-     * @return An object of type GetSubscriptionItemResponse
-     */
-    private GetSubscriptionItemResponse handleGetSubscriptionItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionItemResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionItemResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Example:
-     * @param  request  Required parameter: Request for updating a subscription affiliation id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionAffiliationId(
-            final String subscriptionId,
-            final UpdateSubscriptionAffiliationIdRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionAffiliationIdRequest(subscriptionId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionAffiliationIdResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateSubscriptionAffiliationId.
-     */
-    private HttpRequest buildUpdateSubscriptionAffiliationIdRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionAffiliationIdRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/gateway-affiliation-id");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionAffiliationId.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionAffiliationIdResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
+            final String page,
+            final String size) throws IOException {
+        return new ApiCall.Builder<ListCyclesResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycles")
+                        .queryParam(param -> param.key("page")
+                                .value(page))
+                        .queryParam(param -> param.key("size")
+                                .value(size))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListCyclesResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -1164,69 +1089,267 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String subscriptionId,
             final int page,
             final int size) throws ApiException, IOException {
-        HttpRequest request = buildGetDiscountsRequest(subscriptionId, page, size);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetDiscountsResponse(context);
+        return prepareGetDiscountsRequest(subscriptionId, page, size).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getDiscounts.
+     * Builds the ApiCall object for getDiscounts.
      */
-    private HttpRequest buildGetDiscountsRequest(
+    private ApiCall<ListDiscountsResponse, ApiException> prepareGetDiscountsRequest(
             final String subscriptionId,
             final int page,
-            final int size) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/discounts/");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
+            final int size) throws IOException {
+        return new ApiCall.Builder<ListDiscountsResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/discounts/")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListDiscountsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for getDiscounts.
-     * @return An object of type ListDiscountsResponse
+     * Updates the billing date from a subscription.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  request  Required parameter: Request for updating the subscription billing date
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private ListDiscountsResponse handleGetDiscountsResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public GetSubscriptionResponse updateSubscriptionBillingDate(
+            final String subscriptionId,
+            final UpdateSubscriptionBillingDateRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionBillingDateRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
+    /**
+     * Builds the ApiCall object for updateSubscriptionBillingDate.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionBillingDateRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionBillingDateRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/billing-date")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
 
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListDiscountsResponse result = ApiHelper.deserialize(responseBody,
-                ListDiscountsResponse.class);
+    /**
+     * Deletes a subscription item.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  subscriptionItemId  Required parameter: Subscription item id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionItemResponse deleteSubscriptionItem(
+            final String subscriptionId,
+            final String subscriptionItemId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeleteSubscriptionItemRequest(subscriptionId, subscriptionItemId,
+                idempotencyKey).execute();
+    }
 
-        return result;
+    /**
+     * Builds the ApiCall object for deleteSubscriptionItem.
+     */
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareDeleteSubscriptionItemRequest(
+            final String subscriptionId,
+            final String subscriptionItemId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{subscription_item_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("subscription_item_id").value(subscriptionItemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListIncrementsResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListIncrementsResponse getIncrements(
+            final String subscriptionId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException {
+        return prepareGetIncrementsRequest(subscriptionId, page, size).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getIncrements.
+     */
+    private ApiCall<ListIncrementsResponse, ApiException> prepareGetIncrementsRequest(
+            final String subscriptionId,
+            final Integer page,
+            final Integer size) throws IOException {
+        return new ApiCall.Builder<ListIncrementsResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/increments/")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListIncrementsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates the boleto due days from a subscription.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  request  Required parameter: Example:
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionDueDays(
+            final String subscriptionId,
+            final UpdateSubscriptionDueDaysRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionDueDaysRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionDueDays.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionDueDaysRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionDueDaysRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/boleto-due-days")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates the start at date from a subscription.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  request  Required parameter: Request for updating the subscription start date
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionStartAt(
+            final String subscriptionId,
+            final UpdateSubscriptionStartAtRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionStartAtRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionStartAt.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionStartAtRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionStartAtRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/start-at")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -1244,70 +1367,41 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String itemId,
             final UpdateSubscriptionItemRequest body,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildUpdateSubscriptionItemRequest(subscriptionId, itemId, body,
-                idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleUpdateSubscriptionItemResponse(context);
+        return prepareUpdateSubscriptionItemRequest(subscriptionId, itemId, body,
+                idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for updateSubscriptionItem.
+     * Builds the ApiCall object for updateSubscriptionItem.
      */
-    private HttpRequest buildUpdateSubscriptionItemRequest(
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareUpdateSubscriptionItemRequest(
             final String subscriptionId,
             final String itemId,
             final UpdateSubscriptionItemRequest body,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{item_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("item_id",
-                new SimpleEntry<Object, Boolean>(itemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(body);
-        HttpRequest request = getClientInstance().putBody(queryBuilder, headers, null, bodyJson);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionItem.
-     * @return An object of type GetSubscriptionItemResponse
-     */
-    private GetSubscriptionItemResponse handleUpdateSubscriptionItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionItemResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionItemResponse.class);
-
-        return result;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}")
+                        .bodyParam(param -> param.value(body))
+                        .bodySerializer(() ->  ApiHelper.serialize(body))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PUT))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -1323,68 +1417,73 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String subscriptionId,
             final CreateSubscriptionItemRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateSubscriptionItemRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateSubscriptionItemResponse(context);
+        return prepareCreateSubscriptionItemRequest(subscriptionId, request,
+                idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for createSubscriptionItem.
+     * Builds the ApiCall object for createSubscriptionItem.
      */
-    private HttpRequest buildCreateSubscriptionItemRequest(
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareCreateSubscriptionItemRequest(
             final String subscriptionId,
             final CreateSubscriptionItemRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for createSubscriptionItem.
-     * @return An object of type GetSubscriptionItemResponse
+     * Gets a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private GetSubscriptionItemResponse handleCreateSubscriptionItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public GetSubscriptionResponse getSubscription(
+            final String subscriptionId) throws ApiException, IOException {
+        return prepareGetSubscriptionRequest(subscriptionId).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionItemResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionItemResponse.class);
-
-        return result;
+    /**
+     * Builds the ApiCall object for getSubscription.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareGetSubscriptionRequest(
+            final String subscriptionId) throws IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -1410,20 +1509,14 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String group,
             final LocalDateTime usedSince,
             final LocalDateTime usedUntil) throws ApiException, IOException {
-        HttpRequest request = buildGetUsagesRequest(subscriptionId, itemId, page, size, code, group,
-                usedSince, usedUntil);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetUsagesResponse(context);
+        return prepareGetUsagesRequest(subscriptionId, itemId, page, size, code, group, usedSince,
+                usedUntil).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getUsages.
+     * Builds the ApiCall object for getUsages.
      */
-    private HttpRequest buildGetUsagesRequest(
+    private ApiCall<ListUsagesResponse, ApiException> prepareGetUsagesRequest(
             final String subscriptionId,
             final String itemId,
             final Integer page,
@@ -1431,60 +1524,84 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String code,
             final String group,
             final LocalDateTime usedSince,
-            final LocalDateTime usedUntil) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{item_id}/usages");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("item_id",
-                new SimpleEntry<Object, Boolean>(itemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-        queryParameters.put("code", code);
-        queryParameters.put("group", group);
-        queryParameters.put("used_since", DateTimeHelper.toRfc8601DateTime(usedSince));
-        queryParameters.put("used_until", DateTimeHelper.toRfc8601DateTime(usedUntil));
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
+            final LocalDateTime usedUntil) throws IOException {
+        return new ApiCall.Builder<ListUsagesResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("group")
+                                .value(group).isRequired(false))
+                        .queryParam(param -> param.key("used_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(usedSince)).isRequired(false))
+                        .queryParam(param -> param.key("used_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(usedUntil)).isRequired(false))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListUsagesResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for getUsages.
-     * @return An object of type ListUsagesResponse
+     * @param  subscriptionId  Required parameter: Example:
+     * @param  request  Required parameter: Request for updating the end date of the current
+     *         signature cycle
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    private ListUsagesResponse handleGetUsagesResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
+    public GetSubscriptionResponse updateLatestPeriodEndAt(
+            final String subscriptionId,
+            final UpdateCurrentCycleEndDateRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateLatestPeriodEndAtRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
 
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListUsagesResponse result = ApiHelper.deserialize(responseBody,
-                ListUsagesResponse.class);
-
-        return result;
+    /**
+     * Builds the ApiCall object for updateLatestPeriodEndAt.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateLatestPeriodEndAtRequest(
+            final String subscriptionId,
+            final UpdateCurrentCycleEndDateRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/periods/latest/end-at")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -1501,68 +1618,38 @@ public final class DefaultSubscriptionsController extends BaseController impleme
             final String subscriptionId,
             final UpdateSubscriptionMinimumPriceRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionMiniumPriceRequest(subscriptionId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionMiniumPriceResponse(context);
+        return prepareUpdateSubscriptionMiniumPriceRequest(subscriptionId, request,
+                idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for updateSubscriptionMiniumPrice.
+     * Builds the ApiCall object for updateSubscriptionMiniumPrice.
      */
-    private HttpRequest buildUpdateSubscriptionMiniumPriceRequest(
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionMiniumPriceRequest(
             final String subscriptionId,
             final UpdateSubscriptionMinimumPriceRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/minimum_price");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionMiniumPrice.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionMiniumPriceResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/minimum_price")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -1575,1147 +1662,33 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetPeriodResponse getSubscriptionCycleById(
             final String subscriptionId,
             final String cycleId) throws ApiException, IOException {
-        HttpRequest request = buildGetSubscriptionCycleByIdRequest(subscriptionId, cycleId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetSubscriptionCycleByIdResponse(context);
+        return prepareGetSubscriptionCycleByIdRequest(subscriptionId, cycleId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getSubscriptionCycleById.
+     * Builds the ApiCall object for getSubscriptionCycleById.
      */
-    private HttpRequest buildGetSubscriptionCycleByIdRequest(
+    private ApiCall<GetPeriodResponse, ApiException> prepareGetSubscriptionCycleByIdRequest(
             final String subscriptionId,
-            final String cycleId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/cycles/{cycleId}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("cycleId",
-                new SimpleEntry<Object, Boolean>(cycleId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getSubscriptionCycleById.
-     * @return An object of type GetPeriodResponse
-     */
-    private GetPeriodResponse handleGetSubscriptionCycleByIdResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetPeriodResponse result = ApiHelper.deserialize(responseBody,
-                GetPeriodResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Create Usage.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  itemId  Required parameter: Item id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetUsageResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetUsageResponse createAnUsage(
-            final String subscriptionId,
-            final String itemId,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildCreateAnUsageRequest(subscriptionId, itemId, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleCreateAnUsageResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createAnUsage.
-     */
-    private HttpRequest buildCreateAnUsageRequest(
-            final String subscriptionId,
-            final String itemId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{item_id}/usages");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("item_id",
-                new SimpleEntry<Object, Boolean>(itemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().post(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for createAnUsage.
-     * @return An object of type GetUsageResponse
-     */
-    private GetUsageResponse handleCreateAnUsageResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetUsageResponse result = ApiHelper.deserialize(responseBody,
-                GetUsageResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Cancels a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Optional parameter: Request for cancelling a subscription
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse cancelSubscription(
-            final String subscriptionId,
-            final CreateCancelSubscriptionRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCancelSubscriptionRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCancelSubscriptionResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for cancelSubscription.
-     */
-    private HttpRequest buildCancelSubscriptionRequest(
-            final String subscriptionId,
-            final CreateCancelSubscriptionRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().deleteBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for cancelSubscription.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleCancelSubscriptionResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Deletes a subscription item.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  subscriptionItemId  Required parameter: Subscription item id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionItemResponse deleteSubscriptionItem(
-            final String subscriptionId,
-            final String subscriptionItemId,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildDeleteSubscriptionItemRequest(subscriptionId, subscriptionItemId,
-                idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleDeleteSubscriptionItemResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for deleteSubscriptionItem.
-     */
-    private HttpRequest buildDeleteSubscriptionItemRequest(
-            final String subscriptionId,
-            final String subscriptionItemId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{subscription_item_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("subscription_item_id",
-                new SimpleEntry<Object, Boolean>(subscriptionItemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for deleteSubscriptionItem.
-     * @return An object of type GetSubscriptionItemResponse
-     */
-    private GetSubscriptionItemResponse handleDeleteSubscriptionItemResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionItemResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionItemResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListIncrementsResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListIncrementsResponse getIncrements(
-            final String subscriptionId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException {
-        HttpRequest request = buildGetIncrementsRequest(subscriptionId, page, size);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetIncrementsResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getIncrements.
-     */
-    private HttpRequest buildGetIncrementsRequest(
-            final String subscriptionId,
-            final Integer page,
-            final Integer size) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/increments/");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getIncrements.
-     * @return An object of type ListIncrementsResponse
-     */
-    private ListIncrementsResponse handleGetIncrementsResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListIncrementsResponse result = ApiHelper.deserialize(responseBody,
-                ListIncrementsResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the boleto due days from a subscription.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  request  Required parameter: Example:
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionDueDays(
-            final String subscriptionId,
-            final UpdateSubscriptionDueDaysRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionDueDaysRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionDueDaysResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateSubscriptionDueDays.
-     */
-    private HttpRequest buildUpdateSubscriptionDueDaysRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionDueDaysRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/boleto-due-days");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionDueDays.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionDueDaysResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the credit card from a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for updating a card
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionCard(
-            final String subscriptionId,
-            final UpdateSubscriptionCardRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionCardRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionCardResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateSubscriptionCard.
-     */
-    private HttpRequest buildUpdateSubscriptionCardRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionCardRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/card");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionCard.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionCardResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Deletes a usage.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  itemId  Required parameter: The subscription item id
-     * @param  usageId  Required parameter: The usage id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetUsageResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetUsageResponse deleteUsage(
-            final String subscriptionId,
-            final String itemId,
-            final String usageId,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildDeleteUsageRequest(subscriptionId, itemId, usageId,
-                idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleDeleteUsageResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for deleteUsage.
-     */
-    private HttpRequest buildDeleteUsageRequest(
-            final String subscriptionId,
-            final String itemId,
-            final String usageId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("item_id",
-                new SimpleEntry<Object, Boolean>(itemId, true));
-        templateParameters.put("usage_id",
-                new SimpleEntry<Object, Boolean>(usageId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for deleteUsage.
-     * @return An object of type GetUsageResponse
-     */
-    private GetUsageResponse handleDeleteUsageResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetUsageResponse result = ApiHelper.deserialize(responseBody,
-                GetUsageResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Creates a discount.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for creating a discount
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetDiscountResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetDiscountResponse createDiscount(
-            final String subscriptionId,
-            final CreateDiscountRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateDiscountRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateDiscountResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createDiscount.
-     */
-    private HttpRequest buildCreateDiscountRequest(
-            final String subscriptionId,
-            final CreateDiscountRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/discounts");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for createDiscount.
-     * @return An object of type GetDiscountResponse
-     */
-    private GetDiscountResponse handleCreateDiscountResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetDiscountResponse result = ApiHelper.deserialize(responseBody,
-                GetDiscountResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the payment method from a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for updating the paymentmethod from a
-     *         subscription
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionPaymentMethod(
-            final String subscriptionId,
-            final UpdateSubscriptionPaymentMethodRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionPaymentMethodRequest(subscriptionId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionPaymentMethodResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateSubscriptionPaymentMethod.
-     */
-    private HttpRequest buildUpdateSubscriptionPaymentMethodRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionPaymentMethodRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/payment-method");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionPaymentMethod.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionPaymentMethodResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Creates a increment.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for creating a increment
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetIncrementResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetIncrementResponse createIncrement(
-            final String subscriptionId,
-            final CreateIncrementRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateIncrementRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateIncrementResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createIncrement.
-     */
-    private HttpRequest buildCreateIncrementRequest(
-            final String subscriptionId,
-            final CreateIncrementRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/increments");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for createIncrement.
-     * @return An object of type GetIncrementResponse
-     */
-    private GetIncrementResponse handleCreateIncrementResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetIncrementResponse result = ApiHelper.deserialize(responseBody,
-                GetIncrementResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Creates a usage.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  itemId  Required parameter: Item id
-     * @param  body  Required parameter: Request for creating a usage
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetUsageResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetUsageResponse createUsage(
-            final String subscriptionId,
-            final String itemId,
-            final CreateUsageRequest body,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildCreateUsageRequest(subscriptionId, itemId, body, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleCreateUsageResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for createUsage.
-     */
-    private HttpRequest buildCreateUsageRequest(
-            final String subscriptionId,
-            final String itemId,
-            final CreateUsageRequest body,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/items/{item_id}/usages");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("item_id",
-                new SimpleEntry<Object, Boolean>(itemId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(body);
-        HttpRequest request = getClientInstance().postBody(queryBuilder, headers, null, bodyJson);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for createUsage.
-     * @return An object of type GetUsageResponse
-     */
-    private GetUsageResponse handleCreateUsageResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetUsageResponse result = ApiHelper.deserialize(responseBody,
-                GetUsageResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  page  Required parameter: Page number
-     * @param  size  Required parameter: Page size
-     * @return    Returns the ListCyclesResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListCyclesResponse getSubscriptionCycles(
-            final String subscriptionId,
-            final String page,
-            final String size) throws ApiException, IOException {
-        HttpRequest request = buildGetSubscriptionCyclesRequest(subscriptionId, page, size);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetSubscriptionCyclesResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getSubscriptionCycles.
-     */
-    private HttpRequest buildGetSubscriptionCyclesRequest(
-            final String subscriptionId,
-            final String page,
-            final String size) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/cycles");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getSubscriptionCycles.
-     * @return An object of type ListCyclesResponse
-     */
-    private ListCyclesResponse handleGetSubscriptionCyclesResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListCyclesResponse result = ApiHelper.deserialize(responseBody,
-                ListCyclesResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the billing date from a subscription.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  request  Required parameter: Request for updating the subscription billing date
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionBillingDate(
-            final String subscriptionId,
-            final UpdateSubscriptionBillingDateRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionBillingDateRequest(subscriptionId,
-                request, idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionBillingDateResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateSubscriptionBillingDate.
-     */
-    private HttpRequest buildUpdateSubscriptionBillingDateRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionBillingDateRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/billing-date");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionBillingDate.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionBillingDateResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the start at date from a subscription.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  request  Required parameter: Request for updating the subscription start date
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionStartAt(
-            final String subscriptionId,
-            final UpdateSubscriptionStartAtRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSubscriptionStartAtRequest(subscriptionId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSubscriptionStartAtResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateSubscriptionStartAt.
-     */
-    private HttpRequest buildUpdateSubscriptionStartAtRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionStartAtRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/start-at");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateSubscriptionStartAt.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSubscriptionStartAtResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
+            final String cycleId) throws IOException {
+        return new ApiCall.Builder<GetPeriodResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycles/{cycleId}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("cycleId").value(cycleId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetPeriodResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -2728,64 +1701,33 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetUsageReportResponse getUsageReport(
             final String subscriptionId,
             final String periodId) throws ApiException, IOException {
-        HttpRequest request = buildGetUsageReportRequest(subscriptionId, periodId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetUsageReportResponse(context);
+        return prepareGetUsageReportRequest(subscriptionId, periodId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getUsageReport.
+     * Builds the ApiCall object for getUsageReport.
      */
-    private HttpRequest buildGetUsageReportRequest(
+    private ApiCall<GetUsageReportResponse, ApiException> prepareGetUsageReportRequest(
             final String subscriptionId,
-            final String periodId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/periods/{period_id}/usages/report");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("period_id",
-                new SimpleEntry<Object, Boolean>(periodId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getUsageReport.
-     * @return An object of type GetUsageReportResponse
-     */
-    private GetUsageReportResponse handleGetUsageReportResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetUsageReportResponse result = ApiHelper.deserialize(responseBody,
-                GetUsageReportResponse.class);
-
-        return result;
+            final String periodId) throws IOException {
+        return new ApiCall.Builder<GetUsageReportResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/periods/{period_id}/usages/report")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("period_id").value(periodId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageReportResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -2798,65 +1740,33 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     public GetSubscriptionResponse updateSplitSubscription(
             final String id,
             final UpdateSubscriptionSplitRequest request) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateSplitSubscriptionRequest(id, request);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateSplitSubscriptionResponse(context);
+        return prepareUpdateSplitSubscriptionRequest(id, request).execute();
     }
 
     /**
-     * Builds the HttpRequest object for updateSplitSubscription.
+     * Builds the ApiCall object for updateSplitSubscription.
      */
-    private HttpRequest buildUpdateSplitSubscriptionRequest(
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSplitSubscriptionRequest(
             final String id,
-            final UpdateSubscriptionSplitRequest request) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{id}/split");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("id",
-                new SimpleEntry<Object, Boolean>(id, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
+            final UpdateSubscriptionSplitRequest request) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{id}/split")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("id").value(id)
+                                .shouldEncode(true))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
-
-    /**
-     * Processes the response for updateSplitSubscription.
-     * @return An object of type GetSubscriptionResponse
-     */
-    private GetSubscriptionResponse handleUpdateSplitSubscriptionResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetSubscriptionResponse result = ApiHelper.deserialize(responseBody,
-                GetSubscriptionResponse.class);
-
-        return result;
-    }
-
 }

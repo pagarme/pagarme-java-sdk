@@ -6,20 +6,13 @@
 
 package me.pagar.api.controllers;
 
+import io.apimatic.core.ApiCall;
+import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.HashMap;
-import java.util.Map;
 import me.pagar.api.ApiHelper;
-import me.pagar.api.AuthManager;
-import me.pagar.api.Configuration;
+import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
-import me.pagar.api.http.Headers;
-import me.pagar.api.http.client.HttpClient;
-import me.pagar.api.http.client.HttpContext;
-import me.pagar.api.http.request.HttpRequest;
-import me.pagar.api.http.response.HttpResponse;
-import me.pagar.api.http.response.HttpStringResponse;
+import me.pagar.api.http.request.HttpMethod;
 import me.pagar.api.models.GetTransactionResponse;
 
 /**
@@ -29,15 +22,11 @@ public final class DefaultTransactionsController extends BaseController implemen
 
     /**
      * Initializes the controller.
-     * @param config    Configurations added in client.
-     * @param httpClient    Send HTTP requests and read the responses.
-     * @param authManagers    Apply authorization to requests.
+     * @param globalConfig    Configurations added in client.
      */
-    public DefaultTransactionsController(Configuration config, HttpClient httpClient,
-            Map<String, AuthManager> authManagers) {
-        super(config, httpClient, authManagers);
+    public DefaultTransactionsController(GlobalConfiguration globalConfig) {
+        super(globalConfig);
     }
-
 
     /**
      * @param  transactionId  Required parameter: Example:
@@ -47,61 +36,29 @@ public final class DefaultTransactionsController extends BaseController implemen
      */
     public GetTransactionResponse getTransaction(
             final String transactionId) throws ApiException, IOException {
-        HttpRequest request = buildGetTransactionRequest(transactionId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetTransactionResponse(context);
+        return prepareGetTransactionRequest(transactionId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getTransaction.
+     * Builds the ApiCall object for getTransaction.
      */
-    private HttpRequest buildGetTransactionRequest(
-            final String transactionId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/transactions/{transaction_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("transaction_id",
-                new SimpleEntry<Object, Boolean>(transactionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
+    private ApiCall<GetTransactionResponse, ApiException> prepareGetTransactionRequest(
+            final String transactionId) throws IOException {
+        return new ApiCall.Builder<GetTransactionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/transactions/{transaction_id}")
+                        .templateParam(param -> param.key("transaction_id").value(transactionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTransactionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
-
-    /**
-     * Processes the response for getTransaction.
-     * @return An object of type GetTransactionResponse
-     */
-    private GetTransactionResponse handleGetTransactionResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetTransactionResponse result = ApiHelper.deserialize(responseBody,
-                GetTransactionResponse.class);
-
-        return result;
-    }
-
 }

@@ -12,7 +12,7 @@ TransactionsController transactionsController = client.getTransactionsController
 # Get Transaction
 
 ```java
-CompletableFuture<GetTransactionResponse> getTransaction(
+GetTransactionResponse getTransaction(
     final String transactionId)
 ```
 

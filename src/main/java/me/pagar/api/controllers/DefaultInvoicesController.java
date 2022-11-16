@@ -7,22 +7,15 @@
 package me.pagar.api.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.apimatic.core.ApiCall;
+import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.HashMap;
-import java.util.Map;
 import me.pagar.api.ApiHelper;
-import me.pagar.api.AuthManager;
-import me.pagar.api.Configuration;
 import me.pagar.api.DateTimeHelper;
+import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
-import me.pagar.api.http.Headers;
-import me.pagar.api.http.client.HttpClient;
-import me.pagar.api.http.client.HttpContext;
-import me.pagar.api.http.request.HttpRequest;
-import me.pagar.api.http.response.HttpResponse;
-import me.pagar.api.http.response.HttpStringResponse;
+import me.pagar.api.http.request.HttpMethod;
 import me.pagar.api.models.CreateInvoiceRequest;
 import me.pagar.api.models.GetInvoiceResponse;
 import me.pagar.api.models.ListInvoicesResponse;
@@ -36,15 +29,131 @@ public final class DefaultInvoicesController extends BaseController implements I
 
     /**
      * Initializes the controller.
-     * @param config    Configurations added in client.
-     * @param httpClient    Send HTTP requests and read the responses.
-     * @param authManagers    Apply authorization to requests.
+     * @param globalConfig    Configurations added in client.
      */
-    public DefaultInvoicesController(Configuration config, HttpClient httpClient,
-            Map<String, AuthManager> authManagers) {
-        super(config, httpClient, authManagers);
+    public DefaultInvoicesController(GlobalConfiguration globalConfig) {
+        super(globalConfig);
     }
 
+    /**
+     * Updates the metadata from an invoice.
+     * @param  invoiceId  Required parameter: The invoice id
+     * @param  request  Required parameter: Request for updating the invoice metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetInvoiceResponse updateInvoiceMetadata(
+            final String invoiceId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateInvoiceMetadataRequest(invoiceId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateInvoiceMetadata.
+     */
+    private ApiCall<GetInvoiceResponse, ApiException> prepareUpdateInvoiceMetadataRequest(
+            final String invoiceId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetInvoiceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/invoices/{invoice_id}/metadata")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("invoice_id").value(invoiceId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetInvoiceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetInvoiceResponse getPartialInvoice(
+            final String subscriptionId) throws ApiException, IOException {
+        return prepareGetPartialInvoiceRequest(subscriptionId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getPartialInvoice.
+     */
+    private ApiCall<GetInvoiceResponse, ApiException> prepareGetPartialInvoiceRequest(
+            final String subscriptionId) throws IOException {
+        return new ApiCall.Builder<GetInvoiceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/partial-invoice")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetInvoiceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Cancels an invoice.
+     * @param  invoiceId  Required parameter: Invoice id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetInvoiceResponse cancelInvoice(
+            final String invoiceId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCancelInvoiceRequest(invoiceId, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for cancelInvoice.
+     */
+    private ApiCall<GetInvoiceResponse, ApiException> prepareCancelInvoiceRequest(
+            final String invoiceId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetInvoiceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/invoices/{invoice_id}")
+                        .templateParam(param -> param.key("invoice_id").value(invoiceId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetInvoiceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
 
     /**
      * Create an Invoice.
@@ -61,71 +170,41 @@ public final class DefaultInvoicesController extends BaseController implements I
             final String cycleId,
             final CreateInvoiceRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildCreateInvoiceRequest(subscriptionId, cycleId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleCreateInvoiceResponse(context);
+        return prepareCreateInvoiceRequest(subscriptionId, cycleId, request,
+                idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for createInvoice.
+     * Builds the ApiCall object for createInvoice.
      */
-    private HttpRequest buildCreateInvoiceRequest(
+    private ApiCall<GetInvoiceResponse, ApiException> prepareCreateInvoiceRequest(
             final String subscriptionId,
             final String cycleId,
             final CreateInvoiceRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/cycles/{cycle_id}/pay");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        templateParameters.put("cycle_id",
-                new SimpleEntry<Object, Boolean>(cycleId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().postBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for createInvoice.
-     * @return An object of type GetInvoiceResponse
-     */
-    private GetInvoiceResponse handleCreateInvoiceResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetInvoiceResponse result = ApiHelper.deserialize(responseBody,
-                GetInvoiceResponse.class);
-
-        return result;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetInvoiceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycles/{cycle_id}/pay")
+                        .bodyParam(param -> param.value(request).isRequired(false))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("cycle_id").value(cycleId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetInvoiceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -157,20 +236,14 @@ public final class DefaultInvoicesController extends BaseController implements I
             final LocalDateTime dueSince,
             final LocalDateTime dueUntil,
             final String customerDocument) throws ApiException, IOException {
-        HttpRequest request = buildGetInvoicesRequest(page, size, code, customerId, subscriptionId,
-                createdSince, createdUntil, status, dueSince, dueUntil, customerDocument);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetInvoicesResponse(context);
+        return prepareGetInvoicesRequest(page, size, code, customerId, subscriptionId, createdSince,
+                createdUntil, status, dueSince, dueUntil, customerDocument).execute();
     }
 
     /**
-     * Builds the HttpRequest object for getInvoices.
+     * Builds the ApiCall object for getInvoices.
      */
-    private HttpRequest buildGetInvoicesRequest(
+    private ApiCall<ListInvoicesResponse, ApiException> prepareGetInvoicesRequest(
             final Integer page,
             final Integer size,
             final String code,
@@ -181,269 +254,78 @@ public final class DefaultInvoicesController extends BaseController implements I
             final String status,
             final LocalDateTime dueSince,
             final LocalDateTime dueUntil,
-            final String customerDocument) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/invoices");
-
-        //load all query parameters
-        Map<String, Object> queryParameters = new HashMap<>();
-        queryParameters.put("page", page);
-        queryParameters.put("size", size);
-        queryParameters.put("code", code);
-        queryParameters.put("customer_id", customerId);
-        queryParameters.put("subscription_id", subscriptionId);
-        queryParameters.put("created_since", DateTimeHelper.toRfc8601DateTime(createdSince));
-        queryParameters.put("created_until", DateTimeHelper.toRfc8601DateTime(createdUntil));
-        queryParameters.put("status", status);
-        queryParameters.put("due_since", DateTimeHelper.toRfc8601DateTime(dueSince));
-        queryParameters.put("due_until", DateTimeHelper.toRfc8601DateTime(dueUntil));
-        queryParameters.put("customer_document", customerDocument);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, queryParameters,
-                null);
-
-        return request;
+            final String customerDocument) throws IOException {
+        return new ApiCall.Builder<ListInvoicesResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/invoices")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("customer_id")
+                                .value(customerId).isRequired(false))
+                        .queryParam(param -> param.key("subscription_id")
+                                .value(subscriptionId).isRequired(false))
+                        .queryParam(param -> param.key("created_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdSince)).isRequired(false))
+                        .queryParam(param -> param.key("created_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdUntil)).isRequired(false))
+                        .queryParam(param -> param.key("status")
+                                .value(status).isRequired(false))
+                        .queryParam(param -> param.key("due_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(dueSince)).isRequired(false))
+                        .queryParam(param -> param.key("due_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(dueUntil)).isRequired(false))
+                        .queryParam(param -> param.key("customer_document")
+                                .value(customerDocument).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListInvoicesResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
-     * Processes the response for getInvoices.
-     * @return An object of type ListInvoicesResponse
-     */
-    private ListInvoicesResponse handleGetInvoicesResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        ListInvoicesResponse result = ApiHelper.deserialize(responseBody,
-                ListInvoicesResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Cancels an invoice.
-     * @param  invoiceId  Required parameter: Invoice id
-     * @param  idempotencyKey  Optional parameter: Example:
+     * Gets an invoice.
+     * @param  invoiceId  Required parameter: Invoice Id
      * @return    Returns the GetInvoiceResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetInvoiceResponse cancelInvoice(
-            final String invoiceId,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest request = buildCancelInvoiceRequest(invoiceId, idempotencyKey);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleCancelInvoiceResponse(context);
+    public GetInvoiceResponse getInvoice(
+            final String invoiceId) throws ApiException, IOException {
+        return prepareGetInvoiceRequest(invoiceId).execute();
     }
 
     /**
-     * Builds the HttpRequest object for cancelInvoice.
+     * Builds the ApiCall object for getInvoice.
      */
-    private HttpRequest buildCancelInvoiceRequest(
-            final String invoiceId,
-            final String idempotencyKey) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/invoices/{invoice_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("invoice_id",
-                new SimpleEntry<Object, Boolean>(invoiceId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().delete(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for cancelInvoice.
-     * @return An object of type GetInvoiceResponse
-     */
-    private GetInvoiceResponse handleCancelInvoiceResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetInvoiceResponse result = ApiHelper.deserialize(responseBody,
-                GetInvoiceResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Updates the metadata from an invoice.
-     * @param  invoiceId  Required parameter: The invoice id
-     * @param  request  Required parameter: Request for updating the invoice metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetInvoiceResponse updateInvoiceMetadata(
-            final String invoiceId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateInvoiceMetadataRequest(invoiceId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateInvoiceMetadataResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for updateInvoiceMetadata.
-     */
-    private HttpRequest buildUpdateInvoiceMetadataRequest(
-            final String invoiceId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/invoices/{invoice_id}/metadata");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("invoice_id",
-                new SimpleEntry<Object, Boolean>(invoiceId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
-    }
-
-    /**
-     * Processes the response for updateInvoiceMetadata.
-     * @return An object of type GetInvoiceResponse
-     */
-    private GetInvoiceResponse handleUpdateInvoiceMetadataResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetInvoiceResponse result = ApiHelper.deserialize(responseBody,
-                GetInvoiceResponse.class);
-
-        return result;
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetInvoiceResponse getPartialInvoice(
-            final String subscriptionId) throws ApiException, IOException {
-        HttpRequest request = buildGetPartialInvoiceRequest(subscriptionId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetPartialInvoiceResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getPartialInvoice.
-     */
-    private HttpRequest buildGetPartialInvoiceRequest(
-            final String subscriptionId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/subscriptions/{subscription_id}/partial-invoice");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("subscription_id",
-                new SimpleEntry<Object, Boolean>(subscriptionId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getPartialInvoice.
-     * @return An object of type GetInvoiceResponse
-     */
-    private GetInvoiceResponse handleGetPartialInvoiceResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetInvoiceResponse result = ApiHelper.deserialize(responseBody,
-                GetInvoiceResponse.class);
-
-        return result;
+    private ApiCall<GetInvoiceResponse, ApiException> prepareGetInvoiceRequest(
+            final String invoiceId) throws IOException {
+        return new ApiCall.Builder<GetInvoiceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/invoices/{invoice_id}")
+                        .templateParam(param -> param.key("invoice_id").value(invoiceId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetInvoiceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
 
     /**
@@ -459,134 +341,36 @@ public final class DefaultInvoicesController extends BaseController implements I
             final String invoiceId,
             final UpdateInvoiceStatusRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        HttpRequest internalRequest = buildUpdateInvoiceStatusRequest(invoiceId, request,
-                idempotencyKey);
-        authManagers.get("global").apply(internalRequest);
-
-        HttpResponse response = getClientInstance().execute(internalRequest, false);
-        HttpContext context = new HttpContext(internalRequest, response);
-
-        return handleUpdateInvoiceStatusResponse(context);
+        return prepareUpdateInvoiceStatusRequest(invoiceId, request, idempotencyKey).execute();
     }
 
     /**
-     * Builds the HttpRequest object for updateInvoiceStatus.
+     * Builds the ApiCall object for updateInvoiceStatus.
      */
-    private HttpRequest buildUpdateInvoiceStatusRequest(
+    private ApiCall<GetInvoiceResponse, ApiException> prepareUpdateInvoiceStatusRequest(
             final String invoiceId,
             final UpdateInvoiceStatusRequest request,
-            final String idempotencyKey) throws JsonProcessingException {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/invoices/{invoice_id}/status");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("invoice_id",
-                new SimpleEntry<Object, Boolean>(invoiceId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("idempotency-key", idempotencyKey);
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-        headers.add("content-type", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        String bodyJson = ApiHelper.serialize(request);
-        HttpRequest internalRequest = getClientInstance().patchBody(queryBuilder, headers, null,
-                bodyJson);
-
-        return internalRequest;
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetInvoiceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/invoices/{invoice_id}/status")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("invoice_id").value(invoiceId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetInvoiceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
     }
-
-    /**
-     * Processes the response for updateInvoiceStatus.
-     * @return An object of type GetInvoiceResponse
-     */
-    private GetInvoiceResponse handleUpdateInvoiceStatusResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetInvoiceResponse result = ApiHelper.deserialize(responseBody,
-                GetInvoiceResponse.class);
-
-        return result;
-    }
-
-    /**
-     * Gets an invoice.
-     * @param  invoiceId  Required parameter: Invoice Id
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetInvoiceResponse getInvoice(
-            final String invoiceId) throws ApiException, IOException {
-        HttpRequest request = buildGetInvoiceRequest(invoiceId);
-        authManagers.get("global").apply(request);
-
-        HttpResponse response = getClientInstance().execute(request, false);
-        HttpContext context = new HttpContext(request, response);
-
-        return handleGetInvoiceResponse(context);
-    }
-
-    /**
-     * Builds the HttpRequest object for getInvoice.
-     */
-    private HttpRequest buildGetInvoiceRequest(
-            final String invoiceId) {
-        //the base uri for api requests
-        String baseUri = config.getBaseUri();
-
-        //prepare query string for API call
-        final StringBuilder queryBuilder = new StringBuilder(baseUri
-                + "/invoices/{invoice_id}");
-
-        //process template parameters
-        Map<String, SimpleEntry<Object, Boolean>> templateParameters = new HashMap<>();
-        templateParameters.put("invoice_id",
-                new SimpleEntry<Object, Boolean>(invoiceId, true));
-        ApiHelper.appendUrlWithTemplateParameters(queryBuilder, templateParameters);
-
-        //load all headers for the outgoing API request
-        Headers headers = new Headers();
-        headers.add("user-agent", BaseController.userAgent);
-        headers.add("accept", "application/json");
-
-        //prepare and invoke the API call request to fetch the response
-        HttpRequest request = getClientInstance().get(queryBuilder, headers, null, null);
-
-        return request;
-    }
-
-    /**
-     * Processes the response for getInvoice.
-     * @return An object of type GetInvoiceResponse
-     */
-    private GetInvoiceResponse handleGetInvoiceResponse(
-            HttpContext context) throws ApiException, IOException {
-        HttpResponse response = context.getResponse();
-
-        //handle errors defined at the API level
-        validateResponse(response, context);
-
-        //extract result from the http response
-        String responseBody = ((HttpStringResponse) response).getBody();
-        GetInvoiceResponse result = ApiHelper.deserialize(responseBody,
-                GetInvoiceResponse.class);
-
-        return result;
-    }
-
 }

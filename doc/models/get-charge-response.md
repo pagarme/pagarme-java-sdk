@@ -30,6 +30,8 @@ Response object for getting a charge
 | `CanceledAt` | `LocalDateTime` | Optional | - | LocalDateTime getCanceledAt() | setCanceledAt(LocalDateTime canceledAt) |
 | `CanceledAmount` | `int` | Required | Canceled Amount | int getCanceledAmount() | setCanceledAmount(int canceledAmount) |
 | `PaidAmount` | `int` | Required | Paid amount | int getPaidAmount() | setPaidAmount(int paidAmount) |
+| `InterestAndFinePaid` | `Integer` | Optional | interest and fine paid | Integer getInterestAndFinePaid() | setInterestAndFinePaid(Integer interestAndFinePaid) |
+| `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 
 ## Example (as JSON)
 
@@ -57,7 +59,9 @@ Response object for getting a charge
   "paid_at": null,
   "canceled_at": null,
   "canceled_amount": 64,
-  "paid_amount": 210
+  "paid_amount": 210,
+  "interest_and_fine_paid": null,
+  "recurrency_cycle": null
 }
 ```
 

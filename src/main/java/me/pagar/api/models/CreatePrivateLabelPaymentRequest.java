@@ -9,6 +9,7 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import io.apimatic.core.types.BaseModel;
 
 /**
  * This is a model class for CreatePrivateLabelPaymentRequest type.
@@ -23,6 +24,7 @@ public class CreatePrivateLabelPaymentRequest {
     private Boolean capture;
     private Boolean extendedLimitEnabled;
     private String extendedLimitCode;
+    private String recurrencyCycle;
 
     /**
      * Default constructor.
@@ -43,6 +45,7 @@ public class CreatePrivateLabelPaymentRequest {
      * @param  capture  Boolean value for capture.
      * @param  extendedLimitEnabled  Boolean value for extendedLimitEnabled.
      * @param  extendedLimitCode  String value for extendedLimitCode.
+     * @param  recurrencyCycle  String value for recurrencyCycle.
      */
     public CreatePrivateLabelPaymentRequest(
             Integer installments,
@@ -53,7 +56,8 @@ public class CreatePrivateLabelPaymentRequest {
             Boolean recurrence,
             Boolean capture,
             Boolean extendedLimitEnabled,
-            String extendedLimitCode) {
+            String extendedLimitCode,
+            String recurrencyCycle) {
         this.installments = installments;
         this.statementDescriptor = statementDescriptor;
         this.card = card;
@@ -63,6 +67,7 @@ public class CreatePrivateLabelPaymentRequest {
         this.capture = capture;
         this.extendedLimitEnabled = extendedLimitEnabled;
         this.extendedLimitCode = extendedLimitCode;
+        this.recurrencyCycle = recurrencyCycle;
     }
 
     /**
@@ -253,6 +258,27 @@ public class CreatePrivateLabelPaymentRequest {
     }
 
     /**
+     * Getter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @return Returns the String
+     */
+    @JsonGetter("recurrency_cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getRecurrencyCycle() {
+        return recurrencyCycle;
+    }
+
+    /**
+     * Setter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @param recurrencyCycle Value for String
+     */
+    @JsonSetter("recurrency_cycle")
+    public void setRecurrencyCycle(String recurrencyCycle) {
+        this.recurrencyCycle = recurrencyCycle;
+    }
+
+    /**
      * Converts this CreatePrivateLabelPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -262,7 +288,8 @@ public class CreatePrivateLabelPaymentRequest {
                 + ", statementDescriptor=" + statementDescriptor + ", card=" + card + ", cardId="
                 + cardId + ", cardToken=" + cardToken + ", recurrence=" + recurrence + ", capture="
                 + capture + ", extendedLimitEnabled=" + extendedLimitEnabled
-                + ", extendedLimitCode=" + extendedLimitCode + "]";
+                + ", extendedLimitCode=" + extendedLimitCode + ", recurrencyCycle="
+                + recurrencyCycle + "]";
     }
 
     /**
@@ -280,7 +307,8 @@ public class CreatePrivateLabelPaymentRequest {
                 .recurrence(getRecurrence())
                 .capture(getCapture())
                 .extendedLimitEnabled(getExtendedLimitEnabled())
-                .extendedLimitCode(getExtendedLimitCode());
+                .extendedLimitCode(getExtendedLimitCode())
+                .recurrencyCycle(getRecurrencyCycle());
         return builder;
     }
 
@@ -297,6 +325,7 @@ public class CreatePrivateLabelPaymentRequest {
         private Boolean capture = true;
         private Boolean extendedLimitEnabled;
         private String extendedLimitCode;
+        private String recurrencyCycle;
 
 
 
@@ -391,13 +420,23 @@ public class CreatePrivateLabelPaymentRequest {
         }
 
         /**
+         * Setter for recurrencyCycle.
+         * @param  recurrencyCycle  String value for recurrencyCycle.
+         * @return Builder
+         */
+        public Builder recurrencyCycle(String recurrencyCycle) {
+            this.recurrencyCycle = recurrencyCycle;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreatePrivateLabelPaymentRequest} object using the set fields.
          * @return {@link CreatePrivateLabelPaymentRequest}
          */
         public CreatePrivateLabelPaymentRequest build() {
             return new CreatePrivateLabelPaymentRequest(installments, statementDescriptor, card,
-                    cardId, cardToken, recurrence, capture, extendedLimitEnabled,
-                    extendedLimitCode);
+                    cardId, cardToken, recurrence, capture, extendedLimitEnabled, extendedLimitCode,
+                    recurrencyCycle);
         }
     }
 }

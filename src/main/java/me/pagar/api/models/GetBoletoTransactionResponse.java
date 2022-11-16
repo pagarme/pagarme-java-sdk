@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +89,9 @@ public class GetBoletoTransactionResponse
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      * @param  dueAt  LocalDateTime value for dueAt.
      * @param  paidAt  LocalDateTime value for paidAt.
      * @param  creditAt  LocalDateTime value for creditAt.
@@ -123,12 +127,15 @@ public class GetBoletoTransactionResponse
             LocalDateTime nextAttempt,
             String transactionType,
             Map<String, String> metadata,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue,
             LocalDateTime dueAt,
             LocalDateTime paidAt,
             LocalDateTime creditAt) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata);
+                metadata, interest, fine, maxDaysToPayPastDue);
         this.url = url;
         this.barcode = barcode;
         this.nossoNumero = nossoNumero;
@@ -484,7 +491,9 @@ public class GetBoletoTransactionResponse
                 + ", splits=" + getSplits() + ", id=" + getId() + ", gatewayResponse="
                 + getGatewayResponse() + ", antifraudResponse=" + getAntifraudResponse()
                 + ", split=" + getSplit() + ", nextAttempt=" + getNextAttempt()
-                + ", transactionType=" + getTransactionType() + ", metadata=" + getMetadata() + "]";
+                + ", transactionType=" + getTransactionType() + ", metadata=" + getMetadata()
+                + ", interest=" + getInterest() + ", fine=" + getFine() + ", maxDaysToPayPastDue="
+                + getMaxDaysToPayPastDue() + "]";
     }
 
     /**
@@ -503,7 +512,10 @@ public class GetBoletoTransactionResponse
                 .creditAt(getCreditAt())
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
-                .metadata(getMetadata());
+                .metadata(getMetadata())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -511,6 +523,19 @@ public class GetBoletoTransactionResponse
      * Class to build instances of {@link GetBoletoTransactionResponse}.
      */
     public static class Builder {
+        private String gatewayId;
+        private int amount;
+        private String status;
+        private boolean success;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+        private int attemptCount;
+        private int maxAttempts;
+        private List<GetSplitResponse> splits;
+        private String id;
+        private GetGatewayResponseResponse gatewayResponse;
+        private GetAntifraudResponse antifraudResponse;
+        private List<GetSplitResponse> split;
         private String url;
         private String barcode;
         private String nossoNumero;
@@ -525,25 +550,15 @@ public class GetBoletoTransactionResponse
         private String paidAmount;
         private String type;
         private String statementDescriptor;
-        private LocalDateTime dueAt;
-        private LocalDateTime paidAt;
-        private LocalDateTime creditAt;
-        private String gatewayId;
-        private int amount;
-        private String status;
-        private boolean success;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private int attemptCount;
-        private int maxAttempts;
-        private List<GetSplitResponse> splits;
-        private String id;
-        private GetGatewayResponseResponse gatewayResponse;
-        private GetAntifraudResponse antifraudResponse;
-        private List<GetSplitResponse> split;
         private LocalDateTime nextAttempt;
         private String transactionType = "boleto";
         private Map<String, String> metadata;
+        private GetInterestResponse interest;
+        private GetFineResponse fine;
+        private Integer maxDaysToPayPastDue;
+        private LocalDateTime dueAt;
+        private LocalDateTime paidAt;
+        private LocalDateTime creditAt;
 
         /**
          * Initialization constructor.
@@ -617,6 +632,136 @@ public class GetBoletoTransactionResponse
             this.paidAmount = paidAmount;
             this.type = type;
             this.statementDescriptor = statementDescriptor;
+        }
+
+        /**
+         * Setter for gatewayId.
+         * @param  gatewayId  String value for gatewayId.
+         * @return Builder
+         */
+        public Builder gatewayId(String gatewayId) {
+            this.gatewayId = gatewayId;
+            return this;
+        }
+
+        /**
+         * Setter for amount.
+         * @param  amount  int value for amount.
+         * @return Builder
+         */
+        public Builder amount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        /**
+         * Setter for status.
+         * @param  status  String value for status.
+         * @return Builder
+         */
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        /**
+         * Setter for success.
+         * @param  success  boolean value for success.
+         * @return Builder
+         */
+        public Builder success(boolean success) {
+            this.success = success;
+            return this;
+        }
+
+        /**
+         * Setter for createdAt.
+         * @param  createdAt  LocalDateTime value for createdAt.
+         * @return Builder
+         */
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        /**
+         * Setter for updatedAt.
+         * @param  updatedAt  LocalDateTime value for updatedAt.
+         * @return Builder
+         */
+        public Builder updatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        /**
+         * Setter for attemptCount.
+         * @param  attemptCount  int value for attemptCount.
+         * @return Builder
+         */
+        public Builder attemptCount(int attemptCount) {
+            this.attemptCount = attemptCount;
+            return this;
+        }
+
+        /**
+         * Setter for maxAttempts.
+         * @param  maxAttempts  int value for maxAttempts.
+         * @return Builder
+         */
+        public Builder maxAttempts(int maxAttempts) {
+            this.maxAttempts = maxAttempts;
+            return this;
+        }
+
+        /**
+         * Setter for splits.
+         * @param  splits  List of GetSplitResponse value for splits.
+         * @return Builder
+         */
+        public Builder splits(List<GetSplitResponse> splits) {
+            this.splits = splits;
+            return this;
+        }
+
+        /**
+         * Setter for id.
+         * @param  id  String value for id.
+         * @return Builder
+         */
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Setter for gatewayResponse.
+         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
+         * @return Builder
+         */
+        public Builder gatewayResponse(GetGatewayResponseResponse gatewayResponse) {
+            this.gatewayResponse = gatewayResponse;
+            return this;
+        }
+
+        /**
+         * Setter for antifraudResponse.
+         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
+         * @return Builder
+         */
+        public Builder antifraudResponse(GetAntifraudResponse antifraudResponse) {
+            this.antifraudResponse = antifraudResponse;
+            return this;
+        }
+
+        /**
+         * Setter for split.
+         * @param  split  List of GetSplitResponse value for split.
+         * @return Builder
+         */
+        public Builder split(List<GetSplitResponse> split) {
+            this.split = split;
+            return this;
         }
 
         /**
@@ -760,166 +905,6 @@ public class GetBoletoTransactionResponse
         }
 
         /**
-         * Setter for dueAt.
-         * @param  dueAt  LocalDateTime value for dueAt.
-         * @return Builder
-         */
-        public Builder dueAt(LocalDateTime dueAt) {
-            this.dueAt = dueAt;
-            return this;
-        }
-
-        /**
-         * Setter for paidAt.
-         * @param  paidAt  LocalDateTime value for paidAt.
-         * @return Builder
-         */
-        public Builder paidAt(LocalDateTime paidAt) {
-            this.paidAt = paidAt;
-            return this;
-        }
-
-        /**
-         * Setter for creditAt.
-         * @param  creditAt  LocalDateTime value for creditAt.
-         * @return Builder
-         */
-        public Builder creditAt(LocalDateTime creditAt) {
-            this.creditAt = creditAt;
-            return this;
-        }
-
-        /**
-         * Setter for gatewayId.
-         * @param  gatewayId  String value for gatewayId.
-         * @return Builder
-         */
-        public Builder gatewayId(String gatewayId) {
-            this.gatewayId = gatewayId;
-            return this;
-        }
-
-        /**
-         * Setter for amount.
-         * @param  amount  int value for amount.
-         * @return Builder
-         */
-        public Builder amount(int amount) {
-            this.amount = amount;
-            return this;
-        }
-
-        /**
-         * Setter for status.
-         * @param  status  String value for status.
-         * @return Builder
-         */
-        public Builder status(String status) {
-            this.status = status;
-            return this;
-        }
-
-        /**
-         * Setter for success.
-         * @param  success  boolean value for success.
-         * @return Builder
-         */
-        public Builder success(boolean success) {
-            this.success = success;
-            return this;
-        }
-
-        /**
-         * Setter for createdAt.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @return Builder
-         */
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        /**
-         * Setter for updatedAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @return Builder
-         */
-        public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        /**
-         * Setter for attemptCount.
-         * @param  attemptCount  int value for attemptCount.
-         * @return Builder
-         */
-        public Builder attemptCount(int attemptCount) {
-            this.attemptCount = attemptCount;
-            return this;
-        }
-
-        /**
-         * Setter for maxAttempts.
-         * @param  maxAttempts  int value for maxAttempts.
-         * @return Builder
-         */
-        public Builder maxAttempts(int maxAttempts) {
-            this.maxAttempts = maxAttempts;
-            return this;
-        }
-
-        /**
-         * Setter for splits.
-         * @param  splits  List of GetSplitResponse value for splits.
-         * @return Builder
-         */
-        public Builder splits(List<GetSplitResponse> splits) {
-            this.splits = splits;
-            return this;
-        }
-
-        /**
-         * Setter for id.
-         * @param  id  String value for id.
-         * @return Builder
-         */
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        /**
-         * Setter for gatewayResponse.
-         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
-         * @return Builder
-         */
-        public Builder gatewayResponse(GetGatewayResponseResponse gatewayResponse) {
-            this.gatewayResponse = gatewayResponse;
-            return this;
-        }
-
-        /**
-         * Setter for antifraudResponse.
-         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
-         * @return Builder
-         */
-        public Builder antifraudResponse(GetAntifraudResponse antifraudResponse) {
-            this.antifraudResponse = antifraudResponse;
-            return this;
-        }
-
-        /**
-         * Setter for split.
-         * @param  split  List of GetSplitResponse value for split.
-         * @return Builder
-         */
-        public Builder split(List<GetSplitResponse> split) {
-            this.split = split;
-            return this;
-        }
-
-        /**
          * Setter for nextAttempt.
          * @param  nextAttempt  LocalDateTime value for nextAttempt.
          * @return Builder
@@ -950,6 +935,66 @@ public class GetBoletoTransactionResponse
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  GetInterestResponse value for interest.
+         * @return Builder
+         */
+        public Builder interest(GetInterestResponse interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  GetFineResponse value for fine.
+         * @return Builder
+         */
+        public Builder fine(GetFineResponse fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
+         * Setter for dueAt.
+         * @param  dueAt  LocalDateTime value for dueAt.
+         * @return Builder
+         */
+        public Builder dueAt(LocalDateTime dueAt) {
+            this.dueAt = dueAt;
+            return this;
+        }
+
+        /**
+         * Setter for paidAt.
+         * @param  paidAt  LocalDateTime value for paidAt.
+         * @return Builder
+         */
+        public Builder paidAt(LocalDateTime paidAt) {
+            this.paidAt = paidAt;
+            return this;
+        }
+
+        /**
+         * Setter for creditAt.
+         * @param  creditAt  LocalDateTime value for creditAt.
+         * @return Builder
+         */
+        public Builder creditAt(LocalDateTime creditAt) {
+            this.creditAt = creditAt;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetBoletoTransactionResponse} object using the set fields.
          * @return {@link GetBoletoTransactionResponse}
          */
@@ -958,8 +1003,8 @@ public class GetBoletoTransactionResponse
                     updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
                     antifraudResponse, split, url, barcode, nossoNumero, bank, documentNumber,
                     instructions, billingAddress, qrCode, line, pdfPassword, pdf, paidAmount, type,
-                    statementDescriptor, nextAttempt, transactionType, metadata, dueAt, paidAt,
-                    creditAt);
+                    statementDescriptor, nextAttempt, transactionType, metadata, interest, fine,
+                    maxDaysToPayPastDue, dueAt, paidAt, creditAt);
         }
     }
 }

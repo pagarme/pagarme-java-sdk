@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.BaseModel;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,9 @@ public class GetBankTransferTransactionResponse
      * @param  nextAttempt  LocalDateTime value for nextAttempt.
      * @param  transactionType  String value for transactionType.
      * @param  metadata  Map of String, value for metadata.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      * @param  paidAt  LocalDateTime value for paidAt.
      * @param  paidAmount  Integer value for paidAmount.
      */
@@ -88,11 +92,14 @@ public class GetBankTransferTransactionResponse
             LocalDateTime nextAttempt,
             String transactionType,
             Map<String, String> metadata,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue,
             LocalDateTime paidAt,
             Integer paidAmount) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata);
+                metadata, interest, fine, maxDaysToPayPastDue);
         this.url = url;
         this.bankTid = bankTid;
         this.bank = bank;
@@ -219,7 +226,8 @@ public class GetBankTransferTransactionResponse
                 + getId() + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", split=" + getSplit() + ", nextAttempt="
                 + getNextAttempt() + ", transactionType=" + getTransactionType() + ", metadata="
-                + getMetadata() + "]";
+                + getMetadata() + ", interest=" + getInterest() + ", fine=" + getFine()
+                + ", maxDaysToPayPastDue=" + getMaxDaysToPayPastDue() + "]";
     }
 
     /**
@@ -236,7 +244,10 @@ public class GetBankTransferTransactionResponse
                 .paidAmount(getPaidAmount())
                 .nextAttempt(getNextAttempt())
                 .transactionType(getTransactionType())
-                .metadata(getMetadata());
+                .metadata(getMetadata())
+                .interest(getInterest())
+                .fine(getFine())
+                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
         return builder;
     }
 
@@ -244,11 +255,6 @@ public class GetBankTransferTransactionResponse
      * Class to build instances of {@link GetBankTransferTransactionResponse}.
      */
     public static class Builder {
-        private String url;
-        private String bankTid;
-        private String bank;
-        private LocalDateTime paidAt;
-        private Integer paidAmount;
         private String gatewayId;
         private int amount;
         private String status;
@@ -262,9 +268,17 @@ public class GetBankTransferTransactionResponse
         private GetGatewayResponseResponse gatewayResponse;
         private GetAntifraudResponse antifraudResponse;
         private List<GetSplitResponse> split;
+        private String url;
+        private String bankTid;
+        private String bank;
         private LocalDateTime nextAttempt;
         private String transactionType = "bank_transfer";
         private Map<String, String> metadata;
+        private GetInterestResponse interest;
+        private GetFineResponse fine;
+        private Integer maxDaysToPayPastDue;
+        private LocalDateTime paidAt;
+        private Integer paidAmount;
 
         /**
          * Initialization constructor.
@@ -312,56 +326,6 @@ public class GetBankTransferTransactionResponse
             this.url = url;
             this.bankTid = bankTid;
             this.bank = bank;
-        }
-
-        /**
-         * Setter for url.
-         * @param  url  String value for url.
-         * @return Builder
-         */
-        public Builder url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        /**
-         * Setter for bankTid.
-         * @param  bankTid  String value for bankTid.
-         * @return Builder
-         */
-        public Builder bankTid(String bankTid) {
-            this.bankTid = bankTid;
-            return this;
-        }
-
-        /**
-         * Setter for bank.
-         * @param  bank  String value for bank.
-         * @return Builder
-         */
-        public Builder bank(String bank) {
-            this.bank = bank;
-            return this;
-        }
-
-        /**
-         * Setter for paidAt.
-         * @param  paidAt  LocalDateTime value for paidAt.
-         * @return Builder
-         */
-        public Builder paidAt(LocalDateTime paidAt) {
-            this.paidAt = paidAt;
-            return this;
-        }
-
-        /**
-         * Setter for paidAmount.
-         * @param  paidAmount  Integer value for paidAmount.
-         * @return Builder
-         */
-        public Builder paidAmount(Integer paidAmount) {
-            this.paidAmount = paidAmount;
-            return this;
         }
 
         /**
@@ -495,6 +459,36 @@ public class GetBankTransferTransactionResponse
         }
 
         /**
+         * Setter for url.
+         * @param  url  String value for url.
+         * @return Builder
+         */
+        public Builder url(String url) {
+            this.url = url;
+            return this;
+        }
+
+        /**
+         * Setter for bankTid.
+         * @param  bankTid  String value for bankTid.
+         * @return Builder
+         */
+        public Builder bankTid(String bankTid) {
+            this.bankTid = bankTid;
+            return this;
+        }
+
+        /**
+         * Setter for bank.
+         * @param  bank  String value for bank.
+         * @return Builder
+         */
+        public Builder bank(String bank) {
+            this.bank = bank;
+            return this;
+        }
+
+        /**
          * Setter for nextAttempt.
          * @param  nextAttempt  LocalDateTime value for nextAttempt.
          * @return Builder
@@ -525,6 +519,56 @@ public class GetBankTransferTransactionResponse
         }
 
         /**
+         * Setter for interest.
+         * @param  interest  GetInterestResponse value for interest.
+         * @return Builder
+         */
+        public Builder interest(GetInterestResponse interest) {
+            this.interest = interest;
+            return this;
+        }
+
+        /**
+         * Setter for fine.
+         * @param  fine  GetFineResponse value for fine.
+         * @return Builder
+         */
+        public Builder fine(GetFineResponse fine) {
+            this.fine = fine;
+            return this;
+        }
+
+        /**
+         * Setter for maxDaysToPayPastDue.
+         * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
+            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            return this;
+        }
+
+        /**
+         * Setter for paidAt.
+         * @param  paidAt  LocalDateTime value for paidAt.
+         * @return Builder
+         */
+        public Builder paidAt(LocalDateTime paidAt) {
+            this.paidAt = paidAt;
+            return this;
+        }
+
+        /**
+         * Setter for paidAmount.
+         * @param  paidAmount  Integer value for paidAmount.
+         * @return Builder
+         */
+        public Builder paidAmount(Integer paidAmount) {
+            this.paidAmount = paidAmount;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetBankTransferTransactionResponse} object using the set fields.
          * @return {@link GetBankTransferTransactionResponse}
          */
@@ -532,7 +576,7 @@ public class GetBankTransferTransactionResponse
             return new GetBankTransferTransactionResponse(gatewayId, amount, status, success,
                     createdAt, updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
                     antifraudResponse, split, url, bankTid, bank, nextAttempt, transactionType,
-                    metadata, paidAt, paidAmount);
+                    metadata, interest, fine, maxDaysToPayPastDue, paidAt, paidAmount);
         }
     }
 }
