@@ -53,6 +53,7 @@ public class CreateSubscriptionRequest {
     private CreatePeriodRequest period;
     private CreateSubMerchantRequest submerchant;
     private CreateSubscriptionSplitRequest split;
+    private CreateSubscriptionBoletoRequest boleto;
 
     /**
      * Default constructor.
@@ -94,6 +95,7 @@ public class CreateSubscriptionRequest {
      * @param  period  CreatePeriodRequest value for period.
      * @param  submerchant  CreateSubMerchantRequest value for submerchant.
      * @param  split  CreateSubscriptionSplitRequest value for split.
+     * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
      */
     public CreateSubscriptionRequest(
             CreateCustomerRequest customer,
@@ -127,7 +129,8 @@ public class CreateSubscriptionRequest {
             Integer boletoDueDays,
             CreatePeriodRequest period,
             CreateSubMerchantRequest submerchant,
-            CreateSubscriptionSplitRequest split) {
+            CreateSubscriptionSplitRequest split,
+            CreateSubscriptionBoletoRequest boleto) {
         this.customer = customer;
         this.card = card;
         this.code = code;
@@ -160,6 +163,7 @@ public class CreateSubscriptionRequest {
         this.period = period;
         this.submerchant = submerchant;
         this.split = split;
+        this.boleto = boleto;
     }
 
     /**
@@ -818,6 +822,27 @@ public class CreateSubscriptionRequest {
     }
 
     /**
+     * Getter for Boleto.
+     * Information about fines and interest on the "boleto" used from payment
+     * @return Returns the CreateSubscriptionBoletoRequest
+     */
+    @JsonGetter("boleto")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreateSubscriptionBoletoRequest getBoleto() {
+        return boleto;
+    }
+
+    /**
+     * Setter for Boleto.
+     * Information about fines and interest on the "boleto" used from payment
+     * @param boleto Value for CreateSubscriptionBoletoRequest
+     */
+    @JsonSetter("boleto")
+    public void setBoleto(CreateSubscriptionBoletoRequest boleto) {
+        this.boleto = boleto;
+    }
+
+    /**
      * Converts this CreateSubscriptionRequest into string format.
      * @return String representation of this class
      */
@@ -835,7 +860,7 @@ public class CreateSubscriptionRequest {
                 + minimumPrice + ", cycles=" + cycles + ", cardToken=" + cardToken
                 + ", gatewayAffiliationId=" + gatewayAffiliationId + ", quantity=" + quantity
                 + ", boletoDueDays=" + boletoDueDays + ", period=" + period + ", submerchant="
-                + submerchant + ", split=" + split + "]";
+                + submerchant + ", split=" + split + ", boleto=" + boleto + "]";
     }
 
     /**
@@ -861,7 +886,8 @@ public class CreateSubscriptionRequest {
                 .boletoDueDays(getBoletoDueDays())
                 .period(getPeriod())
                 .submerchant(getSubmerchant())
-                .split(getSplit());
+                .split(getSplit())
+                .boleto(getBoleto());
         return builder;
     }
 
@@ -901,6 +927,7 @@ public class CreateSubscriptionRequest {
         private CreatePeriodRequest period;
         private CreateSubMerchantRequest submerchant;
         private CreateSubscriptionSplitRequest split;
+        private CreateSubscriptionBoletoRequest boleto;
 
         /**
          * Initialization constructor.
@@ -1275,6 +1302,16 @@ public class CreateSubscriptionRequest {
         }
 
         /**
+         * Setter for boleto.
+         * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
+         * @return Builder
+         */
+        public Builder boleto(CreateSubscriptionBoletoRequest boleto) {
+            this.boleto = boleto;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateSubscriptionRequest} object using the set fields.
          * @return {@link CreateSubscriptionRequest}
          */
@@ -1284,7 +1321,7 @@ public class CreateSubscriptionRequest {
                     pricingScheme, items, shipping, discounts, metadata, setup, increments, planId,
                     customerId, cardId, billingDay, installments, startAt, minimumPrice, cycles,
                     cardToken, gatewayAffiliationId, quantity, boletoDueDays, period, submerchant,
-                    split);
+                    split, boleto);
         }
     }
 }

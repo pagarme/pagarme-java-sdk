@@ -19,6 +19,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
     private String cardId;
     private CreateCardRequest card;
     private String cardToken;
+    private CreateSubscriptionBoletoRequest boleto;
 
     /**
      * Default constructor.
@@ -32,16 +33,19 @@ public class UpdateSubscriptionPaymentMethodRequest {
      * @param  cardId  String value for cardId.
      * @param  card  CreateCardRequest value for card.
      * @param  cardToken  String value for cardToken.
+     * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
      */
     public UpdateSubscriptionPaymentMethodRequest(
             String paymentMethod,
             String cardId,
             CreateCardRequest card,
-            String cardToken) {
+            String cardToken,
+            CreateSubscriptionBoletoRequest boleto) {
         this.paymentMethod = paymentMethod;
         this.cardId = cardId;
         this.card = card;
         this.cardToken = cardToken;
+        this.boleto = boleto;
     }
 
     /**
@@ -126,13 +130,35 @@ public class UpdateSubscriptionPaymentMethodRequest {
     }
 
     /**
+     * Getter for Boleto.
+     * Information about fines and interest on the "boleto" used from payment
+     * @return Returns the CreateSubscriptionBoletoRequest
+     */
+    @JsonGetter("boleto")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreateSubscriptionBoletoRequest getBoleto() {
+        return boleto;
+    }
+
+    /**
+     * Setter for Boleto.
+     * Information about fines and interest on the "boleto" used from payment
+     * @param boleto Value for CreateSubscriptionBoletoRequest
+     */
+    @JsonSetter("boleto")
+    public void setBoleto(CreateSubscriptionBoletoRequest boleto) {
+        this.boleto = boleto;
+    }
+
+    /**
      * Converts this UpdateSubscriptionPaymentMethodRequest into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
         return "UpdateSubscriptionPaymentMethodRequest [" + "paymentMethod=" + paymentMethod
-                + ", cardId=" + cardId + ", card=" + card + ", cardToken=" + cardToken + "]";
+                + ", cardId=" + cardId + ", card=" + card + ", cardToken=" + cardToken + ", boleto="
+                + boleto + "]";
     }
 
     /**
@@ -142,7 +168,8 @@ public class UpdateSubscriptionPaymentMethodRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(paymentMethod, cardId, card)
-                .cardToken(getCardToken());
+                .cardToken(getCardToken())
+                .boleto(getBoleto());
         return builder;
     }
 
@@ -154,6 +181,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
         private String cardId;
         private CreateCardRequest card;
         private String cardToken;
+        private CreateSubscriptionBoletoRequest boleto;
 
         /**
          * Initialization constructor.
@@ -214,12 +242,22 @@ public class UpdateSubscriptionPaymentMethodRequest {
         }
 
         /**
+         * Setter for boleto.
+         * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
+         * @return Builder
+         */
+        public Builder boleto(CreateSubscriptionBoletoRequest boleto) {
+            this.boleto = boleto;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateSubscriptionPaymentMethodRequest} object using the set fields.
          * @return {@link UpdateSubscriptionPaymentMethodRequest}
          */
         public UpdateSubscriptionPaymentMethodRequest build() {
             return new UpdateSubscriptionPaymentMethodRequest(paymentMethod, cardId, card,
-                    cardToken);
+                    cardToken, boleto);
         }
     }
 }

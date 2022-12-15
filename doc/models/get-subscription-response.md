@@ -37,6 +37,7 @@
 | `Increments` | [`List<GetIncrementResponse>`](../../doc/models/get-increment-response.md) | Required | Subscription increments | List<GetIncrementResponse> getIncrements() | setIncrements(List<GetIncrementResponse> increments) |
 | `BoletoDueDays` | `Integer` | Optional | Days until boleto expires | Integer getBoletoDueDays() | setBoletoDueDays(Integer boletoDueDays) |
 | `Split` | [`GetSubscriptionSplitResponse`](../../doc/models/get-subscription-split-response.md) | Required | Subscription's split response | GetSubscriptionSplitResponse getSplit() | setSplit(GetSubscriptionSplitResponse split) |
+| `Boleto` | [`GetSubscriptionBoletoResponse`](../../doc/models/get-subscription-boleto-response.md) | Optional | - | GetSubscriptionBoletoResponse getBoleto() | setBoleto(GetSubscriptionBoletoResponse boleto) |
 
 ## Example (as JSON)
 
@@ -407,7 +408,8 @@
                     "id": "id7"
                   }
                 ]
-              }
+              },
+              "boleto": null
             },
             "name": "name4",
             "quantity": null,
@@ -607,7 +609,8 @@
                     "id": "id9"
                   }
                 ]
-              }
+              },
+              "boleto": null
             },
             "name": "name5",
             "quantity": null,
@@ -668,7 +671,8 @@
               "id": "id8"
             }
           ]
-        }
+        },
+        "boleto": null
       },
       "name": "name7",
       "quantity": null,
@@ -1026,7 +1030,8 @@
                     "id": "id9"
                   }
                 ]
-              }
+              },
+              "boleto": null
             },
             "name": "name3",
             "quantity": null,
@@ -1101,7 +1106,8 @@
               "id": "id6"
             }
           ]
-        }
+        },
+        "boleto": null
       },
       "name": "name8",
       "quantity": null,
@@ -1162,7 +1168,8 @@
         "id": "id7"
       }
     ]
-  }
+  },
+  "boleto": null
 }
 ```
 

@@ -49,6 +49,7 @@ public class GetSubscriptionResponse {
     private List<GetIncrementResponse> increments;
     private Integer boletoDueDays;
     private GetSubscriptionSplitResponse split;
+    private GetSubscriptionBoletoResponse boleto;
 
     /**
      * Default constructor.
@@ -86,6 +87,7 @@ public class GetSubscriptionResponse {
      * @param  canceledAt  LocalDateTime value for canceledAt.
      * @param  discounts  List of GetDiscountResponse value for discounts.
      * @param  boletoDueDays  Integer value for boletoDueDays.
+     * @param  boleto  GetSubscriptionBoletoResponse value for boleto.
      */
     public GetSubscriptionResponse(
             String id,
@@ -115,7 +117,8 @@ public class GetSubscriptionResponse {
             Integer minimumPrice,
             LocalDateTime canceledAt,
             List<GetDiscountResponse> discounts,
-            Integer boletoDueDays) {
+            Integer boletoDueDays,
+            GetSubscriptionBoletoResponse boleto) {
         this.id = id;
         this.code = code;
         this.startAt = startAt;
@@ -144,6 +147,7 @@ public class GetSubscriptionResponse {
         this.increments = increments;
         this.boletoDueDays = boletoDueDays;
         this.split = split;
+        this.boleto = boleto;
     }
 
     /**
@@ -679,6 +683,25 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Getter for Boleto.
+     * @return Returns the GetSubscriptionBoletoResponse
+     */
+    @JsonGetter("boleto")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public GetSubscriptionBoletoResponse getBoleto() {
+        return boleto;
+    }
+
+    /**
+     * Setter for Boleto.
+     * @param boleto Value for GetSubscriptionBoletoResponse
+     */
+    @JsonSetter("boleto")
+    public void setBoleto(GetSubscriptionBoletoResponse boleto) {
+        this.boleto = boleto;
+    }
+
+    /**
      * Converts this GetSubscriptionResponse into string format.
      * @return String representation of this class
      */
@@ -695,7 +718,7 @@ public class GetSubscriptionResponse {
                 + currentCycle + ", customer=" + customer + ", nextBillingAt=" + nextBillingAt
                 + ", billingDay=" + billingDay + ", minimumPrice=" + minimumPrice + ", canceledAt="
                 + canceledAt + ", discounts=" + discounts + ", boletoDueDays=" + boletoDueDays
-                + "]";
+                + ", boleto=" + boleto + "]";
     }
 
     /**
@@ -714,7 +737,8 @@ public class GetSubscriptionResponse {
                 .minimumPrice(getMinimumPrice())
                 .canceledAt(getCanceledAt())
                 .discounts(getDiscounts())
-                .boletoDueDays(getBoletoDueDays());
+                .boletoDueDays(getBoletoDueDays())
+                .boleto(getBoleto());
         return builder;
     }
 
@@ -750,6 +774,7 @@ public class GetSubscriptionResponse {
         private LocalDateTime canceledAt;
         private List<GetDiscountResponse> discounts;
         private Integer boletoDueDays;
+        private GetSubscriptionBoletoResponse boleto;
 
         /**
          * Initialization constructor.
@@ -1090,6 +1115,16 @@ public class GetSubscriptionResponse {
         }
 
         /**
+         * Setter for boleto.
+         * @param  boleto  GetSubscriptionBoletoResponse value for boleto.
+         * @return Builder
+         */
+        public Builder boleto(GetSubscriptionBoletoResponse boleto) {
+            this.boleto = boleto;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetSubscriptionResponse} object using the set fields.
          * @return {@link GetSubscriptionResponse}
          */
@@ -1098,7 +1133,7 @@ public class GetSubscriptionResponse {
                     billingType, paymentMethod, currency, installments, status, createdAt,
                     updatedAt, card, items, statementDescriptor, metadata, setup,
                     gatewayAffiliationId, increments, split, currentCycle, customer, nextBillingAt,
-                    billingDay, minimumPrice, canceledAt, discounts, boletoDueDays);
+                    billingDay, minimumPrice, canceledAt, discounts, boletoDueDays, boleto);
         }
     }
 }

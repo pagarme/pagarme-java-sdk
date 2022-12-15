@@ -43,6 +43,7 @@ Request for creating a subcription
 | `Period` | [`CreatePeriodRequest`](../../doc/models/create-period-request.md) | Optional | - | CreatePeriodRequest getPeriod() | setPeriod(CreatePeriodRequest period) |
 | `Submerchant` | [`CreateSubMerchantRequest`](../../doc/models/create-sub-merchant-request.md) | Optional | SubMerchant | CreateSubMerchantRequest getSubmerchant() | setSubmerchant(CreateSubMerchantRequest submerchant) |
 | `Split` | [`CreateSubscriptionSplitRequest`](../../doc/models/create-subscription-split-request.md) | Optional | Subscription's split | CreateSubscriptionSplitRequest getSplit() | setSplit(CreateSubscriptionSplitRequest split) |
+| `Boleto` | [`CreateSubscriptionBoletoRequest`](../../doc/models/create-subscription-boleto-request.md) | Optional | Information about fines and interest on the "boleto" used from payment | CreateSubscriptionBoletoRequest getBoleto() | setBoleto(CreateSubscriptionBoletoRequest boleto) |
 
 ## Example (as JSON)
 
