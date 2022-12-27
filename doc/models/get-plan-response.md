@@ -17,7 +17,7 @@ Response object for getting a plan
 | `Url` | `String` | Required | - | String getUrl() | setUrl(String url) |
 | `StatementDescriptor` | `String` | Required | - | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
 | `Interval` | `String` | Required | - | String getInterval() | setInterval(String interval) |
-| `IntervalCount` | `int` | Required | - | int getIntervalCount() | setIntervalCount(int intervalCount) |
+| `IntervalCount` | `Integer` | Required | - | Integer getIntervalCount() | setIntervalCount(Integer intervalCount) |
 | `BillingType` | `String` | Required | - | String getBillingType() | setBillingType(String billingType) |
 | `PaymentMethods` | `List<String>` | Required | - | List<String> getPaymentMethods() | setPaymentMethods(List<String> paymentMethods) |
 | `Installments` | `List<Integer>` | Required | - | List<Integer> getInstallments() | setInstallments(List<Integer> installments) |
@@ -27,7 +27,7 @@ Response object for getting a plan
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
 | `Items` | [`List<GetPlanItemResponse>`](../../doc/models/get-plan-item-response.md) | Required | - | List<GetPlanItemResponse> getItems() | setItems(List<GetPlanItemResponse> items) |
 | `BillingDays` | `List<Integer>` | Required | - | List<Integer> getBillingDays() | setBillingDays(List<Integer> billingDays) |
-| `Shippable` | `boolean` | Required | - | boolean getShippable() | setShippable(boolean shippable) |
+| `Shippable` | `Boolean` | Required | - | Boolean getShippable() | setShippable(Boolean shippable) |
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `TrialPeriodDays` | `Integer` | Optional | - | Integer getTrialPeriodDays() | setTrialPeriodDays(Integer trialPeriodDays) |
 | `MinimumPrice` | `Integer` | Optional | - | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |

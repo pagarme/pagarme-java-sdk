@@ -14,7 +14,7 @@ import io.apimatic.core.types.BaseModel;
  * This is a model class for GetChargesSummaryResponse type.
  */
 public class GetChargesSummaryResponse {
-    private int total;
+    private Integer total;
 
     /**
      * Default constructor.
@@ -24,28 +24,28 @@ public class GetChargesSummaryResponse {
 
     /**
      * Initialization constructor.
-     * @param  total  int value for total.
+     * @param  total  Integer value for total.
      */
     public GetChargesSummaryResponse(
-            int total) {
+            Integer total) {
         this.total = total;
     }
 
     /**
      * Getter for Total.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("total")
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
     /**
      * Setter for Total.
-     * @param total Value for int
+     * @param total Value for Integer
      */
     @JsonSetter("total")
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -72,7 +72,7 @@ public class GetChargesSummaryResponse {
      * Class to build instances of {@link GetChargesSummaryResponse}.
      */
     public static class Builder {
-        private int total;
+        private Integer total;
 
         /**
          * Initialization constructor.
@@ -82,18 +82,18 @@ public class GetChargesSummaryResponse {
 
         /**
          * Initialization constructor.
-         * @param  total  int value for total.
+         * @param  total  Integer value for total.
          */
-        public Builder(int total) {
+        public Builder(Integer total) {
             this.total = total;
         }
 
         /**
          * Setter for total.
-         * @param  total  int value for total.
+         * @param  total  Integer value for total.
          * @return Builder
          */
-        public Builder total(int total) {
+        public Builder total(Integer total) {
             this.total = total;
             return this;
         }

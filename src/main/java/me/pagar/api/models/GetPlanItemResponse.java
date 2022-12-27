@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -27,9 +28,9 @@ public class GetPlanItemResponse {
     private GetPricingSchemeResponse pricingScheme;
     private String description;
     private GetPlanResponse plan;
-    private Integer quantity;
-    private Integer cycles;
-    private LocalDateTime deletedAt;
+    private OptionalNullable<Integer> quantity;
+    private OptionalNullable<Integer> cycles;
+    private OptionalNullable<LocalDateTime> deletedAt;
 
     /**
      * Default constructor.
@@ -63,6 +64,26 @@ public class GetPlanItemResponse {
             Integer quantity,
             Integer cycles,
             LocalDateTime deletedAt) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.pricingScheme = pricingScheme;
+        this.description = description;
+        this.plan = plan;
+        this.quantity = OptionalNullable.of(quantity);
+        this.cycles = OptionalNullable.of(cycles);
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPlanItemResponse(String id, String name, String status, LocalDateTime createdAt,
+            LocalDateTime updatedAt, GetPricingSchemeResponse pricingScheme, String description,
+            GetPlanResponse plan, OptionalNullable<Integer> quantity,
+            OptionalNullable<Integer> cycles, OptionalNullable<LocalDateTime> deletedAt) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -225,13 +246,22 @@ public class GetPlanItemResponse {
     }
 
     /**
-     * Getter for Quantity.
-     * @return Returns the Integer
+     * Internal Getter for Quantity.
+     * @return Returns the Internal Integer
      */
     @JsonGetter("quantity")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetQuantity() {
+        return this.quantity;
+    }
+
+    /**
+     * Getter for Quantity.
+     * @return Returns the Integer
+     */
     public Integer getQuantity() {
-        return quantity;
+        return OptionalNullable.getFrom(quantity);
     }
 
     /**
@@ -240,17 +270,33 @@ public class GetPlanItemResponse {
      */
     @JsonSetter("quantity")
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        this.quantity = OptionalNullable.of(quantity);
+    }
+
+    /**
+     * UnSetter for Quantity.
+     */
+    public void unsetQuantity() {
+        quantity = null;
+    }
+
+    /**
+     * Internal Getter for Cycles.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("cycles")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetCycles() {
+        return this.cycles;
     }
 
     /**
      * Getter for Cycles.
      * @return Returns the Integer
      */
-    @JsonGetter("cycles")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getCycles() {
-        return cycles;
+        return OptionalNullable.getFrom(cycles);
     }
 
     /**
@@ -259,18 +305,33 @@ public class GetPlanItemResponse {
      */
     @JsonSetter("cycles")
     public void setCycles(Integer cycles) {
-        this.cycles = cycles;
+        this.cycles = OptionalNullable.of(cycles);
+    }
+
+    /**
+     * UnSetter for Cycles.
+     */
+    public void unsetCycles() {
+        cycles = null;
+    }
+
+    /**
+     * Internal Getter for DeletedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
     }
 
     /**
      * Getter for DeletedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("deleted_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -280,7 +341,14 @@ public class GetPlanItemResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
     }
 
     /**
@@ -302,10 +370,10 @@ public class GetPlanItemResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, name, status, createdAt, updatedAt, pricingScheme,
-                description, plan)
-                .quantity(getQuantity())
-                .cycles(getCycles())
-                .deletedAt(getDeletedAt());
+                description, plan);
+        builder.quantity = internalGetQuantity();
+        builder.cycles = internalGetCycles();
+        builder.deletedAt = internalGetDeletedAt();
         return builder;
     }
 
@@ -321,9 +389,9 @@ public class GetPlanItemResponse {
         private GetPricingSchemeResponse pricingScheme;
         private String description;
         private GetPlanResponse plan;
-        private Integer quantity;
-        private Integer cycles;
-        private LocalDateTime deletedAt;
+        private OptionalNullable<Integer> quantity;
+        private OptionalNullable<Integer> cycles;
+        private OptionalNullable<LocalDateTime> deletedAt;
 
         /**
          * Initialization constructor.
@@ -441,7 +509,16 @@ public class GetPlanItemResponse {
          * @return Builder
          */
         public Builder quantity(Integer quantity) {
-            this.quantity = quantity;
+            this.quantity = OptionalNullable.of(quantity);
+            return this;
+        }
+
+        /**
+         * UnSetter for quantity.
+         * @return Builder
+         */
+        public Builder unsetQuantity() {
+            quantity = null;
             return this;
         }
 
@@ -451,7 +528,16 @@ public class GetPlanItemResponse {
          * @return Builder
          */
         public Builder cycles(Integer cycles) {
-            this.cycles = cycles;
+            this.cycles = OptionalNullable.of(cycles);
+            return this;
+        }
+
+        /**
+         * UnSetter for cycles.
+         * @return Builder
+         */
+        public Builder unsetCycles() {
+            cycles = null;
             return this;
         }
 
@@ -461,7 +547,16 @@ public class GetPlanItemResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 

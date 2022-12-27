@@ -11,7 +11,7 @@ Response object for getting a pricing scheme
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Price` | `int` | Required | - | int getPrice() | setPrice(int price) |
+| `Price` | `Integer` | Required | - | Integer getPrice() | setPrice(Integer price) |
 | `SchemeType` | `String` | Required | - | String getSchemeType() | setSchemeType(String schemeType) |
 | `PriceBrackets` | [`List<GetPriceBracketResponse>`](../../doc/models/get-price-bracket-response.md) | Required | - | List<GetPriceBracketResponse> getPriceBrackets() | setPriceBrackets(List<GetPriceBracketResponse> priceBrackets) |
 | `MinimumPrice` | `Integer` | Optional | - | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |

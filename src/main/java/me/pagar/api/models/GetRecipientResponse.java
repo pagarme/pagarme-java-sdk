@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,8 @@ public class GetRecipientResponse {
     private GetBankAccountResponse defaultBankAccount;
     private List<GetGatewayRecipientResponse> gatewayRecipients;
     private Map<String, String> metadata;
-    private GetAutomaticAnticipationResponse automaticAnticipationSettings;
-    private GetTransferSettingsResponse transferSettings;
+    private OptionalNullable<GetAutomaticAnticipationResponse> automaticAnticipationSettings;
+    private OptionalNullable<GetTransferSettingsResponse> transferSettings;
     private String code;
     private String paymentMode;
 
@@ -85,6 +86,36 @@ public class GetRecipientResponse {
             String paymentMode,
             GetAutomaticAnticipationResponse automaticAnticipationSettings,
             GetTransferSettingsResponse transferSettings) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.document = document;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+        this.defaultBankAccount = defaultBankAccount;
+        this.gatewayRecipients = gatewayRecipients;
+        this.metadata = metadata;
+        this.automaticAnticipationSettings = OptionalNullable.of(automaticAnticipationSettings);
+        this.transferSettings = OptionalNullable.of(transferSettings);
+        this.code = code;
+        this.paymentMode = paymentMode;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetRecipientResponse(String id, String name, String email, String document,
+            String description, String type, String status, LocalDateTime createdAt,
+            LocalDateTime updatedAt, LocalDateTime deletedAt,
+            GetBankAccountResponse defaultBankAccount,
+            List<GetGatewayRecipientResponse> gatewayRecipients, Map<String, String> metadata,
+            String code, String paymentMode,
+            OptionalNullable<GetAutomaticAnticipationResponse> automaticAnticipationSettings,
+            OptionalNullable<GetTransferSettingsResponse> transferSettings) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -371,13 +402,22 @@ public class GetRecipientResponse {
     }
 
     /**
-     * Getter for AutomaticAnticipationSettings.
-     * @return Returns the GetAutomaticAnticipationResponse
+     * Internal Getter for AutomaticAnticipationSettings.
+     * @return Returns the Internal GetAutomaticAnticipationResponse
      */
     @JsonGetter("automatic_anticipation_settings")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetAutomaticAnticipationResponse> internalGetAutomaticAnticipationSettings() {
+        return this.automaticAnticipationSettings;
+    }
+
+    /**
+     * Getter for AutomaticAnticipationSettings.
+     * @return Returns the GetAutomaticAnticipationResponse
+     */
     public GetAutomaticAnticipationResponse getAutomaticAnticipationSettings() {
-        return automaticAnticipationSettings;
+        return OptionalNullable.getFrom(automaticAnticipationSettings);
     }
 
     /**
@@ -386,17 +426,33 @@ public class GetRecipientResponse {
      */
     @JsonSetter("automatic_anticipation_settings")
     public void setAutomaticAnticipationSettings(GetAutomaticAnticipationResponse automaticAnticipationSettings) {
-        this.automaticAnticipationSettings = automaticAnticipationSettings;
+        this.automaticAnticipationSettings = OptionalNullable.of(automaticAnticipationSettings);
+    }
+
+    /**
+     * UnSetter for AutomaticAnticipationSettings.
+     */
+    public void unsetAutomaticAnticipationSettings() {
+        automaticAnticipationSettings = null;
+    }
+
+    /**
+     * Internal Getter for TransferSettings.
+     * @return Returns the Internal GetTransferSettingsResponse
+     */
+    @JsonGetter("transfer_settings")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetTransferSettingsResponse> internalGetTransferSettings() {
+        return this.transferSettings;
     }
 
     /**
      * Getter for TransferSettings.
      * @return Returns the GetTransferSettingsResponse
      */
-    @JsonGetter("transfer_settings")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetTransferSettingsResponse getTransferSettings() {
-        return transferSettings;
+        return OptionalNullable.getFrom(transferSettings);
     }
 
     /**
@@ -405,7 +461,14 @@ public class GetRecipientResponse {
      */
     @JsonSetter("transfer_settings")
     public void setTransferSettings(GetTransferSettingsResponse transferSettings) {
-        this.transferSettings = transferSettings;
+        this.transferSettings = OptionalNullable.of(transferSettings);
+    }
+
+    /**
+     * UnSetter for TransferSettings.
+     */
+    public void unsetTransferSettings() {
+        transferSettings = null;
     }
 
     /**
@@ -471,9 +534,9 @@ public class GetRecipientResponse {
     public Builder toBuilder() {
         Builder builder = new Builder(id, name, email, document, description, type, status,
                 createdAt, updatedAt, deletedAt, defaultBankAccount, gatewayRecipients, metadata,
-                code, paymentMode)
-                .automaticAnticipationSettings(getAutomaticAnticipationSettings())
-                .transferSettings(getTransferSettings());
+                code, paymentMode);
+        builder.automaticAnticipationSettings = internalGetAutomaticAnticipationSettings();
+        builder.transferSettings = internalGetTransferSettings();
         return builder;
     }
 
@@ -496,8 +559,8 @@ public class GetRecipientResponse {
         private Map<String, String> metadata;
         private String code;
         private String paymentMode = "bank_transfer";
-        private GetAutomaticAnticipationResponse automaticAnticipationSettings;
-        private GetTransferSettingsResponse transferSettings;
+        private OptionalNullable<GetAutomaticAnticipationResponse> automaticAnticipationSettings;
+        private OptionalNullable<GetTransferSettingsResponse> transferSettings;
 
         /**
          * Initialization constructor.
@@ -705,7 +768,16 @@ public class GetRecipientResponse {
          */
         public Builder automaticAnticipationSettings(
                 GetAutomaticAnticipationResponse automaticAnticipationSettings) {
-            this.automaticAnticipationSettings = automaticAnticipationSettings;
+            this.automaticAnticipationSettings = OptionalNullable.of(automaticAnticipationSettings);
+            return this;
+        }
+
+        /**
+         * UnSetter for automaticAnticipationSettings.
+         * @return Builder
+         */
+        public Builder unsetAutomaticAnticipationSettings() {
+            automaticAnticipationSettings = null;
             return this;
         }
 
@@ -715,7 +787,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder transferSettings(GetTransferSettingsResponse transferSettings) {
-            this.transferSettings = transferSettings;
+            this.transferSettings = OptionalNullable.of(transferSettings);
+            return this;
+        }
+
+        /**
+         * UnSetter for transferSettings.
+         * @return Builder
+         */
+        public Builder unsetTransferSettings() {
+            transferSettings = null;
             return this;
         }
 

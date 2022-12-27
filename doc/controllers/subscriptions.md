@@ -1044,9 +1044,6 @@ setup.setAmount(150);
 setup.setDescription("description0");
 CreatePaymentRequest payment = new CreatePaymentRequest();
 payment.setPaymentMethod("payment_method4");
-CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
-
-payment.setPrivateLabel(privateLabel);
 
 setup.setPayment(payment);
 

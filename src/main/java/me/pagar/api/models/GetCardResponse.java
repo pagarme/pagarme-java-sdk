@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -24,17 +25,17 @@ public class GetCardResponse {
     private String lastFourDigits;
     private String brand;
     private String holderName;
-    private int expMonth;
-    private int expYear;
+    private Integer expMonth;
+    private Integer expYear;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private GetBillingAddressResponse billingAddress;
-    private GetCustomerResponse customer;
+    private OptionalNullable<GetCustomerResponse> customer;
     private Map<String, String> metadata;
     private String type;
     private String holderDocument;
-    private LocalDateTime deletedAt;
+    private OptionalNullable<LocalDateTime> deletedAt;
     private String firstSixDigits;
     private String label;
 
@@ -50,8 +51,8 @@ public class GetCardResponse {
      * @param  lastFourDigits  String value for lastFourDigits.
      * @param  brand  String value for brand.
      * @param  holderName  String value for holderName.
-     * @param  expMonth  int value for expMonth.
-     * @param  expYear  int value for expYear.
+     * @param  expMonth  Integer value for expMonth.
+     * @param  expYear  Integer value for expYear.
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -69,8 +70,8 @@ public class GetCardResponse {
             String lastFourDigits,
             String brand,
             String holderName,
-            int expMonth,
-            int expYear,
+            Integer expMonth,
+            Integer expYear,
             String status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
@@ -82,6 +83,34 @@ public class GetCardResponse {
             String label,
             GetCustomerResponse customer,
             LocalDateTime deletedAt) {
+        this.id = id;
+        this.lastFourDigits = lastFourDigits;
+        this.brand = brand;
+        this.holderName = holderName;
+        this.expMonth = expMonth;
+        this.expYear = expYear;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.billingAddress = billingAddress;
+        this.customer = OptionalNullable.of(customer);
+        this.metadata = metadata;
+        this.type = type;
+        this.holderDocument = holderDocument;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+        this.firstSixDigits = firstSixDigits;
+        this.label = label;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCardResponse(String id, String lastFourDigits, String brand, String holderName,
+            Integer expMonth, Integer expYear, String status, LocalDateTime createdAt,
+            LocalDateTime updatedAt, GetBillingAddressResponse billingAddress,
+            Map<String, String> metadata, String type, String holderDocument, String firstSixDigits,
+            String label, OptionalNullable<GetCustomerResponse> customer,
+            OptionalNullable<LocalDateTime> deletedAt) {
         this.id = id;
         this.lastFourDigits = lastFourDigits;
         this.brand = brand;
@@ -175,37 +204,37 @@ public class GetCardResponse {
 
     /**
      * Getter for ExpMonth.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("exp_month")
-    public int getExpMonth() {
+    public Integer getExpMonth() {
         return expMonth;
     }
 
     /**
      * Setter for ExpMonth.
-     * @param expMonth Value for int
+     * @param expMonth Value for Integer
      */
     @JsonSetter("exp_month")
-    public void setExpMonth(int expMonth) {
+    public void setExpMonth(Integer expMonth) {
         this.expMonth = expMonth;
     }
 
     /**
      * Getter for ExpYear.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("exp_year")
-    public int getExpYear() {
+    public Integer getExpYear() {
         return expYear;
     }
 
     /**
      * Setter for ExpYear.
-     * @param expYear Value for int
+     * @param expYear Value for Integer
      */
     @JsonSetter("exp_year")
-    public void setExpYear(int expYear) {
+    public void setExpYear(Integer expYear) {
         this.expYear = expYear;
     }
 
@@ -286,13 +315,22 @@ public class GetCardResponse {
     }
 
     /**
-     * Getter for Customer.
-     * @return Returns the GetCustomerResponse
+     * Internal Getter for Customer.
+     * @return Returns the Internal GetCustomerResponse
      */
     @JsonGetter("customer")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
+    }
+
+    /**
+     * Getter for Customer.
+     * @return Returns the GetCustomerResponse
+     */
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -301,7 +339,14 @@ public class GetCardResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -363,14 +408,22 @@ public class GetCardResponse {
     }
 
     /**
-     * Getter for DeletedAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for DeletedAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("deleted_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
+    }
+
+    /**
+     * Getter for DeletedAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -380,7 +433,14 @@ public class GetCardResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
     }
 
     /**
@@ -444,9 +504,9 @@ public class GetCardResponse {
     public Builder toBuilder() {
         Builder builder = new Builder(id, lastFourDigits, brand, holderName, expMonth, expYear,
                 status, createdAt, updatedAt, billingAddress, metadata, type, holderDocument,
-                firstSixDigits, label)
-                .customer(getCustomer())
-                .deletedAt(getDeletedAt());
+                firstSixDigits, label);
+        builder.customer = internalGetCustomer();
+        builder.deletedAt = internalGetDeletedAt();
         return builder;
     }
 
@@ -458,8 +518,8 @@ public class GetCardResponse {
         private String lastFourDigits;
         private String brand;
         private String holderName;
-        private int expMonth;
-        private int expYear;
+        private Integer expMonth;
+        private Integer expYear;
         private String status;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -469,8 +529,8 @@ public class GetCardResponse {
         private String holderDocument;
         private String firstSixDigits;
         private String label;
-        private GetCustomerResponse customer;
-        private LocalDateTime deletedAt;
+        private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<LocalDateTime> deletedAt;
 
         /**
          * Initialization constructor.
@@ -484,8 +544,8 @@ public class GetCardResponse {
          * @param  lastFourDigits  String value for lastFourDigits.
          * @param  brand  String value for brand.
          * @param  holderName  String value for holderName.
-         * @param  expMonth  int value for expMonth.
-         * @param  expYear  int value for expYear.
+         * @param  expMonth  Integer value for expMonth.
+         * @param  expYear  Integer value for expYear.
          * @param  status  String value for status.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -497,7 +557,7 @@ public class GetCardResponse {
          * @param  label  String value for label.
          */
         public Builder(String id, String lastFourDigits, String brand, String holderName,
-                int expMonth, int expYear, String status, LocalDateTime createdAt,
+                Integer expMonth, Integer expYear, String status, LocalDateTime createdAt,
                 LocalDateTime updatedAt, GetBillingAddressResponse billingAddress,
                 Map<String, String> metadata, String type, String holderDocument,
                 String firstSixDigits, String label) {
@@ -560,20 +620,20 @@ public class GetCardResponse {
 
         /**
          * Setter for expMonth.
-         * @param  expMonth  int value for expMonth.
+         * @param  expMonth  Integer value for expMonth.
          * @return Builder
          */
-        public Builder expMonth(int expMonth) {
+        public Builder expMonth(Integer expMonth) {
             this.expMonth = expMonth;
             return this;
         }
 
         /**
          * Setter for expYear.
-         * @param  expYear  int value for expYear.
+         * @param  expYear  Integer value for expYear.
          * @return Builder
          */
-        public Builder expYear(int expYear) {
+        public Builder expYear(Integer expYear) {
             this.expYear = expYear;
             return this;
         }
@@ -674,7 +734,16 @@ public class GetCardResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 
@@ -684,7 +753,16 @@ public class GetCardResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 

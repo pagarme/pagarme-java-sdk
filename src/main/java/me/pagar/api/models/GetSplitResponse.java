@@ -9,17 +9,19 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetSplitResponse type.
  */
 public class GetSplitResponse {
     private String type;
-    private int amount;
-    private GetRecipientResponse recipient;
+    private Integer amount;
+    private OptionalNullable<GetRecipientResponse> recipient;
     private String gatewayId;
-    private GetSplitOptionsResponse options;
+    private OptionalNullable<GetSplitOptionsResponse> options;
     private String id;
 
     /**
@@ -31,7 +33,7 @@ public class GetSplitResponse {
     /**
      * Initialization constructor.
      * @param  type  String value for type.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  gatewayId  String value for gatewayId.
      * @param  id  String value for id.
      * @param  recipient  GetRecipientResponse value for recipient.
@@ -39,11 +41,25 @@ public class GetSplitResponse {
      */
     public GetSplitResponse(
             String type,
-            int amount,
+            Integer amount,
             String gatewayId,
             String id,
             GetRecipientResponse recipient,
             GetSplitOptionsResponse options) {
+        this.type = type;
+        this.amount = amount;
+        this.recipient = OptionalNullable.of(recipient);
+        this.gatewayId = gatewayId;
+        this.options = OptionalNullable.of(options);
+        this.id = id;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetSplitResponse(String type, Integer amount, String gatewayId, String id,
+            OptionalNullable<GetRecipientResponse> recipient,
+            OptionalNullable<GetSplitOptionsResponse> options) {
         this.type = type;
         this.amount = amount;
         this.recipient = recipient;
@@ -75,21 +91,33 @@ public class GetSplitResponse {
     /**
      * Getter for Amount.
      * Amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
      * Amount
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    /**
+     * Internal Getter for Recipient.
+     * Recipient
+     * @return Returns the Internal GetRecipientResponse
+     */
+    @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetRecipientResponse> internalGetRecipient() {
+        return this.recipient;
     }
 
     /**
@@ -97,10 +125,8 @@ public class GetSplitResponse {
      * Recipient
      * @return Returns the GetRecipientResponse
      */
-    @JsonGetter("recipient")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
-        return recipient;
+        return OptionalNullable.getFrom(recipient);
     }
 
     /**
@@ -110,7 +136,15 @@ public class GetSplitResponse {
      */
     @JsonSetter("recipient")
     public void setRecipient(GetRecipientResponse recipient) {
-        this.recipient = recipient;
+        this.recipient = OptionalNullable.of(recipient);
+    }
+
+    /**
+     * UnSetter for Recipient.
+     * Recipient
+     */
+    public void unsetRecipient() {
+        recipient = null;
     }
 
     /**
@@ -134,13 +168,22 @@ public class GetSplitResponse {
     }
 
     /**
-     * Getter for Options.
-     * @return Returns the GetSplitOptionsResponse
+     * Internal Getter for Options.
+     * @return Returns the Internal GetSplitOptionsResponse
      */
     @JsonGetter("options")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSplitOptionsResponse> internalGetOptions() {
+        return this.options;
+    }
+
+    /**
+     * Getter for Options.
+     * @return Returns the GetSplitOptionsResponse
+     */
     public GetSplitOptionsResponse getOptions() {
-        return options;
+        return OptionalNullable.getFrom(options);
     }
 
     /**
@@ -149,7 +192,14 @@ public class GetSplitResponse {
      */
     @JsonSetter("options")
     public void setOptions(GetSplitOptionsResponse options) {
-        this.options = options;
+        this.options = OptionalNullable.of(options);
+    }
+
+    /**
+     * UnSetter for Options.
+     */
+    public void unsetOptions() {
+        options = null;
     }
 
     /**
@@ -187,9 +237,9 @@ public class GetSplitResponse {
      * @return a new {@link GetSplitResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(type, amount, gatewayId, id)
-                .recipient(getRecipient())
-                .options(getOptions());
+        Builder builder = new Builder(type, amount, gatewayId, id);
+        builder.recipient = internalGetRecipient();
+        builder.options = internalGetOptions();
         return builder;
     }
 
@@ -198,11 +248,11 @@ public class GetSplitResponse {
      */
     public static class Builder {
         private String type;
-        private int amount;
+        private Integer amount;
         private String gatewayId;
         private String id;
-        private GetRecipientResponse recipient;
-        private GetSplitOptionsResponse options;
+        private OptionalNullable<GetRecipientResponse> recipient;
+        private OptionalNullable<GetSplitOptionsResponse> options;
 
         /**
          * Initialization constructor.
@@ -213,11 +263,11 @@ public class GetSplitResponse {
         /**
          * Initialization constructor.
          * @param  type  String value for type.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  gatewayId  String value for gatewayId.
          * @param  id  String value for id.
          */
-        public Builder(String type, int amount, String gatewayId, String id) {
+        public Builder(String type, Integer amount, String gatewayId, String id) {
             this.type = type;
             this.amount = amount;
             this.gatewayId = gatewayId;
@@ -236,10 +286,10 @@ public class GetSplitResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -270,7 +320,16 @@ public class GetSplitResponse {
          * @return Builder
          */
         public Builder recipient(GetRecipientResponse recipient) {
-            this.recipient = recipient;
+            this.recipient = OptionalNullable.of(recipient);
+            return this;
+        }
+
+        /**
+         * UnSetter for recipient.
+         * @return Builder
+         */
+        public Builder unsetRecipient() {
+            recipient = null;
             return this;
         }
 
@@ -280,7 +339,16 @@ public class GetSplitResponse {
          * @return Builder
          */
         public Builder options(GetSplitOptionsResponse options) {
-            this.options = options;
+            this.options = OptionalNullable.of(options);
+            return this;
+        }
+
+        /**
+         * UnSetter for options.
+         * @return Builder
+         */
+        public Builder unsetOptions() {
+            options = null;
             return this;
         }
 

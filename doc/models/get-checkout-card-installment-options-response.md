@@ -10,7 +10,7 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Number` | `String` | Required | Número de parcelas | String getNumber() | setNumber(String number) |
-| `Total` | `int` | Required | Valor total da compra | int getTotal() | setTotal(int total) |
+| `Total` | `Integer` | Required | Valor total da compra | Integer getTotal() | setTotal(Integer total) |
 
 ## Example (as JSON)
 

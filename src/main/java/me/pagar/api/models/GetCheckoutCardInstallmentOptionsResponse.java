@@ -15,7 +15,7 @@ import io.apimatic.core.types.BaseModel;
  */
 public class GetCheckoutCardInstallmentOptionsResponse {
     private String number;
-    private int total;
+    private Integer total;
 
     /**
      * Default constructor.
@@ -26,11 +26,11 @@ public class GetCheckoutCardInstallmentOptionsResponse {
     /**
      * Initialization constructor.
      * @param  number  String value for number.
-     * @param  total  int value for total.
+     * @param  total  Integer value for total.
      */
     public GetCheckoutCardInstallmentOptionsResponse(
             String number,
-            int total) {
+            Integer total) {
         this.number = number;
         this.total = total;
     }
@@ -58,20 +58,20 @@ public class GetCheckoutCardInstallmentOptionsResponse {
     /**
      * Getter for Total.
      * Valor total da compra
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("total")
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
     /**
      * Setter for Total.
      * Valor total da compra
-     * @param total Value for int
+     * @param total Value for Integer
      */
     @JsonSetter("total")
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -100,7 +100,7 @@ public class GetCheckoutCardInstallmentOptionsResponse {
      */
     public static class Builder {
         private String number;
-        private int total;
+        private Integer total;
 
         /**
          * Initialization constructor.
@@ -111,9 +111,9 @@ public class GetCheckoutCardInstallmentOptionsResponse {
         /**
          * Initialization constructor.
          * @param  number  String value for number.
-         * @param  total  int value for total.
+         * @param  total  Integer value for total.
          */
-        public Builder(String number, int total) {
+        public Builder(String number, Integer total) {
             this.number = number;
             this.total = total;
         }
@@ -130,10 +130,10 @@ public class GetCheckoutCardInstallmentOptionsResponse {
 
         /**
          * Setter for total.
-         * @param  total  int value for total.
+         * @param  total  Integer value for total.
          * @return Builder
          */
-        public Builder total(int total) {
+        public Builder total(Integer total) {
             this.total = total;
             return this;
         }

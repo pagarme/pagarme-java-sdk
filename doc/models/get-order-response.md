@@ -28,7 +28,7 @@ Response object for getting an Order
 | `SessionId` | `String` | Optional | Session id | String getSessionId() | setSessionId(String sessionId) |
 | `Location` | [`GetLocationResponse`](../../doc/models/get-location-response.md) | Optional | Location | GetLocationResponse getLocation() | setLocation(GetLocationResponse location) |
 | `Device` | [`GetDeviceResponse`](../../doc/models/get-device-response.md) | Optional | Device's informations | GetDeviceResponse getDevice() | setDevice(GetDeviceResponse device) |
-| `Closed` | `boolean` | Required | Indicates whether the order is closed | boolean getClosed() | setClosed(boolean closed) |
+| `Closed` | `Boolean` | Required | Indicates whether the order is closed | Boolean getClosed() | setClosed(Boolean closed) |
 
 ## Example (as JSON)
 

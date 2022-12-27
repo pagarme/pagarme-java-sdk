@@ -8,12 +8,11 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +21,6 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetBoletoTransactionResponse type.
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "transaction_type",
-        defaultImpl = GetBoletoTransactionResponse.class,
-        visible = true)
-@JsonInclude(Include.ALWAYS)
 public class GetBoletoTransactionResponse
         extends GetTransactionResponse {
     private String url;
@@ -38,15 +30,15 @@ public class GetBoletoTransactionResponse
     private String documentNumber;
     private String instructions;
     private GetBillingAddressResponse billingAddress;
-    private LocalDateTime dueAt;
+    private OptionalNullable<LocalDateTime> dueAt;
     private String qrCode;
     private String line;
     private String pdfPassword;
     private String pdf;
-    private LocalDateTime paidAt;
+    private OptionalNullable<LocalDateTime> paidAt;
     private String paidAmount;
     private String type;
-    private LocalDateTime creditAt;
+    private OptionalNullable<LocalDateTime> creditAt;
     private String statementDescriptor;
 
     /**
@@ -54,19 +46,18 @@ public class GetBoletoTransactionResponse
      */
     public GetBoletoTransactionResponse() {
         super();
-        setTransactionType("boleto");
     }
 
     /**
      * Initialization constructor.
      * @param  gatewayId  String value for gatewayId.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
-     * @param  success  boolean value for success.
+     * @param  success  Boolean value for success.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
-     * @param  attemptCount  int value for attemptCount.
-     * @param  maxAttempts  int value for maxAttempts.
+     * @param  attemptCount  Integer value for attemptCount.
+     * @param  maxAttempts  Integer value for maxAttempts.
      * @param  splits  List of GetSplitResponse value for splits.
      * @param  id  String value for id.
      * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -98,13 +89,13 @@ public class GetBoletoTransactionResponse
      */
     public GetBoletoTransactionResponse(
             String gatewayId,
-            int amount,
+            Integer amount,
             String status,
-            boolean success,
+            Boolean success,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
-            int attemptCount,
-            int maxAttempts,
+            Integer attemptCount,
+            Integer maxAttempts,
             List<GetSplitResponse> splits,
             String id,
             GetGatewayResponseResponse gatewayResponse,
@@ -133,6 +124,45 @@ public class GetBoletoTransactionResponse
             LocalDateTime dueAt,
             LocalDateTime paidAt,
             LocalDateTime creditAt) {
+        super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
+                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
+                metadata, interest, fine, maxDaysToPayPastDue);
+        this.url = url;
+        this.barcode = barcode;
+        this.nossoNumero = nossoNumero;
+        this.bank = bank;
+        this.documentNumber = documentNumber;
+        this.instructions = instructions;
+        this.billingAddress = billingAddress;
+        this.dueAt = OptionalNullable.of(dueAt);
+        this.qrCode = qrCode;
+        this.line = line;
+        this.pdfPassword = pdfPassword;
+        this.pdf = pdf;
+        this.paidAt = OptionalNullable.of(paidAt);
+        this.paidAmount = paidAmount;
+        this.type = type;
+        this.creditAt = OptionalNullable.of(creditAt);
+        this.statementDescriptor = statementDescriptor;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetBoletoTransactionResponse(String gatewayId, Integer amount, String status,
+            Boolean success, LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+            Integer maxAttempts, List<GetSplitResponse> splits, String id,
+            GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
+            List<GetSplitResponse> split, String url, String barcode, String nossoNumero,
+            String bank, String documentNumber, String instructions,
+            GetBillingAddressResponse billingAddress, String qrCode, String line,
+            String pdfPassword, String pdf, String paidAmount, String type,
+            String statementDescriptor, OptionalNullable<LocalDateTime> nextAttempt,
+            OptionalNullable<String> transactionType,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
+            OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<LocalDateTime> dueAt,
+            OptionalNullable<LocalDateTime> paidAt, OptionalNullable<LocalDateTime> creditAt) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
                 metadata, interest, fine, maxDaysToPayPastDue);
@@ -282,14 +312,22 @@ public class GetBoletoTransactionResponse
     }
 
     /**
-     * Getter for DueAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for DueAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("due_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDueAt() {
+        return this.dueAt;
+    }
+
+    /**
+     * Getter for DueAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getDueAt() {
-        return dueAt;
+        return OptionalNullable.getFrom(dueAt);
     }
 
     /**
@@ -299,7 +337,14 @@ public class GetBoletoTransactionResponse
     @JsonSetter("due_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDueAt(LocalDateTime dueAt) {
-        this.dueAt = dueAt;
+        this.dueAt = OptionalNullable.of(dueAt);
+    }
+
+    /**
+     * UnSetter for DueAt.
+     */
+    public void unsetDueAt() {
+        dueAt = null;
     }
 
     /**
@@ -375,14 +420,22 @@ public class GetBoletoTransactionResponse
     }
 
     /**
-     * Getter for PaidAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for PaidAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("paid_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetPaidAt() {
+        return this.paidAt;
+    }
+
+    /**
+     * Getter for PaidAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getPaidAt() {
-        return paidAt;
+        return OptionalNullable.getFrom(paidAt);
     }
 
     /**
@@ -392,7 +445,14 @@ public class GetBoletoTransactionResponse
     @JsonSetter("paid_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setPaidAt(LocalDateTime paidAt) {
-        this.paidAt = paidAt;
+        this.paidAt = OptionalNullable.of(paidAt);
+    }
+
+    /**
+     * UnSetter for PaidAt.
+     */
+    public void unsetPaidAt() {
+        paidAt = null;
     }
 
     /**
@@ -432,14 +492,22 @@ public class GetBoletoTransactionResponse
     }
 
     /**
-     * Getter for CreditAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for CreditAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("credit_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreditAt() {
+        return this.creditAt;
+    }
+
+    /**
+     * Getter for CreditAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getCreditAt() {
-        return creditAt;
+        return OptionalNullable.getFrom(creditAt);
     }
 
     /**
@@ -449,7 +517,14 @@ public class GetBoletoTransactionResponse
     @JsonSetter("credit_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreditAt(LocalDateTime creditAt) {
-        this.creditAt = creditAt;
+        this.creditAt = OptionalNullable.of(creditAt);
+    }
+
+    /**
+     * UnSetter for CreditAt.
+     */
+    public void unsetCreditAt() {
+        creditAt = null;
     }
 
     /**
@@ -506,16 +581,16 @@ public class GetBoletoTransactionResponse
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, barcode,
                 nossoNumero, bank, documentNumber, instructions, billingAddress, qrCode, line,
-                pdfPassword, pdf, paidAmount, type, statementDescriptor)
-                .dueAt(getDueAt())
-                .paidAt(getPaidAt())
-                .creditAt(getCreditAt())
-                .nextAttempt(getNextAttempt())
-                .transactionType(getTransactionType())
-                .metadata(getMetadata())
-                .interest(getInterest())
-                .fine(getFine())
-                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
+                pdfPassword, pdf, paidAmount, type, statementDescriptor);
+        builder.dueAt = internalGetDueAt();
+        builder.paidAt = internalGetPaidAt();
+        builder.creditAt = internalGetCreditAt();
+        builder.nextAttempt = internalGetNextAttempt();
+        builder.transactionType = internalGetTransactionType();
+        builder.metadata = internalGetMetadata();
+        builder.interest = internalGetInterest();
+        builder.fine = internalGetFine();
+        builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
         return builder;
     }
 
@@ -524,13 +599,13 @@ public class GetBoletoTransactionResponse
      */
     public static class Builder {
         private String gatewayId;
-        private int amount;
+        private Integer amount;
         private String status;
-        private boolean success;
+        private Boolean success;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        private int attemptCount;
-        private int maxAttempts;
+        private Integer attemptCount;
+        private Integer maxAttempts;
         private List<GetSplitResponse> splits;
         private String id;
         private GetGatewayResponseResponse gatewayResponse;
@@ -550,15 +625,15 @@ public class GetBoletoTransactionResponse
         private String paidAmount;
         private String type;
         private String statementDescriptor;
-        private LocalDateTime nextAttempt;
-        private String transactionType = "boleto";
-        private Map<String, String> metadata;
-        private GetInterestResponse interest;
-        private GetFineResponse fine;
-        private Integer maxDaysToPayPastDue;
-        private LocalDateTime dueAt;
-        private LocalDateTime paidAt;
-        private LocalDateTime creditAt;
+        private OptionalNullable<LocalDateTime> nextAttempt;
+        private OptionalNullable<String> transactionType;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<GetInterestResponse> interest;
+        private OptionalNullable<GetFineResponse> fine;
+        private OptionalNullable<Integer> maxDaysToPayPastDue;
+        private OptionalNullable<LocalDateTime> dueAt;
+        private OptionalNullable<LocalDateTime> paidAt;
+        private OptionalNullable<LocalDateTime> creditAt;
 
         /**
          * Initialization constructor.
@@ -569,13 +644,13 @@ public class GetBoletoTransactionResponse
         /**
          * Initialization constructor.
          * @param  gatewayId  String value for gatewayId.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  attemptCount  int value for attemptCount.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  attemptCount  Integer value for attemptCount.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @param  splits  List of GetSplitResponse value for splits.
          * @param  id  String value for id.
          * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -596,9 +671,9 @@ public class GetBoletoTransactionResponse
          * @param  type  String value for type.
          * @param  statementDescriptor  String value for statementDescriptor.
          */
-        public Builder(String gatewayId, int amount, String status, boolean success,
-                LocalDateTime createdAt, LocalDateTime updatedAt, int attemptCount, int maxAttempts,
-                List<GetSplitResponse> splits, String id,
+        public Builder(String gatewayId, Integer amount, String status, Boolean success,
+                LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+                Integer maxAttempts, List<GetSplitResponse> splits, String id,
                 GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
                 List<GetSplitResponse> split, String url, String barcode, String nossoNumero,
                 String bank, String documentNumber, String instructions,
@@ -646,10 +721,10 @@ public class GetBoletoTransactionResponse
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -666,10 +741,10 @@ public class GetBoletoTransactionResponse
 
         /**
          * Setter for success.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @return Builder
          */
-        public Builder success(boolean success) {
+        public Builder success(Boolean success) {
             this.success = success;
             return this;
         }
@@ -696,20 +771,20 @@ public class GetBoletoTransactionResponse
 
         /**
          * Setter for attemptCount.
-         * @param  attemptCount  int value for attemptCount.
+         * @param  attemptCount  Integer value for attemptCount.
          * @return Builder
          */
-        public Builder attemptCount(int attemptCount) {
+        public Builder attemptCount(Integer attemptCount) {
             this.attemptCount = attemptCount;
             return this;
         }
 
         /**
          * Setter for maxAttempts.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @return Builder
          */
-        public Builder maxAttempts(int maxAttempts) {
+        public Builder maxAttempts(Integer maxAttempts) {
             this.maxAttempts = maxAttempts;
             return this;
         }
@@ -910,7 +985,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder nextAttempt(LocalDateTime nextAttempt) {
-            this.nextAttempt = nextAttempt;
+            this.nextAttempt = OptionalNullable.of(nextAttempt);
+            return this;
+        }
+
+        /**
+         * UnSetter for nextAttempt.
+         * @return Builder
+         */
+        public Builder unsetNextAttempt() {
+            nextAttempt = null;
             return this;
         }
 
@@ -920,7 +1004,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = transactionType;
+            this.transactionType = OptionalNullable.of(transactionType);
+            return this;
+        }
+
+        /**
+         * UnSetter for transactionType.
+         * @return Builder
+         */
+        public Builder unsetTransactionType() {
+            transactionType = null;
             return this;
         }
 
@@ -930,7 +1023,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -940,7 +1042,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder interest(GetInterestResponse interest) {
-            this.interest = interest;
+            this.interest = OptionalNullable.of(interest);
+            return this;
+        }
+
+        /**
+         * UnSetter for interest.
+         * @return Builder
+         */
+        public Builder unsetInterest() {
+            interest = null;
             return this;
         }
 
@@ -950,7 +1061,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder fine(GetFineResponse fine) {
-            this.fine = fine;
+            this.fine = OptionalNullable.of(fine);
+            return this;
+        }
+
+        /**
+         * UnSetter for fine.
+         * @return Builder
+         */
+        public Builder unsetFine() {
+            fine = null;
             return this;
         }
 
@@ -960,7 +1080,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder unsetMaxDaysToPayPastDue() {
+            maxDaysToPayPastDue = null;
             return this;
         }
 
@@ -970,7 +1099,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder dueAt(LocalDateTime dueAt) {
-            this.dueAt = dueAt;
+            this.dueAt = OptionalNullable.of(dueAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for dueAt.
+         * @return Builder
+         */
+        public Builder unsetDueAt() {
+            dueAt = null;
             return this;
         }
 
@@ -980,7 +1118,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder paidAt(LocalDateTime paidAt) {
-            this.paidAt = paidAt;
+            this.paidAt = OptionalNullable.of(paidAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for paidAt.
+         * @return Builder
+         */
+        public Builder unsetPaidAt() {
+            paidAt = null;
             return this;
         }
 
@@ -990,7 +1137,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder creditAt(LocalDateTime creditAt) {
-            this.creditAt = creditAt;
+            this.creditAt = OptionalNullable.of(creditAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for creditAt.
+         * @return Builder
+         */
+        public Builder unsetCreditAt() {
+            creditAt = null;
             return this;
         }
 

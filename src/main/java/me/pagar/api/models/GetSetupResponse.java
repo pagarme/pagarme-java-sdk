@@ -16,7 +16,7 @@ import io.apimatic.core.types.BaseModel;
 public class GetSetupResponse {
     private String id;
     private String description;
-    private int amount;
+    private Integer amount;
     private String status;
 
     /**
@@ -29,13 +29,13 @@ public class GetSetupResponse {
      * Initialization constructor.
      * @param  id  String value for id.
      * @param  description  String value for description.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
      */
     public GetSetupResponse(
             String id,
             String description,
-            int amount,
+            Integer amount,
             String status) {
         this.id = id;
         this.description = description;
@@ -81,19 +81,19 @@ public class GetSetupResponse {
 
     /**
      * Getter for Amount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -141,7 +141,7 @@ public class GetSetupResponse {
     public static class Builder {
         private String id;
         private String description;
-        private int amount;
+        private Integer amount;
         private String status;
 
         /**
@@ -154,10 +154,10 @@ public class GetSetupResponse {
          * Initialization constructor.
          * @param  id  String value for id.
          * @param  description  String value for description.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
          */
-        public Builder(String id, String description, int amount, String status) {
+        public Builder(String id, String description, Integer amount, String status) {
             this.id = id;
             this.description = description;
             this.amount = amount;
@@ -186,10 +186,10 @@ public class GetSetupResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }

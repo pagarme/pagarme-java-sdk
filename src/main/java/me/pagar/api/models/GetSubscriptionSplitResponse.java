@@ -15,7 +15,7 @@ import java.util.List;
  * This is a model class for GetSubscriptionSplitResponse type.
  */
 public class GetSubscriptionSplitResponse {
-    private boolean enabled;
+    private Boolean enabled;
     private List<GetSplitResponse> rules;
 
     /**
@@ -26,11 +26,11 @@ public class GetSubscriptionSplitResponse {
 
     /**
      * Initialization constructor.
-     * @param  enabled  boolean value for enabled.
+     * @param  enabled  Boolean value for enabled.
      * @param  rules  List of GetSplitResponse value for rules.
      */
     public GetSubscriptionSplitResponse(
-            boolean enabled,
+            Boolean enabled,
             List<GetSplitResponse> rules) {
         this.enabled = enabled;
         this.rules = rules;
@@ -39,20 +39,20 @@ public class GetSubscriptionSplitResponse {
     /**
      * Getter for Enabled.
      * Defines if the split is enabled
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("enabled")
-    public boolean getEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
     /**
      * Setter for Enabled.
      * Defines if the split is enabled
-     * @param enabled Value for boolean
+     * @param enabled Value for Boolean
      */
     @JsonSetter("enabled")
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -99,7 +99,7 @@ public class GetSubscriptionSplitResponse {
      * Class to build instances of {@link GetSubscriptionSplitResponse}.
      */
     public static class Builder {
-        private boolean enabled;
+        private Boolean enabled;
         private List<GetSplitResponse> rules;
 
         /**
@@ -110,20 +110,20 @@ public class GetSubscriptionSplitResponse {
 
         /**
          * Initialization constructor.
-         * @param  enabled  boolean value for enabled.
+         * @param  enabled  Boolean value for enabled.
          * @param  rules  List of GetSplitResponse value for rules.
          */
-        public Builder(boolean enabled, List<GetSplitResponse> rules) {
+        public Builder(Boolean enabled, List<GetSplitResponse> rules) {
             this.enabled = enabled;
             this.rules = rules;
         }
 
         /**
          * Setter for enabled.
-         * @param  enabled  boolean value for enabled.
+         * @param  enabled  Boolean value for enabled.
          * @return Builder
          */
-        public Builder enabled(boolean enabled) {
+        public Builder enabled(Boolean enabled) {
             this.enabled = enabled;
             return this;
         }

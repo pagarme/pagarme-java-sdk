@@ -12,7 +12,7 @@ Response object for getting a discount
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
-| `Value` | `double` | Required | - | double getValue() | setValue(double value) |
+| `Value` | `Double` | Required | - | Double getValue() | setValue(Double value) |
 | `DiscountType` | `String` | Required | - | String getDiscountType() | setDiscountType(String discountType) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |

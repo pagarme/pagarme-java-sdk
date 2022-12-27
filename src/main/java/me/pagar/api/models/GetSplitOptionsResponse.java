@@ -14,8 +14,8 @@ import io.apimatic.core.types.BaseModel;
  * This is a model class for GetSplitOptionsResponse type.
  */
 public class GetSplitOptionsResponse {
-    private boolean liable;
-    private boolean chargeProcessingFee;
+    private Boolean liable;
+    private Boolean chargeProcessingFee;
     private String chargeRemainderFee;
 
     /**
@@ -26,13 +26,13 @@ public class GetSplitOptionsResponse {
 
     /**
      * Initialization constructor.
-     * @param  liable  boolean value for liable.
-     * @param  chargeProcessingFee  boolean value for chargeProcessingFee.
+     * @param  liable  Boolean value for liable.
+     * @param  chargeProcessingFee  Boolean value for chargeProcessingFee.
      * @param  chargeRemainderFee  String value for chargeRemainderFee.
      */
     public GetSplitOptionsResponse(
-            boolean liable,
-            boolean chargeProcessingFee,
+            Boolean liable,
+            Boolean chargeProcessingFee,
             String chargeRemainderFee) {
         this.liable = liable;
         this.chargeProcessingFee = chargeProcessingFee;
@@ -41,37 +41,37 @@ public class GetSplitOptionsResponse {
 
     /**
      * Getter for Liable.
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("liable")
-    public boolean getLiable() {
+    public Boolean getLiable() {
         return liable;
     }
 
     /**
      * Setter for Liable.
-     * @param liable Value for boolean
+     * @param liable Value for Boolean
      */
     @JsonSetter("liable")
-    public void setLiable(boolean liable) {
+    public void setLiable(Boolean liable) {
         this.liable = liable;
     }
 
     /**
      * Getter for ChargeProcessingFee.
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("charge_processing_fee")
-    public boolean getChargeProcessingFee() {
+    public Boolean getChargeProcessingFee() {
         return chargeProcessingFee;
     }
 
     /**
      * Setter for ChargeProcessingFee.
-     * @param chargeProcessingFee Value for boolean
+     * @param chargeProcessingFee Value for Boolean
      */
     @JsonSetter("charge_processing_fee")
-    public void setChargeProcessingFee(boolean chargeProcessingFee) {
+    public void setChargeProcessingFee(Boolean chargeProcessingFee) {
         this.chargeProcessingFee = chargeProcessingFee;
     }
 
@@ -117,8 +117,8 @@ public class GetSplitOptionsResponse {
      * Class to build instances of {@link GetSplitOptionsResponse}.
      */
     public static class Builder {
-        private boolean liable;
-        private boolean chargeProcessingFee;
+        private Boolean liable;
+        private Boolean chargeProcessingFee;
         private String chargeRemainderFee;
 
         /**
@@ -129,11 +129,11 @@ public class GetSplitOptionsResponse {
 
         /**
          * Initialization constructor.
-         * @param  liable  boolean value for liable.
-         * @param  chargeProcessingFee  boolean value for chargeProcessingFee.
+         * @param  liable  Boolean value for liable.
+         * @param  chargeProcessingFee  Boolean value for chargeProcessingFee.
          * @param  chargeRemainderFee  String value for chargeRemainderFee.
          */
-        public Builder(boolean liable, boolean chargeProcessingFee, String chargeRemainderFee) {
+        public Builder(Boolean liable, Boolean chargeProcessingFee, String chargeRemainderFee) {
             this.liable = liable;
             this.chargeProcessingFee = chargeProcessingFee;
             this.chargeRemainderFee = chargeRemainderFee;
@@ -141,20 +141,20 @@ public class GetSplitOptionsResponse {
 
         /**
          * Setter for liable.
-         * @param  liable  boolean value for liable.
+         * @param  liable  Boolean value for liable.
          * @return Builder
          */
-        public Builder liable(boolean liable) {
+        public Builder liable(Boolean liable) {
             this.liable = liable;
             return this;
         }
 
         /**
          * Setter for chargeProcessingFee.
-         * @param  chargeProcessingFee  boolean value for chargeProcessingFee.
+         * @param  chargeProcessingFee  Boolean value for chargeProcessingFee.
          * @return Builder
          */
-        public Builder chargeProcessingFee(boolean chargeProcessingFee) {
+        public Builder chargeProcessingFee(Boolean chargeProcessingFee) {
             this.chargeProcessingFee = chargeProcessingFee;
             return this;
         }

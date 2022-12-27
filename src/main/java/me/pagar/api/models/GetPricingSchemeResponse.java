@@ -9,18 +9,20 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for GetPricingSchemeResponse type.
  */
 public class GetPricingSchemeResponse {
-    private int price;
+    private Integer price;
     private String schemeType;
     private List<GetPriceBracketResponse> priceBrackets;
-    private Integer minimumPrice;
-    private Double percentage;
+    private OptionalNullable<Integer> minimumPrice;
+    private OptionalNullable<Double> percentage;
 
     /**
      * Default constructor.
@@ -30,18 +32,31 @@ public class GetPricingSchemeResponse {
 
     /**
      * Initialization constructor.
-     * @param  price  int value for price.
+     * @param  price  Integer value for price.
      * @param  schemeType  String value for schemeType.
      * @param  priceBrackets  List of GetPriceBracketResponse value for priceBrackets.
      * @param  minimumPrice  Integer value for minimumPrice.
      * @param  percentage  Double value for percentage.
      */
     public GetPricingSchemeResponse(
-            int price,
+            Integer price,
             String schemeType,
             List<GetPriceBracketResponse> priceBrackets,
             Integer minimumPrice,
             Double percentage) {
+        this.price = price;
+        this.schemeType = schemeType;
+        this.priceBrackets = priceBrackets;
+        this.minimumPrice = OptionalNullable.of(minimumPrice);
+        this.percentage = OptionalNullable.of(percentage);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPricingSchemeResponse(Integer price, String schemeType,
+            List<GetPriceBracketResponse> priceBrackets, OptionalNullable<Integer> minimumPrice,
+            OptionalNullable<Double> percentage) {
         this.price = price;
         this.schemeType = schemeType;
         this.priceBrackets = priceBrackets;
@@ -51,19 +66,19 @@ public class GetPricingSchemeResponse {
 
     /**
      * Getter for Price.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("price")
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
     /**
      * Setter for Price.
-     * @param price Value for int
+     * @param price Value for Integer
      */
     @JsonSetter("price")
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -104,13 +119,22 @@ public class GetPricingSchemeResponse {
     }
 
     /**
-     * Getter for MinimumPrice.
-     * @return Returns the Integer
+     * Internal Getter for MinimumPrice.
+     * @return Returns the Internal Integer
      */
     @JsonGetter("minimum_price")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetMinimumPrice() {
+        return this.minimumPrice;
+    }
+
+    /**
+     * Getter for MinimumPrice.
+     * @return Returns the Integer
+     */
     public Integer getMinimumPrice() {
-        return minimumPrice;
+        return OptionalNullable.getFrom(minimumPrice);
     }
 
     /**
@@ -119,7 +143,26 @@ public class GetPricingSchemeResponse {
      */
     @JsonSetter("minimum_price")
     public void setMinimumPrice(Integer minimumPrice) {
-        this.minimumPrice = minimumPrice;
+        this.minimumPrice = OptionalNullable.of(minimumPrice);
+    }
+
+    /**
+     * UnSetter for MinimumPrice.
+     */
+    public void unsetMinimumPrice() {
+        minimumPrice = null;
+    }
+
+    /**
+     * Internal Getter for Percentage.
+     * percentual value used in pricing_scheme Percent
+     * @return Returns the Internal Double
+     */
+    @JsonGetter("percentage")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Double> internalGetPercentage() {
+        return this.percentage;
     }
 
     /**
@@ -127,10 +170,8 @@ public class GetPricingSchemeResponse {
      * percentual value used in pricing_scheme Percent
      * @return Returns the Double
      */
-    @JsonGetter("percentage")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Double getPercentage() {
-        return percentage;
+        return OptionalNullable.getFrom(percentage);
     }
 
     /**
@@ -140,7 +181,15 @@ public class GetPricingSchemeResponse {
      */
     @JsonSetter("percentage")
     public void setPercentage(Double percentage) {
-        this.percentage = percentage;
+        this.percentage = OptionalNullable.of(percentage);
+    }
+
+    /**
+     * UnSetter for Percentage.
+     * percentual value used in pricing_scheme Percent
+     */
+    public void unsetPercentage() {
+        percentage = null;
     }
 
     /**
@@ -160,9 +209,9 @@ public class GetPricingSchemeResponse {
      * @return a new {@link GetPricingSchemeResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(price, schemeType, priceBrackets)
-                .minimumPrice(getMinimumPrice())
-                .percentage(getPercentage());
+        Builder builder = new Builder(price, schemeType, priceBrackets);
+        builder.minimumPrice = internalGetMinimumPrice();
+        builder.percentage = internalGetPercentage();
         return builder;
     }
 
@@ -170,11 +219,11 @@ public class GetPricingSchemeResponse {
      * Class to build instances of {@link GetPricingSchemeResponse}.
      */
     public static class Builder {
-        private int price;
+        private Integer price;
         private String schemeType;
         private List<GetPriceBracketResponse> priceBrackets;
-        private Integer minimumPrice;
-        private Double percentage;
+        private OptionalNullable<Integer> minimumPrice;
+        private OptionalNullable<Double> percentage;
 
         /**
          * Initialization constructor.
@@ -184,11 +233,12 @@ public class GetPricingSchemeResponse {
 
         /**
          * Initialization constructor.
-         * @param  price  int value for price.
+         * @param  price  Integer value for price.
          * @param  schemeType  String value for schemeType.
          * @param  priceBrackets  List of GetPriceBracketResponse value for priceBrackets.
          */
-        public Builder(int price, String schemeType, List<GetPriceBracketResponse> priceBrackets) {
+        public Builder(Integer price, String schemeType,
+                List<GetPriceBracketResponse> priceBrackets) {
             this.price = price;
             this.schemeType = schemeType;
             this.priceBrackets = priceBrackets;
@@ -196,10 +246,10 @@ public class GetPricingSchemeResponse {
 
         /**
          * Setter for price.
-         * @param  price  int value for price.
+         * @param  price  Integer value for price.
          * @return Builder
          */
-        public Builder price(int price) {
+        public Builder price(Integer price) {
             this.price = price;
             return this;
         }
@@ -230,7 +280,16 @@ public class GetPricingSchemeResponse {
          * @return Builder
          */
         public Builder minimumPrice(Integer minimumPrice) {
-            this.minimumPrice = minimumPrice;
+            this.minimumPrice = OptionalNullable.of(minimumPrice);
+            return this;
+        }
+
+        /**
+         * UnSetter for minimumPrice.
+         * @return Builder
+         */
+        public Builder unsetMinimumPrice() {
+            minimumPrice = null;
             return this;
         }
 
@@ -240,7 +299,16 @@ public class GetPricingSchemeResponse {
          * @return Builder
          */
         public Builder percentage(Double percentage) {
-            this.percentage = percentage;
+            this.percentage = OptionalNullable.of(percentage);
+            return this;
+        }
+
+        /**
+         * UnSetter for percentage.
+         * @return Builder
+         */
+        public Builder unsetPercentage() {
+            percentage = null;
             return this;
         }
 

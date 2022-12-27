@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -33,7 +34,7 @@ public class GetBankAccountResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    private GetRecipientResponse recipient;
+    private OptionalNullable<GetRecipientResponse> recipient;
     private Map<String, String> metadata;
     private String pixKey;
 
@@ -79,6 +80,32 @@ public class GetBankAccountResponse {
             Map<String, String> metadata,
             String pixKey,
             GetRecipientResponse recipient) {
+        this.id = id;
+        this.holderName = holderName;
+        this.holderType = holderType;
+        this.bank = bank;
+        this.branchNumber = branchNumber;
+        this.branchCheckDigit = branchCheckDigit;
+        this.accountNumber = accountNumber;
+        this.accountCheckDigit = accountCheckDigit;
+        this.type = type;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+        this.recipient = OptionalNullable.of(recipient);
+        this.metadata = metadata;
+        this.pixKey = pixKey;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetBankAccountResponse(String id, String holderName, String holderType, String bank,
+            String branchNumber, String branchCheckDigit, String accountNumber,
+            String accountCheckDigit, String type, String status, LocalDateTime createdAt,
+            LocalDateTime updatedAt, LocalDateTime deletedAt, Map<String, String> metadata,
+            String pixKey, OptionalNullable<GetRecipientResponse> recipient) {
         this.id = id;
         this.holderName = holderName;
         this.holderType = holderType;
@@ -364,14 +391,24 @@ public class GetBankAccountResponse {
     }
 
     /**
+     * Internal Getter for Recipient.
+     * Recipient
+     * @return Returns the Internal GetRecipientResponse
+     */
+    @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetRecipientResponse> internalGetRecipient() {
+        return this.recipient;
+    }
+
+    /**
      * Getter for Recipient.
      * Recipient
      * @return Returns the GetRecipientResponse
      */
-    @JsonGetter("recipient")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
-        return recipient;
+        return OptionalNullable.getFrom(recipient);
     }
 
     /**
@@ -381,7 +418,15 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("recipient")
     public void setRecipient(GetRecipientResponse recipient) {
-        this.recipient = recipient;
+        this.recipient = OptionalNullable.of(recipient);
+    }
+
+    /**
+     * UnSetter for Recipient.
+     * Recipient
+     */
+    public void unsetRecipient() {
+        recipient = null;
     }
 
     /**
@@ -447,8 +492,8 @@ public class GetBankAccountResponse {
     public Builder toBuilder() {
         Builder builder = new Builder(id, holderName, holderType, bank, branchNumber,
                 branchCheckDigit, accountNumber, accountCheckDigit, type, status, createdAt,
-                updatedAt, deletedAt, metadata, pixKey)
-                .recipient(getRecipient());
+                updatedAt, deletedAt, metadata, pixKey);
+        builder.recipient = internalGetRecipient();
         return builder;
     }
 
@@ -471,7 +516,7 @@ public class GetBankAccountResponse {
         private LocalDateTime deletedAt;
         private Map<String, String> metadata;
         private String pixKey;
-        private GetRecipientResponse recipient;
+        private OptionalNullable<GetRecipientResponse> recipient;
 
         /**
          * Initialization constructor.
@@ -675,7 +720,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder recipient(GetRecipientResponse recipient) {
-            this.recipient = recipient;
+            this.recipient = OptionalNullable.of(recipient);
+            return this;
+        }
+
+        /**
+         * UnSetter for recipient.
+         * @return Builder
+         */
+        public Builder unsetRecipient() {
+            recipient = null;
             return this;
         }
 

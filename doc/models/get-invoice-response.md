@@ -14,14 +14,14 @@ Response object for getting an invoice
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `Code` | `String` | Required | - | String getCode() | setCode(String code) |
 | `Url` | `String` | Required | - | String getUrl() | setUrl(String url) |
-| `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | - | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `PaymentMethod` | `String` | Required | - | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `Items` | [`List<GetInvoiceItemResponse>`](../../doc/models/get-invoice-item-response.md) | Required | - | List<GetInvoiceItemResponse> getItems() | setItems(List<GetInvoiceItemResponse> items) |
 | `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
 | `Charge` | [`GetChargeResponse`](../../doc/models/get-charge-response.md) | Required | - | GetChargeResponse getCharge() | setCharge(GetChargeResponse charge) |
-| `Installments` | `int` | Required | - | int getInstallments() | setInstallments(int installments) |
+| `Installments` | `Integer` | Required | - | Integer getInstallments() | setInstallments(Integer installments) |
 | `BillingAddress` | [`GetBillingAddressResponse`](../../doc/models/get-billing-address-response.md) | Required | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
 | `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
 | `Cycle` | [`GetPeriodResponse`](../../doc/models/get-period-response.md) | Optional | - | GetPeriodResponse getCycle() | setCycle(GetPeriodResponse cycle) |

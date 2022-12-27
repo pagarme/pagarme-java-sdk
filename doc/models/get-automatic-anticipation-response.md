@@ -9,10 +9,10 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Enabled` | `boolean` | Required | - | boolean getEnabled() | setEnabled(boolean enabled) |
+| `Enabled` | `Boolean` | Required | - | Boolean getEnabled() | setEnabled(Boolean enabled) |
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
-| `VolumePercentage` | `int` | Required | - | int getVolumePercentage() | setVolumePercentage(int volumePercentage) |
-| `Delay` | `int` | Required | - | int getDelay() | setDelay(int delay) |
+| `VolumePercentage` | `Integer` | Required | - | Integer getVolumePercentage() | setVolumePercentage(Integer volumePercentage) |
+| `Delay` | `Integer` | Required | - | Integer getDelay() | setDelay(Integer delay) |
 | `Days` | `List<Integer>` | Required | - | List<Integer> getDays() | setDays(List<Integer> days) |
 
 ## Example (as JSON)

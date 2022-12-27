@@ -17,8 +17,8 @@ import io.apimatic.core.types.OptionalNullable;
  * This is a model class for GetSubscriptionBoletoResponse type.
  */
 public class GetSubscriptionBoletoResponse {
-    private GetInterestResponse interest;
-    private GetFineResponse fine;
+    private OptionalNullable<GetInterestResponse> interest;
+    private OptionalNullable<GetFineResponse> fine;
     private OptionalNullable<Integer> maxDaysToPayPastDue;
 
     /**
@@ -37,15 +37,16 @@ public class GetSubscriptionBoletoResponse {
             GetInterestResponse interest,
             GetFineResponse fine,
             Integer maxDaysToPayPastDue) {
-        this.interest = interest;
-        this.fine = fine;
+        this.interest = OptionalNullable.of(interest);
+        this.fine = OptionalNullable.of(fine);
         this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetSubscriptionBoletoResponse(GetInterestResponse interest, GetFineResponse fine,
+    protected GetSubscriptionBoletoResponse(OptionalNullable<GetInterestResponse> interest,
+            OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue) {
         this.interest = interest;
         this.fine = fine;
@@ -53,14 +54,24 @@ public class GetSubscriptionBoletoResponse {
     }
 
     /**
+     * Internal Getter for Interest.
+     * Interest
+     * @return Returns the Internal GetInterestResponse
+     */
+    @JsonGetter("interest")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetInterestResponse> internalGetInterest() {
+        return this.interest;
+    }
+
+    /**
      * Getter for Interest.
      * Interest
      * @return Returns the GetInterestResponse
      */
-    @JsonGetter("interest")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetInterestResponse getInterest() {
-        return interest;
+        return OptionalNullable.getFrom(interest);
     }
 
     /**
@@ -70,7 +81,27 @@ public class GetSubscriptionBoletoResponse {
      */
     @JsonSetter("interest")
     public void setInterest(GetInterestResponse interest) {
-        this.interest = interest;
+        this.interest = OptionalNullable.of(interest);
+    }
+
+    /**
+     * UnSetter for Interest.
+     * Interest
+     */
+    public void unsetInterest() {
+        interest = null;
+    }
+
+    /**
+     * Internal Getter for Fine.
+     * Fine
+     * @return Returns the Internal GetFineResponse
+     */
+    @JsonGetter("fine")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetFineResponse> internalGetFine() {
+        return this.fine;
     }
 
     /**
@@ -78,10 +109,8 @@ public class GetSubscriptionBoletoResponse {
      * Fine
      * @return Returns the GetFineResponse
      */
-    @JsonGetter("fine")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetFineResponse getFine() {
-        return fine;
+        return OptionalNullable.getFrom(fine);
     }
 
     /**
@@ -91,7 +120,15 @@ public class GetSubscriptionBoletoResponse {
      */
     @JsonSetter("fine")
     public void setFine(GetFineResponse fine) {
-        this.fine = fine;
+        this.fine = OptionalNullable.of(fine);
+    }
+
+    /**
+     * UnSetter for Fine.
+     * Fine
+     */
+    public void unsetFine() {
+        fine = null;
     }
 
     /**
@@ -145,9 +182,9 @@ public class GetSubscriptionBoletoResponse {
      * @return a new {@link GetSubscriptionBoletoResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder()
-                .interest(getInterest())
-                .fine(getFine());
+        Builder builder = new Builder();
+        builder.interest = internalGetInterest();
+        builder.fine = internalGetFine();
         builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
         return builder;
     }
@@ -156,8 +193,8 @@ public class GetSubscriptionBoletoResponse {
      * Class to build instances of {@link GetSubscriptionBoletoResponse}.
      */
     public static class Builder {
-        private GetInterestResponse interest;
-        private GetFineResponse fine;
+        private OptionalNullable<GetInterestResponse> interest;
+        private OptionalNullable<GetFineResponse> fine;
         private OptionalNullable<Integer> maxDaysToPayPastDue;
 
 
@@ -168,7 +205,16 @@ public class GetSubscriptionBoletoResponse {
          * @return Builder
          */
         public Builder interest(GetInterestResponse interest) {
-            this.interest = interest;
+            this.interest = OptionalNullable.of(interest);
+            return this;
+        }
+
+        /**
+         * UnSetter for interest.
+         * @return Builder
+         */
+        public Builder unsetInterest() {
+            interest = null;
             return this;
         }
 
@@ -178,7 +224,16 @@ public class GetSubscriptionBoletoResponse {
          * @return Builder
          */
         public Builder fine(GetFineResponse fine) {
-            this.fine = fine;
+            this.fine = OptionalNullable.of(fine);
+            return this;
+        }
+
+        /**
+         * UnSetter for fine.
+         * @return Builder
+         */
+        public Builder unsetFine() {
+            fine = null;
             return this;
         }
 

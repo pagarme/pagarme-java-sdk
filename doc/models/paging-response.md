@@ -11,7 +11,7 @@ Object used for returning lists of objects with pagination
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Total` | `int` | Required | Total number of pages | int getTotal() | setTotal(int total) |
+| `Total` | `Integer` | Required | Total number of pages | Integer getTotal() | setTotal(Integer total) |
 | `Previous` | `String` | Required | Previous page | String getPrevious() | setPrevious(String previous) |
 | `Next` | `String` | Required | Next page | String getNext() | setNext(String next) |
 

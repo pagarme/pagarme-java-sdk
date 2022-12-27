@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Liable` | `boolean` | Required | - | boolean getLiable() | setLiable(boolean liable) |
-| `ChargeProcessingFee` | `boolean` | Required | - | boolean getChargeProcessingFee() | setChargeProcessingFee(boolean chargeProcessingFee) |
+| `Liable` | `Boolean` | Required | - | Boolean getLiable() | setLiable(Boolean liable) |
+| `ChargeProcessingFee` | `Boolean` | Required | - | Boolean getChargeProcessingFee() | setChargeProcessingFee(Boolean chargeProcessingFee) |
 | `ChargeRemainderFee` | `String` | Required | - | String getChargeRemainderFee() | setChargeRemainderFee(String chargeRemainderFee) |
 
 ## Example (as JSON)

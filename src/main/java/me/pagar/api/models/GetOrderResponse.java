@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class GetOrderResponse {
     private String code;
     private String currency;
     private List<GetOrderItemResponse> items;
-    private GetCustomerResponse customer;
+    private OptionalNullable<GetCustomerResponse> customer;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -33,12 +34,12 @@ public class GetOrderResponse {
     private String invoiceUrl;
     private GetShippingResponse shipping;
     private Map<String, String> metadata;
-    private List<GetCheckoutPaymentResponse> checkouts;
-    private String ip;
-    private String sessionId;
-    private GetLocationResponse location;
-    private GetDeviceResponse device;
-    private boolean closed;
+    private OptionalNullable<List<GetCheckoutPaymentResponse>> checkouts;
+    private OptionalNullable<String> ip;
+    private OptionalNullable<String> sessionId;
+    private OptionalNullable<GetLocationResponse> location;
+    private OptionalNullable<GetDeviceResponse> device;
+    private Boolean closed;
 
     /**
      * Default constructor.
@@ -59,7 +60,7 @@ public class GetOrderResponse {
      * @param  invoiceUrl  String value for invoiceUrl.
      * @param  shipping  GetShippingResponse value for shipping.
      * @param  metadata  Map of String, value for metadata.
-     * @param  closed  boolean value for closed.
+     * @param  closed  Boolean value for closed.
      * @param  customer  GetCustomerResponse value for customer.
      * @param  checkouts  List of GetCheckoutPaymentResponse value for checkouts.
      * @param  ip  String value for ip.
@@ -79,13 +80,45 @@ public class GetOrderResponse {
             String invoiceUrl,
             GetShippingResponse shipping,
             Map<String, String> metadata,
-            boolean closed,
+            Boolean closed,
             GetCustomerResponse customer,
             List<GetCheckoutPaymentResponse> checkouts,
             String ip,
             String sessionId,
             GetLocationResponse location,
             GetDeviceResponse device) {
+        this.id = id;
+        this.code = code;
+        this.currency = currency;
+        this.items = items;
+        this.customer = OptionalNullable.of(customer);
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.charges = charges;
+        this.invoiceUrl = invoiceUrl;
+        this.shipping = shipping;
+        this.metadata = metadata;
+        this.checkouts = OptionalNullable.of(checkouts);
+        this.ip = OptionalNullable.of(ip);
+        this.sessionId = OptionalNullable.of(sessionId);
+        this.location = OptionalNullable.of(location);
+        this.device = OptionalNullable.of(device);
+        this.closed = closed;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetOrderResponse(String id, String code, String currency,
+            List<GetOrderItemResponse> items, String status, LocalDateTime createdAt,
+            LocalDateTime updatedAt, List<GetChargeResponse> charges, String invoiceUrl,
+            GetShippingResponse shipping, Map<String, String> metadata, Boolean closed,
+            OptionalNullable<GetCustomerResponse> customer,
+            OptionalNullable<List<GetCheckoutPaymentResponse>> checkouts,
+            OptionalNullable<String> ip, OptionalNullable<String> sessionId,
+            OptionalNullable<GetLocationResponse> location,
+            OptionalNullable<GetDeviceResponse> device) {
         this.id = id;
         this.code = code;
         this.currency = currency;
@@ -179,13 +212,22 @@ public class GetOrderResponse {
     }
 
     /**
-     * Getter for Customer.
-     * @return Returns the GetCustomerResponse
+     * Internal Getter for Customer.
+     * @return Returns the Internal GetCustomerResponse
      */
     @JsonGetter("customer")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
+    }
+
+    /**
+     * Getter for Customer.
+     * @return Returns the GetCustomerResponse
+     */
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -194,7 +236,14 @@ public class GetOrderResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -328,14 +377,24 @@ public class GetOrderResponse {
     }
 
     /**
+     * Internal Getter for Checkouts.
+     * Checkout Payment Settings Response
+     * @return Returns the Internal List of GetCheckoutPaymentResponse
+     */
+    @JsonGetter("checkouts")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetCheckoutPaymentResponse>> internalGetCheckouts() {
+        return this.checkouts;
+    }
+
+    /**
      * Getter for Checkouts.
      * Checkout Payment Settings Response
      * @return Returns the List of GetCheckoutPaymentResponse
      */
-    @JsonGetter("checkouts")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<GetCheckoutPaymentResponse> getCheckouts() {
-        return checkouts;
+        return OptionalNullable.getFrom(checkouts);
     }
 
     /**
@@ -345,7 +404,27 @@ public class GetOrderResponse {
      */
     @JsonSetter("checkouts")
     public void setCheckouts(List<GetCheckoutPaymentResponse> checkouts) {
-        this.checkouts = checkouts;
+        this.checkouts = OptionalNullable.of(checkouts);
+    }
+
+    /**
+     * UnSetter for Checkouts.
+     * Checkout Payment Settings Response
+     */
+    public void unsetCheckouts() {
+        checkouts = null;
+    }
+
+    /**
+     * Internal Getter for Ip.
+     * Ip address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("ip")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetIp() {
+        return this.ip;
     }
 
     /**
@@ -353,10 +432,8 @@ public class GetOrderResponse {
      * Ip address
      * @return Returns the String
      */
-    @JsonGetter("ip")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getIp() {
-        return ip;
+        return OptionalNullable.getFrom(ip);
     }
 
     /**
@@ -366,7 +443,27 @@ public class GetOrderResponse {
      */
     @JsonSetter("ip")
     public void setIp(String ip) {
-        this.ip = ip;
+        this.ip = OptionalNullable.of(ip);
+    }
+
+    /**
+     * UnSetter for Ip.
+     * Ip address
+     */
+    public void unsetIp() {
+        ip = null;
+    }
+
+    /**
+     * Internal Getter for SessionId.
+     * Session id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("session_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetSessionId() {
+        return this.sessionId;
     }
 
     /**
@@ -374,10 +471,8 @@ public class GetOrderResponse {
      * Session id
      * @return Returns the String
      */
-    @JsonGetter("session_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getSessionId() {
-        return sessionId;
+        return OptionalNullable.getFrom(sessionId);
     }
 
     /**
@@ -387,7 +482,27 @@ public class GetOrderResponse {
      */
     @JsonSetter("session_id")
     public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+        this.sessionId = OptionalNullable.of(sessionId);
+    }
+
+    /**
+     * UnSetter for SessionId.
+     * Session id
+     */
+    public void unsetSessionId() {
+        sessionId = null;
+    }
+
+    /**
+     * Internal Getter for Location.
+     * Location
+     * @return Returns the Internal GetLocationResponse
+     */
+    @JsonGetter("location")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetLocationResponse> internalGetLocation() {
+        return this.location;
     }
 
     /**
@@ -395,10 +510,8 @@ public class GetOrderResponse {
      * Location
      * @return Returns the GetLocationResponse
      */
-    @JsonGetter("location")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetLocationResponse getLocation() {
-        return location;
+        return OptionalNullable.getFrom(location);
     }
 
     /**
@@ -408,7 +521,27 @@ public class GetOrderResponse {
      */
     @JsonSetter("location")
     public void setLocation(GetLocationResponse location) {
-        this.location = location;
+        this.location = OptionalNullable.of(location);
+    }
+
+    /**
+     * UnSetter for Location.
+     * Location
+     */
+    public void unsetLocation() {
+        location = null;
+    }
+
+    /**
+     * Internal Getter for Device.
+     * Device's informations
+     * @return Returns the Internal GetDeviceResponse
+     */
+    @JsonGetter("device")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetDeviceResponse> internalGetDevice() {
+        return this.device;
     }
 
     /**
@@ -416,10 +549,8 @@ public class GetOrderResponse {
      * Device's informations
      * @return Returns the GetDeviceResponse
      */
-    @JsonGetter("device")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetDeviceResponse getDevice() {
-        return device;
+        return OptionalNullable.getFrom(device);
     }
 
     /**
@@ -429,26 +560,34 @@ public class GetOrderResponse {
      */
     @JsonSetter("device")
     public void setDevice(GetDeviceResponse device) {
-        this.device = device;
+        this.device = OptionalNullable.of(device);
+    }
+
+    /**
+     * UnSetter for Device.
+     * Device's informations
+     */
+    public void unsetDevice() {
+        device = null;
     }
 
     /**
      * Getter for Closed.
      * Indicates whether the order is closed
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("closed")
-    public boolean getClosed() {
+    public Boolean getClosed() {
         return closed;
     }
 
     /**
      * Setter for Closed.
      * Indicates whether the order is closed
-     * @param closed Value for boolean
+     * @param closed Value for Boolean
      */
     @JsonSetter("closed")
-    public void setClosed(boolean closed) {
+    public void setClosed(Boolean closed) {
         this.closed = closed;
     }
 
@@ -474,13 +613,13 @@ public class GetOrderResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, code, currency, items, status, createdAt, updatedAt,
-                charges, invoiceUrl, shipping, metadata, closed)
-                .customer(getCustomer())
-                .checkouts(getCheckouts())
-                .ip(getIp())
-                .sessionId(getSessionId())
-                .location(getLocation())
-                .device(getDevice());
+                charges, invoiceUrl, shipping, metadata, closed);
+        builder.customer = internalGetCustomer();
+        builder.checkouts = internalGetCheckouts();
+        builder.ip = internalGetIp();
+        builder.sessionId = internalGetSessionId();
+        builder.location = internalGetLocation();
+        builder.device = internalGetDevice();
         return builder;
     }
 
@@ -499,13 +638,13 @@ public class GetOrderResponse {
         private String invoiceUrl;
         private GetShippingResponse shipping;
         private Map<String, String> metadata;
-        private boolean closed;
-        private GetCustomerResponse customer;
-        private List<GetCheckoutPaymentResponse> checkouts;
-        private String ip;
-        private String sessionId;
-        private GetLocationResponse location;
-        private GetDeviceResponse device;
+        private Boolean closed;
+        private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<List<GetCheckoutPaymentResponse>> checkouts;
+        private OptionalNullable<String> ip;
+        private OptionalNullable<String> sessionId;
+        private OptionalNullable<GetLocationResponse> location;
+        private OptionalNullable<GetDeviceResponse> device;
 
         /**
          * Initialization constructor.
@@ -526,12 +665,12 @@ public class GetOrderResponse {
          * @param  invoiceUrl  String value for invoiceUrl.
          * @param  shipping  GetShippingResponse value for shipping.
          * @param  metadata  Map of String, value for metadata.
-         * @param  closed  boolean value for closed.
+         * @param  closed  Boolean value for closed.
          */
         public Builder(String id, String code, String currency, List<GetOrderItemResponse> items,
                 String status, LocalDateTime createdAt, LocalDateTime updatedAt,
                 List<GetChargeResponse> charges, String invoiceUrl, GetShippingResponse shipping,
-                Map<String, String> metadata, boolean closed) {
+                Map<String, String> metadata, Boolean closed) {
             this.id = id;
             this.code = code;
             this.currency = currency;
@@ -658,10 +797,10 @@ public class GetOrderResponse {
 
         /**
          * Setter for closed.
-         * @param  closed  boolean value for closed.
+         * @param  closed  Boolean value for closed.
          * @return Builder
          */
-        public Builder closed(boolean closed) {
+        public Builder closed(Boolean closed) {
             this.closed = closed;
             return this;
         }
@@ -672,7 +811,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 
@@ -682,7 +830,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder checkouts(List<GetCheckoutPaymentResponse> checkouts) {
-            this.checkouts = checkouts;
+            this.checkouts = OptionalNullable.of(checkouts);
+            return this;
+        }
+
+        /**
+         * UnSetter for checkouts.
+         * @return Builder
+         */
+        public Builder unsetCheckouts() {
+            checkouts = null;
             return this;
         }
 
@@ -692,7 +849,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder ip(String ip) {
-            this.ip = ip;
+            this.ip = OptionalNullable.of(ip);
+            return this;
+        }
+
+        /**
+         * UnSetter for ip.
+         * @return Builder
+         */
+        public Builder unsetIp() {
+            ip = null;
             return this;
         }
 
@@ -702,7 +868,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder sessionId(String sessionId) {
-            this.sessionId = sessionId;
+            this.sessionId = OptionalNullable.of(sessionId);
+            return this;
+        }
+
+        /**
+         * UnSetter for sessionId.
+         * @return Builder
+         */
+        public Builder unsetSessionId() {
+            sessionId = null;
             return this;
         }
 
@@ -712,7 +887,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder location(GetLocationResponse location) {
-            this.location = location;
+            this.location = OptionalNullable.of(location);
+            return this;
+        }
+
+        /**
+         * UnSetter for location.
+         * @return Builder
+         */
+        public Builder unsetLocation() {
+            location = null;
             return this;
         }
 
@@ -722,7 +906,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder device(GetDeviceResponse device) {
-            this.device = device;
+            this.device = OptionalNullable.of(device);
+            return this;
+        }
+
+        /**
+         * UnSetter for device.
+         * @return Builder
+         */
+        public Builder unsetDevice() {
+            device = null;
             return this;
         }
 

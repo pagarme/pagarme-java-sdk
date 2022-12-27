@@ -613,9 +613,6 @@ customer.setCode("code4");
 request.setCustomer(customer);
 CreatePaymentRequest payment = new CreatePaymentRequest();
 payment.setPaymentMethod("payment_method2");
-CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
-
-payment.setPrivateLabel(privateLabel);
 
 request.setPayment(payment);
 Map<String, String> metadata = new LinkedHashMap<>();

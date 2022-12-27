@@ -12,13 +12,13 @@ Generic response object for getting a transaction.
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `GatewayId` | `String` | Required | Gateway transaction id | String getGatewayId() | setGatewayId(String gatewayId) |
-| `Amount` | `int` | Required | Amount in cents | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | Amount in cents | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Required | Transaction status | String getStatus() | setStatus(String status) |
-| `Success` | `boolean` | Required | Indicates if the transaction ocurred successfuly | boolean getSuccess() | setSuccess(boolean success) |
+| `Success` | `Boolean` | Required | Indicates if the transaction ocurred successfuly | Boolean getSuccess() | setSuccess(Boolean success) |
 | `CreatedAt` | `LocalDateTime` | Required | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | Last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `AttemptCount` | `int` | Required | Number of attempts tried | int getAttemptCount() | setAttemptCount(int attemptCount) |
-| `MaxAttempts` | `int` | Required | Max attempts | int getMaxAttempts() | setMaxAttempts(int maxAttempts) |
+| `AttemptCount` | `Integer` | Required | Number of attempts tried | Integer getAttemptCount() | setAttemptCount(Integer attemptCount) |
+| `MaxAttempts` | `Integer` | Required | Max attempts | Integer getMaxAttempts() | setMaxAttempts(Integer maxAttempts) |
 | `Splits` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | Splits | List<GetSplitResponse> getSplits() | setSplits(List<GetSplitResponse> splits) |
 | `NextAttempt` | `LocalDateTime` | Optional | Date and time of the next attempt | LocalDateTime getNextAttempt() | setNextAttempt(LocalDateTime nextAttempt) |
 | `TransactionType` | `String` | Optional | - | String getTransactionType() | setTransactionType(String transactionType) |
@@ -62,6 +62,7 @@ Generic response object for getting a transaction.
     }
   ],
   "next_attempt": null,
+  "transaction_type": null,
   "id": "id0",
   "gateway_response": {
     "code": "code6",
@@ -113,8 +114,7 @@ Generic response object for getting a transaction.
   ],
   "interest": null,
   "fine": null,
-  "max_days_to_pay_past_due": null,
-  "transaction_type": "transaction"
+  "max_days_to_pay_past_due": null
 }
 ```
 

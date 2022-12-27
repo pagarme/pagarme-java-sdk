@@ -13,12 +13,12 @@
 | `Code` | `String` | Required | - | String getCode() | setCode(String code) |
 | `StartAt` | `LocalDateTime` | Required | - | LocalDateTime getStartAt() | setStartAt(LocalDateTime startAt) |
 | `Interval` | `String` | Required | - | String getInterval() | setInterval(String interval) |
-| `IntervalCount` | `int` | Required | - | int getIntervalCount() | setIntervalCount(int intervalCount) |
+| `IntervalCount` | `Integer` | Required | - | Integer getIntervalCount() | setIntervalCount(Integer intervalCount) |
 | `BillingType` | `String` | Required | - | String getBillingType() | setBillingType(String billingType) |
 | `CurrentCycle` | [`GetPeriodResponse`](../../doc/models/get-period-response.md) | Optional | - | GetPeriodResponse getCurrentCycle() | setCurrentCycle(GetPeriodResponse currentCycle) |
 | `PaymentMethod` | `String` | Required | - | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
 | `Currency` | `String` | Required | - | String getCurrency() | setCurrency(String currency) |
-| `Installments` | `int` | Required | - | int getInstallments() | setInstallments(int installments) |
+| `Installments` | `Integer` | Required | - | Integer getInstallments() | setInstallments(Integer installments) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |

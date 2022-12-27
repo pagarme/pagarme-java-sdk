@@ -14,7 +14,7 @@ Response object for getting a customer
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `Name` | `String` | Required | - | String getName() | setName(String name) |
 | `Email` | `String` | Required | - | String getEmail() | setEmail(String email) |
-| `Delinquent` | `boolean` | Required | - | boolean getDelinquent() | setDelinquent(boolean delinquent) |
+| `Delinquent` | `Boolean` | Required | - | Boolean getDelinquent() | setDelinquent(Boolean delinquent) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
 | `Document` | `String` | Required | - | String getDocument() | setDocument(String document) |

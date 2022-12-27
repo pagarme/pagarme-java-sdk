@@ -12,9 +12,9 @@ Response object for getting an order item
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Id` | `String` | Required | Id | String getId() | setId(String id) |
-| `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | - | Integer getAmount() | setAmount(Integer amount) |
 | `Description` | `String` | Required | - | String getDescription() | setDescription(String description) |
-| `Quantity` | `int` | Required | - | int getQuantity() | setQuantity(int quantity) |
+| `Quantity` | `Integer` | Required | - | Integer getQuantity() | setQuantity(Integer quantity) |
 | `Category` | `String` | Required | Category | String getCategory() | setCategory(String category) |
 | `Code` | `String` | Required | Code | String getCode() | setCode(String code) |
 

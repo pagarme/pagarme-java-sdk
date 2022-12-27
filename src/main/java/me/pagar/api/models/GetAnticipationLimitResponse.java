@@ -14,8 +14,8 @@ import io.apimatic.core.types.BaseModel;
  * This is a model class for GetAnticipationLimitResponse type.
  */
 public class GetAnticipationLimitResponse {
-    private int amount;
-    private int anticipationFee;
+    private Integer amount;
+    private Integer anticipationFee;
 
     /**
      * Default constructor.
@@ -25,12 +25,12 @@ public class GetAnticipationLimitResponse {
 
     /**
      * Initialization constructor.
-     * @param  amount  int value for amount.
-     * @param  anticipationFee  int value for anticipationFee.
+     * @param  amount  Integer value for amount.
+     * @param  anticipationFee  Integer value for anticipationFee.
      */
     public GetAnticipationLimitResponse(
-            int amount,
-            int anticipationFee) {
+            Integer amount,
+            Integer anticipationFee) {
         this.amount = amount;
         this.anticipationFee = anticipationFee;
     }
@@ -38,40 +38,40 @@ public class GetAnticipationLimitResponse {
     /**
      * Getter for Amount.
      * Amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
      * Amount
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
     /**
      * Getter for AnticipationFee.
      * Anticipation fee
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("anticipation_fee")
-    public int getAnticipationFee() {
+    public Integer getAnticipationFee() {
         return anticipationFee;
     }
 
     /**
      * Setter for AnticipationFee.
      * Anticipation fee
-     * @param anticipationFee Value for int
+     * @param anticipationFee Value for Integer
      */
     @JsonSetter("anticipation_fee")
-    public void setAnticipationFee(int anticipationFee) {
+    public void setAnticipationFee(Integer anticipationFee) {
         this.anticipationFee = anticipationFee;
     }
 
@@ -99,8 +99,8 @@ public class GetAnticipationLimitResponse {
      * Class to build instances of {@link GetAnticipationLimitResponse}.
      */
     public static class Builder {
-        private int amount;
-        private int anticipationFee;
+        private Integer amount;
+        private Integer anticipationFee;
 
         /**
          * Initialization constructor.
@@ -110,30 +110,30 @@ public class GetAnticipationLimitResponse {
 
         /**
          * Initialization constructor.
-         * @param  amount  int value for amount.
-         * @param  anticipationFee  int value for anticipationFee.
+         * @param  amount  Integer value for amount.
+         * @param  anticipationFee  Integer value for anticipationFee.
          */
-        public Builder(int amount, int anticipationFee) {
+        public Builder(Integer amount, Integer anticipationFee) {
             this.amount = amount;
             this.anticipationFee = anticipationFee;
         }
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
 
         /**
          * Setter for anticipationFee.
-         * @param  anticipationFee  int value for anticipationFee.
+         * @param  anticipationFee  Integer value for anticipationFee.
          * @return Builder
          */
-        public Builder anticipationFee(int anticipationFee) {
+        public Builder anticipationFee(Integer anticipationFee) {
             this.anticipationFee = anticipationFee;
             return this;
         }

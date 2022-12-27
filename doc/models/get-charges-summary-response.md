@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Total` | `int` | Required | - | int getTotal() | setTotal(int total) |
+| `Total` | `Integer` | Required | - | Integer getTotal() | setTotal(Integer total) |
 
 ## Example (as JSON)
 

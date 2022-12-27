@@ -9,18 +9,20 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetInvoiceItemResponse type.
  */
 public class GetInvoiceItemResponse {
-    private int amount;
+    private Integer amount;
     private String description;
     private GetPricingSchemeResponse pricingScheme;
     private GetPriceBracketResponse priceBracket;
-    private Integer quantity;
-    private String name;
+    private OptionalNullable<Integer> quantity;
+    private OptionalNullable<String> name;
     private String subscriptionItemId;
 
     /**
@@ -31,7 +33,7 @@ public class GetInvoiceItemResponse {
 
     /**
      * Initialization constructor.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  description  String value for description.
      * @param  pricingScheme  GetPricingSchemeResponse value for pricingScheme.
      * @param  priceBracket  GetPriceBracketResponse value for priceBracket.
@@ -40,13 +42,29 @@ public class GetInvoiceItemResponse {
      * @param  name  String value for name.
      */
     public GetInvoiceItemResponse(
-            int amount,
+            Integer amount,
             String description,
             GetPricingSchemeResponse pricingScheme,
             GetPriceBracketResponse priceBracket,
             String subscriptionItemId,
             Integer quantity,
             String name) {
+        this.amount = amount;
+        this.description = description;
+        this.pricingScheme = pricingScheme;
+        this.priceBracket = priceBracket;
+        this.quantity = OptionalNullable.of(quantity);
+        this.name = OptionalNullable.of(name);
+        this.subscriptionItemId = subscriptionItemId;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetInvoiceItemResponse(Integer amount, String description,
+            GetPricingSchemeResponse pricingScheme, GetPriceBracketResponse priceBracket,
+            String subscriptionItemId, OptionalNullable<Integer> quantity,
+            OptionalNullable<String> name) {
         this.amount = amount;
         this.description = description;
         this.pricingScheme = pricingScheme;
@@ -58,19 +76,19 @@ public class GetInvoiceItemResponse {
 
     /**
      * Getter for Amount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -129,13 +147,22 @@ public class GetInvoiceItemResponse {
     }
 
     /**
-     * Getter for Quantity.
-     * @return Returns the Integer
+     * Internal Getter for Quantity.
+     * @return Returns the Internal Integer
      */
     @JsonGetter("quantity")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetQuantity() {
+        return this.quantity;
+    }
+
+    /**
+     * Getter for Quantity.
+     * @return Returns the Integer
+     */
     public Integer getQuantity() {
-        return quantity;
+        return OptionalNullable.getFrom(quantity);
     }
 
     /**
@@ -144,17 +171,33 @@ public class GetInvoiceItemResponse {
      */
     @JsonSetter("quantity")
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        this.quantity = OptionalNullable.of(quantity);
+    }
+
+    /**
+     * UnSetter for Quantity.
+     */
+    public void unsetQuantity() {
+        quantity = null;
+    }
+
+    /**
+     * Internal Getter for Name.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
     }
 
     /**
      * Getter for Name.
      * @return Returns the String
      */
-    @JsonGetter("name")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -163,7 +206,14 @@ public class GetInvoiceItemResponse {
      */
     @JsonSetter("name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     */
+    public void unsetName() {
+        name = null;
     }
 
     /**
@@ -205,9 +255,9 @@ public class GetInvoiceItemResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(amount, description, pricingScheme, priceBracket,
-                subscriptionItemId)
-                .quantity(getQuantity())
-                .name(getName());
+                subscriptionItemId);
+        builder.quantity = internalGetQuantity();
+        builder.name = internalGetName();
         return builder;
     }
 
@@ -215,13 +265,13 @@ public class GetInvoiceItemResponse {
      * Class to build instances of {@link GetInvoiceItemResponse}.
      */
     public static class Builder {
-        private int amount;
+        private Integer amount;
         private String description;
         private GetPricingSchemeResponse pricingScheme;
         private GetPriceBracketResponse priceBracket;
         private String subscriptionItemId;
-        private Integer quantity;
-        private String name;
+        private OptionalNullable<Integer> quantity;
+        private OptionalNullable<String> name;
 
         /**
          * Initialization constructor.
@@ -231,13 +281,13 @@ public class GetInvoiceItemResponse {
 
         /**
          * Initialization constructor.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  description  String value for description.
          * @param  pricingScheme  GetPricingSchemeResponse value for pricingScheme.
          * @param  priceBracket  GetPriceBracketResponse value for priceBracket.
          * @param  subscriptionItemId  String value for subscriptionItemId.
          */
-        public Builder(int amount, String description, GetPricingSchemeResponse pricingScheme,
+        public Builder(Integer amount, String description, GetPricingSchemeResponse pricingScheme,
                 GetPriceBracketResponse priceBracket, String subscriptionItemId) {
             this.amount = amount;
             this.description = description;
@@ -248,10 +298,10 @@ public class GetInvoiceItemResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -302,7 +352,16 @@ public class GetInvoiceItemResponse {
          * @return Builder
          */
         public Builder quantity(Integer quantity) {
-            this.quantity = quantity;
+            this.quantity = OptionalNullable.of(quantity);
+            return this;
+        }
+
+        /**
+         * UnSetter for quantity.
+         * @return Builder
+         */
+        public Builder unsetQuantity() {
+            quantity = null;
             return this;
         }
 
@@ -312,7 +371,16 @@ public class GetInvoiceItemResponse {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 

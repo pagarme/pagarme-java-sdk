@@ -14,9 +14,9 @@ import io.apimatic.core.types.BaseModel;
  * This is a model class for GetFineResponse type.
  */
 public class GetFineResponse {
-    private int days;
+    private Integer days;
     private String type;
-    private int amount;
+    private Integer amount;
 
     /**
      * Default constructor.
@@ -26,14 +26,14 @@ public class GetFineResponse {
 
     /**
      * Initialization constructor.
-     * @param  days  int value for days.
+     * @param  days  Integer value for days.
      * @param  type  String value for type.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      */
     public GetFineResponse(
-            int days,
+            Integer days,
             String type,
-            int amount) {
+            Integer amount) {
         this.days = days;
         this.type = type;
         this.amount = amount;
@@ -42,20 +42,20 @@ public class GetFineResponse {
     /**
      * Getter for Days.
      * Days
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("days")
-    public int getDays() {
+    public Integer getDays() {
         return days;
     }
 
     /**
      * Setter for Days.
      * Days
-     * @param days Value for int
+     * @param days Value for Integer
      */
     @JsonSetter("days")
-    public void setDays(int days) {
+    public void setDays(Integer days) {
         this.days = days;
     }
 
@@ -82,20 +82,20 @@ public class GetFineResponse {
     /**
      * Getter for Amount.
      * Amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
      * Amount
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -122,9 +122,9 @@ public class GetFineResponse {
      * Class to build instances of {@link GetFineResponse}.
      */
     public static class Builder {
-        private int days;
+        private Integer days;
         private String type;
-        private int amount;
+        private Integer amount;
 
         /**
          * Initialization constructor.
@@ -134,11 +134,11 @@ public class GetFineResponse {
 
         /**
          * Initialization constructor.
-         * @param  days  int value for days.
+         * @param  days  Integer value for days.
          * @param  type  String value for type.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          */
-        public Builder(int days, String type, int amount) {
+        public Builder(Integer days, String type, Integer amount) {
             this.days = days;
             this.type = type;
             this.amount = amount;
@@ -146,10 +146,10 @@ public class GetFineResponse {
 
         /**
          * Setter for days.
-         * @param  days  int value for days.
+         * @param  days  Integer value for days.
          * @return Builder
          */
-        public Builder days(int days) {
+        public Builder days(Integer days) {
             this.days = days;
             return this;
         }
@@ -166,10 +166,10 @@ public class GetFineResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }

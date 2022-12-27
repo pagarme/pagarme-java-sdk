@@ -11,9 +11,9 @@ Interest Response
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Days` | `int` | Required | Days | int getDays() | setDays(int days) |
+| `Days` | `Integer` | Required | Days | Integer getDays() | setDays(Integer days) |
 | `Type` | `String` | Required | Type | String getType() | setType(String type) |
-| `Amount` | `int` | Required | Amount | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | Amount | Integer getAmount() | setAmount(Integer amount) |
 
 ## Example (as JSON)
 

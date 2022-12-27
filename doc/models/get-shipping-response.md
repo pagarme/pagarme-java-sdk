@@ -11,7 +11,7 @@ Response object for getting the shipping data
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | - | Integer getAmount() | setAmount(Integer amount) |
 | `Description` | `String` | Required | - | String getDescription() | setDescription(String description) |
 | `RecipientName` | `String` | Required | - | String getRecipientName() | setRecipientName(String recipientName) |
 | `RecipientPhone` | `String` | Required | - | String getRecipientPhone() | setRecipientPhone(String recipientPhone) |

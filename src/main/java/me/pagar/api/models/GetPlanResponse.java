@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class GetPlanResponse {
     private String url;
     private String statementDescriptor;
     private String interval;
-    private int intervalCount;
+    private Integer intervalCount;
     private String billingType;
     private List<String> paymentMethods;
     private List<Integer> installments;
@@ -37,11 +38,11 @@ public class GetPlanResponse {
     private LocalDateTime updatedAt;
     private List<GetPlanItemResponse> items;
     private List<Integer> billingDays;
-    private boolean shippable;
+    private Boolean shippable;
     private Map<String, String> metadata;
-    private Integer trialPeriodDays;
-    private Integer minimumPrice;
-    private LocalDateTime deletedAt;
+    private OptionalNullable<Integer> trialPeriodDays;
+    private OptionalNullable<Integer> minimumPrice;
+    private OptionalNullable<LocalDateTime> deletedAt;
 
     /**
      * Default constructor.
@@ -57,7 +58,7 @@ public class GetPlanResponse {
      * @param  url  String value for url.
      * @param  statementDescriptor  String value for statementDescriptor.
      * @param  interval  String value for interval.
-     * @param  intervalCount  int value for intervalCount.
+     * @param  intervalCount  Integer value for intervalCount.
      * @param  billingType  String value for billingType.
      * @param  paymentMethods  List of String value for paymentMethods.
      * @param  installments  List of Integer value for installments.
@@ -67,7 +68,7 @@ public class GetPlanResponse {
      * @param  updatedAt  LocalDateTime value for updatedAt.
      * @param  items  List of GetPlanItemResponse value for items.
      * @param  billingDays  List of Integer value for billingDays.
-     * @param  shippable  boolean value for shippable.
+     * @param  shippable  Boolean value for shippable.
      * @param  metadata  Map of String, value for metadata.
      * @param  trialPeriodDays  Integer value for trialPeriodDays.
      * @param  minimumPrice  Integer value for minimumPrice.
@@ -80,7 +81,7 @@ public class GetPlanResponse {
             String url,
             String statementDescriptor,
             String interval,
-            int intervalCount,
+            Integer intervalCount,
             String billingType,
             List<String> paymentMethods,
             List<Integer> installments,
@@ -90,11 +91,44 @@ public class GetPlanResponse {
             LocalDateTime updatedAt,
             List<GetPlanItemResponse> items,
             List<Integer> billingDays,
-            boolean shippable,
+            Boolean shippable,
             Map<String, String> metadata,
             Integer trialPeriodDays,
             Integer minimumPrice,
             LocalDateTime deletedAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.statementDescriptor = statementDescriptor;
+        this.interval = interval;
+        this.intervalCount = intervalCount;
+        this.billingType = billingType;
+        this.paymentMethods = paymentMethods;
+        this.installments = installments;
+        this.status = status;
+        this.currency = currency;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.items = items;
+        this.billingDays = billingDays;
+        this.shippable = shippable;
+        this.metadata = metadata;
+        this.trialPeriodDays = OptionalNullable.of(trialPeriodDays);
+        this.minimumPrice = OptionalNullable.of(minimumPrice);
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPlanResponse(String id, String name, String description, String url,
+            String statementDescriptor, String interval, Integer intervalCount, String billingType,
+            List<String> paymentMethods, List<Integer> installments, String status, String currency,
+            LocalDateTime createdAt, LocalDateTime updatedAt, List<GetPlanItemResponse> items,
+            List<Integer> billingDays, Boolean shippable, Map<String, String> metadata,
+            OptionalNullable<Integer> trialPeriodDays, OptionalNullable<Integer> minimumPrice,
+            OptionalNullable<LocalDateTime> deletedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -228,19 +262,19 @@ public class GetPlanResponse {
 
     /**
      * Getter for IntervalCount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("interval_count")
-    public int getIntervalCount() {
+    public Integer getIntervalCount() {
         return intervalCount;
     }
 
     /**
      * Setter for IntervalCount.
-     * @param intervalCount Value for int
+     * @param intervalCount Value for Integer
      */
     @JsonSetter("interval_count")
-    public void setIntervalCount(int intervalCount) {
+    public void setIntervalCount(Integer intervalCount) {
         this.intervalCount = intervalCount;
     }
 
@@ -412,19 +446,19 @@ public class GetPlanResponse {
 
     /**
      * Getter for Shippable.
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("shippable")
-    public boolean getShippable() {
+    public Boolean getShippable() {
         return shippable;
     }
 
     /**
      * Setter for Shippable.
-     * @param shippable Value for boolean
+     * @param shippable Value for Boolean
      */
     @JsonSetter("shippable")
-    public void setShippable(boolean shippable) {
+    public void setShippable(Boolean shippable) {
         this.shippable = shippable;
     }
 
@@ -447,13 +481,22 @@ public class GetPlanResponse {
     }
 
     /**
-     * Getter for TrialPeriodDays.
-     * @return Returns the Integer
+     * Internal Getter for TrialPeriodDays.
+     * @return Returns the Internal Integer
      */
     @JsonGetter("trial_period_days")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetTrialPeriodDays() {
+        return this.trialPeriodDays;
+    }
+
+    /**
+     * Getter for TrialPeriodDays.
+     * @return Returns the Integer
+     */
     public Integer getTrialPeriodDays() {
-        return trialPeriodDays;
+        return OptionalNullable.getFrom(trialPeriodDays);
     }
 
     /**
@@ -462,17 +505,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("trial_period_days")
     public void setTrialPeriodDays(Integer trialPeriodDays) {
-        this.trialPeriodDays = trialPeriodDays;
+        this.trialPeriodDays = OptionalNullable.of(trialPeriodDays);
+    }
+
+    /**
+     * UnSetter for TrialPeriodDays.
+     */
+    public void unsetTrialPeriodDays() {
+        trialPeriodDays = null;
+    }
+
+    /**
+     * Internal Getter for MinimumPrice.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("minimum_price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetMinimumPrice() {
+        return this.minimumPrice;
     }
 
     /**
      * Getter for MinimumPrice.
      * @return Returns the Integer
      */
-    @JsonGetter("minimum_price")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMinimumPrice() {
-        return minimumPrice;
+        return OptionalNullable.getFrom(minimumPrice);
     }
 
     /**
@@ -481,18 +540,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("minimum_price")
     public void setMinimumPrice(Integer minimumPrice) {
-        this.minimumPrice = minimumPrice;
+        this.minimumPrice = OptionalNullable.of(minimumPrice);
+    }
+
+    /**
+     * UnSetter for MinimumPrice.
+     */
+    public void unsetMinimumPrice() {
+        minimumPrice = null;
+    }
+
+    /**
+     * Internal Getter for DeletedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
     }
 
     /**
      * Getter for DeletedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("deleted_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -502,7 +576,14 @@ public class GetPlanResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
     }
 
     /**
@@ -530,10 +611,10 @@ public class GetPlanResponse {
     public Builder toBuilder() {
         Builder builder = new Builder(id, name, description, url, statementDescriptor, interval,
                 intervalCount, billingType, paymentMethods, installments, status, currency,
-                createdAt, updatedAt, items, billingDays, shippable, metadata)
-                .trialPeriodDays(getTrialPeriodDays())
-                .minimumPrice(getMinimumPrice())
-                .deletedAt(getDeletedAt());
+                createdAt, updatedAt, items, billingDays, shippable, metadata);
+        builder.trialPeriodDays = internalGetTrialPeriodDays();
+        builder.minimumPrice = internalGetMinimumPrice();
+        builder.deletedAt = internalGetDeletedAt();
         return builder;
     }
 
@@ -547,7 +628,7 @@ public class GetPlanResponse {
         private String url;
         private String statementDescriptor;
         private String interval;
-        private int intervalCount;
+        private Integer intervalCount;
         private String billingType;
         private List<String> paymentMethods;
         private List<Integer> installments;
@@ -557,11 +638,11 @@ public class GetPlanResponse {
         private LocalDateTime updatedAt;
         private List<GetPlanItemResponse> items;
         private List<Integer> billingDays;
-        private boolean shippable;
+        private Boolean shippable;
         private Map<String, String> metadata;
-        private Integer trialPeriodDays;
-        private Integer minimumPrice;
-        private LocalDateTime deletedAt;
+        private OptionalNullable<Integer> trialPeriodDays;
+        private OptionalNullable<Integer> minimumPrice;
+        private OptionalNullable<LocalDateTime> deletedAt;
 
         /**
          * Initialization constructor.
@@ -577,7 +658,7 @@ public class GetPlanResponse {
          * @param  url  String value for url.
          * @param  statementDescriptor  String value for statementDescriptor.
          * @param  interval  String value for interval.
-         * @param  intervalCount  int value for intervalCount.
+         * @param  intervalCount  Integer value for intervalCount.
          * @param  billingType  String value for billingType.
          * @param  paymentMethods  List of String value for paymentMethods.
          * @param  installments  List of Integer value for installments.
@@ -587,14 +668,14 @@ public class GetPlanResponse {
          * @param  updatedAt  LocalDateTime value for updatedAt.
          * @param  items  List of GetPlanItemResponse value for items.
          * @param  billingDays  List of Integer value for billingDays.
-         * @param  shippable  boolean value for shippable.
+         * @param  shippable  Boolean value for shippable.
          * @param  metadata  Map of String, value for metadata.
          */
         public Builder(String id, String name, String description, String url,
-                String statementDescriptor, String interval, int intervalCount, String billingType,
-                List<String> paymentMethods, List<Integer> installments, String status,
-                String currency, LocalDateTime createdAt, LocalDateTime updatedAt,
-                List<GetPlanItemResponse> items, List<Integer> billingDays, boolean shippable,
+                String statementDescriptor, String interval, Integer intervalCount,
+                String billingType, List<String> paymentMethods, List<Integer> installments,
+                String status, String currency, LocalDateTime createdAt, LocalDateTime updatedAt,
+                List<GetPlanItemResponse> items, List<Integer> billingDays, Boolean shippable,
                 Map<String, String> metadata) {
             this.id = id;
             this.name = name;
@@ -678,10 +759,10 @@ public class GetPlanResponse {
 
         /**
          * Setter for intervalCount.
-         * @param  intervalCount  int value for intervalCount.
+         * @param  intervalCount  Integer value for intervalCount.
          * @return Builder
          */
-        public Builder intervalCount(int intervalCount) {
+        public Builder intervalCount(Integer intervalCount) {
             this.intervalCount = intervalCount;
             return this;
         }
@@ -778,10 +859,10 @@ public class GetPlanResponse {
 
         /**
          * Setter for shippable.
-         * @param  shippable  boolean value for shippable.
+         * @param  shippable  Boolean value for shippable.
          * @return Builder
          */
-        public Builder shippable(boolean shippable) {
+        public Builder shippable(Boolean shippable) {
             this.shippable = shippable;
             return this;
         }
@@ -802,7 +883,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder trialPeriodDays(Integer trialPeriodDays) {
-            this.trialPeriodDays = trialPeriodDays;
+            this.trialPeriodDays = OptionalNullable.of(trialPeriodDays);
+            return this;
+        }
+
+        /**
+         * UnSetter for trialPeriodDays.
+         * @return Builder
+         */
+        public Builder unsetTrialPeriodDays() {
+            trialPeriodDays = null;
             return this;
         }
 
@@ -812,7 +902,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder minimumPrice(Integer minimumPrice) {
-            this.minimumPrice = minimumPrice;
+            this.minimumPrice = OptionalNullable.of(minimumPrice);
+            return this;
+        }
+
+        /**
+         * UnSetter for minimumPrice.
+         * @return Builder
+         */
+        public Builder unsetMinimumPrice() {
+            minimumPrice = null;
             return this;
         }
 
@@ -822,7 +921,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 

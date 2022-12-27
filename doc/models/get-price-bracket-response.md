@@ -11,8 +11,8 @@ Response object for getting a price bracket
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `StartQuantity` | `int` | Required | - | int getStartQuantity() | setStartQuantity(int startQuantity) |
-| `Price` | `int` | Required | - | int getPrice() | setPrice(int price) |
+| `StartQuantity` | `Integer` | Required | - | Integer getStartQuantity() | setStartQuantity(Integer startQuantity) |
+| `Price` | `Integer` | Required | - | Integer getPrice() | setPrice(Integer price) |
 | `EndQuantity` | `Integer` | Optional | - | Integer getEndQuantity() | setEndQuantity(Integer endQuantity) |
 | `OveragePrice` | `Integer` | Optional | - | Integer getOveragePrice() | setOveragePrice(Integer overagePrice) |
 

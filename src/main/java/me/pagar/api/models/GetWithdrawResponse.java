@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import me.pagar.api.DateTimeHelper;
@@ -22,14 +23,14 @@ import me.pagar.api.DateTimeHelper;
 public class GetWithdrawResponse {
     private String id;
     private String gatewayId;
-    private int amount;
+    private Integer amount;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<String> metadata;
-    private Integer fee;
-    private LocalDateTime fundingDate;
-    private LocalDateTime fundingEstimatedDate;
+    private OptionalNullable<List<String>> metadata;
+    private OptionalNullable<Integer> fee;
+    private OptionalNullable<LocalDateTime> fundingDate;
+    private OptionalNullable<LocalDateTime> fundingEstimatedDate;
     private String type;
     private GetWithdrawSourceResponse source;
     private GetWithdrawTargetResponse target;
@@ -44,7 +45,7 @@ public class GetWithdrawResponse {
      * Initialization constructor.
      * @param  id  String value for id.
      * @param  gatewayId  String value for gatewayId.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -59,7 +60,7 @@ public class GetWithdrawResponse {
     public GetWithdrawResponse(
             String id,
             String gatewayId,
-            int amount,
+            Integer amount,
             String status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
@@ -70,6 +71,30 @@ public class GetWithdrawResponse {
             Integer fee,
             LocalDateTime fundingDate,
             LocalDateTime fundingEstimatedDate) {
+        this.id = id;
+        this.gatewayId = gatewayId;
+        this.amount = amount;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.metadata = OptionalNullable.of(metadata);
+        this.fee = OptionalNullable.of(fee);
+        this.fundingDate = OptionalNullable.of(fundingDate);
+        this.fundingEstimatedDate = OptionalNullable.of(fundingEstimatedDate);
+        this.type = type;
+        this.source = source;
+        this.target = target;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetWithdrawResponse(String id, String gatewayId, Integer amount, String status,
+            LocalDateTime createdAt, LocalDateTime updatedAt, String type,
+            GetWithdrawSourceResponse source, GetWithdrawTargetResponse target,
+            OptionalNullable<List<String>> metadata, OptionalNullable<Integer> fee,
+            OptionalNullable<LocalDateTime> fundingDate,
+            OptionalNullable<LocalDateTime> fundingEstimatedDate) {
         this.id = id;
         this.gatewayId = gatewayId;
         this.amount = amount;
@@ -123,19 +148,19 @@ public class GetWithdrawResponse {
 
     /**
      * Getter for Amount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -198,13 +223,22 @@ public class GetWithdrawResponse {
     }
 
     /**
-     * Getter for Metadata.
-     * @return Returns the List of String
+     * Internal Getter for Metadata.
+     * @return Returns the Internal List of String
      */
     @JsonGetter("metadata")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<String>> internalGetMetadata() {
+        return this.metadata;
+    }
+
+    /**
+     * Getter for Metadata.
+     * @return Returns the List of String
+     */
     public List<String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -213,17 +247,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(List<String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
+    }
+
+    /**
+     * Internal Getter for Fee.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetFee() {
+        return this.fee;
     }
 
     /**
      * Getter for Fee.
      * @return Returns the Integer
      */
-    @JsonGetter("fee")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getFee() {
-        return fee;
+        return OptionalNullable.getFrom(fee);
     }
 
     /**
@@ -232,18 +282,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("fee")
     public void setFee(Integer fee) {
-        this.fee = fee;
+        this.fee = OptionalNullable.of(fee);
+    }
+
+    /**
+     * UnSetter for Fee.
+     */
+    public void unsetFee() {
+        fee = null;
+    }
+
+    /**
+     * Internal Getter for FundingDate.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("funding_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetFundingDate() {
+        return this.fundingDate;
     }
 
     /**
      * Getter for FundingDate.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("funding_date")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getFundingDate() {
-        return fundingDate;
+        return OptionalNullable.getFrom(fundingDate);
     }
 
     /**
@@ -253,18 +318,33 @@ public class GetWithdrawResponse {
     @JsonSetter("funding_date")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setFundingDate(LocalDateTime fundingDate) {
-        this.fundingDate = fundingDate;
+        this.fundingDate = OptionalNullable.of(fundingDate);
+    }
+
+    /**
+     * UnSetter for FundingDate.
+     */
+    public void unsetFundingDate() {
+        fundingDate = null;
+    }
+
+    /**
+     * Internal Getter for FundingEstimatedDate.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("funding_estimated_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetFundingEstimatedDate() {
+        return this.fundingEstimatedDate;
     }
 
     /**
      * Getter for FundingEstimatedDate.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("funding_estimated_date")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getFundingEstimatedDate() {
-        return fundingEstimatedDate;
+        return OptionalNullable.getFrom(fundingEstimatedDate);
     }
 
     /**
@@ -274,7 +354,14 @@ public class GetWithdrawResponse {
     @JsonSetter("funding_estimated_date")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setFundingEstimatedDate(LocalDateTime fundingEstimatedDate) {
-        this.fundingEstimatedDate = fundingEstimatedDate;
+        this.fundingEstimatedDate = OptionalNullable.of(fundingEstimatedDate);
+    }
+
+    /**
+     * UnSetter for FundingEstimatedDate.
+     */
+    public void unsetFundingEstimatedDate() {
+        fundingEstimatedDate = null;
     }
 
     /**
@@ -351,11 +438,11 @@ public class GetWithdrawResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, gatewayId, amount, status, createdAt, updatedAt, type,
-                source, target)
-                .metadata(getMetadata())
-                .fee(getFee())
-                .fundingDate(getFundingDate())
-                .fundingEstimatedDate(getFundingEstimatedDate());
+                source, target);
+        builder.metadata = internalGetMetadata();
+        builder.fee = internalGetFee();
+        builder.fundingDate = internalGetFundingDate();
+        builder.fundingEstimatedDate = internalGetFundingEstimatedDate();
         return builder;
     }
 
@@ -365,17 +452,17 @@ public class GetWithdrawResponse {
     public static class Builder {
         private String id;
         private String gatewayId;
-        private int amount;
+        private Integer amount;
         private String status;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private String type;
         private GetWithdrawSourceResponse source;
         private GetWithdrawTargetResponse target;
-        private List<String> metadata;
-        private Integer fee;
-        private LocalDateTime fundingDate;
-        private LocalDateTime fundingEstimatedDate;
+        private OptionalNullable<List<String>> metadata;
+        private OptionalNullable<Integer> fee;
+        private OptionalNullable<LocalDateTime> fundingDate;
+        private OptionalNullable<LocalDateTime> fundingEstimatedDate;
 
         /**
          * Initialization constructor.
@@ -387,7 +474,7 @@ public class GetWithdrawResponse {
          * Initialization constructor.
          * @param  id  String value for id.
          * @param  gatewayId  String value for gatewayId.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -395,7 +482,7 @@ public class GetWithdrawResponse {
          * @param  source  GetWithdrawSourceResponse value for source.
          * @param  target  GetWithdrawTargetResponse value for target.
          */
-        public Builder(String id, String gatewayId, int amount, String status,
+        public Builder(String id, String gatewayId, Integer amount, String status,
                 LocalDateTime createdAt, LocalDateTime updatedAt, String type,
                 GetWithdrawSourceResponse source, GetWithdrawTargetResponse target) {
             this.id = id;
@@ -431,10 +518,10 @@ public class GetWithdrawResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -505,7 +592,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder metadata(List<String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -515,7 +611,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder fee(Integer fee) {
-            this.fee = fee;
+            this.fee = OptionalNullable.of(fee);
+            return this;
+        }
+
+        /**
+         * UnSetter for fee.
+         * @return Builder
+         */
+        public Builder unsetFee() {
+            fee = null;
             return this;
         }
 
@@ -525,7 +630,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder fundingDate(LocalDateTime fundingDate) {
-            this.fundingDate = fundingDate;
+            this.fundingDate = OptionalNullable.of(fundingDate);
+            return this;
+        }
+
+        /**
+         * UnSetter for fundingDate.
+         * @return Builder
+         */
+        public Builder unsetFundingDate() {
+            fundingDate = null;
             return this;
         }
 
@@ -535,7 +649,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder fundingEstimatedDate(LocalDateTime fundingEstimatedDate) {
-            this.fundingEstimatedDate = fundingEstimatedDate;
+            this.fundingEstimatedDate = OptionalNullable.of(fundingEstimatedDate);
+            return this;
+        }
+
+        /**
+         * UnSetter for fundingEstimatedDate.
+         * @return Builder
+         */
+        public Builder unsetFundingEstimatedDate() {
+            fundingEstimatedDate = null;
             return this;
         }
 

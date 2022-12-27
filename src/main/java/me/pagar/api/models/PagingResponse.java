@@ -14,7 +14,7 @@ import io.apimatic.core.types.BaseModel;
  * This is a model class for PagingResponse type.
  */
 public class PagingResponse {
-    private int total;
+    private Integer total;
     private String previous;
     private String next;
 
@@ -26,12 +26,12 @@ public class PagingResponse {
 
     /**
      * Initialization constructor.
-     * @param  total  int value for total.
+     * @param  total  Integer value for total.
      * @param  previous  String value for previous.
      * @param  next  String value for next.
      */
     public PagingResponse(
-            int total,
+            Integer total,
             String previous,
             String next) {
         this.total = total;
@@ -42,20 +42,20 @@ public class PagingResponse {
     /**
      * Getter for Total.
      * Total number of pages
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("total")
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
     /**
      * Setter for Total.
      * Total number of pages
-     * @param total Value for int
+     * @param total Value for Integer
      */
     @JsonSetter("total")
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -123,7 +123,7 @@ public class PagingResponse {
      * Class to build instances of {@link PagingResponse}.
      */
     public static class Builder {
-        private int total;
+        private Integer total;
         private String previous;
         private String next;
 
@@ -135,11 +135,11 @@ public class PagingResponse {
 
         /**
          * Initialization constructor.
-         * @param  total  int value for total.
+         * @param  total  Integer value for total.
          * @param  previous  String value for previous.
          * @param  next  String value for next.
          */
-        public Builder(int total, String previous, String next) {
+        public Builder(Integer total, String previous, String next) {
             this.total = total;
             this.previous = previous;
             this.next = next;
@@ -147,10 +147,10 @@ public class PagingResponse {
 
         /**
          * Setter for total.
-         * @param  total  int value for total.
+         * @param  total  Integer value for total.
          * @return Builder
          */
-        public Builder total(int total) {
+        public Builder total(Integer total) {
             this.total = total;
             return this;
         }

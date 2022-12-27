@@ -7,13 +7,11 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +20,6 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetPixTransactionResponse type.
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "transaction_type",
-        defaultImpl = GetPixTransactionResponse.class,
-        visible = true)
-@JsonInclude(Include.ALWAYS)
 public class GetPixTransactionResponse
         extends GetTransactionResponse {
     private String qrCode;
@@ -43,19 +34,18 @@ public class GetPixTransactionResponse
      */
     public GetPixTransactionResponse() {
         super();
-        setTransactionType("pix");
     }
 
     /**
      * Initialization constructor.
      * @param  gatewayId  String value for gatewayId.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
-     * @param  success  boolean value for success.
+     * @param  success  Boolean value for success.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
-     * @param  attemptCount  int value for attemptCount.
-     * @param  maxAttempts  int value for maxAttempts.
+     * @param  attemptCount  Integer value for attemptCount.
+     * @param  maxAttempts  Integer value for maxAttempts.
      * @param  splits  List of GetSplitResponse value for splits.
      * @param  id  String value for id.
      * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -77,13 +67,13 @@ public class GetPixTransactionResponse
      */
     public GetPixTransactionResponse(
             String gatewayId,
-            int amount,
+            Integer amount,
             String status,
-            boolean success,
+            Boolean success,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
-            int attemptCount,
-            int maxAttempts,
+            Integer attemptCount,
+            Integer maxAttempts,
             List<GetSplitResponse> splits,
             String id,
             GetGatewayResponseResponse gatewayResponse,
@@ -101,6 +91,31 @@ public class GetPixTransactionResponse
             GetInterestResponse interest,
             GetFineResponse fine,
             Integer maxDaysToPayPastDue) {
+        super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
+                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
+                metadata, interest, fine, maxDaysToPayPastDue);
+        this.qrCode = qrCode;
+        this.qrCodeUrl = qrCodeUrl;
+        this.expiresAt = expiresAt;
+        this.additionalInformation = additionalInformation;
+        this.endToEndId = endToEndId;
+        this.payer = payer;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPixTransactionResponse(String gatewayId, Integer amount, String status,
+            Boolean success, LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+            Integer maxAttempts, List<GetSplitResponse> splits, String id,
+            GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
+            List<GetSplitResponse> split, String qrCode, String qrCodeUrl, LocalDateTime expiresAt,
+            List<PixAdditionalInformation> additionalInformation, String endToEndId,
+            GetPixPayerResponse payer, OptionalNullable<LocalDateTime> nextAttempt,
+            OptionalNullable<String> transactionType,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
+            OptionalNullable<Integer> maxDaysToPayPastDue) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
                 metadata, interest, fine, maxDaysToPayPastDue);
@@ -251,13 +266,13 @@ public class GetPixTransactionResponse
         Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), qrCode,
-                qrCodeUrl, expiresAt, additionalInformation, endToEndId, payer)
-                .nextAttempt(getNextAttempt())
-                .transactionType(getTransactionType())
-                .metadata(getMetadata())
-                .interest(getInterest())
-                .fine(getFine())
-                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
+                qrCodeUrl, expiresAt, additionalInformation, endToEndId, payer);
+        builder.nextAttempt = internalGetNextAttempt();
+        builder.transactionType = internalGetTransactionType();
+        builder.metadata = internalGetMetadata();
+        builder.interest = internalGetInterest();
+        builder.fine = internalGetFine();
+        builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
         return builder;
     }
 
@@ -266,13 +281,13 @@ public class GetPixTransactionResponse
      */
     public static class Builder {
         private String gatewayId;
-        private int amount;
+        private Integer amount;
         private String status;
-        private boolean success;
+        private Boolean success;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        private int attemptCount;
-        private int maxAttempts;
+        private Integer attemptCount;
+        private Integer maxAttempts;
         private List<GetSplitResponse> splits;
         private String id;
         private GetGatewayResponseResponse gatewayResponse;
@@ -284,12 +299,12 @@ public class GetPixTransactionResponse
         private List<PixAdditionalInformation> additionalInformation;
         private String endToEndId;
         private GetPixPayerResponse payer;
-        private LocalDateTime nextAttempt;
-        private String transactionType = "pix";
-        private Map<String, String> metadata;
-        private GetInterestResponse interest;
-        private GetFineResponse fine;
-        private Integer maxDaysToPayPastDue;
+        private OptionalNullable<LocalDateTime> nextAttempt;
+        private OptionalNullable<String> transactionType;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<GetInterestResponse> interest;
+        private OptionalNullable<GetFineResponse> fine;
+        private OptionalNullable<Integer> maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -300,13 +315,13 @@ public class GetPixTransactionResponse
         /**
          * Initialization constructor.
          * @param  gatewayId  String value for gatewayId.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  attemptCount  int value for attemptCount.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  attemptCount  Integer value for attemptCount.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @param  splits  List of GetSplitResponse value for splits.
          * @param  id  String value for id.
          * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -320,9 +335,9 @@ public class GetPixTransactionResponse
          * @param  endToEndId  String value for endToEndId.
          * @param  payer  GetPixPayerResponse value for payer.
          */
-        public Builder(String gatewayId, int amount, String status, boolean success,
-                LocalDateTime createdAt, LocalDateTime updatedAt, int attemptCount, int maxAttempts,
-                List<GetSplitResponse> splits, String id,
+        public Builder(String gatewayId, Integer amount, String status, Boolean success,
+                LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+                Integer maxAttempts, List<GetSplitResponse> splits, String id,
                 GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
                 List<GetSplitResponse> split, String qrCode, String qrCodeUrl,
                 LocalDateTime expiresAt, List<PixAdditionalInformation> additionalInformation,
@@ -360,10 +375,10 @@ public class GetPixTransactionResponse
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -380,10 +395,10 @@ public class GetPixTransactionResponse
 
         /**
          * Setter for success.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @return Builder
          */
-        public Builder success(boolean success) {
+        public Builder success(Boolean success) {
             this.success = success;
             return this;
         }
@@ -410,20 +425,20 @@ public class GetPixTransactionResponse
 
         /**
          * Setter for attemptCount.
-         * @param  attemptCount  int value for attemptCount.
+         * @param  attemptCount  Integer value for attemptCount.
          * @return Builder
          */
-        public Builder attemptCount(int attemptCount) {
+        public Builder attemptCount(Integer attemptCount) {
             this.attemptCount = attemptCount;
             return this;
         }
 
         /**
          * Setter for maxAttempts.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @return Builder
          */
-        public Builder maxAttempts(int maxAttempts) {
+        public Builder maxAttempts(Integer maxAttempts) {
             this.maxAttempts = maxAttempts;
             return this;
         }
@@ -546,7 +561,16 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder nextAttempt(LocalDateTime nextAttempt) {
-            this.nextAttempt = nextAttempt;
+            this.nextAttempt = OptionalNullable.of(nextAttempt);
+            return this;
+        }
+
+        /**
+         * UnSetter for nextAttempt.
+         * @return Builder
+         */
+        public Builder unsetNextAttempt() {
+            nextAttempt = null;
             return this;
         }
 
@@ -556,7 +580,16 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = transactionType;
+            this.transactionType = OptionalNullable.of(transactionType);
+            return this;
+        }
+
+        /**
+         * UnSetter for transactionType.
+         * @return Builder
+         */
+        public Builder unsetTransactionType() {
+            transactionType = null;
             return this;
         }
 
@@ -566,7 +599,16 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -576,7 +618,16 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder interest(GetInterestResponse interest) {
-            this.interest = interest;
+            this.interest = OptionalNullable.of(interest);
+            return this;
+        }
+
+        /**
+         * UnSetter for interest.
+         * @return Builder
+         */
+        public Builder unsetInterest() {
+            interest = null;
             return this;
         }
 
@@ -586,7 +637,16 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder fine(GetFineResponse fine) {
-            this.fine = fine;
+            this.fine = OptionalNullable.of(fine);
+            return this;
+        }
+
+        /**
+         * UnSetter for fine.
+         * @return Builder
+         */
+        public Builder unsetFine() {
+            fine = null;
             return this;
         }
 
@@ -596,7 +656,16 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder unsetMaxDaysToPayPastDue() {
+            maxDaysToPayPastDue = null;
             return this;
         }
 

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -23,7 +24,7 @@ public class GetAccessTokenResponse {
     private String code;
     private String status;
     private LocalDateTime createdAt;
-    private GetCustomerResponse customer;
+    private OptionalNullable<GetCustomerResponse> customer;
 
     /**
      * Default constructor.
@@ -45,6 +46,18 @@ public class GetAccessTokenResponse {
             String status,
             LocalDateTime createdAt,
             GetCustomerResponse customer) {
+        this.id = id;
+        this.code = code;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAccessTokenResponse(String id, String code, String status, LocalDateTime createdAt,
+            OptionalNullable<GetCustomerResponse> customer) {
         this.id = id;
         this.code = code;
         this.status = status;
@@ -127,13 +140,22 @@ public class GetAccessTokenResponse {
     }
 
     /**
-     * Getter for Customer.
-     * @return Returns the GetCustomerResponse
+     * Internal Getter for Customer.
+     * @return Returns the Internal GetCustomerResponse
      */
     @JsonGetter("customer")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
+    }
+
+    /**
+     * Getter for Customer.
+     * @return Returns the GetCustomerResponse
+     */
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -142,7 +164,14 @@ public class GetAccessTokenResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -161,8 +190,8 @@ public class GetAccessTokenResponse {
      * @return a new {@link GetAccessTokenResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, code, status, createdAt)
-                .customer(getCustomer());
+        Builder builder = new Builder(id, code, status, createdAt);
+        builder.customer = internalGetCustomer();
         return builder;
     }
 
@@ -174,7 +203,7 @@ public class GetAccessTokenResponse {
         private String code;
         private String status;
         private LocalDateTime createdAt;
-        private GetCustomerResponse customer;
+        private OptionalNullable<GetCustomerResponse> customer;
 
         /**
          * Initialization constructor.
@@ -242,7 +271,16 @@ public class GetAccessTokenResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 

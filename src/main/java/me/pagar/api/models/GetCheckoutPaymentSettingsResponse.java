@@ -9,7 +9,9 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
@@ -20,10 +22,10 @@ public class GetCheckoutPaymentSettingsResponse {
     private String paymentUrl;
     private List<String> acceptedPaymentMethods;
     private String status;
-    private GetCustomerResponse customer;
-    private Integer amount;
-    private String defaultPaymentMethod;
-    private String gatewayAffiliationId;
+    private OptionalNullable<GetCustomerResponse> customer;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> defaultPaymentMethod;
+    private OptionalNullable<String> gatewayAffiliationId;
 
     /**
      * Default constructor.
@@ -51,6 +53,24 @@ public class GetCheckoutPaymentSettingsResponse {
             Integer amount,
             String defaultPaymentMethod,
             String gatewayAffiliationId) {
+        this.successUrl = successUrl;
+        this.paymentUrl = paymentUrl;
+        this.acceptedPaymentMethods = acceptedPaymentMethods;
+        this.status = status;
+        this.customer = OptionalNullable.of(customer);
+        this.amount = OptionalNullable.of(amount);
+        this.defaultPaymentMethod = OptionalNullable.of(defaultPaymentMethod);
+        this.gatewayAffiliationId = OptionalNullable.of(gatewayAffiliationId);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCheckoutPaymentSettingsResponse(String successUrl, String paymentUrl,
+            List<String> acceptedPaymentMethods, String status,
+            OptionalNullable<GetCustomerResponse> customer, OptionalNullable<Integer> amount,
+            OptionalNullable<String> defaultPaymentMethod,
+            OptionalNullable<String> gatewayAffiliationId) {
         this.successUrl = successUrl;
         this.paymentUrl = paymentUrl;
         this.acceptedPaymentMethods = acceptedPaymentMethods;
@@ -142,14 +162,24 @@ public class GetCheckoutPaymentSettingsResponse {
     }
 
     /**
+     * Internal Getter for Customer.
+     * Customer
+     * @return Returns the Internal GetCustomerResponse
+     */
+    @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
+    }
+
+    /**
      * Getter for Customer.
      * Customer
      * @return Returns the GetCustomerResponse
      */
-    @JsonGetter("customer")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -159,7 +189,27 @@ public class GetCheckoutPaymentSettingsResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     * Customer
+     */
+    public void unsetCustomer() {
+        customer = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * Payment amount
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
@@ -167,10 +217,8 @@ public class GetCheckoutPaymentSettingsResponse {
      * Payment amount
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -180,7 +228,27 @@ public class GetCheckoutPaymentSettingsResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Payment amount
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for DefaultPaymentMethod.
+     * Default Payment Method
+     * @return Returns the Internal String
+     */
+    @JsonGetter("default_payment_method")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDefaultPaymentMethod() {
+        return this.defaultPaymentMethod;
     }
 
     /**
@@ -188,10 +256,8 @@ public class GetCheckoutPaymentSettingsResponse {
      * Default Payment Method
      * @return Returns the String
      */
-    @JsonGetter("default_payment_method")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDefaultPaymentMethod() {
-        return defaultPaymentMethod;
+        return OptionalNullable.getFrom(defaultPaymentMethod);
     }
 
     /**
@@ -201,7 +267,27 @@ public class GetCheckoutPaymentSettingsResponse {
      */
     @JsonSetter("default_payment_method")
     public void setDefaultPaymentMethod(String defaultPaymentMethod) {
-        this.defaultPaymentMethod = defaultPaymentMethod;
+        this.defaultPaymentMethod = OptionalNullable.of(defaultPaymentMethod);
+    }
+
+    /**
+     * UnSetter for DefaultPaymentMethod.
+     * Default Payment Method
+     */
+    public void unsetDefaultPaymentMethod() {
+        defaultPaymentMethod = null;
+    }
+
+    /**
+     * Internal Getter for GatewayAffiliationId.
+     * Gateway Affiliation Id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("gateway_affiliation_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGatewayAffiliationId() {
+        return this.gatewayAffiliationId;
     }
 
     /**
@@ -209,10 +295,8 @@ public class GetCheckoutPaymentSettingsResponse {
      * Gateway Affiliation Id
      * @return Returns the String
      */
-    @JsonGetter("gateway_affiliation_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGatewayAffiliationId() {
-        return gatewayAffiliationId;
+        return OptionalNullable.getFrom(gatewayAffiliationId);
     }
 
     /**
@@ -222,7 +306,15 @@ public class GetCheckoutPaymentSettingsResponse {
      */
     @JsonSetter("gateway_affiliation_id")
     public void setGatewayAffiliationId(String gatewayAffiliationId) {
-        this.gatewayAffiliationId = gatewayAffiliationId;
+        this.gatewayAffiliationId = OptionalNullable.of(gatewayAffiliationId);
+    }
+
+    /**
+     * UnSetter for GatewayAffiliationId.
+     * Gateway Affiliation Id
+     */
+    public void unsetGatewayAffiliationId() {
+        gatewayAffiliationId = null;
     }
 
     /**
@@ -244,11 +336,11 @@ public class GetCheckoutPaymentSettingsResponse {
      * @return a new {@link GetCheckoutPaymentSettingsResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(successUrl, paymentUrl, acceptedPaymentMethods, status)
-                .customer(getCustomer())
-                .amount(getAmount())
-                .defaultPaymentMethod(getDefaultPaymentMethod())
-                .gatewayAffiliationId(getGatewayAffiliationId());
+        Builder builder = new Builder(successUrl, paymentUrl, acceptedPaymentMethods, status);
+        builder.customer = internalGetCustomer();
+        builder.amount = internalGetAmount();
+        builder.defaultPaymentMethod = internalGetDefaultPaymentMethod();
+        builder.gatewayAffiliationId = internalGetGatewayAffiliationId();
         return builder;
     }
 
@@ -260,10 +352,10 @@ public class GetCheckoutPaymentSettingsResponse {
         private String paymentUrl;
         private List<String> acceptedPaymentMethods;
         private String status;
-        private GetCustomerResponse customer;
-        private Integer amount;
-        private String defaultPaymentMethod;
-        private String gatewayAffiliationId;
+        private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> defaultPaymentMethod;
+        private OptionalNullable<String> gatewayAffiliationId;
 
         /**
          * Initialization constructor.
@@ -332,7 +424,16 @@ public class GetCheckoutPaymentSettingsResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 
@@ -342,7 +443,16 @@ public class GetCheckoutPaymentSettingsResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -352,7 +462,16 @@ public class GetCheckoutPaymentSettingsResponse {
          * @return Builder
          */
         public Builder defaultPaymentMethod(String defaultPaymentMethod) {
-            this.defaultPaymentMethod = defaultPaymentMethod;
+            this.defaultPaymentMethod = OptionalNullable.of(defaultPaymentMethod);
+            return this;
+        }
+
+        /**
+         * UnSetter for defaultPaymentMethod.
+         * @return Builder
+         */
+        public Builder unsetDefaultPaymentMethod() {
+            defaultPaymentMethod = null;
             return this;
         }
 
@@ -362,7 +481,16 @@ public class GetCheckoutPaymentSettingsResponse {
          * @return Builder
          */
         public Builder gatewayAffiliationId(String gatewayAffiliationId) {
-            this.gatewayAffiliationId = gatewayAffiliationId;
+            this.gatewayAffiliationId = OptionalNullable.of(gatewayAffiliationId);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayAffiliationId.
+         * @return Builder
+         */
+        public Builder unsetGatewayAffiliationId() {
+            gatewayAffiliationId = null;
             return this;
         }
 

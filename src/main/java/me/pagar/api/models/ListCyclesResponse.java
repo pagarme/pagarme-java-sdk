@@ -9,15 +9,17 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for ListCyclesResponse type.
  */
 public class ListCyclesResponse {
-    private List<GetPeriodResponse> data;
-    private PagingResponse paging;
+    private OptionalNullable<List<GetPeriodResponse>> data;
+    private OptionalNullable<PagingResponse> paging;
 
     /**
      * Default constructor.
@@ -33,8 +35,29 @@ public class ListCyclesResponse {
     public ListCyclesResponse(
             List<GetPeriodResponse> data,
             PagingResponse paging) {
+        this.data = OptionalNullable.of(data);
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected ListCyclesResponse(OptionalNullable<List<GetPeriodResponse>> data,
+            OptionalNullable<PagingResponse> paging) {
         this.data = data;
         this.paging = paging;
+    }
+
+    /**
+     * Internal Getter for Data.
+     * The subscription cycles objects
+     * @return Returns the Internal List of GetPeriodResponse
+     */
+    @JsonGetter("data")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetPeriodResponse>> internalGetData() {
+        return this.data;
     }
 
     /**
@@ -42,10 +65,8 @@ public class ListCyclesResponse {
      * The subscription cycles objects
      * @return Returns the List of GetPeriodResponse
      */
-    @JsonGetter("data")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<GetPeriodResponse> getData() {
-        return data;
+        return OptionalNullable.getFrom(data);
     }
 
     /**
@@ -55,7 +76,27 @@ public class ListCyclesResponse {
      */
     @JsonSetter("data")
     public void setData(List<GetPeriodResponse> data) {
-        this.data = data;
+        this.data = OptionalNullable.of(data);
+    }
+
+    /**
+     * UnSetter for Data.
+     * The subscription cycles objects
+     */
+    public void unsetData() {
+        data = null;
+    }
+
+    /**
+     * Internal Getter for Paging.
+     * Paging object
+     * @return Returns the Internal PagingResponse
+     */
+    @JsonGetter("paging")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<PagingResponse> internalGetPaging() {
+        return this.paging;
     }
 
     /**
@@ -63,10 +104,8 @@ public class ListCyclesResponse {
      * Paging object
      * @return Returns the PagingResponse
      */
-    @JsonGetter("paging")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public PagingResponse getPaging() {
-        return paging;
+        return OptionalNullable.getFrom(paging);
     }
 
     /**
@@ -76,7 +115,15 @@ public class ListCyclesResponse {
      */
     @JsonSetter("paging")
     public void setPaging(PagingResponse paging) {
-        this.paging = paging;
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * UnSetter for Paging.
+     * Paging object
+     */
+    public void unsetPaging() {
+        paging = null;
     }
 
     /**
@@ -94,9 +141,9 @@ public class ListCyclesResponse {
      * @return a new {@link ListCyclesResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder()
-                .data(getData())
-                .paging(getPaging());
+        Builder builder = new Builder();
+        builder.data = internalGetData();
+        builder.paging = internalGetPaging();
         return builder;
     }
 
@@ -104,8 +151,8 @@ public class ListCyclesResponse {
      * Class to build instances of {@link ListCyclesResponse}.
      */
     public static class Builder {
-        private List<GetPeriodResponse> data;
-        private PagingResponse paging;
+        private OptionalNullable<List<GetPeriodResponse>> data;
+        private OptionalNullable<PagingResponse> paging;
 
 
 
@@ -115,7 +162,16 @@ public class ListCyclesResponse {
          * @return Builder
          */
         public Builder data(List<GetPeriodResponse> data) {
-            this.data = data;
+            this.data = OptionalNullable.of(data);
+            return this;
+        }
+
+        /**
+         * UnSetter for data.
+         * @return Builder
+         */
+        public Builder unsetData() {
+            data = null;
             return this;
         }
 
@@ -125,7 +181,16 @@ public class ListCyclesResponse {
          * @return Builder
          */
         public Builder paging(PagingResponse paging) {
-            this.paging = paging;
+            this.paging = OptionalNullable.of(paging);
+            return this;
+        }
+
+        /**
+         * UnSetter for paging.
+         * @return Builder
+         */
+        public Builder unsetPaging() {
+            paging = null;
             return this;
         }
 

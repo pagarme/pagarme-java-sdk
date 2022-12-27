@@ -14,7 +14,7 @@ Response object for getting a charge
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `Code` | `String` | Required | - | String getCode() | setCode(String code) |
 | `GatewayId` | `String` | Required | - | String getGatewayId() | setGatewayId(String gatewayId) |
-| `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | - | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `Currency` | `String` | Required | - | String getCurrency() | setCurrency(String currency) |
 | `PaymentMethod` | `String` | Required | - | String getPaymentMethod() | setPaymentMethod(String paymentMethod) |
@@ -28,8 +28,8 @@ Response object for getting a charge
 | `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `PaidAt` | `LocalDateTime` | Optional | - | LocalDateTime getPaidAt() | setPaidAt(LocalDateTime paidAt) |
 | `CanceledAt` | `LocalDateTime` | Optional | - | LocalDateTime getCanceledAt() | setCanceledAt(LocalDateTime canceledAt) |
-| `CanceledAmount` | `int` | Required | Canceled Amount | int getCanceledAmount() | setCanceledAmount(int canceledAmount) |
-| `PaidAmount` | `int` | Required | Paid amount | int getPaidAmount() | setPaidAmount(int paidAmount) |
+| `CanceledAmount` | `Integer` | Required | Canceled Amount | Integer getCanceledAmount() | setCanceledAmount(Integer canceledAmount) |
+| `PaidAmount` | `Integer` | Required | Paid amount | Integer getPaidAmount() | setPaidAmount(Integer paidAmount) |
 | `InterestAndFinePaid` | `Integer` | Optional | interest and fine paid | Integer getInterestAndFinePaid() | setInterestAndFinePaid(Integer interestAndFinePaid) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 

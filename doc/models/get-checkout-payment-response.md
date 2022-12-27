@@ -19,18 +19,18 @@ Resposta das configurações de pagamento do checkout
 | `GatewayAffiliationId` | `String` | Required | Código da afiliação onde o pagamento será processado no gateway | String getGatewayAffiliationId() | setGatewayAffiliationId(String gatewayAffiliationId) |
 | `AcceptedPaymentMethods` | `List<String>` | Required | Meios de pagamento aceitos no checkout | List<String> getAcceptedPaymentMethods() | setAcceptedPaymentMethods(List<String> acceptedPaymentMethods) |
 | `Status` | `String` | Required | Status do checkout | String getStatus() | setStatus(String status) |
-| `SkipCheckoutSuccessPage` | `boolean` | Required | Pular tela de sucesso pós-pagamento? | boolean getSkipCheckoutSuccessPage() | setSkipCheckoutSuccessPage(boolean skipCheckoutSuccessPage) |
+| `SkipCheckoutSuccessPage` | `Boolean` | Required | Pular tela de sucesso pós-pagamento? | Boolean getSkipCheckoutSuccessPage() | setSkipCheckoutSuccessPage(Boolean skipCheckoutSuccessPage) |
 | `CreatedAt` | `LocalDateTime` | Required | Data de criação | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | Data de atualização | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
 | `CanceledAt` | `LocalDateTime` | Optional | Data de cancelamento | LocalDateTime getCanceledAt() | setCanceledAt(LocalDateTime canceledAt) |
-| `CustomerEditable` | `boolean` | Required | Torna o objeto customer editável | boolean getCustomerEditable() | setCustomerEditable(boolean customerEditable) |
+| `CustomerEditable` | `Boolean` | Required | Torna o objeto customer editável | Boolean getCustomerEditable() | setCustomerEditable(Boolean customerEditable) |
 | `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | Dados do comprador | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
 | `Billingaddress` | [`GetAddressResponse`](../../doc/models/get-address-response.md) | Required | Dados do endereço de cobrança | GetAddressResponse getBillingaddress() | setBillingaddress(GetAddressResponse billingaddress) |
 | `CreditCard` | [`GetCheckoutCreditCardPaymentResponse`](../../doc/models/get-checkout-credit-card-payment-response.md) | Required | Configurações de cartão de crédito | GetCheckoutCreditCardPaymentResponse getCreditCard() | setCreditCard(GetCheckoutCreditCardPaymentResponse creditCard) |
 | `Boleto` | [`GetCheckoutBoletoPaymentResponse`](../../doc/models/get-checkout-boleto-payment-response.md) | Required | Configurações de boleto | GetCheckoutBoletoPaymentResponse getBoleto() | setBoleto(GetCheckoutBoletoPaymentResponse boleto) |
-| `BillingAddressEditable` | `boolean` | Required | Indica se o billing address poderá ser editado | boolean getBillingAddressEditable() | setBillingAddressEditable(boolean billingAddressEditable) |
+| `BillingAddressEditable` | `Boolean` | Required | Indica se o billing address poderá ser editado | Boolean getBillingAddressEditable() | setBillingAddressEditable(Boolean billingAddressEditable) |
 | `Shipping` | [`GetShippingResponse`](../../doc/models/get-shipping-response.md) | Required | Configurações  de entrega | GetShippingResponse getShipping() | setShipping(GetShippingResponse shipping) |
-| `Shippable` | `boolean` | Required | Indica se possui entrega | boolean getShippable() | setShippable(boolean shippable) |
+| `Shippable` | `Boolean` | Required | Indica se possui entrega | Boolean getShippable() | setShippable(Boolean shippable) |
 | `ClosedAt` | `LocalDateTime` | Optional | Data de fechamento | LocalDateTime getClosedAt() | setClosedAt(LocalDateTime closedAt) |
 | `ExpiresAt` | `LocalDateTime` | Optional | Data de expiração | LocalDateTime getExpiresAt() | setExpiresAt(LocalDateTime expiresAt) |
 | `Currency` | `String` | Required | Moeda | String getCurrency() | setCurrency(String currency) |

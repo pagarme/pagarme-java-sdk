@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -20,15 +21,15 @@ import me.pagar.api.DateTimeHelper;
  */
 public class GetDiscountResponse {
     private String id;
-    private double value;
+    private Double value;
     private String discountType;
     private String status;
     private LocalDateTime createdAt;
-    private Integer cycles;
-    private LocalDateTime deletedAt;
-    private String description;
-    private GetSubscriptionResponse subscription;
-    private GetSubscriptionItemResponse subscriptionItem;
+    private OptionalNullable<Integer> cycles;
+    private OptionalNullable<LocalDateTime> deletedAt;
+    private OptionalNullable<String> description;
+    private OptionalNullable<GetSubscriptionResponse> subscription;
+    private OptionalNullable<GetSubscriptionItemResponse> subscriptionItem;
 
     /**
      * Default constructor.
@@ -39,7 +40,7 @@ public class GetDiscountResponse {
     /**
      * Initialization constructor.
      * @param  id  String value for id.
-     * @param  value  double value for value.
+     * @param  value  Double value for value.
      * @param  discountType  String value for discountType.
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
@@ -51,7 +52,7 @@ public class GetDiscountResponse {
      */
     public GetDiscountResponse(
             String id,
-            double value,
+            Double value,
             String discountType,
             String status,
             LocalDateTime createdAt,
@@ -60,6 +61,26 @@ public class GetDiscountResponse {
             String description,
             GetSubscriptionResponse subscription,
             GetSubscriptionItemResponse subscriptionItem) {
+        this.id = id;
+        this.value = value;
+        this.discountType = discountType;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.cycles = OptionalNullable.of(cycles);
+        this.deletedAt = OptionalNullable.of(deletedAt);
+        this.description = OptionalNullable.of(description);
+        this.subscription = OptionalNullable.of(subscription);
+        this.subscriptionItem = OptionalNullable.of(subscriptionItem);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetDiscountResponse(String id, Double value, String discountType, String status,
+            LocalDateTime createdAt, OptionalNullable<Integer> cycles,
+            OptionalNullable<LocalDateTime> deletedAt, OptionalNullable<String> description,
+            OptionalNullable<GetSubscriptionResponse> subscription,
+            OptionalNullable<GetSubscriptionItemResponse> subscriptionItem) {
         this.id = id;
         this.value = value;
         this.discountType = discountType;
@@ -92,19 +113,19 @@ public class GetDiscountResponse {
 
     /**
      * Getter for Value.
-     * @return Returns the double
+     * @return Returns the Double
      */
     @JsonGetter("value")
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
     /**
      * Setter for Value.
-     * @param value Value for double
+     * @param value Value for Double
      */
     @JsonSetter("value")
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
@@ -165,13 +186,22 @@ public class GetDiscountResponse {
     }
 
     /**
-     * Getter for Cycles.
-     * @return Returns the Integer
+     * Internal Getter for Cycles.
+     * @return Returns the Internal Integer
      */
     @JsonGetter("cycles")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetCycles() {
+        return this.cycles;
+    }
+
+    /**
+     * Getter for Cycles.
+     * @return Returns the Integer
+     */
     public Integer getCycles() {
-        return cycles;
+        return OptionalNullable.getFrom(cycles);
     }
 
     /**
@@ -180,18 +210,33 @@ public class GetDiscountResponse {
      */
     @JsonSetter("cycles")
     public void setCycles(Integer cycles) {
-        this.cycles = cycles;
+        this.cycles = OptionalNullable.of(cycles);
+    }
+
+    /**
+     * UnSetter for Cycles.
+     */
+    public void unsetCycles() {
+        cycles = null;
+    }
+
+    /**
+     * Internal Getter for DeletedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
     }
 
     /**
      * Getter for DeletedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("deleted_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -201,17 +246,33 @@ public class GetDiscountResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
+    }
+
+    /**
+     * Internal Getter for Description.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDescription() {
+        return this.description;
     }
 
     /**
      * Getter for Description.
      * @return Returns the String
      */
-    @JsonGetter("description")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getDescription() {
-        return description;
+        return OptionalNullable.getFrom(description);
     }
 
     /**
@@ -220,17 +281,33 @@ public class GetDiscountResponse {
      */
     @JsonSetter("description")
     public void setDescription(String description) {
-        this.description = description;
+        this.description = OptionalNullable.of(description);
+    }
+
+    /**
+     * UnSetter for Description.
+     */
+    public void unsetDescription() {
+        description = null;
+    }
+
+    /**
+     * Internal Getter for Subscription.
+     * @return Returns the Internal GetSubscriptionResponse
+     */
+    @JsonGetter("subscription")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSubscriptionResponse> internalGetSubscription() {
+        return this.subscription;
     }
 
     /**
      * Getter for Subscription.
      * @return Returns the GetSubscriptionResponse
      */
-    @JsonGetter("subscription")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetSubscriptionResponse getSubscription() {
-        return subscription;
+        return OptionalNullable.getFrom(subscription);
     }
 
     /**
@@ -239,7 +316,26 @@ public class GetDiscountResponse {
      */
     @JsonSetter("subscription")
     public void setSubscription(GetSubscriptionResponse subscription) {
-        this.subscription = subscription;
+        this.subscription = OptionalNullable.of(subscription);
+    }
+
+    /**
+     * UnSetter for Subscription.
+     */
+    public void unsetSubscription() {
+        subscription = null;
+    }
+
+    /**
+     * Internal Getter for SubscriptionItem.
+     * The subscription item
+     * @return Returns the Internal GetSubscriptionItemResponse
+     */
+    @JsonGetter("subscription_item")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSubscriptionItemResponse> internalGetSubscriptionItem() {
+        return this.subscriptionItem;
     }
 
     /**
@@ -247,10 +343,8 @@ public class GetDiscountResponse {
      * The subscription item
      * @return Returns the GetSubscriptionItemResponse
      */
-    @JsonGetter("subscription_item")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetSubscriptionItemResponse getSubscriptionItem() {
-        return subscriptionItem;
+        return OptionalNullable.getFrom(subscriptionItem);
     }
 
     /**
@@ -260,7 +354,15 @@ public class GetDiscountResponse {
      */
     @JsonSetter("subscription_item")
     public void setSubscriptionItem(GetSubscriptionItemResponse subscriptionItem) {
-        this.subscriptionItem = subscriptionItem;
+        this.subscriptionItem = OptionalNullable.of(subscriptionItem);
+    }
+
+    /**
+     * UnSetter for SubscriptionItem.
+     * The subscription item
+     */
+    public void unsetSubscriptionItem() {
+        subscriptionItem = null;
     }
 
     /**
@@ -281,12 +383,12 @@ public class GetDiscountResponse {
      * @return a new {@link GetDiscountResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, value, discountType, status, createdAt)
-                .cycles(getCycles())
-                .deletedAt(getDeletedAt())
-                .description(getDescription())
-                .subscription(getSubscription())
-                .subscriptionItem(getSubscriptionItem());
+        Builder builder = new Builder(id, value, discountType, status, createdAt);
+        builder.cycles = internalGetCycles();
+        builder.deletedAt = internalGetDeletedAt();
+        builder.description = internalGetDescription();
+        builder.subscription = internalGetSubscription();
+        builder.subscriptionItem = internalGetSubscriptionItem();
         return builder;
     }
 
@@ -295,15 +397,15 @@ public class GetDiscountResponse {
      */
     public static class Builder {
         private String id;
-        private double value;
+        private Double value;
         private String discountType;
         private String status;
         private LocalDateTime createdAt;
-        private Integer cycles;
-        private LocalDateTime deletedAt;
-        private String description;
-        private GetSubscriptionResponse subscription;
-        private GetSubscriptionItemResponse subscriptionItem;
+        private OptionalNullable<Integer> cycles;
+        private OptionalNullable<LocalDateTime> deletedAt;
+        private OptionalNullable<String> description;
+        private OptionalNullable<GetSubscriptionResponse> subscription;
+        private OptionalNullable<GetSubscriptionItemResponse> subscriptionItem;
 
         /**
          * Initialization constructor.
@@ -314,12 +416,12 @@ public class GetDiscountResponse {
         /**
          * Initialization constructor.
          * @param  id  String value for id.
-         * @param  value  double value for value.
+         * @param  value  Double value for value.
          * @param  discountType  String value for discountType.
          * @param  status  String value for status.
          * @param  createdAt  LocalDateTime value for createdAt.
          */
-        public Builder(String id, double value, String discountType, String status,
+        public Builder(String id, Double value, String discountType, String status,
                 LocalDateTime createdAt) {
             this.id = id;
             this.value = value;
@@ -340,10 +442,10 @@ public class GetDiscountResponse {
 
         /**
          * Setter for value.
-         * @param  value  double value for value.
+         * @param  value  Double value for value.
          * @return Builder
          */
-        public Builder value(double value) {
+        public Builder value(Double value) {
             this.value = value;
             return this;
         }
@@ -384,7 +486,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder cycles(Integer cycles) {
-            this.cycles = cycles;
+            this.cycles = OptionalNullable.of(cycles);
+            return this;
+        }
+
+        /**
+         * UnSetter for cycles.
+         * @return Builder
+         */
+        public Builder unsetCycles() {
+            cycles = null;
             return this;
         }
 
@@ -394,7 +505,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 
@@ -404,7 +524,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder description(String description) {
-            this.description = description;
+            this.description = OptionalNullable.of(description);
+            return this;
+        }
+
+        /**
+         * UnSetter for description.
+         * @return Builder
+         */
+        public Builder unsetDescription() {
+            description = null;
             return this;
         }
 
@@ -414,7 +543,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder subscription(GetSubscriptionResponse subscription) {
-            this.subscription = subscription;
+            this.subscription = OptionalNullable.of(subscription);
+            return this;
+        }
+
+        /**
+         * UnSetter for subscription.
+         * @return Builder
+         */
+        public Builder unsetSubscription() {
+            subscription = null;
             return this;
         }
 
@@ -424,7 +562,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder subscriptionItem(GetSubscriptionItemResponse subscriptionItem) {
-            this.subscriptionItem = subscriptionItem;
+            this.subscriptionItem = OptionalNullable.of(subscriptionItem);
+            return this;
+        }
+
+        /**
+         * UnSetter for subscriptionItem.
+         * @return Builder
+         */
+        public Builder unsetSubscriptionItem() {
+            subscriptionItem = null;
             return this;
         }
 

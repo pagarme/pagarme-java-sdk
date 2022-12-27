@@ -8,14 +8,11 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -24,62 +21,43 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetTransactionResponse type.
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "transaction_type",
-        defaultImpl = GetTransactionResponse.class,
-        visible = true)
-@JsonSubTypes({
-    @Type(value = GetBankTransferTransactionResponse.class, name = "bank_transfer"),
-    @Type(value = GetSafetyPayTransactionResponse.class, name = "safetypay"),
-    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
-    @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
-    @Type(value = GetDebitCardTransactionResponse.class, name = "debit_card"),
-    @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
-    @Type(value = GetCashTransactionResponse.class, name = "cash"),
-    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card"),
-    @Type(value = GetPixTransactionResponse.class, name = "pix")
-})
-@JsonInclude(Include.ALWAYS)
 public class GetTransactionResponse {
     private String gatewayId;
-    private int amount;
+    private Integer amount;
     private String status;
-    private boolean success;
+    private Boolean success;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private int attemptCount;
-    private int maxAttempts;
+    private Integer attemptCount;
+    private Integer maxAttempts;
     private List<GetSplitResponse> splits;
-    private LocalDateTime nextAttempt;
-    private String transactionType;
+    private OptionalNullable<LocalDateTime> nextAttempt;
+    private OptionalNullable<String> transactionType;
     private String id;
     private GetGatewayResponseResponse gatewayResponse;
     private GetAntifraudResponse antifraudResponse;
-    private Map<String, String> metadata;
+    private OptionalNullable<Map<String, String>> metadata;
     private List<GetSplitResponse> split;
-    private GetInterestResponse interest;
-    private GetFineResponse fine;
-    private Integer maxDaysToPayPastDue;
+    private OptionalNullable<GetInterestResponse> interest;
+    private OptionalNullable<GetFineResponse> fine;
+    private OptionalNullable<Integer> maxDaysToPayPastDue;
 
     /**
      * Default constructor.
      */
     public GetTransactionResponse() {
-        setTransactionType("transaction");
     }
 
     /**
      * Initialization constructor.
      * @param  gatewayId  String value for gatewayId.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
-     * @param  success  boolean value for success.
+     * @param  success  Boolean value for success.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
-     * @param  attemptCount  int value for attemptCount.
-     * @param  maxAttempts  int value for maxAttempts.
+     * @param  attemptCount  Integer value for attemptCount.
+     * @param  maxAttempts  Integer value for maxAttempts.
      * @param  splits  List of GetSplitResponse value for splits.
      * @param  id  String value for id.
      * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -94,13 +72,13 @@ public class GetTransactionResponse {
      */
     public GetTransactionResponse(
             String gatewayId,
-            int amount,
+            Integer amount,
             String status,
-            boolean success,
+            Boolean success,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
-            int attemptCount,
-            int maxAttempts,
+            Integer attemptCount,
+            Integer maxAttempts,
             List<GetSplitResponse> splits,
             String id,
             GetGatewayResponseResponse gatewayResponse,
@@ -112,6 +90,39 @@ public class GetTransactionResponse {
             GetInterestResponse interest,
             GetFineResponse fine,
             Integer maxDaysToPayPastDue) {
+        this.gatewayId = gatewayId;
+        this.amount = amount;
+        this.status = status;
+        this.success = success;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.attemptCount = attemptCount;
+        this.maxAttempts = maxAttempts;
+        this.splits = splits;
+        this.nextAttempt = OptionalNullable.of(nextAttempt);
+        this.transactionType = OptionalNullable.of(transactionType);
+        this.id = id;
+        this.gatewayResponse = gatewayResponse;
+        this.antifraudResponse = antifraudResponse;
+        this.metadata = OptionalNullable.of(metadata);
+        this.split = split;
+        this.interest = OptionalNullable.of(interest);
+        this.fine = OptionalNullable.of(fine);
+        this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetTransactionResponse(String gatewayId, Integer amount, String status,
+            Boolean success, LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+            Integer maxAttempts, List<GetSplitResponse> splits, String id,
+            GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
+            List<GetSplitResponse> split, OptionalNullable<LocalDateTime> nextAttempt,
+            OptionalNullable<String> transactionType,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
+            OptionalNullable<Integer> maxDaysToPayPastDue) {
         this.gatewayId = gatewayId;
         this.amount = amount;
         this.status = status;
@@ -156,20 +167,20 @@ public class GetTransactionResponse {
     /**
      * Getter for Amount.
      * Amount in cents
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
      * Amount in cents
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -196,20 +207,20 @@ public class GetTransactionResponse {
     /**
      * Getter for Success.
      * Indicates if the transaction ocurred successfuly
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("success")
-    public boolean getSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
     /**
      * Setter for Success.
      * Indicates if the transaction ocurred successfuly
-     * @param success Value for boolean
+     * @param success Value for Boolean
      */
     @JsonSetter("success")
-    public void setSuccess(boolean success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
     }
 
@@ -260,40 +271,40 @@ public class GetTransactionResponse {
     /**
      * Getter for AttemptCount.
      * Number of attempts tried
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("attempt_count")
-    public int getAttemptCount() {
+    public Integer getAttemptCount() {
         return attemptCount;
     }
 
     /**
      * Setter for AttemptCount.
      * Number of attempts tried
-     * @param attemptCount Value for int
+     * @param attemptCount Value for Integer
      */
     @JsonSetter("attempt_count")
-    public void setAttemptCount(int attemptCount) {
+    public void setAttemptCount(Integer attemptCount) {
         this.attemptCount = attemptCount;
     }
 
     /**
      * Getter for MaxAttempts.
      * Max attempts
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("max_attempts")
-    public int getMaxAttempts() {
+    public Integer getMaxAttempts() {
         return maxAttempts;
     }
 
     /**
      * Setter for MaxAttempts.
      * Max attempts
-     * @param maxAttempts Value for int
+     * @param maxAttempts Value for Integer
      */
     @JsonSetter("max_attempts")
-    public void setMaxAttempts(int maxAttempts) {
+    public void setMaxAttempts(Integer maxAttempts) {
         this.maxAttempts = maxAttempts;
     }
 
@@ -318,15 +329,24 @@ public class GetTransactionResponse {
     }
 
     /**
+     * Internal Getter for NextAttempt.
+     * Date and time of the next attempt
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("next_attempt")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetNextAttempt() {
+        return this.nextAttempt;
+    }
+
+    /**
      * Getter for NextAttempt.
      * Date and time of the next attempt
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("next_attempt")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getNextAttempt() {
-        return nextAttempt;
+        return OptionalNullable.getFrom(nextAttempt);
     }
 
     /**
@@ -337,17 +357,34 @@ public class GetTransactionResponse {
     @JsonSetter("next_attempt")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setNextAttempt(LocalDateTime nextAttempt) {
-        this.nextAttempt = nextAttempt;
+        this.nextAttempt = OptionalNullable.of(nextAttempt);
+    }
+
+    /**
+     * UnSetter for NextAttempt.
+     * Date and time of the next attempt
+     */
+    public void unsetNextAttempt() {
+        nextAttempt = null;
+    }
+
+    /**
+     * Internal Getter for TransactionType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("transaction_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetTransactionType() {
+        return this.transactionType;
     }
 
     /**
      * Getter for TransactionType.
      * @return Returns the String
      */
-    @JsonGetter("transaction_type")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getTransactionType() {
-        return transactionType;
+        return OptionalNullable.getFrom(transactionType);
     }
 
     /**
@@ -356,7 +393,14 @@ public class GetTransactionResponse {
      */
     @JsonSetter("transaction_type")
     public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
+        this.transactionType = OptionalNullable.of(transactionType);
+    }
+
+    /**
+     * UnSetter for TransactionType.
+     */
+    public void unsetTransactionType() {
+        transactionType = null;
     }
 
     /**
@@ -418,13 +462,22 @@ public class GetTransactionResponse {
     }
 
     /**
-     * Getter for Metadata.
-     * @return Returns the Map of String, String
+     * Internal Getter for Metadata.
+     * @return Returns the Internal Map of String, String
      */
     @JsonGetter("metadata")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
+    }
+
+    /**
+     * Getter for Metadata.
+     * @return Returns the Map of String, String
+     */
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -433,7 +486,14 @@ public class GetTransactionResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
     }
 
     /**
@@ -455,13 +515,22 @@ public class GetTransactionResponse {
     }
 
     /**
-     * Getter for Interest.
-     * @return Returns the GetInterestResponse
+     * Internal Getter for Interest.
+     * @return Returns the Internal GetInterestResponse
      */
     @JsonGetter("interest")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetInterestResponse> internalGetInterest() {
+        return this.interest;
+    }
+
+    /**
+     * Getter for Interest.
+     * @return Returns the GetInterestResponse
+     */
     public GetInterestResponse getInterest() {
-        return interest;
+        return OptionalNullable.getFrom(interest);
     }
 
     /**
@@ -470,17 +539,33 @@ public class GetTransactionResponse {
      */
     @JsonSetter("interest")
     public void setInterest(GetInterestResponse interest) {
-        this.interest = interest;
+        this.interest = OptionalNullable.of(interest);
+    }
+
+    /**
+     * UnSetter for Interest.
+     */
+    public void unsetInterest() {
+        interest = null;
+    }
+
+    /**
+     * Internal Getter for Fine.
+     * @return Returns the Internal GetFineResponse
+     */
+    @JsonGetter("fine")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetFineResponse> internalGetFine() {
+        return this.fine;
     }
 
     /**
      * Getter for Fine.
      * @return Returns the GetFineResponse
      */
-    @JsonGetter("fine")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetFineResponse getFine() {
-        return fine;
+        return OptionalNullable.getFrom(fine);
     }
 
     /**
@@ -489,17 +574,33 @@ public class GetTransactionResponse {
      */
     @JsonSetter("fine")
     public void setFine(GetFineResponse fine) {
-        this.fine = fine;
+        this.fine = OptionalNullable.of(fine);
+    }
+
+    /**
+     * UnSetter for Fine.
+     */
+    public void unsetFine() {
+        fine = null;
+    }
+
+    /**
+     * Internal Getter for MaxDaysToPayPastDue.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("max_days_to_pay_past_due")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetMaxDaysToPayPastDue() {
+        return this.maxDaysToPayPastDue;
     }
 
     /**
      * Getter for MaxDaysToPayPastDue.
      * @return Returns the Integer
      */
-    @JsonGetter("max_days_to_pay_past_due")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMaxDaysToPayPastDue() {
-        return maxDaysToPayPastDue;
+        return OptionalNullable.getFrom(maxDaysToPayPastDue);
     }
 
     /**
@@ -508,7 +609,14 @@ public class GetTransactionResponse {
      */
     @JsonSetter("max_days_to_pay_past_due")
     public void setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-        this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+        this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+    }
+
+    /**
+     * UnSetter for MaxDaysToPayPastDue.
+     */
+    public void unsetMaxDaysToPayPastDue() {
+        maxDaysToPayPastDue = null;
     }
 
     /**
@@ -534,13 +642,13 @@ public class GetTransactionResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(gatewayId, amount, status, success, createdAt, updatedAt,
-                attemptCount, maxAttempts, splits, id, gatewayResponse, antifraudResponse, split)
-                .nextAttempt(getNextAttempt())
-                .transactionType(getTransactionType())
-                .metadata(getMetadata())
-                .interest(getInterest())
-                .fine(getFine())
-                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
+                attemptCount, maxAttempts, splits, id, gatewayResponse, antifraudResponse, split);
+        builder.nextAttempt = internalGetNextAttempt();
+        builder.transactionType = internalGetTransactionType();
+        builder.metadata = internalGetMetadata();
+        builder.interest = internalGetInterest();
+        builder.fine = internalGetFine();
+        builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
         return builder;
     }
 
@@ -549,24 +657,24 @@ public class GetTransactionResponse {
      */
     public static class Builder {
         private String gatewayId;
-        private int amount;
+        private Integer amount;
         private String status;
-        private boolean success;
+        private Boolean success;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        private int attemptCount;
-        private int maxAttempts;
+        private Integer attemptCount;
+        private Integer maxAttempts;
         private List<GetSplitResponse> splits;
         private String id;
         private GetGatewayResponseResponse gatewayResponse;
         private GetAntifraudResponse antifraudResponse;
         private List<GetSplitResponse> split;
-        private LocalDateTime nextAttempt;
-        private String transactionType = "transaction";
-        private Map<String, String> metadata;
-        private GetInterestResponse interest;
-        private GetFineResponse fine;
-        private Integer maxDaysToPayPastDue;
+        private OptionalNullable<LocalDateTime> nextAttempt;
+        private OptionalNullable<String> transactionType;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<GetInterestResponse> interest;
+        private OptionalNullable<GetFineResponse> fine;
+        private OptionalNullable<Integer> maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -577,22 +685,22 @@ public class GetTransactionResponse {
         /**
          * Initialization constructor.
          * @param  gatewayId  String value for gatewayId.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  attemptCount  int value for attemptCount.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  attemptCount  Integer value for attemptCount.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @param  splits  List of GetSplitResponse value for splits.
          * @param  id  String value for id.
          * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
          * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
          * @param  split  List of GetSplitResponse value for split.
          */
-        public Builder(String gatewayId, int amount, String status, boolean success,
-                LocalDateTime createdAt, LocalDateTime updatedAt, int attemptCount, int maxAttempts,
-                List<GetSplitResponse> splits, String id,
+        public Builder(String gatewayId, Integer amount, String status, Boolean success,
+                LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+                Integer maxAttempts, List<GetSplitResponse> splits, String id,
                 GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
                 List<GetSplitResponse> split) {
             this.gatewayId = gatewayId;
@@ -622,10 +730,10 @@ public class GetTransactionResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -642,10 +750,10 @@ public class GetTransactionResponse {
 
         /**
          * Setter for success.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @return Builder
          */
-        public Builder success(boolean success) {
+        public Builder success(Boolean success) {
             this.success = success;
             return this;
         }
@@ -672,20 +780,20 @@ public class GetTransactionResponse {
 
         /**
          * Setter for attemptCount.
-         * @param  attemptCount  int value for attemptCount.
+         * @param  attemptCount  Integer value for attemptCount.
          * @return Builder
          */
-        public Builder attemptCount(int attemptCount) {
+        public Builder attemptCount(Integer attemptCount) {
             this.attemptCount = attemptCount;
             return this;
         }
 
         /**
          * Setter for maxAttempts.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @return Builder
          */
-        public Builder maxAttempts(int maxAttempts) {
+        public Builder maxAttempts(Integer maxAttempts) {
             this.maxAttempts = maxAttempts;
             return this;
         }
@@ -746,7 +854,16 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder nextAttempt(LocalDateTime nextAttempt) {
-            this.nextAttempt = nextAttempt;
+            this.nextAttempt = OptionalNullable.of(nextAttempt);
+            return this;
+        }
+
+        /**
+         * UnSetter for nextAttempt.
+         * @return Builder
+         */
+        public Builder unsetNextAttempt() {
+            nextAttempt = null;
             return this;
         }
 
@@ -756,7 +873,16 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = transactionType;
+            this.transactionType = OptionalNullable.of(transactionType);
+            return this;
+        }
+
+        /**
+         * UnSetter for transactionType.
+         * @return Builder
+         */
+        public Builder unsetTransactionType() {
+            transactionType = null;
             return this;
         }
 
@@ -766,7 +892,16 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -776,7 +911,16 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder interest(GetInterestResponse interest) {
-            this.interest = interest;
+            this.interest = OptionalNullable.of(interest);
+            return this;
+        }
+
+        /**
+         * UnSetter for interest.
+         * @return Builder
+         */
+        public Builder unsetInterest() {
+            interest = null;
             return this;
         }
 
@@ -786,7 +930,16 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder fine(GetFineResponse fine) {
-            this.fine = fine;
+            this.fine = OptionalNullable.of(fine);
+            return this;
+        }
+
+        /**
+         * UnSetter for fine.
+         * @return Builder
+         */
+        public Builder unsetFine() {
+            fine = null;
             return this;
         }
 
@@ -796,7 +949,16 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder unsetMaxDaysToPayPastDue() {
+            maxDaysToPayPastDue = null;
             return this;
         }
 

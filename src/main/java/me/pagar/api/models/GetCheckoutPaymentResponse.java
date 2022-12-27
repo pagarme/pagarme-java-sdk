@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import me.pagar.api.DateTimeHelper;
@@ -21,32 +22,32 @@ import me.pagar.api.DateTimeHelper;
  */
 public class GetCheckoutPaymentResponse {
     private String id;
-    private Integer amount;
+    private OptionalNullable<Integer> amount;
     private String defaultPaymentMethod;
     private String successUrl;
     private String paymentUrl;
     private String gatewayAffiliationId;
     private List<String> acceptedPaymentMethods;
     private String status;
-    private boolean skipCheckoutSuccessPage;
+    private Boolean skipCheckoutSuccessPage;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private LocalDateTime canceledAt;
-    private boolean customerEditable;
-    private GetCustomerResponse customer;
+    private OptionalNullable<LocalDateTime> canceledAt;
+    private Boolean customerEditable;
+    private OptionalNullable<GetCustomerResponse> customer;
     private GetAddressResponse billingaddress;
     private GetCheckoutCreditCardPaymentResponse creditCard;
     private GetCheckoutBoletoPaymentResponse boleto;
-    private boolean billingAddressEditable;
+    private Boolean billingAddressEditable;
     private GetShippingResponse shipping;
-    private boolean shippable;
-    private LocalDateTime closedAt;
-    private LocalDateTime expiresAt;
+    private Boolean shippable;
+    private OptionalNullable<LocalDateTime> closedAt;
+    private OptionalNullable<LocalDateTime> expiresAt;
     private String currency;
-    private GetCheckoutDebitCardPaymentResponse debitCard;
-    private GetCheckoutBankTransferPaymentResponse bankTransfer;
+    private OptionalNullable<GetCheckoutDebitCardPaymentResponse> debitCard;
+    private OptionalNullable<GetCheckoutBankTransferPaymentResponse> bankTransfer;
     private List<String> acceptedBrands;
-    private GetCheckoutPixPaymentResponse pix;
+    private OptionalNullable<GetCheckoutPixPaymentResponse> pix;
 
     /**
      * Default constructor.
@@ -63,16 +64,16 @@ public class GetCheckoutPaymentResponse {
      * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
      * @param  acceptedPaymentMethods  List of String value for acceptedPaymentMethods.
      * @param  status  String value for status.
-     * @param  skipCheckoutSuccessPage  boolean value for skipCheckoutSuccessPage.
+     * @param  skipCheckoutSuccessPage  Boolean value for skipCheckoutSuccessPage.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
-     * @param  customerEditable  boolean value for customerEditable.
+     * @param  customerEditable  Boolean value for customerEditable.
      * @param  billingaddress  GetAddressResponse value for billingaddress.
      * @param  creditCard  GetCheckoutCreditCardPaymentResponse value for creditCard.
      * @param  boleto  GetCheckoutBoletoPaymentResponse value for boleto.
-     * @param  billingAddressEditable  boolean value for billingAddressEditable.
+     * @param  billingAddressEditable  Boolean value for billingAddressEditable.
      * @param  shipping  GetShippingResponse value for shipping.
-     * @param  shippable  boolean value for shippable.
+     * @param  shippable  Boolean value for shippable.
      * @param  currency  String value for currency.
      * @param  acceptedBrands  List of String value for acceptedBrands.
      * @param  amount  Integer value for amount.
@@ -92,16 +93,16 @@ public class GetCheckoutPaymentResponse {
             String gatewayAffiliationId,
             List<String> acceptedPaymentMethods,
             String status,
-            boolean skipCheckoutSuccessPage,
+            Boolean skipCheckoutSuccessPage,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
-            boolean customerEditable,
+            Boolean customerEditable,
             GetAddressResponse billingaddress,
             GetCheckoutCreditCardPaymentResponse creditCard,
             GetCheckoutBoletoPaymentResponse boleto,
-            boolean billingAddressEditable,
+            Boolean billingAddressEditable,
             GetShippingResponse shipping,
-            boolean shippable,
+            Boolean shippable,
             String currency,
             List<String> acceptedBrands,
             Integer amount,
@@ -112,6 +113,52 @@ public class GetCheckoutPaymentResponse {
             GetCheckoutDebitCardPaymentResponse debitCard,
             GetCheckoutBankTransferPaymentResponse bankTransfer,
             GetCheckoutPixPaymentResponse pix) {
+        this.id = id;
+        this.amount = OptionalNullable.of(amount);
+        this.defaultPaymentMethod = defaultPaymentMethod;
+        this.successUrl = successUrl;
+        this.paymentUrl = paymentUrl;
+        this.gatewayAffiliationId = gatewayAffiliationId;
+        this.acceptedPaymentMethods = acceptedPaymentMethods;
+        this.status = status;
+        this.skipCheckoutSuccessPage = skipCheckoutSuccessPage;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.canceledAt = OptionalNullable.of(canceledAt);
+        this.customerEditable = customerEditable;
+        this.customer = OptionalNullable.of(customer);
+        this.billingaddress = billingaddress;
+        this.creditCard = creditCard;
+        this.boleto = boleto;
+        this.billingAddressEditable = billingAddressEditable;
+        this.shipping = shipping;
+        this.shippable = shippable;
+        this.closedAt = OptionalNullable.of(closedAt);
+        this.expiresAt = OptionalNullable.of(expiresAt);
+        this.currency = currency;
+        this.debitCard = OptionalNullable.of(debitCard);
+        this.bankTransfer = OptionalNullable.of(bankTransfer);
+        this.acceptedBrands = acceptedBrands;
+        this.pix = OptionalNullable.of(pix);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCheckoutPaymentResponse(String id, String defaultPaymentMethod, String successUrl,
+            String paymentUrl, String gatewayAffiliationId, List<String> acceptedPaymentMethods,
+            String status, Boolean skipCheckoutSuccessPage, LocalDateTime createdAt,
+            LocalDateTime updatedAt, Boolean customerEditable, GetAddressResponse billingaddress,
+            GetCheckoutCreditCardPaymentResponse creditCard,
+            GetCheckoutBoletoPaymentResponse boleto, Boolean billingAddressEditable,
+            GetShippingResponse shipping, Boolean shippable, String currency,
+            List<String> acceptedBrands, OptionalNullable<Integer> amount,
+            OptionalNullable<LocalDateTime> canceledAt,
+            OptionalNullable<GetCustomerResponse> customer,
+            OptionalNullable<LocalDateTime> closedAt, OptionalNullable<LocalDateTime> expiresAt,
+            OptionalNullable<GetCheckoutDebitCardPaymentResponse> debitCard,
+            OptionalNullable<GetCheckoutBankTransferPaymentResponse> bankTransfer,
+            OptionalNullable<GetCheckoutPixPaymentResponse> pix) {
         this.id = id;
         this.amount = amount;
         this.defaultPaymentMethod = defaultPaymentMethod;
@@ -160,14 +207,24 @@ public class GetCheckoutPaymentResponse {
     }
 
     /**
+     * Internal Getter for Amount.
+     * Valor em centavos
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
+    }
+
+    /**
      * Getter for Amount.
      * Valor em centavos
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -177,7 +234,15 @@ public class GetCheckoutPaymentResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Valor em centavos
+     */
+    public void unsetAmount() {
+        amount = null;
     }
 
     /**
@@ -303,20 +368,20 @@ public class GetCheckoutPaymentResponse {
     /**
      * Getter for SkipCheckoutSuccessPage.
      * Pular tela de sucesso pós-pagamento?
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("skip_checkout_success_page")
-    public boolean getSkipCheckoutSuccessPage() {
+    public Boolean getSkipCheckoutSuccessPage() {
         return skipCheckoutSuccessPage;
     }
 
     /**
      * Setter for SkipCheckoutSuccessPage.
      * Pular tela de sucesso pós-pagamento?
-     * @param skipCheckoutSuccessPage Value for boolean
+     * @param skipCheckoutSuccessPage Value for Boolean
      */
     @JsonSetter("skip_checkout_success_page")
-    public void setSkipCheckoutSuccessPage(boolean skipCheckoutSuccessPage) {
+    public void setSkipCheckoutSuccessPage(Boolean skipCheckoutSuccessPage) {
         this.skipCheckoutSuccessPage = skipCheckoutSuccessPage;
     }
 
@@ -365,15 +430,24 @@ public class GetCheckoutPaymentResponse {
     }
 
     /**
+     * Internal Getter for CanceledAt.
+     * Data de cancelamento
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("canceled_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCanceledAt() {
+        return this.canceledAt;
+    }
+
+    /**
      * Getter for CanceledAt.
      * Data de cancelamento
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("canceled_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCanceledAt() {
-        return canceledAt;
+        return OptionalNullable.getFrom(canceledAt);
     }
 
     /**
@@ -384,27 +458,47 @@ public class GetCheckoutPaymentResponse {
     @JsonSetter("canceled_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCanceledAt(LocalDateTime canceledAt) {
-        this.canceledAt = canceledAt;
+        this.canceledAt = OptionalNullable.of(canceledAt);
+    }
+
+    /**
+     * UnSetter for CanceledAt.
+     * Data de cancelamento
+     */
+    public void unsetCanceledAt() {
+        canceledAt = null;
     }
 
     /**
      * Getter for CustomerEditable.
      * Torna o objeto customer editável
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("customer_editable")
-    public boolean getCustomerEditable() {
+    public Boolean getCustomerEditable() {
         return customerEditable;
     }
 
     /**
      * Setter for CustomerEditable.
      * Torna o objeto customer editável
-     * @param customerEditable Value for boolean
+     * @param customerEditable Value for Boolean
      */
     @JsonSetter("customer_editable")
-    public void setCustomerEditable(boolean customerEditable) {
+    public void setCustomerEditable(Boolean customerEditable) {
         this.customerEditable = customerEditable;
+    }
+
+    /**
+     * Internal Getter for Customer.
+     * Dados do comprador
+     * @return Returns the Internal GetCustomerResponse
+     */
+    @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
     }
 
     /**
@@ -412,10 +506,8 @@ public class GetCheckoutPaymentResponse {
      * Dados do comprador
      * @return Returns the GetCustomerResponse
      */
-    @JsonGetter("customer")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -425,7 +517,15 @@ public class GetCheckoutPaymentResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     * Dados do comprador
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -491,20 +591,20 @@ public class GetCheckoutPaymentResponse {
     /**
      * Getter for BillingAddressEditable.
      * Indica se o billing address poderá ser editado
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("billing_address_editable")
-    public boolean getBillingAddressEditable() {
+    public Boolean getBillingAddressEditable() {
         return billingAddressEditable;
     }
 
     /**
      * Setter for BillingAddressEditable.
      * Indica se o billing address poderá ser editado
-     * @param billingAddressEditable Value for boolean
+     * @param billingAddressEditable Value for Boolean
      */
     @JsonSetter("billing_address_editable")
-    public void setBillingAddressEditable(boolean billingAddressEditable) {
+    public void setBillingAddressEditable(Boolean billingAddressEditable) {
         this.billingAddressEditable = billingAddressEditable;
     }
 
@@ -531,21 +631,33 @@ public class GetCheckoutPaymentResponse {
     /**
      * Getter for Shippable.
      * Indica se possui entrega
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("shippable")
-    public boolean getShippable() {
+    public Boolean getShippable() {
         return shippable;
     }
 
     /**
      * Setter for Shippable.
      * Indica se possui entrega
-     * @param shippable Value for boolean
+     * @param shippable Value for Boolean
      */
     @JsonSetter("shippable")
-    public void setShippable(boolean shippable) {
+    public void setShippable(Boolean shippable) {
         this.shippable = shippable;
+    }
+
+    /**
+     * Internal Getter for ClosedAt.
+     * Data de fechamento
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("closed_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetClosedAt() {
+        return this.closedAt;
     }
 
     /**
@@ -553,11 +665,8 @@ public class GetCheckoutPaymentResponse {
      * Data de fechamento
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("closed_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getClosedAt() {
-        return closedAt;
+        return OptionalNullable.getFrom(closedAt);
     }
 
     /**
@@ -568,7 +677,27 @@ public class GetCheckoutPaymentResponse {
     @JsonSetter("closed_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setClosedAt(LocalDateTime closedAt) {
-        this.closedAt = closedAt;
+        this.closedAt = OptionalNullable.of(closedAt);
+    }
+
+    /**
+     * UnSetter for ClosedAt.
+     * Data de fechamento
+     */
+    public void unsetClosedAt() {
+        closedAt = null;
+    }
+
+    /**
+     * Internal Getter for ExpiresAt.
+     * Data de expiração
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("expires_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetExpiresAt() {
+        return this.expiresAt;
     }
 
     /**
@@ -576,11 +705,8 @@ public class GetCheckoutPaymentResponse {
      * Data de expiração
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("expires_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getExpiresAt() {
-        return expiresAt;
+        return OptionalNullable.getFrom(expiresAt);
     }
 
     /**
@@ -591,7 +717,15 @@ public class GetCheckoutPaymentResponse {
     @JsonSetter("expires_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setExpiresAt(LocalDateTime expiresAt) {
-        this.expiresAt = expiresAt;
+        this.expiresAt = OptionalNullable.of(expiresAt);
+    }
+
+    /**
+     * UnSetter for ExpiresAt.
+     * Data de expiração
+     */
+    public void unsetExpiresAt() {
+        expiresAt = null;
     }
 
     /**
@@ -615,14 +749,24 @@ public class GetCheckoutPaymentResponse {
     }
 
     /**
+     * Internal Getter for DebitCard.
+     * Configurações de cartão de débito
+     * @return Returns the Internal GetCheckoutDebitCardPaymentResponse
+     */
+    @JsonGetter("debit_card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCheckoutDebitCardPaymentResponse> internalGetDebitCard() {
+        return this.debitCard;
+    }
+
+    /**
      * Getter for DebitCard.
      * Configurações de cartão de débito
      * @return Returns the GetCheckoutDebitCardPaymentResponse
      */
-    @JsonGetter("debit_card")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCheckoutDebitCardPaymentResponse getDebitCard() {
-        return debitCard;
+        return OptionalNullable.getFrom(debitCard);
     }
 
     /**
@@ -632,7 +776,27 @@ public class GetCheckoutPaymentResponse {
      */
     @JsonSetter("debit_card")
     public void setDebitCard(GetCheckoutDebitCardPaymentResponse debitCard) {
-        this.debitCard = debitCard;
+        this.debitCard = OptionalNullable.of(debitCard);
+    }
+
+    /**
+     * UnSetter for DebitCard.
+     * Configurações de cartão de débito
+     */
+    public void unsetDebitCard() {
+        debitCard = null;
+    }
+
+    /**
+     * Internal Getter for BankTransfer.
+     * Bank transfer payment response
+     * @return Returns the Internal GetCheckoutBankTransferPaymentResponse
+     */
+    @JsonGetter("bank_transfer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCheckoutBankTransferPaymentResponse> internalGetBankTransfer() {
+        return this.bankTransfer;
     }
 
     /**
@@ -640,10 +804,8 @@ public class GetCheckoutPaymentResponse {
      * Bank transfer payment response
      * @return Returns the GetCheckoutBankTransferPaymentResponse
      */
-    @JsonGetter("bank_transfer")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCheckoutBankTransferPaymentResponse getBankTransfer() {
-        return bankTransfer;
+        return OptionalNullable.getFrom(bankTransfer);
     }
 
     /**
@@ -653,7 +815,15 @@ public class GetCheckoutPaymentResponse {
      */
     @JsonSetter("bank_transfer")
     public void setBankTransfer(GetCheckoutBankTransferPaymentResponse bankTransfer) {
-        this.bankTransfer = bankTransfer;
+        this.bankTransfer = OptionalNullable.of(bankTransfer);
+    }
+
+    /**
+     * UnSetter for BankTransfer.
+     * Bank transfer payment response
+     */
+    public void unsetBankTransfer() {
+        bankTransfer = null;
     }
 
     /**
@@ -677,14 +847,24 @@ public class GetCheckoutPaymentResponse {
     }
 
     /**
+     * Internal Getter for Pix.
+     * Pix payment response
+     * @return Returns the Internal GetCheckoutPixPaymentResponse
+     */
+    @JsonGetter("pix")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCheckoutPixPaymentResponse> internalGetPix() {
+        return this.pix;
+    }
+
+    /**
      * Getter for Pix.
      * Pix payment response
      * @return Returns the GetCheckoutPixPaymentResponse
      */
-    @JsonGetter("pix")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCheckoutPixPaymentResponse getPix() {
-        return pix;
+        return OptionalNullable.getFrom(pix);
     }
 
     /**
@@ -694,7 +874,15 @@ public class GetCheckoutPaymentResponse {
      */
     @JsonSetter("pix")
     public void setPix(GetCheckoutPixPaymentResponse pix) {
-        this.pix = pix;
+        this.pix = OptionalNullable.of(pix);
+    }
+
+    /**
+     * UnSetter for Pix.
+     * Pix payment response
+     */
+    public void unsetPix() {
+        pix = null;
     }
 
     /**
@@ -726,15 +914,15 @@ public class GetCheckoutPaymentResponse {
         Builder builder = new Builder(id, defaultPaymentMethod, successUrl, paymentUrl,
                 gatewayAffiliationId, acceptedPaymentMethods, status, skipCheckoutSuccessPage,
                 createdAt, updatedAt, customerEditable, billingaddress, creditCard, boleto,
-                billingAddressEditable, shipping, shippable, currency, acceptedBrands)
-                .amount(getAmount())
-                .canceledAt(getCanceledAt())
-                .customer(getCustomer())
-                .closedAt(getClosedAt())
-                .expiresAt(getExpiresAt())
-                .debitCard(getDebitCard())
-                .bankTransfer(getBankTransfer())
-                .pix(getPix());
+                billingAddressEditable, shipping, shippable, currency, acceptedBrands);
+        builder.amount = internalGetAmount();
+        builder.canceledAt = internalGetCanceledAt();
+        builder.customer = internalGetCustomer();
+        builder.closedAt = internalGetClosedAt();
+        builder.expiresAt = internalGetExpiresAt();
+        builder.debitCard = internalGetDebitCard();
+        builder.bankTransfer = internalGetBankTransfer();
+        builder.pix = internalGetPix();
         return builder;
     }
 
@@ -749,26 +937,26 @@ public class GetCheckoutPaymentResponse {
         private String gatewayAffiliationId;
         private List<String> acceptedPaymentMethods;
         private String status;
-        private boolean skipCheckoutSuccessPage;
+        private Boolean skipCheckoutSuccessPage;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        private boolean customerEditable;
+        private Boolean customerEditable;
         private GetAddressResponse billingaddress;
         private GetCheckoutCreditCardPaymentResponse creditCard;
         private GetCheckoutBoletoPaymentResponse boleto;
-        private boolean billingAddressEditable;
+        private Boolean billingAddressEditable;
         private GetShippingResponse shipping;
-        private boolean shippable;
+        private Boolean shippable;
         private String currency;
         private List<String> acceptedBrands;
-        private Integer amount;
-        private LocalDateTime canceledAt;
-        private GetCustomerResponse customer;
-        private LocalDateTime closedAt;
-        private LocalDateTime expiresAt;
-        private GetCheckoutDebitCardPaymentResponse debitCard;
-        private GetCheckoutBankTransferPaymentResponse bankTransfer;
-        private GetCheckoutPixPaymentResponse pix;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<LocalDateTime> canceledAt;
+        private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<LocalDateTime> closedAt;
+        private OptionalNullable<LocalDateTime> expiresAt;
+        private OptionalNullable<GetCheckoutDebitCardPaymentResponse> debitCard;
+        private OptionalNullable<GetCheckoutBankTransferPaymentResponse> bankTransfer;
+        private OptionalNullable<GetCheckoutPixPaymentResponse> pix;
 
         /**
          * Initialization constructor.
@@ -785,26 +973,26 @@ public class GetCheckoutPaymentResponse {
          * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
          * @param  acceptedPaymentMethods  List of String value for acceptedPaymentMethods.
          * @param  status  String value for status.
-         * @param  skipCheckoutSuccessPage  boolean value for skipCheckoutSuccessPage.
+         * @param  skipCheckoutSuccessPage  Boolean value for skipCheckoutSuccessPage.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  customerEditable  boolean value for customerEditable.
+         * @param  customerEditable  Boolean value for customerEditable.
          * @param  billingaddress  GetAddressResponse value for billingaddress.
          * @param  creditCard  GetCheckoutCreditCardPaymentResponse value for creditCard.
          * @param  boleto  GetCheckoutBoletoPaymentResponse value for boleto.
-         * @param  billingAddressEditable  boolean value for billingAddressEditable.
+         * @param  billingAddressEditable  Boolean value for billingAddressEditable.
          * @param  shipping  GetShippingResponse value for shipping.
-         * @param  shippable  boolean value for shippable.
+         * @param  shippable  Boolean value for shippable.
          * @param  currency  String value for currency.
          * @param  acceptedBrands  List of String value for acceptedBrands.
          */
         public Builder(String id, String defaultPaymentMethod, String successUrl, String paymentUrl,
                 String gatewayAffiliationId, List<String> acceptedPaymentMethods, String status,
-                boolean skipCheckoutSuccessPage, LocalDateTime createdAt, LocalDateTime updatedAt,
-                boolean customerEditable, GetAddressResponse billingaddress,
+                Boolean skipCheckoutSuccessPage, LocalDateTime createdAt, LocalDateTime updatedAt,
+                Boolean customerEditable, GetAddressResponse billingaddress,
                 GetCheckoutCreditCardPaymentResponse creditCard,
-                GetCheckoutBoletoPaymentResponse boleto, boolean billingAddressEditable,
-                GetShippingResponse shipping, boolean shippable, String currency,
+                GetCheckoutBoletoPaymentResponse boleto, Boolean billingAddressEditable,
+                GetShippingResponse shipping, Boolean shippable, String currency,
                 List<String> acceptedBrands) {
             this.id = id;
             this.defaultPaymentMethod = defaultPaymentMethod;
@@ -899,10 +1087,10 @@ public class GetCheckoutPaymentResponse {
 
         /**
          * Setter for skipCheckoutSuccessPage.
-         * @param  skipCheckoutSuccessPage  boolean value for skipCheckoutSuccessPage.
+         * @param  skipCheckoutSuccessPage  Boolean value for skipCheckoutSuccessPage.
          * @return Builder
          */
-        public Builder skipCheckoutSuccessPage(boolean skipCheckoutSuccessPage) {
+        public Builder skipCheckoutSuccessPage(Boolean skipCheckoutSuccessPage) {
             this.skipCheckoutSuccessPage = skipCheckoutSuccessPage;
             return this;
         }
@@ -929,10 +1117,10 @@ public class GetCheckoutPaymentResponse {
 
         /**
          * Setter for customerEditable.
-         * @param  customerEditable  boolean value for customerEditable.
+         * @param  customerEditable  Boolean value for customerEditable.
          * @return Builder
          */
-        public Builder customerEditable(boolean customerEditable) {
+        public Builder customerEditable(Boolean customerEditable) {
             this.customerEditable = customerEditable;
             return this;
         }
@@ -969,10 +1157,10 @@ public class GetCheckoutPaymentResponse {
 
         /**
          * Setter for billingAddressEditable.
-         * @param  billingAddressEditable  boolean value for billingAddressEditable.
+         * @param  billingAddressEditable  Boolean value for billingAddressEditable.
          * @return Builder
          */
-        public Builder billingAddressEditable(boolean billingAddressEditable) {
+        public Builder billingAddressEditable(Boolean billingAddressEditable) {
             this.billingAddressEditable = billingAddressEditable;
             return this;
         }
@@ -989,10 +1177,10 @@ public class GetCheckoutPaymentResponse {
 
         /**
          * Setter for shippable.
-         * @param  shippable  boolean value for shippable.
+         * @param  shippable  Boolean value for shippable.
          * @return Builder
          */
-        public Builder shippable(boolean shippable) {
+        public Builder shippable(Boolean shippable) {
             this.shippable = shippable;
             return this;
         }
@@ -1023,7 +1211,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -1033,7 +1230,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder canceledAt(LocalDateTime canceledAt) {
-            this.canceledAt = canceledAt;
+            this.canceledAt = OptionalNullable.of(canceledAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for canceledAt.
+         * @return Builder
+         */
+        public Builder unsetCanceledAt() {
+            canceledAt = null;
             return this;
         }
 
@@ -1043,7 +1249,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 
@@ -1053,7 +1268,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder closedAt(LocalDateTime closedAt) {
-            this.closedAt = closedAt;
+            this.closedAt = OptionalNullable.of(closedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for closedAt.
+         * @return Builder
+         */
+        public Builder unsetClosedAt() {
+            closedAt = null;
             return this;
         }
 
@@ -1063,7 +1287,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder expiresAt(LocalDateTime expiresAt) {
-            this.expiresAt = expiresAt;
+            this.expiresAt = OptionalNullable.of(expiresAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for expiresAt.
+         * @return Builder
+         */
+        public Builder unsetExpiresAt() {
+            expiresAt = null;
             return this;
         }
 
@@ -1073,7 +1306,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder debitCard(GetCheckoutDebitCardPaymentResponse debitCard) {
-            this.debitCard = debitCard;
+            this.debitCard = OptionalNullable.of(debitCard);
+            return this;
+        }
+
+        /**
+         * UnSetter for debitCard.
+         * @return Builder
+         */
+        public Builder unsetDebitCard() {
+            debitCard = null;
             return this;
         }
 
@@ -1083,7 +1325,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder bankTransfer(GetCheckoutBankTransferPaymentResponse bankTransfer) {
-            this.bankTransfer = bankTransfer;
+            this.bankTransfer = OptionalNullable.of(bankTransfer);
+            return this;
+        }
+
+        /**
+         * UnSetter for bankTransfer.
+         * @return Builder
+         */
+        public Builder unsetBankTransfer() {
+            bankTransfer = null;
             return this;
         }
 
@@ -1093,7 +1344,16 @@ public class GetCheckoutPaymentResponse {
          * @return Builder
          */
         public Builder pix(GetCheckoutPixPaymentResponse pix) {
-            this.pix = pix;
+            this.pix = OptionalNullable.of(pix);
+            return this;
+        }
+
+        /**
+         * UnSetter for pix.
+         * @return Builder
+         */
+        public Builder unsetPix() {
+            pix = null;
             return this;
         }
 

@@ -11,8 +11,8 @@ Anticipation limit
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Amount` | `int` | Required | Amount | int getAmount() | setAmount(int amount) |
-| `AnticipationFee` | `int` | Required | Anticipation fee | int getAnticipationFee() | setAnticipationFee(int anticipationFee) |
+| `Amount` | `Integer` | Required | Amount | Integer getAmount() | setAmount(Integer amount) |
+| `AnticipationFee` | `Integer` | Required | Anticipation fee | Integer getAnticipationFee() | setAnticipationFee(Integer anticipationFee) |
 
 ## Example (as JSON)
 

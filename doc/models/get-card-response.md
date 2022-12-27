@@ -15,8 +15,8 @@ Response object for getting a credit card
 | `LastFourDigits` | `String` | Required | - | String getLastFourDigits() | setLastFourDigits(String lastFourDigits) |
 | `Brand` | `String` | Required | - | String getBrand() | setBrand(String brand) |
 | `HolderName` | `String` | Required | - | String getHolderName() | setHolderName(String holderName) |
-| `ExpMonth` | `int` | Required | - | int getExpMonth() | setExpMonth(int expMonth) |
-| `ExpYear` | `int` | Required | - | int getExpYear() | setExpYear(int expYear) |
+| `ExpMonth` | `Integer` | Required | - | Integer getExpMonth() | setExpMonth(Integer expMonth) |
+| `ExpYear` | `Integer` | Required | - | Integer getExpYear() | setExpYear(Integer expYear) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |

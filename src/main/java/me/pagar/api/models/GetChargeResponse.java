@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -23,24 +24,24 @@ public class GetChargeResponse {
     private String id;
     private String code;
     private String gatewayId;
-    private int amount;
+    private Integer amount;
     private String status;
     private String currency;
     private String paymentMethod;
     private LocalDateTime dueAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private GetTransactionResponse lastTransaction;
-    private GetInvoiceResponse invoice;
-    private GetOrderResponse order;
-    private GetCustomerResponse customer;
+    private OptionalNullable<GetTransactionResponse> lastTransaction;
+    private OptionalNullable<GetInvoiceResponse> invoice;
+    private OptionalNullable<GetOrderResponse> order;
+    private OptionalNullable<GetCustomerResponse> customer;
     private Map<String, String> metadata;
-    private LocalDateTime paidAt;
-    private LocalDateTime canceledAt;
-    private int canceledAmount;
-    private int paidAmount;
-    private Integer interestAndFinePaid;
-    private String recurrencyCycle;
+    private OptionalNullable<LocalDateTime> paidAt;
+    private OptionalNullable<LocalDateTime> canceledAt;
+    private Integer canceledAmount;
+    private Integer paidAmount;
+    private OptionalNullable<Integer> interestAndFinePaid;
+    private OptionalNullable<String> recurrencyCycle;
 
     /**
      * Default constructor.
@@ -53,7 +54,7 @@ public class GetChargeResponse {
      * @param  id  String value for id.
      * @param  code  String value for code.
      * @param  gatewayId  String value for gatewayId.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
      * @param  currency  String value for currency.
      * @param  paymentMethod  String value for paymentMethod.
@@ -61,8 +62,8 @@ public class GetChargeResponse {
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
      * @param  metadata  Map of String, value for metadata.
-     * @param  canceledAmount  int value for canceledAmount.
-     * @param  paidAmount  int value for paidAmount.
+     * @param  canceledAmount  Integer value for canceledAmount.
+     * @param  paidAmount  Integer value for paidAmount.
      * @param  lastTransaction  GetTransactionResponse value for lastTransaction.
      * @param  invoice  GetInvoiceResponse value for invoice.
      * @param  order  GetOrderResponse value for order.
@@ -76,7 +77,7 @@ public class GetChargeResponse {
             String id,
             String code,
             String gatewayId,
-            int amount,
+            Integer amount,
             String status,
             String currency,
             String paymentMethod,
@@ -84,8 +85,8 @@ public class GetChargeResponse {
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
             Map<String, String> metadata,
-            int canceledAmount,
-            int paidAmount,
+            Integer canceledAmount,
+            Integer paidAmount,
             GetTransactionResponse lastTransaction,
             GetInvoiceResponse invoice,
             GetOrderResponse order,
@@ -94,6 +95,42 @@ public class GetChargeResponse {
             LocalDateTime canceledAt,
             Integer interestAndFinePaid,
             String recurrencyCycle) {
+        this.id = id;
+        this.code = code;
+        this.gatewayId = gatewayId;
+        this.amount = amount;
+        this.status = status;
+        this.currency = currency;
+        this.paymentMethod = paymentMethod;
+        this.dueAt = dueAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.lastTransaction = OptionalNullable.of(lastTransaction);
+        this.invoice = OptionalNullable.of(invoice);
+        this.order = OptionalNullable.of(order);
+        this.customer = OptionalNullable.of(customer);
+        this.metadata = metadata;
+        this.paidAt = OptionalNullable.of(paidAt);
+        this.canceledAt = OptionalNullable.of(canceledAt);
+        this.canceledAmount = canceledAmount;
+        this.paidAmount = paidAmount;
+        this.interestAndFinePaid = OptionalNullable.of(interestAndFinePaid);
+        this.recurrencyCycle = OptionalNullable.of(recurrencyCycle);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetChargeResponse(String id, String code, String gatewayId, Integer amount,
+            String status, String currency, String paymentMethod, LocalDateTime dueAt,
+            LocalDateTime createdAt, LocalDateTime updatedAt, Map<String, String> metadata,
+            Integer canceledAmount, Integer paidAmount,
+            OptionalNullable<GetTransactionResponse> lastTransaction,
+            OptionalNullable<GetInvoiceResponse> invoice, OptionalNullable<GetOrderResponse> order,
+            OptionalNullable<GetCustomerResponse> customer, OptionalNullable<LocalDateTime> paidAt,
+            OptionalNullable<LocalDateTime> canceledAt,
+            OptionalNullable<Integer> interestAndFinePaid,
+            OptionalNullable<String> recurrencyCycle) {
         this.id = id;
         this.code = code;
         this.gatewayId = gatewayId;
@@ -173,19 +210,19 @@ public class GetChargeResponse {
 
     /**
      * Getter for Amount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -304,13 +341,22 @@ public class GetChargeResponse {
     }
 
     /**
-     * Getter for LastTransaction.
-     * @return Returns the GetTransactionResponse
+     * Internal Getter for LastTransaction.
+     * @return Returns the Internal GetTransactionResponse
      */
     @JsonGetter("last_transaction")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetTransactionResponse> internalGetLastTransaction() {
+        return this.lastTransaction;
+    }
+
+    /**
+     * Getter for LastTransaction.
+     * @return Returns the GetTransactionResponse
+     */
     public GetTransactionResponse getLastTransaction() {
-        return lastTransaction;
+        return OptionalNullable.getFrom(lastTransaction);
     }
 
     /**
@@ -319,17 +365,33 @@ public class GetChargeResponse {
      */
     @JsonSetter("last_transaction")
     public void setLastTransaction(GetTransactionResponse lastTransaction) {
-        this.lastTransaction = lastTransaction;
+        this.lastTransaction = OptionalNullable.of(lastTransaction);
+    }
+
+    /**
+     * UnSetter for LastTransaction.
+     */
+    public void unsetLastTransaction() {
+        lastTransaction = null;
+    }
+
+    /**
+     * Internal Getter for Invoice.
+     * @return Returns the Internal GetInvoiceResponse
+     */
+    @JsonGetter("invoice")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetInvoiceResponse> internalGetInvoice() {
+        return this.invoice;
     }
 
     /**
      * Getter for Invoice.
      * @return Returns the GetInvoiceResponse
      */
-    @JsonGetter("invoice")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetInvoiceResponse getInvoice() {
-        return invoice;
+        return OptionalNullable.getFrom(invoice);
     }
 
     /**
@@ -338,17 +400,33 @@ public class GetChargeResponse {
      */
     @JsonSetter("invoice")
     public void setInvoice(GetInvoiceResponse invoice) {
-        this.invoice = invoice;
+        this.invoice = OptionalNullable.of(invoice);
+    }
+
+    /**
+     * UnSetter for Invoice.
+     */
+    public void unsetInvoice() {
+        invoice = null;
+    }
+
+    /**
+     * Internal Getter for Order.
+     * @return Returns the Internal GetOrderResponse
+     */
+    @JsonGetter("order")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetOrderResponse> internalGetOrder() {
+        return this.order;
     }
 
     /**
      * Getter for Order.
      * @return Returns the GetOrderResponse
      */
-    @JsonGetter("order")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetOrderResponse getOrder() {
-        return order;
+        return OptionalNullable.getFrom(order);
     }
 
     /**
@@ -357,17 +435,33 @@ public class GetChargeResponse {
      */
     @JsonSetter("order")
     public void setOrder(GetOrderResponse order) {
-        this.order = order;
+        this.order = OptionalNullable.of(order);
+    }
+
+    /**
+     * UnSetter for Order.
+     */
+    public void unsetOrder() {
+        order = null;
+    }
+
+    /**
+     * Internal Getter for Customer.
+     * @return Returns the Internal GetCustomerResponse
+     */
+    @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
     }
 
     /**
      * Getter for Customer.
      * @return Returns the GetCustomerResponse
      */
-    @JsonGetter("customer")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -376,7 +470,14 @@ public class GetChargeResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -398,14 +499,22 @@ public class GetChargeResponse {
     }
 
     /**
-     * Getter for PaidAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for PaidAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("paid_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetPaidAt() {
+        return this.paidAt;
+    }
+
+    /**
+     * Getter for PaidAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getPaidAt() {
-        return paidAt;
+        return OptionalNullable.getFrom(paidAt);
     }
 
     /**
@@ -415,18 +524,33 @@ public class GetChargeResponse {
     @JsonSetter("paid_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setPaidAt(LocalDateTime paidAt) {
-        this.paidAt = paidAt;
+        this.paidAt = OptionalNullable.of(paidAt);
+    }
+
+    /**
+     * UnSetter for PaidAt.
+     */
+    public void unsetPaidAt() {
+        paidAt = null;
+    }
+
+    /**
+     * Internal Getter for CanceledAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("canceled_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCanceledAt() {
+        return this.canceledAt;
     }
 
     /**
      * Getter for CanceledAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("canceled_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCanceledAt() {
-        return canceledAt;
+        return OptionalNullable.getFrom(canceledAt);
     }
 
     /**
@@ -436,47 +560,66 @@ public class GetChargeResponse {
     @JsonSetter("canceled_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCanceledAt(LocalDateTime canceledAt) {
-        this.canceledAt = canceledAt;
+        this.canceledAt = OptionalNullable.of(canceledAt);
+    }
+
+    /**
+     * UnSetter for CanceledAt.
+     */
+    public void unsetCanceledAt() {
+        canceledAt = null;
     }
 
     /**
      * Getter for CanceledAmount.
      * Canceled Amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("canceled_amount")
-    public int getCanceledAmount() {
+    public Integer getCanceledAmount() {
         return canceledAmount;
     }
 
     /**
      * Setter for CanceledAmount.
      * Canceled Amount
-     * @param canceledAmount Value for int
+     * @param canceledAmount Value for Integer
      */
     @JsonSetter("canceled_amount")
-    public void setCanceledAmount(int canceledAmount) {
+    public void setCanceledAmount(Integer canceledAmount) {
         this.canceledAmount = canceledAmount;
     }
 
     /**
      * Getter for PaidAmount.
      * Paid amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("paid_amount")
-    public int getPaidAmount() {
+    public Integer getPaidAmount() {
         return paidAmount;
     }
 
     /**
      * Setter for PaidAmount.
      * Paid amount
-     * @param paidAmount Value for int
+     * @param paidAmount Value for Integer
      */
     @JsonSetter("paid_amount")
-    public void setPaidAmount(int paidAmount) {
+    public void setPaidAmount(Integer paidAmount) {
         this.paidAmount = paidAmount;
+    }
+
+    /**
+     * Internal Getter for InterestAndFinePaid.
+     * interest and fine paid
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("interest_and_fine_paid")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetInterestAndFinePaid() {
+        return this.interestAndFinePaid;
     }
 
     /**
@@ -484,10 +627,8 @@ public class GetChargeResponse {
      * interest and fine paid
      * @return Returns the Integer
      */
-    @JsonGetter("interest_and_fine_paid")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getInterestAndFinePaid() {
-        return interestAndFinePaid;
+        return OptionalNullable.getFrom(interestAndFinePaid);
     }
 
     /**
@@ -497,7 +638,27 @@ public class GetChargeResponse {
      */
     @JsonSetter("interest_and_fine_paid")
     public void setInterestAndFinePaid(Integer interestAndFinePaid) {
-        this.interestAndFinePaid = interestAndFinePaid;
+        this.interestAndFinePaid = OptionalNullable.of(interestAndFinePaid);
+    }
+
+    /**
+     * UnSetter for InterestAndFinePaid.
+     * interest and fine paid
+     */
+    public void unsetInterestAndFinePaid() {
+        interestAndFinePaid = null;
+    }
+
+    /**
+     * Internal Getter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("recurrency_cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetRecurrencyCycle() {
+        return this.recurrencyCycle;
     }
 
     /**
@@ -505,10 +666,8 @@ public class GetChargeResponse {
      * Defines whether the card has been used one or more times.
      * @return Returns the String
      */
-    @JsonGetter("recurrency_cycle")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getRecurrencyCycle() {
-        return recurrencyCycle;
+        return OptionalNullable.getFrom(recurrencyCycle);
     }
 
     /**
@@ -518,7 +677,15 @@ public class GetChargeResponse {
      */
     @JsonSetter("recurrency_cycle")
     public void setRecurrencyCycle(String recurrencyCycle) {
-        this.recurrencyCycle = recurrencyCycle;
+        this.recurrencyCycle = OptionalNullable.of(recurrencyCycle);
+    }
+
+    /**
+     * UnSetter for RecurrencyCycle.
+     * Defines whether the card has been used one or more times.
+     */
+    public void unsetRecurrencyCycle() {
+        recurrencyCycle = null;
     }
 
     /**
@@ -545,15 +712,15 @@ public class GetChargeResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, code, gatewayId, amount, status, currency, paymentMethod,
-                dueAt, createdAt, updatedAt, metadata, canceledAmount, paidAmount)
-                .lastTransaction(getLastTransaction())
-                .invoice(getInvoice())
-                .order(getOrder())
-                .customer(getCustomer())
-                .paidAt(getPaidAt())
-                .canceledAt(getCanceledAt())
-                .interestAndFinePaid(getInterestAndFinePaid())
-                .recurrencyCycle(getRecurrencyCycle());
+                dueAt, createdAt, updatedAt, metadata, canceledAmount, paidAmount);
+        builder.lastTransaction = internalGetLastTransaction();
+        builder.invoice = internalGetInvoice();
+        builder.order = internalGetOrder();
+        builder.customer = internalGetCustomer();
+        builder.paidAt = internalGetPaidAt();
+        builder.canceledAt = internalGetCanceledAt();
+        builder.interestAndFinePaid = internalGetInterestAndFinePaid();
+        builder.recurrencyCycle = internalGetRecurrencyCycle();
         return builder;
     }
 
@@ -564,7 +731,7 @@ public class GetChargeResponse {
         private String id;
         private String code;
         private String gatewayId;
-        private int amount;
+        private Integer amount;
         private String status;
         private String currency;
         private String paymentMethod;
@@ -572,16 +739,16 @@ public class GetChargeResponse {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private Map<String, String> metadata;
-        private int canceledAmount;
-        private int paidAmount;
-        private GetTransactionResponse lastTransaction;
-        private GetInvoiceResponse invoice;
-        private GetOrderResponse order;
-        private GetCustomerResponse customer;
-        private LocalDateTime paidAt;
-        private LocalDateTime canceledAt;
-        private Integer interestAndFinePaid;
-        private String recurrencyCycle;
+        private Integer canceledAmount;
+        private Integer paidAmount;
+        private OptionalNullable<GetTransactionResponse> lastTransaction;
+        private OptionalNullable<GetInvoiceResponse> invoice;
+        private OptionalNullable<GetOrderResponse> order;
+        private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<LocalDateTime> paidAt;
+        private OptionalNullable<LocalDateTime> canceledAt;
+        private OptionalNullable<Integer> interestAndFinePaid;
+        private OptionalNullable<String> recurrencyCycle;
 
         /**
          * Initialization constructor.
@@ -594,7 +761,7 @@ public class GetChargeResponse {
          * @param  id  String value for id.
          * @param  code  String value for code.
          * @param  gatewayId  String value for gatewayId.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
          * @param  currency  String value for currency.
          * @param  paymentMethod  String value for paymentMethod.
@@ -602,13 +769,13 @@ public class GetChargeResponse {
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
          * @param  metadata  Map of String, value for metadata.
-         * @param  canceledAmount  int value for canceledAmount.
-         * @param  paidAmount  int value for paidAmount.
+         * @param  canceledAmount  Integer value for canceledAmount.
+         * @param  paidAmount  Integer value for paidAmount.
          */
-        public Builder(String id, String code, String gatewayId, int amount, String status,
+        public Builder(String id, String code, String gatewayId, Integer amount, String status,
                 String currency, String paymentMethod, LocalDateTime dueAt, LocalDateTime createdAt,
-                LocalDateTime updatedAt, Map<String, String> metadata, int canceledAmount,
-                int paidAmount) {
+                LocalDateTime updatedAt, Map<String, String> metadata, Integer canceledAmount,
+                Integer paidAmount) {
             this.id = id;
             this.code = code;
             this.gatewayId = gatewayId;
@@ -656,10 +823,10 @@ public class GetChargeResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -736,20 +903,20 @@ public class GetChargeResponse {
 
         /**
          * Setter for canceledAmount.
-         * @param  canceledAmount  int value for canceledAmount.
+         * @param  canceledAmount  Integer value for canceledAmount.
          * @return Builder
          */
-        public Builder canceledAmount(int canceledAmount) {
+        public Builder canceledAmount(Integer canceledAmount) {
             this.canceledAmount = canceledAmount;
             return this;
         }
 
         /**
          * Setter for paidAmount.
-         * @param  paidAmount  int value for paidAmount.
+         * @param  paidAmount  Integer value for paidAmount.
          * @return Builder
          */
-        public Builder paidAmount(int paidAmount) {
+        public Builder paidAmount(Integer paidAmount) {
             this.paidAmount = paidAmount;
             return this;
         }
@@ -760,7 +927,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder lastTransaction(GetTransactionResponse lastTransaction) {
-            this.lastTransaction = lastTransaction;
+            this.lastTransaction = OptionalNullable.of(lastTransaction);
+            return this;
+        }
+
+        /**
+         * UnSetter for lastTransaction.
+         * @return Builder
+         */
+        public Builder unsetLastTransaction() {
+            lastTransaction = null;
             return this;
         }
 
@@ -770,7 +946,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder invoice(GetInvoiceResponse invoice) {
-            this.invoice = invoice;
+            this.invoice = OptionalNullable.of(invoice);
+            return this;
+        }
+
+        /**
+         * UnSetter for invoice.
+         * @return Builder
+         */
+        public Builder unsetInvoice() {
+            invoice = null;
             return this;
         }
 
@@ -780,7 +965,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder order(GetOrderResponse order) {
-            this.order = order;
+            this.order = OptionalNullable.of(order);
+            return this;
+        }
+
+        /**
+         * UnSetter for order.
+         * @return Builder
+         */
+        public Builder unsetOrder() {
+            order = null;
             return this;
         }
 
@@ -790,7 +984,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 
@@ -800,7 +1003,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder paidAt(LocalDateTime paidAt) {
-            this.paidAt = paidAt;
+            this.paidAt = OptionalNullable.of(paidAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for paidAt.
+         * @return Builder
+         */
+        public Builder unsetPaidAt() {
+            paidAt = null;
             return this;
         }
 
@@ -810,7 +1022,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder canceledAt(LocalDateTime canceledAt) {
-            this.canceledAt = canceledAt;
+            this.canceledAt = OptionalNullable.of(canceledAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for canceledAt.
+         * @return Builder
+         */
+        public Builder unsetCanceledAt() {
+            canceledAt = null;
             return this;
         }
 
@@ -820,7 +1041,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder interestAndFinePaid(Integer interestAndFinePaid) {
-            this.interestAndFinePaid = interestAndFinePaid;
+            this.interestAndFinePaid = OptionalNullable.of(interestAndFinePaid);
+            return this;
+        }
+
+        /**
+         * UnSetter for interestAndFinePaid.
+         * @return Builder
+         */
+        public Builder unsetInterestAndFinePaid() {
+            interestAndFinePaid = null;
             return this;
         }
 
@@ -830,7 +1060,16 @@ public class GetChargeResponse {
          * @return Builder
          */
         public Builder recurrencyCycle(String recurrencyCycle) {
-            this.recurrencyCycle = recurrencyCycle;
+            this.recurrencyCycle = OptionalNullable.of(recurrencyCycle);
+            return this;
+        }
+
+        /**
+         * UnSetter for recurrencyCycle.
+         * @return Builder
+         */
+        public Builder unsetRecurrencyCycle() {
+            recurrencyCycle = null;
             return this;
         }
 

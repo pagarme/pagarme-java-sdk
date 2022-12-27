@@ -9,17 +9,19 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetBalanceResponse type.
  */
 public class GetBalanceResponse {
     private String currency;
-    private long availableAmount;
-    private GetRecipientResponse recipient;
-    private long transferredAmount;
-    private long waitingFundsAmount;
+    private Long availableAmount;
+    private OptionalNullable<GetRecipientResponse> recipient;
+    private Long transferredAmount;
+    private Long waitingFundsAmount;
 
     /**
      * Default constructor.
@@ -30,17 +32,29 @@ public class GetBalanceResponse {
     /**
      * Initialization constructor.
      * @param  currency  String value for currency.
-     * @param  availableAmount  long value for availableAmount.
-     * @param  transferredAmount  long value for transferredAmount.
-     * @param  waitingFundsAmount  long value for waitingFundsAmount.
+     * @param  availableAmount  Long value for availableAmount.
+     * @param  transferredAmount  Long value for transferredAmount.
+     * @param  waitingFundsAmount  Long value for waitingFundsAmount.
      * @param  recipient  GetRecipientResponse value for recipient.
      */
     public GetBalanceResponse(
             String currency,
-            long availableAmount,
-            long transferredAmount,
-            long waitingFundsAmount,
+            Long availableAmount,
+            Long transferredAmount,
+            Long waitingFundsAmount,
             GetRecipientResponse recipient) {
+        this.currency = currency;
+        this.availableAmount = availableAmount;
+        this.recipient = OptionalNullable.of(recipient);
+        this.transferredAmount = transferredAmount;
+        this.waitingFundsAmount = waitingFundsAmount;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetBalanceResponse(String currency, Long availableAmount, Long transferredAmount,
+            Long waitingFundsAmount, OptionalNullable<GetRecipientResponse> recipient) {
         this.currency = currency;
         this.availableAmount = availableAmount;
         this.recipient = recipient;
@@ -71,21 +85,33 @@ public class GetBalanceResponse {
     /**
      * Getter for AvailableAmount.
      * Amount available for transferring
-     * @return Returns the long
+     * @return Returns the Long
      */
     @JsonGetter("available_amount")
-    public long getAvailableAmount() {
+    public Long getAvailableAmount() {
         return availableAmount;
     }
 
     /**
      * Setter for AvailableAmount.
      * Amount available for transferring
-     * @param availableAmount Value for long
+     * @param availableAmount Value for Long
      */
     @JsonSetter("available_amount")
-    public void setAvailableAmount(long availableAmount) {
+    public void setAvailableAmount(Long availableAmount) {
         this.availableAmount = availableAmount;
+    }
+
+    /**
+     * Internal Getter for Recipient.
+     * Recipient
+     * @return Returns the Internal GetRecipientResponse
+     */
+    @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetRecipientResponse> internalGetRecipient() {
+        return this.recipient;
     }
 
     /**
@@ -93,10 +119,8 @@ public class GetBalanceResponse {
      * Recipient
      * @return Returns the GetRecipientResponse
      */
-    @JsonGetter("recipient")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
-        return recipient;
+        return OptionalNullable.getFrom(recipient);
     }
 
     /**
@@ -106,42 +130,50 @@ public class GetBalanceResponse {
      */
     @JsonSetter("recipient")
     public void setRecipient(GetRecipientResponse recipient) {
-        this.recipient = recipient;
+        this.recipient = OptionalNullable.of(recipient);
+    }
+
+    /**
+     * UnSetter for Recipient.
+     * Recipient
+     */
+    public void unsetRecipient() {
+        recipient = null;
     }
 
     /**
      * Getter for TransferredAmount.
-     * @return Returns the long
+     * @return Returns the Long
      */
     @JsonGetter("transferred_amount")
-    public long getTransferredAmount() {
+    public Long getTransferredAmount() {
         return transferredAmount;
     }
 
     /**
      * Setter for TransferredAmount.
-     * @param transferredAmount Value for long
+     * @param transferredAmount Value for Long
      */
     @JsonSetter("transferred_amount")
-    public void setTransferredAmount(long transferredAmount) {
+    public void setTransferredAmount(Long transferredAmount) {
         this.transferredAmount = transferredAmount;
     }
 
     /**
      * Getter for WaitingFundsAmount.
-     * @return Returns the long
+     * @return Returns the Long
      */
     @JsonGetter("waiting_funds_amount")
-    public long getWaitingFundsAmount() {
+    public Long getWaitingFundsAmount() {
         return waitingFundsAmount;
     }
 
     /**
      * Setter for WaitingFundsAmount.
-     * @param waitingFundsAmount Value for long
+     * @param waitingFundsAmount Value for Long
      */
     @JsonSetter("waiting_funds_amount")
-    public void setWaitingFundsAmount(long waitingFundsAmount) {
+    public void setWaitingFundsAmount(Long waitingFundsAmount) {
         this.waitingFundsAmount = waitingFundsAmount;
     }
 
@@ -163,8 +195,8 @@ public class GetBalanceResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(currency, availableAmount, transferredAmount,
-                waitingFundsAmount)
-                .recipient(getRecipient());
+                waitingFundsAmount);
+        builder.recipient = internalGetRecipient();
         return builder;
     }
 
@@ -173,10 +205,10 @@ public class GetBalanceResponse {
      */
     public static class Builder {
         private String currency;
-        private long availableAmount;
-        private long transferredAmount;
-        private long waitingFundsAmount;
-        private GetRecipientResponse recipient;
+        private Long availableAmount;
+        private Long transferredAmount;
+        private Long waitingFundsAmount;
+        private OptionalNullable<GetRecipientResponse> recipient;
 
         /**
          * Initialization constructor.
@@ -187,12 +219,12 @@ public class GetBalanceResponse {
         /**
          * Initialization constructor.
          * @param  currency  String value for currency.
-         * @param  availableAmount  long value for availableAmount.
-         * @param  transferredAmount  long value for transferredAmount.
-         * @param  waitingFundsAmount  long value for waitingFundsAmount.
+         * @param  availableAmount  Long value for availableAmount.
+         * @param  transferredAmount  Long value for transferredAmount.
+         * @param  waitingFundsAmount  Long value for waitingFundsAmount.
          */
-        public Builder(String currency, long availableAmount, long transferredAmount,
-                long waitingFundsAmount) {
+        public Builder(String currency, Long availableAmount, Long transferredAmount,
+                Long waitingFundsAmount) {
             this.currency = currency;
             this.availableAmount = availableAmount;
             this.transferredAmount = transferredAmount;
@@ -211,30 +243,30 @@ public class GetBalanceResponse {
 
         /**
          * Setter for availableAmount.
-         * @param  availableAmount  long value for availableAmount.
+         * @param  availableAmount  Long value for availableAmount.
          * @return Builder
          */
-        public Builder availableAmount(long availableAmount) {
+        public Builder availableAmount(Long availableAmount) {
             this.availableAmount = availableAmount;
             return this;
         }
 
         /**
          * Setter for transferredAmount.
-         * @param  transferredAmount  long value for transferredAmount.
+         * @param  transferredAmount  Long value for transferredAmount.
          * @return Builder
          */
-        public Builder transferredAmount(long transferredAmount) {
+        public Builder transferredAmount(Long transferredAmount) {
             this.transferredAmount = transferredAmount;
             return this;
         }
 
         /**
          * Setter for waitingFundsAmount.
-         * @param  waitingFundsAmount  long value for waitingFundsAmount.
+         * @param  waitingFundsAmount  Long value for waitingFundsAmount.
          * @return Builder
          */
-        public Builder waitingFundsAmount(long waitingFundsAmount) {
+        public Builder waitingFundsAmount(Long waitingFundsAmount) {
             this.waitingFundsAmount = waitingFundsAmount;
             return this;
         }
@@ -245,7 +277,16 @@ public class GetBalanceResponse {
          * @return Builder
          */
         public Builder recipient(GetRecipientResponse recipient) {
-            this.recipient = recipient;
+            this.recipient = OptionalNullable.of(recipient);
+            return this;
+        }
+
+        /**
+         * UnSetter for recipient.
+         * @return Builder
+         */
+        public Builder unsetRecipient() {
+            recipient = null;
             return this;
         }
 

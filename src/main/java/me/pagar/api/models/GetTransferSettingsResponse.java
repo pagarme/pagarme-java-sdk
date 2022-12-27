@@ -14,9 +14,9 @@ import io.apimatic.core.types.BaseModel;
  * This is a model class for GetTransferSettingsResponse type.
  */
 public class GetTransferSettingsResponse {
-    private boolean transferEnabled;
+    private Boolean transferEnabled;
     private String transferInterval;
-    private int transferDay;
+    private Integer transferDay;
 
     /**
      * Default constructor.
@@ -26,14 +26,14 @@ public class GetTransferSettingsResponse {
 
     /**
      * Initialization constructor.
-     * @param  transferEnabled  boolean value for transferEnabled.
+     * @param  transferEnabled  Boolean value for transferEnabled.
      * @param  transferInterval  String value for transferInterval.
-     * @param  transferDay  int value for transferDay.
+     * @param  transferDay  Integer value for transferDay.
      */
     public GetTransferSettingsResponse(
-            boolean transferEnabled,
+            Boolean transferEnabled,
             String transferInterval,
-            int transferDay) {
+            Integer transferDay) {
         this.transferEnabled = transferEnabled;
         this.transferInterval = transferInterval;
         this.transferDay = transferDay;
@@ -41,19 +41,19 @@ public class GetTransferSettingsResponse {
 
     /**
      * Getter for TransferEnabled.
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("transfer_enabled")
-    public boolean getTransferEnabled() {
+    public Boolean getTransferEnabled() {
         return transferEnabled;
     }
 
     /**
      * Setter for TransferEnabled.
-     * @param transferEnabled Value for boolean
+     * @param transferEnabled Value for Boolean
      */
     @JsonSetter("transfer_enabled")
-    public void setTransferEnabled(boolean transferEnabled) {
+    public void setTransferEnabled(Boolean transferEnabled) {
         this.transferEnabled = transferEnabled;
     }
 
@@ -77,19 +77,19 @@ public class GetTransferSettingsResponse {
 
     /**
      * Getter for TransferDay.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("transfer_day")
-    public int getTransferDay() {
+    public Integer getTransferDay() {
         return transferDay;
     }
 
     /**
      * Setter for TransferDay.
-     * @param transferDay Value for int
+     * @param transferDay Value for Integer
      */
     @JsonSetter("transfer_day")
-    public void setTransferDay(int transferDay) {
+    public void setTransferDay(Integer transferDay) {
         this.transferDay = transferDay;
     }
 
@@ -117,9 +117,9 @@ public class GetTransferSettingsResponse {
      * Class to build instances of {@link GetTransferSettingsResponse}.
      */
     public static class Builder {
-        private boolean transferEnabled;
+        private Boolean transferEnabled;
         private String transferInterval;
-        private int transferDay;
+        private Integer transferDay;
 
         /**
          * Initialization constructor.
@@ -129,11 +129,11 @@ public class GetTransferSettingsResponse {
 
         /**
          * Initialization constructor.
-         * @param  transferEnabled  boolean value for transferEnabled.
+         * @param  transferEnabled  Boolean value for transferEnabled.
          * @param  transferInterval  String value for transferInterval.
-         * @param  transferDay  int value for transferDay.
+         * @param  transferDay  Integer value for transferDay.
          */
-        public Builder(boolean transferEnabled, String transferInterval, int transferDay) {
+        public Builder(Boolean transferEnabled, String transferInterval, Integer transferDay) {
             this.transferEnabled = transferEnabled;
             this.transferInterval = transferInterval;
             this.transferDay = transferDay;
@@ -141,10 +141,10 @@ public class GetTransferSettingsResponse {
 
         /**
          * Setter for transferEnabled.
-         * @param  transferEnabled  boolean value for transferEnabled.
+         * @param  transferEnabled  Boolean value for transferEnabled.
          * @return Builder
          */
-        public Builder transferEnabled(boolean transferEnabled) {
+        public Builder transferEnabled(Boolean transferEnabled) {
             this.transferEnabled = transferEnabled;
             return this;
         }
@@ -161,10 +161,10 @@ public class GetTransferSettingsResponse {
 
         /**
          * Setter for transferDay.
-         * @param  transferDay  int value for transferDay.
+         * @param  transferDay  Integer value for transferDay.
          * @return Builder
          */
-        public Builder transferDay(int transferDay) {
+        public Builder transferDay(Integer transferDay) {
             this.transferDay = transferDay;
             return this;
         }

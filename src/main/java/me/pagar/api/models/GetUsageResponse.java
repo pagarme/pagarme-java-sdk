@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -20,16 +21,16 @@ import me.pagar.api.DateTimeHelper;
  */
 public class GetUsageResponse {
     private String id;
-    private int quantity;
+    private Integer quantity;
     private String description;
     private LocalDateTime usedAt;
     private LocalDateTime createdAt;
     private String status;
-    private LocalDateTime deletedAt;
+    private OptionalNullable<LocalDateTime> deletedAt;
     private GetSubscriptionItemResponse subscriptionItem;
-    private String code;
-    private String group;
-    private Integer amount;
+    private OptionalNullable<String> code;
+    private OptionalNullable<String> group;
+    private OptionalNullable<Integer> amount;
 
     /**
      * Default constructor.
@@ -40,7 +41,7 @@ public class GetUsageResponse {
     /**
      * Initialization constructor.
      * @param  id  String value for id.
-     * @param  quantity  int value for quantity.
+     * @param  quantity  Integer value for quantity.
      * @param  description  String value for description.
      * @param  usedAt  LocalDateTime value for usedAt.
      * @param  createdAt  LocalDateTime value for createdAt.
@@ -53,7 +54,7 @@ public class GetUsageResponse {
      */
     public GetUsageResponse(
             String id,
-            int quantity,
+            Integer quantity,
             String description,
             LocalDateTime usedAt,
             LocalDateTime createdAt,
@@ -63,6 +64,27 @@ public class GetUsageResponse {
             String code,
             String group,
             Integer amount) {
+        this.id = id;
+        this.quantity = quantity;
+        this.description = description;
+        this.usedAt = usedAt;
+        this.createdAt = createdAt;
+        this.status = status;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+        this.subscriptionItem = subscriptionItem;
+        this.code = OptionalNullable.of(code);
+        this.group = OptionalNullable.of(group);
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetUsageResponse(String id, Integer quantity, String description,
+            LocalDateTime usedAt, LocalDateTime createdAt, String status,
+            GetSubscriptionItemResponse subscriptionItem, OptionalNullable<LocalDateTime> deletedAt,
+            OptionalNullable<String> code, OptionalNullable<String> group,
+            OptionalNullable<Integer> amount) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -99,20 +121,20 @@ public class GetUsageResponse {
     /**
      * Getter for Quantity.
      * Quantity
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("quantity")
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
     /**
      * Setter for Quantity.
      * Quantity
-     * @param quantity Value for int
+     * @param quantity Value for Integer
      */
     @JsonSetter("quantity")
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -201,14 +223,22 @@ public class GetUsageResponse {
     }
 
     /**
-     * Getter for DeletedAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for DeletedAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("deleted_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
+    }
+
+    /**
+     * Getter for DeletedAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -218,7 +248,14 @@ public class GetUsageResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
     }
 
     /**
@@ -242,14 +279,24 @@ public class GetUsageResponse {
     }
 
     /**
+     * Internal Getter for Code.
+     * Identification code in the client system
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
+    }
+
+    /**
      * Getter for Code.
      * Identification code in the client system
      * @return Returns the String
      */
-    @JsonGetter("code")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -259,7 +306,27 @@ public class GetUsageResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     * Identification code in the client system
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for Group.
+     * Identification group in the client system
+     * @return Returns the Internal String
+     */
+    @JsonGetter("group")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGroup() {
+        return this.group;
     }
 
     /**
@@ -267,10 +334,8 @@ public class GetUsageResponse {
      * Identification group in the client system
      * @return Returns the String
      */
-    @JsonGetter("group")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getGroup() {
-        return group;
+        return OptionalNullable.getFrom(group);
     }
 
     /**
@@ -280,7 +345,27 @@ public class GetUsageResponse {
      */
     @JsonSetter("group")
     public void setGroup(String group) {
-        this.group = group;
+        this.group = OptionalNullable.of(group);
+    }
+
+    /**
+     * UnSetter for Group.
+     * Identification group in the client system
+     */
+    public void unsetGroup() {
+        group = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * Field used in item scheme type 'Percent'
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
@@ -288,10 +373,8 @@ public class GetUsageResponse {
      * Field used in item scheme type 'Percent'
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -301,7 +384,15 @@ public class GetUsageResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Field used in item scheme type 'Percent'
+     */
+    public void unsetAmount() {
+        amount = null;
     }
 
     /**
@@ -323,11 +414,11 @@ public class GetUsageResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, quantity, description, usedAt, createdAt, status,
-                subscriptionItem)
-                .deletedAt(getDeletedAt())
-                .code(getCode())
-                .group(getGroup())
-                .amount(getAmount());
+                subscriptionItem);
+        builder.deletedAt = internalGetDeletedAt();
+        builder.code = internalGetCode();
+        builder.group = internalGetGroup();
+        builder.amount = internalGetAmount();
         return builder;
     }
 
@@ -336,16 +427,16 @@ public class GetUsageResponse {
      */
     public static class Builder {
         private String id;
-        private int quantity;
+        private Integer quantity;
         private String description;
         private LocalDateTime usedAt;
         private LocalDateTime createdAt;
         private String status;
         private GetSubscriptionItemResponse subscriptionItem;
-        private LocalDateTime deletedAt;
-        private String code;
-        private String group;
-        private Integer amount;
+        private OptionalNullable<LocalDateTime> deletedAt;
+        private OptionalNullable<String> code;
+        private OptionalNullable<String> group;
+        private OptionalNullable<Integer> amount;
 
         /**
          * Initialization constructor.
@@ -356,14 +447,14 @@ public class GetUsageResponse {
         /**
          * Initialization constructor.
          * @param  id  String value for id.
-         * @param  quantity  int value for quantity.
+         * @param  quantity  Integer value for quantity.
          * @param  description  String value for description.
          * @param  usedAt  LocalDateTime value for usedAt.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  status  String value for status.
          * @param  subscriptionItem  GetSubscriptionItemResponse value for subscriptionItem.
          */
-        public Builder(String id, int quantity, String description, LocalDateTime usedAt,
+        public Builder(String id, Integer quantity, String description, LocalDateTime usedAt,
                 LocalDateTime createdAt, String status,
                 GetSubscriptionItemResponse subscriptionItem) {
             this.id = id;
@@ -387,10 +478,10 @@ public class GetUsageResponse {
 
         /**
          * Setter for quantity.
-         * @param  quantity  int value for quantity.
+         * @param  quantity  Integer value for quantity.
          * @return Builder
          */
-        public Builder quantity(int quantity) {
+        public Builder quantity(Integer quantity) {
             this.quantity = quantity;
             return this;
         }
@@ -451,7 +542,16 @@ public class GetUsageResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 
@@ -461,7 +561,16 @@ public class GetUsageResponse {
          * @return Builder
          */
         public Builder code(String code) {
-            this.code = code;
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
             return this;
         }
 
@@ -471,7 +580,16 @@ public class GetUsageResponse {
          * @return Builder
          */
         public Builder group(String group) {
-            this.group = group;
+            this.group = OptionalNullable.of(group);
+            return this;
+        }
+
+        /**
+         * UnSetter for group.
+         * @return Builder
+         */
+        public Builder unsetGroup() {
+            group = null;
             return this;
         }
 
@@ -481,7 +599,16 @@ public class GetUsageResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 

@@ -8,12 +8,11 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -22,38 +21,30 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetSafetyPayTransactionResponse type.
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "transaction_type",
-        defaultImpl = GetSafetyPayTransactionResponse.class,
-        visible = true)
-@JsonInclude(Include.ALWAYS)
 public class GetSafetyPayTransactionResponse
         extends GetTransactionResponse {
     private String url;
     private String bankTid;
-    private LocalDateTime paidAt;
-    private Integer paidAmount;
+    private OptionalNullable<LocalDateTime> paidAt;
+    private OptionalNullable<Integer> paidAmount;
 
     /**
      * Default constructor.
      */
     public GetSafetyPayTransactionResponse() {
         super();
-        setTransactionType("safetypay");
     }
 
     /**
      * Initialization constructor.
      * @param  gatewayId  String value for gatewayId.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
-     * @param  success  boolean value for success.
+     * @param  success  Boolean value for success.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
-     * @param  attemptCount  int value for attemptCount.
-     * @param  maxAttempts  int value for maxAttempts.
+     * @param  attemptCount  Integer value for attemptCount.
+     * @param  maxAttempts  Integer value for maxAttempts.
      * @param  splits  List of GetSplitResponse value for splits.
      * @param  id  String value for id.
      * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -72,13 +63,13 @@ public class GetSafetyPayTransactionResponse
      */
     public GetSafetyPayTransactionResponse(
             String gatewayId,
-            int amount,
+            Integer amount,
             String status,
-            boolean success,
+            Boolean success,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
-            int attemptCount,
-            int maxAttempts,
+            Integer attemptCount,
+            Integer maxAttempts,
             List<GetSplitResponse> splits,
             String id,
             GetGatewayResponseResponse gatewayResponse,
@@ -94,6 +85,28 @@ public class GetSafetyPayTransactionResponse
             Integer maxDaysToPayPastDue,
             LocalDateTime paidAt,
             Integer paidAmount) {
+        super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
+                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
+                metadata, interest, fine, maxDaysToPayPastDue);
+        this.url = url;
+        this.bankTid = bankTid;
+        this.paidAt = OptionalNullable.of(paidAt);
+        this.paidAmount = OptionalNullable.of(paidAmount);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetSafetyPayTransactionResponse(String gatewayId, Integer amount, String status,
+            Boolean success, LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+            Integer maxAttempts, List<GetSplitResponse> splits, String id,
+            GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
+            List<GetSplitResponse> split, String url, String bankTid,
+            OptionalNullable<LocalDateTime> nextAttempt, OptionalNullable<String> transactionType,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
+            OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<LocalDateTime> paidAt,
+            OptionalNullable<Integer> paidAmount) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
                 metadata, interest, fine, maxDaysToPayPastDue);
@@ -144,15 +157,24 @@ public class GetSafetyPayTransactionResponse
     }
 
     /**
+     * Internal Getter for PaidAt.
+     * Payment date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("paid_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetPaidAt() {
+        return this.paidAt;
+    }
+
+    /**
      * Getter for PaidAt.
      * Payment date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("paid_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getPaidAt() {
-        return paidAt;
+        return OptionalNullable.getFrom(paidAt);
     }
 
     /**
@@ -163,7 +185,27 @@ public class GetSafetyPayTransactionResponse
     @JsonSetter("paid_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setPaidAt(LocalDateTime paidAt) {
-        this.paidAt = paidAt;
+        this.paidAt = OptionalNullable.of(paidAt);
+    }
+
+    /**
+     * UnSetter for PaidAt.
+     * Payment date
+     */
+    public void unsetPaidAt() {
+        paidAt = null;
+    }
+
+    /**
+     * Internal Getter for PaidAmount.
+     * Paid amount
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("paid_amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetPaidAmount() {
+        return this.paidAmount;
     }
 
     /**
@@ -171,10 +213,8 @@ public class GetSafetyPayTransactionResponse
      * Paid amount
      * @return Returns the Integer
      */
-    @JsonGetter("paid_amount")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getPaidAmount() {
-        return paidAmount;
+        return OptionalNullable.getFrom(paidAmount);
     }
 
     /**
@@ -184,7 +224,15 @@ public class GetSafetyPayTransactionResponse
      */
     @JsonSetter("paid_amount")
     public void setPaidAmount(Integer paidAmount) {
-        this.paidAmount = paidAmount;
+        this.paidAmount = OptionalNullable.of(paidAmount);
+    }
+
+    /**
+     * UnSetter for PaidAmount.
+     * Paid amount
+     */
+    public void unsetPaidAmount() {
+        paidAmount = null;
     }
 
     /**
@@ -214,15 +262,15 @@ public class GetSafetyPayTransactionResponse
     public Builder toGetSafetyPayTransactionResponseBuilder() {
         Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
-                getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, bankTid)
-                .paidAt(getPaidAt())
-                .paidAmount(getPaidAmount())
-                .nextAttempt(getNextAttempt())
-                .transactionType(getTransactionType())
-                .metadata(getMetadata())
-                .interest(getInterest())
-                .fine(getFine())
-                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
+                getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, bankTid);
+        builder.paidAt = internalGetPaidAt();
+        builder.paidAmount = internalGetPaidAmount();
+        builder.nextAttempt = internalGetNextAttempt();
+        builder.transactionType = internalGetTransactionType();
+        builder.metadata = internalGetMetadata();
+        builder.interest = internalGetInterest();
+        builder.fine = internalGetFine();
+        builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
         return builder;
     }
 
@@ -231,13 +279,13 @@ public class GetSafetyPayTransactionResponse
      */
     public static class Builder {
         private String gatewayId;
-        private int amount;
+        private Integer amount;
         private String status;
-        private boolean success;
+        private Boolean success;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        private int attemptCount;
-        private int maxAttempts;
+        private Integer attemptCount;
+        private Integer maxAttempts;
         private List<GetSplitResponse> splits;
         private String id;
         private GetGatewayResponseResponse gatewayResponse;
@@ -245,14 +293,14 @@ public class GetSafetyPayTransactionResponse
         private List<GetSplitResponse> split;
         private String url;
         private String bankTid;
-        private LocalDateTime nextAttempt;
-        private String transactionType = "safetypay";
-        private Map<String, String> metadata;
-        private GetInterestResponse interest;
-        private GetFineResponse fine;
-        private Integer maxDaysToPayPastDue;
-        private LocalDateTime paidAt;
-        private Integer paidAmount;
+        private OptionalNullable<LocalDateTime> nextAttempt;
+        private OptionalNullable<String> transactionType;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<GetInterestResponse> interest;
+        private OptionalNullable<GetFineResponse> fine;
+        private OptionalNullable<Integer> maxDaysToPayPastDue;
+        private OptionalNullable<LocalDateTime> paidAt;
+        private OptionalNullable<Integer> paidAmount;
 
         /**
          * Initialization constructor.
@@ -263,13 +311,13 @@ public class GetSafetyPayTransactionResponse
         /**
          * Initialization constructor.
          * @param  gatewayId  String value for gatewayId.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  attemptCount  int value for attemptCount.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  attemptCount  Integer value for attemptCount.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @param  splits  List of GetSplitResponse value for splits.
          * @param  id  String value for id.
          * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
@@ -278,9 +326,9 @@ public class GetSafetyPayTransactionResponse
          * @param  url  String value for url.
          * @param  bankTid  String value for bankTid.
          */
-        public Builder(String gatewayId, int amount, String status, boolean success,
-                LocalDateTime createdAt, LocalDateTime updatedAt, int attemptCount, int maxAttempts,
-                List<GetSplitResponse> splits, String id,
+        public Builder(String gatewayId, Integer amount, String status, Boolean success,
+                LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
+                Integer maxAttempts, List<GetSplitResponse> splits, String id,
                 GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
                 List<GetSplitResponse> split, String url, String bankTid) {
             this.gatewayId = gatewayId;
@@ -312,10 +360,10 @@ public class GetSafetyPayTransactionResponse
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -332,10 +380,10 @@ public class GetSafetyPayTransactionResponse
 
         /**
          * Setter for success.
-         * @param  success  boolean value for success.
+         * @param  success  Boolean value for success.
          * @return Builder
          */
-        public Builder success(boolean success) {
+        public Builder success(Boolean success) {
             this.success = success;
             return this;
         }
@@ -362,20 +410,20 @@ public class GetSafetyPayTransactionResponse
 
         /**
          * Setter for attemptCount.
-         * @param  attemptCount  int value for attemptCount.
+         * @param  attemptCount  Integer value for attemptCount.
          * @return Builder
          */
-        public Builder attemptCount(int attemptCount) {
+        public Builder attemptCount(Integer attemptCount) {
             this.attemptCount = attemptCount;
             return this;
         }
 
         /**
          * Setter for maxAttempts.
-         * @param  maxAttempts  int value for maxAttempts.
+         * @param  maxAttempts  Integer value for maxAttempts.
          * @return Builder
          */
-        public Builder maxAttempts(int maxAttempts) {
+        public Builder maxAttempts(Integer maxAttempts) {
             this.maxAttempts = maxAttempts;
             return this;
         }
@@ -456,7 +504,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder nextAttempt(LocalDateTime nextAttempt) {
-            this.nextAttempt = nextAttempt;
+            this.nextAttempt = OptionalNullable.of(nextAttempt);
+            return this;
+        }
+
+        /**
+         * UnSetter for nextAttempt.
+         * @return Builder
+         */
+        public Builder unsetNextAttempt() {
+            nextAttempt = null;
             return this;
         }
 
@@ -466,7 +523,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = transactionType;
+            this.transactionType = OptionalNullable.of(transactionType);
+            return this;
+        }
+
+        /**
+         * UnSetter for transactionType.
+         * @return Builder
+         */
+        public Builder unsetTransactionType() {
+            transactionType = null;
             return this;
         }
 
@@ -476,7 +542,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -486,7 +561,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder interest(GetInterestResponse interest) {
-            this.interest = interest;
+            this.interest = OptionalNullable.of(interest);
+            return this;
+        }
+
+        /**
+         * UnSetter for interest.
+         * @return Builder
+         */
+        public Builder unsetInterest() {
+            interest = null;
             return this;
         }
 
@@ -496,7 +580,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder fine(GetFineResponse fine) {
-            this.fine = fine;
+            this.fine = OptionalNullable.of(fine);
+            return this;
+        }
+
+        /**
+         * UnSetter for fine.
+         * @return Builder
+         */
+        public Builder unsetFine() {
+            fine = null;
             return this;
         }
 
@@ -506,7 +599,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder unsetMaxDaysToPayPastDue() {
+            maxDaysToPayPastDue = null;
             return this;
         }
 
@@ -516,7 +618,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder paidAt(LocalDateTime paidAt) {
-            this.paidAt = paidAt;
+            this.paidAt = OptionalNullable.of(paidAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for paidAt.
+         * @return Builder
+         */
+        public Builder unsetPaidAt() {
+            paidAt = null;
             return this;
         }
 
@@ -526,7 +637,16 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder paidAmount(Integer paidAmount) {
-            this.paidAmount = paidAmount;
+            this.paidAmount = OptionalNullable.of(paidAmount);
+            return this;
+        }
+
+        /**
+         * UnSetter for paidAmount.
+         * @return Builder
+         */
+        public Builder unsetPaidAmount() {
+            paidAmount = null;
             return this;
         }
 

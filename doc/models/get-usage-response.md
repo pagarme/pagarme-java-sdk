@@ -12,7 +12,7 @@ Response object for getting a usage
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Id` | `String` | Required | Id | String getId() | setId(String id) |
-| `Quantity` | `int` | Required | Quantity | int getQuantity() | setQuantity(int quantity) |
+| `Quantity` | `Integer` | Required | Quantity | Integer getQuantity() | setQuantity(Integer quantity) |
 | `Description` | `String` | Required | Description | String getDescription() | setDescription(String description) |
 | `UsedAt` | `LocalDateTime` | Required | Used at | LocalDateTime getUsedAt() | setUsedAt(LocalDateTime usedAt) |
 | `CreatedAt` | `LocalDateTime` | Required | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |

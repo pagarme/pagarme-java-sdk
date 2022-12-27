@@ -12,7 +12,7 @@ Split response
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Type` | `String` | Required | Type | String getType() | setType(String type) |
-| `Amount` | `int` | Required | Amount | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | Amount | Integer getAmount() | setAmount(Integer amount) |
 | `Recipient` | [`GetRecipientResponse`](../../doc/models/get-recipient-response.md) | Optional | Recipient | GetRecipientResponse getRecipient() | setRecipient(GetRecipientResponse recipient) |
 | `GatewayId` | `String` | Required | The split rule gateway id | String getGatewayId() | setGatewayId(String gatewayId) |
 | `Options` | [`GetSplitOptionsResponse`](../../doc/models/get-split-options-response.md) | Optional | - | GetSplitOptionsResponse getOptions() | setOptions(GetSplitOptionsResponse options) |

@@ -15,9 +15,9 @@ import io.apimatic.core.types.BaseModel;
  */
 public class GetOrderItemResponse {
     private String id;
-    private int amount;
+    private Integer amount;
     private String description;
-    private int quantity;
+    private Integer quantity;
     private String category;
     private String code;
 
@@ -30,17 +30,17 @@ public class GetOrderItemResponse {
     /**
      * Initialization constructor.
      * @param  id  String value for id.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  description  String value for description.
-     * @param  quantity  int value for quantity.
+     * @param  quantity  Integer value for quantity.
      * @param  category  String value for category.
      * @param  code  String value for code.
      */
     public GetOrderItemResponse(
             String id,
-            int amount,
+            Integer amount,
             String description,
-            int quantity,
+            Integer quantity,
             String category,
             String code) {
         this.id = id;
@@ -73,19 +73,19 @@ public class GetOrderItemResponse {
 
     /**
      * Getter for Amount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -109,19 +109,19 @@ public class GetOrderItemResponse {
 
     /**
      * Getter for Quantity.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("quantity")
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
     /**
      * Setter for Quantity.
-     * @param quantity Value for int
+     * @param quantity Value for Integer
      */
     @JsonSetter("quantity")
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -191,9 +191,9 @@ public class GetOrderItemResponse {
      */
     public static class Builder {
         private String id;
-        private int amount;
+        private Integer amount;
         private String description;
-        private int quantity;
+        private Integer quantity;
         private String category;
         private String code;
 
@@ -206,14 +206,14 @@ public class GetOrderItemResponse {
         /**
          * Initialization constructor.
          * @param  id  String value for id.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  description  String value for description.
-         * @param  quantity  int value for quantity.
+         * @param  quantity  Integer value for quantity.
          * @param  category  String value for category.
          * @param  code  String value for code.
          */
-        public Builder(String id, int amount, String description, int quantity, String category,
-                String code) {
+        public Builder(String id, Integer amount, String description, Integer quantity,
+                String category, String code) {
             this.id = id;
             this.amount = amount;
             this.description = description;
@@ -234,10 +234,10 @@ public class GetOrderItemResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -254,10 +254,10 @@ public class GetOrderItemResponse {
 
         /**
          * Setter for quantity.
-         * @param  quantity  int value for quantity.
+         * @param  quantity  Integer value for quantity.
          * @return Builder
          */
-        public Builder quantity(int quantity) {
+        public Builder quantity(Integer quantity) {
             this.quantity = quantity;
             return this;
         }

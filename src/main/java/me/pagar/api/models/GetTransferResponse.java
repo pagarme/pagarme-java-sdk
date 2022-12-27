@@ -20,7 +20,7 @@ import me.pagar.api.DateTimeHelper;
  */
 public class GetTransferResponse {
     private String id;
-    private int amount;
+    private Integer amount;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -36,7 +36,7 @@ public class GetTransferResponse {
     /**
      * Initialization constructor.
      * @param  id  String value for id.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -45,7 +45,7 @@ public class GetTransferResponse {
      */
     public GetTransferResponse(
             String id,
-            int amount,
+            Integer amount,
             String status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
@@ -83,20 +83,20 @@ public class GetTransferResponse {
     /**
      * Getter for Amount.
      * Transfer amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
      * Transfer amount
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -231,7 +231,7 @@ public class GetTransferResponse {
      */
     public static class Builder {
         private String id;
-        private int amount;
+        private Integer amount;
         private String status;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -247,14 +247,14 @@ public class GetTransferResponse {
         /**
          * Initialization constructor.
          * @param  id  String value for id.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  status  String value for status.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
          * @param  bankAccount  GetBankAccountResponse value for bankAccount.
          * @param  metadata  Map of String, value for metadata.
          */
-        public Builder(String id, int amount, String status, LocalDateTime createdAt,
+        public Builder(String id, Integer amount, String status, LocalDateTime createdAt,
                 LocalDateTime updatedAt, GetBankAccountResponse bankAccount,
                 Map<String, String> metadata) {
             this.id = id;
@@ -278,10 +278,10 @@ public class GetTransferResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }

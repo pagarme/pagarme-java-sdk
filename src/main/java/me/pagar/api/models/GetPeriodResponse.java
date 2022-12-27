@@ -24,10 +24,10 @@ public class GetPeriodResponse {
     private LocalDateTime billingAt;
     private GetSubscriptionResponse subscription;
     private String status;
-    private int duration;
+    private Integer duration;
     private String createdAt;
     private String updatedAt;
-    private int cycle;
+    private Integer cycle;
 
     /**
      * Default constructor.
@@ -43,10 +43,10 @@ public class GetPeriodResponse {
      * @param  billingAt  LocalDateTime value for billingAt.
      * @param  subscription  GetSubscriptionResponse value for subscription.
      * @param  status  String value for status.
-     * @param  duration  int value for duration.
+     * @param  duration  Integer value for duration.
      * @param  createdAt  String value for createdAt.
      * @param  updatedAt  String value for updatedAt.
-     * @param  cycle  int value for cycle.
+     * @param  cycle  Integer value for cycle.
      */
     public GetPeriodResponse(
             LocalDateTime startAt,
@@ -55,10 +55,10 @@ public class GetPeriodResponse {
             LocalDateTime billingAt,
             GetSubscriptionResponse subscription,
             String status,
-            int duration,
+            Integer duration,
             String createdAt,
             String updatedAt,
-            int cycle) {
+            Integer cycle) {
         this.startAt = startAt;
         this.endAt = endAt;
         this.id = id;
@@ -187,19 +187,19 @@ public class GetPeriodResponse {
 
     /**
      * Getter for Duration.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("duration")
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
     /**
      * Setter for Duration.
-     * @param duration Value for int
+     * @param duration Value for Integer
      */
     @JsonSetter("duration")
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
@@ -241,19 +241,19 @@ public class GetPeriodResponse {
 
     /**
      * Getter for Cycle.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("cycle")
-    public int getCycle() {
+    public Integer getCycle() {
         return cycle;
     }
 
     /**
      * Setter for Cycle.
-     * @param cycle Value for int
+     * @param cycle Value for Integer
      */
     @JsonSetter("cycle")
-    public void setCycle(int cycle) {
+    public void setCycle(Integer cycle) {
         this.cycle = cycle;
     }
 
@@ -290,10 +290,10 @@ public class GetPeriodResponse {
         private LocalDateTime billingAt;
         private GetSubscriptionResponse subscription;
         private String status;
-        private int duration;
+        private Integer duration;
         private String createdAt;
         private String updatedAt;
-        private int cycle;
+        private Integer cycle;
 
         /**
          * Initialization constructor.
@@ -309,14 +309,14 @@ public class GetPeriodResponse {
          * @param  billingAt  LocalDateTime value for billingAt.
          * @param  subscription  GetSubscriptionResponse value for subscription.
          * @param  status  String value for status.
-         * @param  duration  int value for duration.
+         * @param  duration  Integer value for duration.
          * @param  createdAt  String value for createdAt.
          * @param  updatedAt  String value for updatedAt.
-         * @param  cycle  int value for cycle.
+         * @param  cycle  Integer value for cycle.
          */
         public Builder(LocalDateTime startAt, LocalDateTime endAt, String id,
                 LocalDateTime billingAt, GetSubscriptionResponse subscription, String status,
-                int duration, String createdAt, String updatedAt, int cycle) {
+                Integer duration, String createdAt, String updatedAt, Integer cycle) {
             this.startAt = startAt;
             this.endAt = endAt;
             this.id = id;
@@ -391,10 +391,10 @@ public class GetPeriodResponse {
 
         /**
          * Setter for duration.
-         * @param  duration  int value for duration.
+         * @param  duration  Integer value for duration.
          * @return Builder
          */
-        public Builder duration(int duration) {
+        public Builder duration(Integer duration) {
             this.duration = duration;
             return this;
         }
@@ -421,10 +421,10 @@ public class GetPeriodResponse {
 
         /**
          * Setter for cycle.
-         * @param  cycle  int value for cycle.
+         * @param  cycle  Integer value for cycle.
          * @return Builder
          */
-        public Builder cycle(int cycle) {
+        public Builder cycle(Integer cycle) {
             this.cycle = cycle;
             return this;
         }

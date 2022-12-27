@@ -9,15 +9,17 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetPhoneResponse type.
  */
 public class GetPhoneResponse {
-    private String countryCode;
-    private String number;
-    private String areaCode;
+    private OptionalNullable<String> countryCode;
+    private OptionalNullable<String> number;
+    private OptionalNullable<String> areaCode;
 
     /**
      * Default constructor.
@@ -35,19 +37,38 @@ public class GetPhoneResponse {
             String countryCode,
             String number,
             String areaCode) {
+        this.countryCode = OptionalNullable.of(countryCode);
+        this.number = OptionalNullable.of(number);
+        this.areaCode = OptionalNullable.of(areaCode);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPhoneResponse(OptionalNullable<String> countryCode,
+            OptionalNullable<String> number, OptionalNullable<String> areaCode) {
         this.countryCode = countryCode;
         this.number = number;
         this.areaCode = areaCode;
     }
 
     /**
-     * Getter for CountryCode.
-     * @return Returns the String
+     * Internal Getter for CountryCode.
+     * @return Returns the Internal String
      */
     @JsonGetter("country_code")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCountryCode() {
+        return this.countryCode;
+    }
+
+    /**
+     * Getter for CountryCode.
+     * @return Returns the String
+     */
     public String getCountryCode() {
-        return countryCode;
+        return OptionalNullable.getFrom(countryCode);
     }
 
     /**
@@ -56,17 +77,33 @@ public class GetPhoneResponse {
      */
     @JsonSetter("country_code")
     public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+        this.countryCode = OptionalNullable.of(countryCode);
+    }
+
+    /**
+     * UnSetter for CountryCode.
+     */
+    public void unsetCountryCode() {
+        countryCode = null;
+    }
+
+    /**
+     * Internal Getter for Number.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNumber() {
+        return this.number;
     }
 
     /**
      * Getter for Number.
      * @return Returns the String
      */
-    @JsonGetter("number")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getNumber() {
-        return number;
+        return OptionalNullable.getFrom(number);
     }
 
     /**
@@ -75,17 +112,33 @@ public class GetPhoneResponse {
      */
     @JsonSetter("number")
     public void setNumber(String number) {
-        this.number = number;
+        this.number = OptionalNullable.of(number);
+    }
+
+    /**
+     * UnSetter for Number.
+     */
+    public void unsetNumber() {
+        number = null;
+    }
+
+    /**
+     * Internal Getter for AreaCode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("area_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAreaCode() {
+        return this.areaCode;
     }
 
     /**
      * Getter for AreaCode.
      * @return Returns the String
      */
-    @JsonGetter("area_code")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getAreaCode() {
-        return areaCode;
+        return OptionalNullable.getFrom(areaCode);
     }
 
     /**
@@ -94,7 +147,14 @@ public class GetPhoneResponse {
      */
     @JsonSetter("area_code")
     public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
+        this.areaCode = OptionalNullable.of(areaCode);
+    }
+
+    /**
+     * UnSetter for AreaCode.
+     */
+    public void unsetAreaCode() {
+        areaCode = null;
     }
 
     /**
@@ -113,10 +173,10 @@ public class GetPhoneResponse {
      * @return a new {@link GetPhoneResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder()
-                .countryCode(getCountryCode())
-                .number(getNumber())
-                .areaCode(getAreaCode());
+        Builder builder = new Builder();
+        builder.countryCode = internalGetCountryCode();
+        builder.number = internalGetNumber();
+        builder.areaCode = internalGetAreaCode();
         return builder;
     }
 
@@ -124,9 +184,9 @@ public class GetPhoneResponse {
      * Class to build instances of {@link GetPhoneResponse}.
      */
     public static class Builder {
-        private String countryCode;
-        private String number;
-        private String areaCode;
+        private OptionalNullable<String> countryCode;
+        private OptionalNullable<String> number;
+        private OptionalNullable<String> areaCode;
 
 
 
@@ -136,7 +196,16 @@ public class GetPhoneResponse {
          * @return Builder
          */
         public Builder countryCode(String countryCode) {
-            this.countryCode = countryCode;
+            this.countryCode = OptionalNullable.of(countryCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for countryCode.
+         * @return Builder
+         */
+        public Builder unsetCountryCode() {
+            countryCode = null;
             return this;
         }
 
@@ -146,7 +215,16 @@ public class GetPhoneResponse {
          * @return Builder
          */
         public Builder number(String number) {
-            this.number = number;
+            this.number = OptionalNullable.of(number);
+            return this;
+        }
+
+        /**
+         * UnSetter for number.
+         * @return Builder
+         */
+        public Builder unsetNumber() {
+            number = null;
             return this;
         }
 
@@ -156,7 +234,16 @@ public class GetPhoneResponse {
          * @return Builder
          */
         public Builder areaCode(String areaCode) {
-            this.areaCode = areaCode;
+            this.areaCode = OptionalNullable.of(areaCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for areaCode.
+         * @return Builder
+         */
+        public Builder unsetAreaCode() {
+            areaCode = null;
             return this;
         }
 

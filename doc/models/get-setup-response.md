@@ -13,7 +13,7 @@ Response object for getting the setup from a subscription
 |  --- | --- | --- | --- | --- | --- |
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `Description` | `String` | Required | - | String getDescription() | setDescription(String description) |
-| `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | - | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 
 ## Example (as JSON)

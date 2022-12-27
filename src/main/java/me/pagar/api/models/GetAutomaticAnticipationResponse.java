@@ -15,10 +15,10 @@ import java.util.List;
  * This is a model class for GetAutomaticAnticipationResponse type.
  */
 public class GetAutomaticAnticipationResponse {
-    private boolean enabled;
+    private Boolean enabled;
     private String type;
-    private int volumePercentage;
-    private int delay;
+    private Integer volumePercentage;
+    private Integer delay;
     private List<Integer> days;
 
     /**
@@ -29,17 +29,17 @@ public class GetAutomaticAnticipationResponse {
 
     /**
      * Initialization constructor.
-     * @param  enabled  boolean value for enabled.
+     * @param  enabled  Boolean value for enabled.
      * @param  type  String value for type.
-     * @param  volumePercentage  int value for volumePercentage.
-     * @param  delay  int value for delay.
+     * @param  volumePercentage  Integer value for volumePercentage.
+     * @param  delay  Integer value for delay.
      * @param  days  List of Integer value for days.
      */
     public GetAutomaticAnticipationResponse(
-            boolean enabled,
+            Boolean enabled,
             String type,
-            int volumePercentage,
-            int delay,
+            Integer volumePercentage,
+            Integer delay,
             List<Integer> days) {
         this.enabled = enabled;
         this.type = type;
@@ -50,19 +50,19 @@ public class GetAutomaticAnticipationResponse {
 
     /**
      * Getter for Enabled.
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("enabled")
-    public boolean getEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
     /**
      * Setter for Enabled.
-     * @param enabled Value for boolean
+     * @param enabled Value for Boolean
      */
     @JsonSetter("enabled")
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -86,37 +86,37 @@ public class GetAutomaticAnticipationResponse {
 
     /**
      * Getter for VolumePercentage.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("volume_percentage")
-    public int getVolumePercentage() {
+    public Integer getVolumePercentage() {
         return volumePercentage;
     }
 
     /**
      * Setter for VolumePercentage.
-     * @param volumePercentage Value for int
+     * @param volumePercentage Value for Integer
      */
     @JsonSetter("volume_percentage")
-    public void setVolumePercentage(int volumePercentage) {
+    public void setVolumePercentage(Integer volumePercentage) {
         this.volumePercentage = volumePercentage;
     }
 
     /**
      * Getter for Delay.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("delay")
-    public int getDelay() {
+    public Integer getDelay() {
         return delay;
     }
 
     /**
      * Setter for Delay.
-     * @param delay Value for int
+     * @param delay Value for Integer
      */
     @JsonSetter("delay")
-    public void setDelay(int delay) {
+    public void setDelay(Integer delay) {
         this.delay = delay;
     }
 
@@ -163,10 +163,10 @@ public class GetAutomaticAnticipationResponse {
      * Class to build instances of {@link GetAutomaticAnticipationResponse}.
      */
     public static class Builder {
-        private boolean enabled;
+        private Boolean enabled;
         private String type;
-        private int volumePercentage;
-        private int delay;
+        private Integer volumePercentage;
+        private Integer delay;
         private List<Integer> days;
 
         /**
@@ -177,13 +177,13 @@ public class GetAutomaticAnticipationResponse {
 
         /**
          * Initialization constructor.
-         * @param  enabled  boolean value for enabled.
+         * @param  enabled  Boolean value for enabled.
          * @param  type  String value for type.
-         * @param  volumePercentage  int value for volumePercentage.
-         * @param  delay  int value for delay.
+         * @param  volumePercentage  Integer value for volumePercentage.
+         * @param  delay  Integer value for delay.
          * @param  days  List of Integer value for days.
          */
-        public Builder(boolean enabled, String type, int volumePercentage, int delay,
+        public Builder(Boolean enabled, String type, Integer volumePercentage, Integer delay,
                 List<Integer> days) {
             this.enabled = enabled;
             this.type = type;
@@ -194,10 +194,10 @@ public class GetAutomaticAnticipationResponse {
 
         /**
          * Setter for enabled.
-         * @param  enabled  boolean value for enabled.
+         * @param  enabled  Boolean value for enabled.
          * @return Builder
          */
-        public Builder enabled(boolean enabled) {
+        public Builder enabled(Boolean enabled) {
             this.enabled = enabled;
             return this;
         }
@@ -214,20 +214,20 @@ public class GetAutomaticAnticipationResponse {
 
         /**
          * Setter for volumePercentage.
-         * @param  volumePercentage  int value for volumePercentage.
+         * @param  volumePercentage  Integer value for volumePercentage.
          * @return Builder
          */
-        public Builder volumePercentage(int volumePercentage) {
+        public Builder volumePercentage(Integer volumePercentage) {
             this.volumePercentage = volumePercentage;
             return this;
         }
 
         /**
          * Setter for delay.
-         * @param  delay  int value for delay.
+         * @param  delay  Integer value for delay.
          * @return Builder
          */
-        public Builder delay(int delay) {
+        public Builder delay(Integer delay) {
             this.delay = delay;
             return this;
         }

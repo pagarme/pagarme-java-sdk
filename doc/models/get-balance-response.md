@@ -12,10 +12,10 @@ Balance
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Currency` | `String` | Required | Currency | String getCurrency() | setCurrency(String currency) |
-| `AvailableAmount` | `long` | Required | Amount available for transferring | long getAvailableAmount() | setAvailableAmount(long availableAmount) |
+| `AvailableAmount` | `Long` | Required | Amount available for transferring | Long getAvailableAmount() | setAvailableAmount(Long availableAmount) |
 | `Recipient` | [`GetRecipientResponse`](../../doc/models/get-recipient-response.md) | Optional | Recipient | GetRecipientResponse getRecipient() | setRecipient(GetRecipientResponse recipient) |
-| `TransferredAmount` | `long` | Required | - | long getTransferredAmount() | setTransferredAmount(long transferredAmount) |
-| `WaitingFundsAmount` | `long` | Required | - | long getWaitingFundsAmount() | setWaitingFundsAmount(long waitingFundsAmount) |
+| `TransferredAmount` | `Long` | Required | - | Long getTransferredAmount() | setTransferredAmount(Long transferredAmount) |
+| `WaitingFundsAmount` | `Long` | Required | - | Long getWaitingFundsAmount() | setWaitingFundsAmount(Long waitingFundsAmount) |
 
 ## Example (as JSON)
 

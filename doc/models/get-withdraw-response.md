@@ -11,7 +11,7 @@
 |  --- | --- | --- | --- | --- | --- |
 | `Id` | `String` | Required | - | String getId() | setId(String id) |
 | `GatewayId` | `String` | Required | - | String getGatewayId() | setGatewayId(String gatewayId) |
-| `Amount` | `int` | Required | - | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | - | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |

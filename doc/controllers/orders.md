@@ -307,16 +307,10 @@ body.setCustomer(customer);
 List<CreatePaymentRequest> payments = new LinkedList<>();
 CreatePaymentRequest payments0 = new CreatePaymentRequest();
 payments0.setPaymentMethod("payment_method0");
-CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
-
-payments0.setPrivateLabel(privateLabel);
 
 payments.add(payments0);
 CreatePaymentRequest payments1 = new CreatePaymentRequest();
 payments1.setPaymentMethod("payment_method9");
-CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
-
-payments1.setPrivateLabel(privateLabel);
 
 payments.add(payments1);
 

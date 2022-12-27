@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -20,9 +21,9 @@ import me.pagar.api.DateTimeHelper;
  */
 public class GetAnticipationResponse {
     private String id;
-    private int requestedAmount;
-    private int approvedAmount;
-    private GetRecipientResponse recipient;
+    private Integer requestedAmount;
+    private Integer approvedAmount;
+    private OptionalNullable<GetRecipientResponse> recipient;
     private String pgid;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -39,8 +40,8 @@ public class GetAnticipationResponse {
     /**
      * Initialization constructor.
      * @param  id  String value for id.
-     * @param  requestedAmount  int value for requestedAmount.
-     * @param  approvedAmount  int value for approvedAmount.
+     * @param  requestedAmount  Integer value for requestedAmount.
+     * @param  approvedAmount  Integer value for approvedAmount.
      * @param  pgid  String value for pgid.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -51,8 +52,8 @@ public class GetAnticipationResponse {
      */
     public GetAnticipationResponse(
             String id,
-            int requestedAmount,
-            int approvedAmount,
+            Integer requestedAmount,
+            Integer approvedAmount,
             String pgid,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
@@ -60,6 +61,25 @@ public class GetAnticipationResponse {
             String status,
             String timeframe,
             GetRecipientResponse recipient) {
+        this.id = id;
+        this.requestedAmount = requestedAmount;
+        this.approvedAmount = approvedAmount;
+        this.recipient = OptionalNullable.of(recipient);
+        this.pgid = pgid;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.paymentDate = paymentDate;
+        this.status = status;
+        this.timeframe = timeframe;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAnticipationResponse(String id, Integer requestedAmount, Integer approvedAmount,
+            String pgid, LocalDateTime createdAt, LocalDateTime updatedAt,
+            LocalDateTime paymentDate, String status, String timeframe,
+            OptionalNullable<GetRecipientResponse> recipient) {
         this.id = id;
         this.requestedAmount = requestedAmount;
         this.approvedAmount = approvedAmount;
@@ -95,41 +115,53 @@ public class GetAnticipationResponse {
     /**
      * Getter for RequestedAmount.
      * Requested amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("requested_amount")
-    public int getRequestedAmount() {
+    public Integer getRequestedAmount() {
         return requestedAmount;
     }
 
     /**
      * Setter for RequestedAmount.
      * Requested amount
-     * @param requestedAmount Value for int
+     * @param requestedAmount Value for Integer
      */
     @JsonSetter("requested_amount")
-    public void setRequestedAmount(int requestedAmount) {
+    public void setRequestedAmount(Integer requestedAmount) {
         this.requestedAmount = requestedAmount;
     }
 
     /**
      * Getter for ApprovedAmount.
      * Approved amount
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("approved_amount")
-    public int getApprovedAmount() {
+    public Integer getApprovedAmount() {
         return approvedAmount;
     }
 
     /**
      * Setter for ApprovedAmount.
      * Approved amount
-     * @param approvedAmount Value for int
+     * @param approvedAmount Value for Integer
      */
     @JsonSetter("approved_amount")
-    public void setApprovedAmount(int approvedAmount) {
+    public void setApprovedAmount(Integer approvedAmount) {
         this.approvedAmount = approvedAmount;
+    }
+
+    /**
+     * Internal Getter for Recipient.
+     * Recipient
+     * @return Returns the Internal GetRecipientResponse
+     */
+    @JsonGetter("recipient")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetRecipientResponse> internalGetRecipient() {
+        return this.recipient;
     }
 
     /**
@@ -137,10 +169,8 @@ public class GetAnticipationResponse {
      * Recipient
      * @return Returns the GetRecipientResponse
      */
-    @JsonGetter("recipient")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public GetRecipientResponse getRecipient() {
-        return recipient;
+        return OptionalNullable.getFrom(recipient);
     }
 
     /**
@@ -150,7 +180,15 @@ public class GetAnticipationResponse {
      */
     @JsonSetter("recipient")
     public void setRecipient(GetRecipientResponse recipient) {
-        this.recipient = recipient;
+        this.recipient = OptionalNullable.of(recipient);
+    }
+
+    /**
+     * UnSetter for Recipient.
+     * Recipient
+     */
+    public void unsetRecipient() {
+        recipient = null;
     }
 
     /**
@@ -299,8 +337,8 @@ public class GetAnticipationResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, requestedAmount, approvedAmount, pgid, createdAt,
-                updatedAt, paymentDate, status, timeframe)
-                .recipient(getRecipient());
+                updatedAt, paymentDate, status, timeframe);
+        builder.recipient = internalGetRecipient();
         return builder;
     }
 
@@ -309,15 +347,15 @@ public class GetAnticipationResponse {
      */
     public static class Builder {
         private String id;
-        private int requestedAmount;
-        private int approvedAmount;
+        private Integer requestedAmount;
+        private Integer approvedAmount;
         private String pgid;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private LocalDateTime paymentDate;
         private String status;
         private String timeframe;
-        private GetRecipientResponse recipient;
+        private OptionalNullable<GetRecipientResponse> recipient;
 
         /**
          * Initialization constructor.
@@ -328,8 +366,8 @@ public class GetAnticipationResponse {
         /**
          * Initialization constructor.
          * @param  id  String value for id.
-         * @param  requestedAmount  int value for requestedAmount.
-         * @param  approvedAmount  int value for approvedAmount.
+         * @param  requestedAmount  Integer value for requestedAmount.
+         * @param  approvedAmount  Integer value for approvedAmount.
          * @param  pgid  String value for pgid.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
@@ -337,7 +375,7 @@ public class GetAnticipationResponse {
          * @param  status  String value for status.
          * @param  timeframe  String value for timeframe.
          */
-        public Builder(String id, int requestedAmount, int approvedAmount, String pgid,
+        public Builder(String id, Integer requestedAmount, Integer approvedAmount, String pgid,
                 LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime paymentDate,
                 String status, String timeframe) {
             this.id = id;
@@ -363,20 +401,20 @@ public class GetAnticipationResponse {
 
         /**
          * Setter for requestedAmount.
-         * @param  requestedAmount  int value for requestedAmount.
+         * @param  requestedAmount  Integer value for requestedAmount.
          * @return Builder
          */
-        public Builder requestedAmount(int requestedAmount) {
+        public Builder requestedAmount(Integer requestedAmount) {
             this.requestedAmount = requestedAmount;
             return this;
         }
 
         /**
          * Setter for approvedAmount.
-         * @param  approvedAmount  int value for approvedAmount.
+         * @param  approvedAmount  Integer value for approvedAmount.
          * @return Builder
          */
-        public Builder approvedAmount(int approvedAmount) {
+        public Builder approvedAmount(Integer approvedAmount) {
             this.approvedAmount = approvedAmount;
             return this;
         }
@@ -447,7 +485,16 @@ public class GetAnticipationResponse {
          * @return Builder
          */
         public Builder recipient(GetRecipientResponse recipient) {
-            this.recipient = recipient;
+            this.recipient = OptionalNullable.of(recipient);
+            return this;
+        }
+
+        /**
+         * UnSetter for recipient.
+         * @return Builder
+         */
+        public Builder unsetRecipient() {
+            recipient = null;
             return this;
         }
 

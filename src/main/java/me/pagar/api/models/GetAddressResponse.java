@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -32,11 +33,11 @@ public class GetAddressResponse {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private GetCustomerResponse customer;
+    private OptionalNullable<GetCustomerResponse> customer;
     private Map<String, String> metadata;
     private String line1;
     private String line2;
-    private LocalDateTime deletedAt;
+    private OptionalNullable<LocalDateTime> deletedAt;
 
     /**
      * Default constructor.
@@ -82,6 +83,34 @@ public class GetAddressResponse {
             String line2,
             GetCustomerResponse customer,
             LocalDateTime deletedAt) {
+        this.id = id;
+        this.street = street;
+        this.number = number;
+        this.complement = complement;
+        this.zipCode = zipCode;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.customer = OptionalNullable.of(customer);
+        this.metadata = metadata;
+        this.line1 = line1;
+        this.line2 = line2;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAddressResponse(String id, String street, String number, String complement,
+            String zipCode, String neighborhood, String city, String state, String country,
+            String status, LocalDateTime createdAt, LocalDateTime updatedAt,
+            Map<String, String> metadata, String line1, String line2,
+            OptionalNullable<GetCustomerResponse> customer,
+            OptionalNullable<LocalDateTime> deletedAt) {
         this.id = id;
         this.street = street;
         this.number = number;
@@ -322,13 +351,22 @@ public class GetAddressResponse {
     }
 
     /**
-     * Getter for Customer.
-     * @return Returns the GetCustomerResponse
+     * Internal Getter for Customer.
+     * @return Returns the Internal GetCustomerResponse
      */
     @JsonGetter("customer")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCustomerResponse> internalGetCustomer() {
+        return this.customer;
+    }
+
+    /**
+     * Getter for Customer.
+     * @return Returns the GetCustomerResponse
+     */
     public GetCustomerResponse getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -337,7 +375,14 @@ public class GetAddressResponse {
      */
     @JsonSetter("customer")
     public void setCustomer(GetCustomerResponse customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -399,14 +444,22 @@ public class GetAddressResponse {
     }
 
     /**
-     * Getter for DeletedAt.
-     * @return Returns the LocalDateTime
+     * Internal Getter for DeletedAt.
+     * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("deleted_at")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
+    }
+
+    /**
+     * Getter for DeletedAt.
+     * @return Returns the LocalDateTime
+     */
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -416,7 +469,14 @@ public class GetAddressResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
     }
 
     /**
@@ -440,9 +500,9 @@ public class GetAddressResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, street, number, complement, zipCode, neighborhood, city,
-                state, country, status, createdAt, updatedAt, metadata, line1, line2)
-                .customer(getCustomer())
-                .deletedAt(getDeletedAt());
+                state, country, status, createdAt, updatedAt, metadata, line1, line2);
+        builder.customer = internalGetCustomer();
+        builder.deletedAt = internalGetDeletedAt();
         return builder;
     }
 
@@ -465,8 +525,8 @@ public class GetAddressResponse {
         private Map<String, String> metadata;
         private String line1;
         private String line2;
-        private GetCustomerResponse customer;
-        private LocalDateTime deletedAt;
+        private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<LocalDateTime> deletedAt;
 
         /**
          * Initialization constructor.
@@ -669,7 +729,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder customer(GetCustomerResponse customer) {
-            this.customer = customer;
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
             return this;
         }
 
@@ -679,7 +748,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 

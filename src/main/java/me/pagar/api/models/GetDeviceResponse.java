@@ -9,13 +9,15 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetDeviceResponse type.
  */
 public class GetDeviceResponse {
-    private String platform;
+    private OptionalNullable<String> platform;
 
     /**
      * Default constructor.
@@ -29,7 +31,26 @@ public class GetDeviceResponse {
      */
     public GetDeviceResponse(
             String platform) {
+        this.platform = OptionalNullable.of(platform);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetDeviceResponse(OptionalNullable<String> platform) {
         this.platform = platform;
+    }
+
+    /**
+     * Internal Getter for Platform.
+     * Device's platform name
+     * @return Returns the Internal String
+     */
+    @JsonGetter("platform")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPlatform() {
+        return this.platform;
     }
 
     /**
@@ -37,10 +58,8 @@ public class GetDeviceResponse {
      * Device's platform name
      * @return Returns the String
      */
-    @JsonGetter("platform")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getPlatform() {
-        return platform;
+        return OptionalNullable.getFrom(platform);
     }
 
     /**
@@ -50,7 +69,15 @@ public class GetDeviceResponse {
      */
     @JsonSetter("platform")
     public void setPlatform(String platform) {
-        this.platform = platform;
+        this.platform = OptionalNullable.of(platform);
+    }
+
+    /**
+     * UnSetter for Platform.
+     * Device's platform name
+     */
+    public void unsetPlatform() {
+        platform = null;
     }
 
     /**
@@ -68,8 +95,8 @@ public class GetDeviceResponse {
      * @return a new {@link GetDeviceResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder()
-                .platform(getPlatform());
+        Builder builder = new Builder();
+        builder.platform = internalGetPlatform();
         return builder;
     }
 
@@ -77,7 +104,7 @@ public class GetDeviceResponse {
      * Class to build instances of {@link GetDeviceResponse}.
      */
     public static class Builder {
-        private String platform;
+        private OptionalNullable<String> platform;
 
 
 
@@ -87,7 +114,16 @@ public class GetDeviceResponse {
          * @return Builder
          */
         public Builder platform(String platform) {
-            this.platform = platform;
+            this.platform = OptionalNullable.of(platform);
+            return this;
+        }
+
+        /**
+         * UnSetter for platform.
+         * @return Builder
+         */
+        public Builder unsetPlatform() {
+            platform = null;
             return this;
         }
 

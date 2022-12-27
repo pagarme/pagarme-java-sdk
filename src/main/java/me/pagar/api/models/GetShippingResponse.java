@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -19,13 +20,13 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetShippingResponse type.
  */
 public class GetShippingResponse {
-    private int amount;
+    private Integer amount;
     private String description;
     private String recipientName;
     private String recipientPhone;
     private GetAddressResponse address;
-    private LocalDateTime maxDeliveryDate;
-    private LocalDateTime estimatedDeliveryDate;
+    private OptionalNullable<LocalDateTime> maxDeliveryDate;
+    private OptionalNullable<LocalDateTime> estimatedDeliveryDate;
     private String type;
 
     /**
@@ -36,7 +37,7 @@ public class GetShippingResponse {
 
     /**
      * Initialization constructor.
-     * @param  amount  int value for amount.
+     * @param  amount  Integer value for amount.
      * @param  description  String value for description.
      * @param  recipientName  String value for recipientName.
      * @param  recipientPhone  String value for recipientPhone.
@@ -46,7 +47,7 @@ public class GetShippingResponse {
      * @param  estimatedDeliveryDate  LocalDateTime value for estimatedDeliveryDate.
      */
     public GetShippingResponse(
-            int amount,
+            Integer amount,
             String description,
             String recipientName,
             String recipientPhone,
@@ -59,6 +60,23 @@ public class GetShippingResponse {
         this.recipientName = recipientName;
         this.recipientPhone = recipientPhone;
         this.address = address;
+        this.maxDeliveryDate = OptionalNullable.of(maxDeliveryDate);
+        this.estimatedDeliveryDate = OptionalNullable.of(estimatedDeliveryDate);
+        this.type = type;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetShippingResponse(Integer amount, String description, String recipientName,
+            String recipientPhone, GetAddressResponse address, String type,
+            OptionalNullable<LocalDateTime> maxDeliveryDate,
+            OptionalNullable<LocalDateTime> estimatedDeliveryDate) {
+        this.amount = amount;
+        this.description = description;
+        this.recipientName = recipientName;
+        this.recipientPhone = recipientPhone;
+        this.address = address;
         this.maxDeliveryDate = maxDeliveryDate;
         this.estimatedDeliveryDate = estimatedDeliveryDate;
         this.type = type;
@@ -66,19 +84,19 @@ public class GetShippingResponse {
 
     /**
      * Getter for Amount.
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("amount")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for int
+     * @param amount Value for Integer
      */
     @JsonSetter("amount")
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -155,15 +173,24 @@ public class GetShippingResponse {
     }
 
     /**
+     * Internal Getter for MaxDeliveryDate.
+     * Data máxima de entrega
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("max_delivery_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetMaxDeliveryDate() {
+        return this.maxDeliveryDate;
+    }
+
+    /**
      * Getter for MaxDeliveryDate.
      * Data máxima de entrega
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("max_delivery_date")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getMaxDeliveryDate() {
-        return maxDeliveryDate;
+        return OptionalNullable.getFrom(maxDeliveryDate);
     }
 
     /**
@@ -174,7 +201,27 @@ public class GetShippingResponse {
     @JsonSetter("max_delivery_date")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setMaxDeliveryDate(LocalDateTime maxDeliveryDate) {
-        this.maxDeliveryDate = maxDeliveryDate;
+        this.maxDeliveryDate = OptionalNullable.of(maxDeliveryDate);
+    }
+
+    /**
+     * UnSetter for MaxDeliveryDate.
+     * Data máxima de entrega
+     */
+    public void unsetMaxDeliveryDate() {
+        maxDeliveryDate = null;
+    }
+
+    /**
+     * Internal Getter for EstimatedDeliveryDate.
+     * Prazo estimado de entrega
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("estimated_delivery_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetEstimatedDeliveryDate() {
+        return this.estimatedDeliveryDate;
     }
 
     /**
@@ -182,11 +229,8 @@ public class GetShippingResponse {
      * Prazo estimado de entrega
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("estimated_delivery_date")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getEstimatedDeliveryDate() {
-        return estimatedDeliveryDate;
+        return OptionalNullable.getFrom(estimatedDeliveryDate);
     }
 
     /**
@@ -197,7 +241,15 @@ public class GetShippingResponse {
     @JsonSetter("estimated_delivery_date")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setEstimatedDeliveryDate(LocalDateTime estimatedDeliveryDate) {
-        this.estimatedDeliveryDate = estimatedDeliveryDate;
+        this.estimatedDeliveryDate = OptionalNullable.of(estimatedDeliveryDate);
+    }
+
+    /**
+     * UnSetter for EstimatedDeliveryDate.
+     * Prazo estimado de entrega
+     */
+    public void unsetEstimatedDeliveryDate() {
+        estimatedDeliveryDate = null;
     }
 
     /**
@@ -239,9 +291,9 @@ public class GetShippingResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(amount, description, recipientName, recipientPhone, address,
-                type)
-                .maxDeliveryDate(getMaxDeliveryDate())
-                .estimatedDeliveryDate(getEstimatedDeliveryDate());
+                type);
+        builder.maxDeliveryDate = internalGetMaxDeliveryDate();
+        builder.estimatedDeliveryDate = internalGetEstimatedDeliveryDate();
         return builder;
     }
 
@@ -249,14 +301,14 @@ public class GetShippingResponse {
      * Class to build instances of {@link GetShippingResponse}.
      */
     public static class Builder {
-        private int amount;
+        private Integer amount;
         private String description;
         private String recipientName;
         private String recipientPhone;
         private GetAddressResponse address;
         private String type;
-        private LocalDateTime maxDeliveryDate;
-        private LocalDateTime estimatedDeliveryDate;
+        private OptionalNullable<LocalDateTime> maxDeliveryDate;
+        private OptionalNullable<LocalDateTime> estimatedDeliveryDate;
 
         /**
          * Initialization constructor.
@@ -266,15 +318,15 @@ public class GetShippingResponse {
 
         /**
          * Initialization constructor.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @param  description  String value for description.
          * @param  recipientName  String value for recipientName.
          * @param  recipientPhone  String value for recipientPhone.
          * @param  address  GetAddressResponse value for address.
          * @param  type  String value for type.
          */
-        public Builder(int amount, String description, String recipientName, String recipientPhone,
-                GetAddressResponse address, String type) {
+        public Builder(Integer amount, String description, String recipientName,
+                String recipientPhone, GetAddressResponse address, String type) {
             this.amount = amount;
             this.description = description;
             this.recipientName = recipientName;
@@ -285,10 +337,10 @@ public class GetShippingResponse {
 
         /**
          * Setter for amount.
-         * @param  amount  int value for amount.
+         * @param  amount  Integer value for amount.
          * @return Builder
          */
-        public Builder amount(int amount) {
+        public Builder amount(Integer amount) {
             this.amount = amount;
             return this;
         }
@@ -349,7 +401,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder maxDeliveryDate(LocalDateTime maxDeliveryDate) {
-            this.maxDeliveryDate = maxDeliveryDate;
+            this.maxDeliveryDate = OptionalNullable.of(maxDeliveryDate);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxDeliveryDate.
+         * @return Builder
+         */
+        public Builder unsetMaxDeliveryDate() {
+            maxDeliveryDate = null;
             return this;
         }
 
@@ -359,7 +420,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder estimatedDeliveryDate(LocalDateTime estimatedDeliveryDate) {
-            this.estimatedDeliveryDate = estimatedDeliveryDate;
+            this.estimatedDeliveryDate = OptionalNullable.of(estimatedDeliveryDate);
+            return this;
+        }
+
+        /**
+         * UnSetter for estimatedDeliveryDate.
+         * @return Builder
+         */
+        public Builder unsetEstimatedDeliveryDate() {
+            estimatedDeliveryDate = null;
             return this;
         }
 

@@ -12,7 +12,7 @@ Transfer response
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `Id` | `String` | Required | Id | String getId() | setId(String id) |
-| `Amount` | `int` | Required | Transfer amount | int getAmount() | setAmount(int amount) |
+| `Amount` | `Integer` | Required | Transfer amount | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Required | Transfer status | String getStatus() | setStatus(String status) |
 | `CreatedAt` | `LocalDateTime` | Required | Transfer creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Required | Transfer last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |

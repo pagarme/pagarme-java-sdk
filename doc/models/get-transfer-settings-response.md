@@ -9,9 +9,9 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `TransferEnabled` | `boolean` | Required | - | boolean getTransferEnabled() | setTransferEnabled(boolean transferEnabled) |
+| `TransferEnabled` | `Boolean` | Required | - | Boolean getTransferEnabled() | setTransferEnabled(Boolean transferEnabled) |
 | `TransferInterval` | `String` | Required | - | String getTransferInterval() | setTransferInterval(String transferInterval) |
-| `TransferDay` | `int` | Required | - | int getTransferDay() | setTransferDay(int transferDay) |
+| `TransferDay` | `Integer` | Required | - | Integer getTransferDay() | setTransferDay(Integer transferDay) |
 
 ## Example (as JSON)
 

@@ -17,10 +17,10 @@ Response object for getting a period
 | `BillingAt` | `LocalDateTime` | Required | - | LocalDateTime getBillingAt() | setBillingAt(LocalDateTime billingAt) |
 | `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Required | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
 | `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
-| `Duration` | `int` | Required | - | int getDuration() | setDuration(int duration) |
+| `Duration` | `Integer` | Required | - | Integer getDuration() | setDuration(Integer duration) |
 | `CreatedAt` | `String` | Required | - | String getCreatedAt() | setCreatedAt(String createdAt) |
 | `UpdatedAt` | `String` | Required | - | String getUpdatedAt() | setUpdatedAt(String updatedAt) |
-| `Cycle` | `int` | Required | - | int getCycle() | setCycle(int cycle) |
+| `Cycle` | `Integer` | Required | - | Integer getCycle() | setCycle(Integer cycle) |
 
 ## Example (as JSON)
 

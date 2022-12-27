@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -23,7 +24,7 @@ public class GetCustomerResponse {
     private String id;
     private String name;
     private String email;
-    private boolean delinquent;
+    private Boolean delinquent;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String document;
@@ -32,7 +33,7 @@ public class GetCustomerResponse {
     private GetAddressResponse address;
     private Map<String, String> metadata;
     private GetPhonesResponse phones;
-    private Long fbId;
+    private OptionalNullable<Long> fbId;
     private String code;
     private String documentType;
 
@@ -47,7 +48,7 @@ public class GetCustomerResponse {
      * @param  id  String value for id.
      * @param  name  String value for name.
      * @param  email  String value for email.
-     * @param  delinquent  boolean value for delinquent.
+     * @param  delinquent  Boolean value for delinquent.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
      * @param  document  String value for document.
@@ -64,7 +65,7 @@ public class GetCustomerResponse {
             String id,
             String name,
             String email,
-            boolean delinquent,
+            Boolean delinquent,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
             String document,
@@ -76,6 +77,31 @@ public class GetCustomerResponse {
             String code,
             String documentType,
             Long fbId) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.delinquent = delinquent;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.document = document;
+        this.type = type;
+        this.fbAccessToken = fbAccessToken;
+        this.address = address;
+        this.metadata = metadata;
+        this.phones = phones;
+        this.fbId = OptionalNullable.of(fbId);
+        this.code = code;
+        this.documentType = documentType;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCustomerResponse(String id, String name, String email, Boolean delinquent,
+            LocalDateTime createdAt, LocalDateTime updatedAt, String document, String type,
+            String fbAccessToken, GetAddressResponse address, Map<String, String> metadata,
+            GetPhonesResponse phones, String code, String documentType,
+            OptionalNullable<Long> fbId) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -149,19 +175,19 @@ public class GetCustomerResponse {
 
     /**
      * Getter for Delinquent.
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("delinquent")
-    public boolean getDelinquent() {
+    public Boolean getDelinquent() {
         return delinquent;
     }
 
     /**
      * Setter for Delinquent.
-     * @param delinquent Value for boolean
+     * @param delinquent Value for Boolean
      */
     @JsonSetter("delinquent")
-    public void setDelinquent(boolean delinquent) {
+    public void setDelinquent(Boolean delinquent) {
         this.delinquent = delinquent;
     }
 
@@ -314,13 +340,22 @@ public class GetCustomerResponse {
     }
 
     /**
-     * Getter for FbId.
-     * @return Returns the Long
+     * Internal Getter for FbId.
+     * @return Returns the Internal Long
      */
     @JsonGetter("fb_id")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Long> internalGetFbId() {
+        return this.fbId;
+    }
+
+    /**
+     * Getter for FbId.
+     * @return Returns the Long
+     */
     public Long getFbId() {
-        return fbId;
+        return OptionalNullable.getFrom(fbId);
     }
 
     /**
@@ -329,7 +364,14 @@ public class GetCustomerResponse {
      */
     @JsonSetter("fb_id")
     public void setFbId(Long fbId) {
-        this.fbId = fbId;
+        this.fbId = OptionalNullable.of(fbId);
+    }
+
+    /**
+     * UnSetter for FbId.
+     */
+    public void unsetFbId() {
+        fbId = null;
     }
 
     /**
@@ -391,8 +433,8 @@ public class GetCustomerResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, name, email, delinquent, createdAt, updatedAt, document,
-                type, fbAccessToken, address, metadata, phones, code, documentType)
-                .fbId(getFbId());
+                type, fbAccessToken, address, metadata, phones, code, documentType);
+        builder.fbId = internalGetFbId();
         return builder;
     }
 
@@ -403,7 +445,7 @@ public class GetCustomerResponse {
         private String id;
         private String name;
         private String email;
-        private boolean delinquent;
+        private Boolean delinquent;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private String document;
@@ -414,7 +456,7 @@ public class GetCustomerResponse {
         private GetPhonesResponse phones;
         private String code;
         private String documentType;
-        private Long fbId;
+        private OptionalNullable<Long> fbId;
 
         /**
          * Initialization constructor.
@@ -427,7 +469,7 @@ public class GetCustomerResponse {
          * @param  id  String value for id.
          * @param  name  String value for name.
          * @param  email  String value for email.
-         * @param  delinquent  boolean value for delinquent.
+         * @param  delinquent  Boolean value for delinquent.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
          * @param  document  String value for document.
@@ -439,7 +481,7 @@ public class GetCustomerResponse {
          * @param  code  String value for code.
          * @param  documentType  String value for documentType.
          */
-        public Builder(String id, String name, String email, boolean delinquent,
+        public Builder(String id, String name, String email, Boolean delinquent,
                 LocalDateTime createdAt, LocalDateTime updatedAt, String document, String type,
                 String fbAccessToken, GetAddressResponse address, Map<String, String> metadata,
                 GetPhonesResponse phones, String code, String documentType) {
@@ -491,10 +533,10 @@ public class GetCustomerResponse {
 
         /**
          * Setter for delinquent.
-         * @param  delinquent  boolean value for delinquent.
+         * @param  delinquent  Boolean value for delinquent.
          * @return Builder
          */
-        public Builder delinquent(boolean delinquent) {
+        public Builder delinquent(Boolean delinquent) {
             this.delinquent = delinquent;
             return this;
         }
@@ -605,7 +647,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder fbId(Long fbId) {
-            this.fbId = fbId;
+            this.fbId = OptionalNullable.of(fbId);
+            return this;
+        }
+
+        /**
+         * UnSetter for fbId.
+         * @return Builder
+         */
+        public Builder unsetFbId() {
+            fbId = null;
             return this;
         }
 

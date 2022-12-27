@@ -44,7 +44,6 @@ public class CreatePaymentRequest {
     /**
      * Initialization constructor.
      * @param  paymentMethod  String value for paymentMethod.
-     * @param  privateLabel  CreatePrivateLabelPaymentRequest value for privateLabel.
      * @param  creditCard  CreateCreditCardPaymentRequest value for creditCard.
      * @param  debitCard  CreateDebitCardPaymentRequest value for debitCard.
      * @param  boleto  CreateBoletoPaymentRequest value for boleto.
@@ -59,11 +58,11 @@ public class CreatePaymentRequest {
      * @param  customer  CreateCustomerRequest value for customer.
      * @param  metadata  Map of String, value for metadata.
      * @param  cash  CreateCashPaymentRequest value for cash.
+     * @param  privateLabel  CreatePrivateLabelPaymentRequest value for privateLabel.
      * @param  pix  CreatePixPaymentRequest value for pix.
      */
     public CreatePaymentRequest(
             String paymentMethod,
-            CreatePrivateLabelPaymentRequest privateLabel,
             CreateCreditCardPaymentRequest creditCard,
             CreateDebitCardPaymentRequest debitCard,
             CreateBoletoPaymentRequest boleto,
@@ -78,6 +77,7 @@ public class CreatePaymentRequest {
             CreateCustomerRequest customer,
             Map<String, String> metadata,
             CreateCashPaymentRequest cash,
+            CreatePrivateLabelPaymentRequest privateLabel,
             CreatePixPaymentRequest pix) {
         this.paymentMethod = paymentMethod;
         this.creditCard = creditCard;
@@ -418,6 +418,7 @@ public class CreatePaymentRequest {
      * @return Returns the CreatePrivateLabelPaymentRequest
      */
     @JsonGetter("private_label")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreatePrivateLabelPaymentRequest getPrivateLabel() {
         return privateLabel;
     }
@@ -459,13 +460,13 @@ public class CreatePaymentRequest {
      */
     @Override
     public String toString() {
-        return "CreatePaymentRequest [" + "paymentMethod=" + paymentMethod + ", privateLabel="
-                + privateLabel + ", creditCard=" + creditCard + ", debitCard=" + debitCard
-                + ", boleto=" + boleto + ", currency=" + currency + ", voucher=" + voucher
-                + ", split=" + split + ", bankTransfer=" + bankTransfer + ", gatewayAffiliationId="
-                + gatewayAffiliationId + ", amount=" + amount + ", checkout=" + checkout
-                + ", customerId=" + customerId + ", customer=" + customer + ", metadata=" + metadata
-                + ", cash=" + cash + ", pix=" + pix + "]";
+        return "CreatePaymentRequest [" + "paymentMethod=" + paymentMethod + ", creditCard="
+                + creditCard + ", debitCard=" + debitCard + ", boleto=" + boleto + ", currency="
+                + currency + ", voucher=" + voucher + ", split=" + split + ", bankTransfer="
+                + bankTransfer + ", gatewayAffiliationId=" + gatewayAffiliationId + ", amount="
+                + amount + ", checkout=" + checkout + ", customerId=" + customerId + ", customer="
+                + customer + ", metadata=" + metadata + ", cash=" + cash + ", privateLabel="
+                + privateLabel + ", pix=" + pix + "]";
     }
 
     /**
@@ -474,7 +475,7 @@ public class CreatePaymentRequest {
      * @return a new {@link CreatePaymentRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(paymentMethod, privateLabel)
+        Builder builder = new Builder(paymentMethod)
                 .creditCard(getCreditCard())
                 .debitCard(getDebitCard())
                 .boleto(getBoleto())
@@ -489,6 +490,7 @@ public class CreatePaymentRequest {
                 .customer(getCustomer())
                 .metadata(getMetadata())
                 .cash(getCash())
+                .privateLabel(getPrivateLabel())
                 .pix(getPix());
         return builder;
     }
@@ -498,7 +500,6 @@ public class CreatePaymentRequest {
      */
     public static class Builder {
         private String paymentMethod;
-        private CreatePrivateLabelPaymentRequest privateLabel;
         private CreateCreditCardPaymentRequest creditCard;
         private CreateDebitCardPaymentRequest debitCard;
         private CreateBoletoPaymentRequest boleto;
@@ -513,6 +514,7 @@ public class CreatePaymentRequest {
         private CreateCustomerRequest customer;
         private Map<String, String> metadata;
         private CreateCashPaymentRequest cash;
+        private CreatePrivateLabelPaymentRequest privateLabel;
         private CreatePixPaymentRequest pix;
 
         /**
@@ -524,11 +526,9 @@ public class CreatePaymentRequest {
         /**
          * Initialization constructor.
          * @param  paymentMethod  String value for paymentMethod.
-         * @param  privateLabel  CreatePrivateLabelPaymentRequest value for privateLabel.
          */
-        public Builder(String paymentMethod, CreatePrivateLabelPaymentRequest privateLabel) {
+        public Builder(String paymentMethod) {
             this.paymentMethod = paymentMethod;
-            this.privateLabel = privateLabel;
         }
 
         /**
@@ -538,16 +538,6 @@ public class CreatePaymentRequest {
          */
         public Builder paymentMethod(String paymentMethod) {
             this.paymentMethod = paymentMethod;
-            return this;
-        }
-
-        /**
-         * Setter for privateLabel.
-         * @param  privateLabel  CreatePrivateLabelPaymentRequest value for privateLabel.
-         * @return Builder
-         */
-        public Builder privateLabel(CreatePrivateLabelPaymentRequest privateLabel) {
-            this.privateLabel = privateLabel;
             return this;
         }
 
@@ -692,6 +682,16 @@ public class CreatePaymentRequest {
         }
 
         /**
+         * Setter for privateLabel.
+         * @param  privateLabel  CreatePrivateLabelPaymentRequest value for privateLabel.
+         * @return Builder
+         */
+        public Builder privateLabel(CreatePrivateLabelPaymentRequest privateLabel) {
+            this.privateLabel = privateLabel;
+            return this;
+        }
+
+        /**
          * Setter for pix.
          * @param  pix  CreatePixPaymentRequest value for pix.
          * @return Builder
@@ -706,9 +706,9 @@ public class CreatePaymentRequest {
          * @return {@link CreatePaymentRequest}
          */
         public CreatePaymentRequest build() {
-            return new CreatePaymentRequest(paymentMethod, privateLabel, creditCard, debitCard,
-                    boleto, currency, voucher, split, bankTransfer, gatewayAffiliationId, amount,
-                    checkout, customerId, customer, metadata, cash, pix);
+            return new CreatePaymentRequest(paymentMethod, creditCard, debitCard, boleto, currency,
+                    voucher, split, bankTransfer, gatewayAffiliationId, amount, checkout,
+                    customerId, customer, metadata, cash, privateLabel, pix);
         }
     }
 }
