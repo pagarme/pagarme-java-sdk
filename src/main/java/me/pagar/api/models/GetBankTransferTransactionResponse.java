@@ -8,7 +8,9 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -21,19 +23,27 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetBankTransferTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetBankTransferTransactionResponse.class,
+        visible = true)
+@JsonInclude(Include.ALWAYS)
 public class GetBankTransferTransactionResponse
         extends GetTransactionResponse {
     private String url;
     private String bankTid;
     private String bank;
-    private OptionalNullable<LocalDateTime> paidAt;
-    private OptionalNullable<Integer> paidAmount;
+    private LocalDateTime paidAt;
+    private Integer paidAmount;
 
     /**
      * Default constructor.
      */
     public GetBankTransferTransactionResponse() {
         super();
+        setTransactionType("bank_transfer");
     }
 
     /**
@@ -94,8 +104,8 @@ public class GetBankTransferTransactionResponse
         this.url = url;
         this.bankTid = bankTid;
         this.bank = bank;
-        this.paidAt = OptionalNullable.of(paidAt);
-        this.paidAmount = OptionalNullable.of(paidAmount);
+        this.paidAt = paidAt;
+        this.paidAmount = paidAmount;
     }
 
     /**
@@ -106,11 +116,11 @@ public class GetBankTransferTransactionResponse
             Integer maxAttempts, List<GetSplitResponse> splits, String id,
             GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
             List<GetSplitResponse> split, String url, String bankTid, String bank,
-            OptionalNullable<LocalDateTime> nextAttempt, OptionalNullable<String> transactionType,
+            OptionalNullable<LocalDateTime> nextAttempt, String transactionType,
             OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
-            OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<LocalDateTime> paidAt,
-            OptionalNullable<Integer> paidAmount) {
+            OptionalNullable<Integer> maxDaysToPayPastDue, LocalDateTime paidAt,
+            Integer paidAmount) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
                 metadata, interest, fine, maxDaysToPayPastDue);
@@ -182,24 +192,15 @@ public class GetBankTransferTransactionResponse
     }
 
     /**
-     * Internal Getter for PaidAt.
-     * Payment date
-     * @return Returns the Internal LocalDateTime
-     */
-    @JsonGetter("paid_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
-    protected OptionalNullable<LocalDateTime> internalGetPaidAt() {
-        return this.paidAt;
-    }
-
-    /**
      * Getter for PaidAt.
      * Payment date
      * @return Returns the LocalDateTime
      */
+    @JsonGetter("paid_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getPaidAt() {
-        return OptionalNullable.getFrom(paidAt);
+        return paidAt;
     }
 
     /**
@@ -210,27 +211,7 @@ public class GetBankTransferTransactionResponse
     @JsonSetter("paid_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setPaidAt(LocalDateTime paidAt) {
-        this.paidAt = OptionalNullable.of(paidAt);
-    }
-
-    /**
-     * UnSetter for PaidAt.
-     * Payment date
-     */
-    public void unsetPaidAt() {
-        paidAt = null;
-    }
-
-    /**
-     * Internal Getter for PaidAmount.
-     * Paid amount
-     * @return Returns the Internal Integer
-     */
-    @JsonGetter("paid_amount")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<Integer> internalGetPaidAmount() {
-        return this.paidAmount;
+        this.paidAt = paidAt;
     }
 
     /**
@@ -238,8 +219,10 @@ public class GetBankTransferTransactionResponse
      * Paid amount
      * @return Returns the Integer
      */
+    @JsonGetter("paid_amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getPaidAmount() {
-        return OptionalNullable.getFrom(paidAmount);
+        return paidAmount;
     }
 
     /**
@@ -249,15 +232,7 @@ public class GetBankTransferTransactionResponse
      */
     @JsonSetter("paid_amount")
     public void setPaidAmount(Integer paidAmount) {
-        this.paidAmount = OptionalNullable.of(paidAmount);
-    }
-
-    /**
-     * UnSetter for PaidAmount.
-     * Paid amount
-     */
-    public void unsetPaidAmount() {
-        paidAmount = null;
+        this.paidAmount = paidAmount;
     }
 
     /**
@@ -288,11 +263,11 @@ public class GetBankTransferTransactionResponse
         Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, bankTid,
-                bank);
-        builder.paidAt = internalGetPaidAt();
-        builder.paidAmount = internalGetPaidAmount();
+                bank)
+                .paidAt(getPaidAt())
+                .paidAmount(getPaidAmount())
+                .transactionType(getTransactionType());
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -321,13 +296,13 @@ public class GetBankTransferTransactionResponse
         private String bankTid;
         private String bank;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "bank_transfer";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
         private OptionalNullable<Integer> maxDaysToPayPastDue;
-        private OptionalNullable<LocalDateTime> paidAt;
-        private OptionalNullable<Integer> paidAmount;
+        private LocalDateTime paidAt;
+        private Integer paidAmount;
 
         /**
          * Initialization constructor.
@@ -562,16 +537,7 @@ public class GetBankTransferTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 
@@ -657,16 +623,7 @@ public class GetBankTransferTransactionResponse
          * @return Builder
          */
         public Builder paidAt(LocalDateTime paidAt) {
-            this.paidAt = OptionalNullable.of(paidAt);
-            return this;
-        }
-
-        /**
-         * UnSetter for paidAt.
-         * @return Builder
-         */
-        public Builder unsetPaidAt() {
-            paidAt = null;
+            this.paidAt = paidAt;
             return this;
         }
 
@@ -676,16 +633,7 @@ public class GetBankTransferTransactionResponse
          * @return Builder
          */
         public Builder paidAmount(Integer paidAmount) {
-            this.paidAmount = OptionalNullable.of(paidAmount);
-            return this;
-        }
-
-        /**
-         * UnSetter for paidAmount.
-         * @return Builder
-         */
-        public Builder unsetPaidAmount() {
-            paidAmount = null;
+            this.paidAmount = paidAmount;
             return this;
         }
 

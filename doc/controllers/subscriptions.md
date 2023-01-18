@@ -863,19 +863,6 @@ body.setInterval("interval6");
 body.setIntervalCount(170);
 CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
 pricingScheme.setSchemeType("scheme_type2");
-List<CreatePriceBracketRequest> priceBrackets = new LinkedList<>();
-CreatePriceBracketRequest priceBrackets0 = new CreatePriceBracketRequest();
-priceBrackets0.setStartQuantity(31);
-priceBrackets0.setPrice(225);
-
-priceBrackets.add(priceBrackets0);
-CreatePriceBracketRequest priceBrackets1 = new CreatePriceBracketRequest();
-priceBrackets1.setStartQuantity(32);
-priceBrackets1.setPrice(226);
-
-priceBrackets.add(priceBrackets1);
-
-pricingScheme.setPriceBrackets(priceBrackets);
 
 body.setPricingScheme(pricingScheme);
 List<CreateSubscriptionItemRequest> items = new LinkedList<>();
@@ -883,19 +870,6 @@ CreateSubscriptionItemRequest items0 = new CreateSubscriptionItemRequest();
 items0.setDescription("description3");
 CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
 pricingScheme.setSchemeType("scheme_type5");
-List<CreatePriceBracketRequest> priceBrackets = new LinkedList<>();
-CreatePriceBracketRequest priceBrackets0 = new CreatePriceBracketRequest();
-priceBrackets0.setStartQuantity(228);
-priceBrackets0.setPrice(90);
-
-priceBrackets.add(priceBrackets0);
-CreatePriceBracketRequest priceBrackets1 = new CreatePriceBracketRequest();
-priceBrackets1.setStartQuantity(229);
-priceBrackets1.setPrice(89);
-
-priceBrackets.add(priceBrackets1);
-
-pricingScheme.setPriceBrackets(priceBrackets);
 
 items0.setPricingScheme(pricingScheme);
 items0.setId("id3");
@@ -916,14 +890,6 @@ CreateSubscriptionItemRequest items1 = new CreateSubscriptionItemRequest();
 items1.setDescription("description4");
 CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
 pricingScheme.setSchemeType("scheme_type4");
-List<CreatePriceBracketRequest> priceBrackets = new LinkedList<>();
-CreatePriceBracketRequest priceBrackets0 = new CreatePriceBracketRequest();
-priceBrackets0.setStartQuantity(227);
-priceBrackets0.setPrice(91);
-
-priceBrackets.add(priceBrackets0);
-
-pricingScheme.setPriceBrackets(priceBrackets);
 
 items1.setPricingScheme(pricingScheme);
 items1.setId("id4");
@@ -950,24 +916,6 @@ CreateSubscriptionItemRequest items2 = new CreateSubscriptionItemRequest();
 items2.setDescription("description5");
 CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
 pricingScheme.setSchemeType("scheme_type3");
-List<CreatePriceBracketRequest> priceBrackets = new LinkedList<>();
-CreatePriceBracketRequest priceBrackets0 = new CreatePriceBracketRequest();
-priceBrackets0.setStartQuantity(226);
-priceBrackets0.setPrice(92);
-
-priceBrackets.add(priceBrackets0);
-CreatePriceBracketRequest priceBrackets1 = new CreatePriceBracketRequest();
-priceBrackets1.setStartQuantity(227);
-priceBrackets1.setPrice(91);
-
-priceBrackets.add(priceBrackets1);
-CreatePriceBracketRequest priceBrackets2 = new CreatePriceBracketRequest();
-priceBrackets2.setStartQuantity(228);
-priceBrackets2.setPrice(90);
-
-priceBrackets.add(priceBrackets2);
-
-pricingScheme.setPriceBrackets(priceBrackets);
 
 items2.setPricingScheme(pricingScheme);
 items2.setId("id5");
@@ -1039,15 +987,6 @@ metadata.put("key0", "metadata7");
 metadata.put("key1", "metadata8");
 
 body.setMetadata(metadata);
-CreateSetupRequest setup = new CreateSetupRequest();
-setup.setAmount(150);
-setup.setDescription("description0");
-CreatePaymentRequest payment = new CreatePaymentRequest();
-payment.setPaymentMethod("payment_method4");
-
-setup.setPayment(payment);
-
-body.setSetup(setup);
 List<CreateIncrementRequest> increments = new LinkedList<>();
 CreateIncrementRequest increments0 = new CreateIncrementRequest();
 increments0.setValue(38.83);
@@ -1606,14 +1545,6 @@ CreateSubscriptionItemRequest request = new CreateSubscriptionItemRequest();
 request.setDescription("description6");
 CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
 pricingScheme.setSchemeType("scheme_type2");
-List<CreatePriceBracketRequest> priceBrackets = new LinkedList<>();
-CreatePriceBracketRequest priceBrackets0 = new CreatePriceBracketRequest();
-priceBrackets0.setStartQuantity(87);
-priceBrackets0.setPrice(231);
-
-priceBrackets.add(priceBrackets0);
-
-pricingScheme.setPriceBrackets(priceBrackets);
 
 request.setPricingScheme(pricingScheme);
 request.setId("id6");

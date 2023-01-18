@@ -7,7 +7,10 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -20,6 +23,13 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetDebitCardTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetDebitCardTransactionResponse.class,
+        visible = true)
+@JsonInclude(Include.ALWAYS)
 public class GetDebitCardTransactionResponse
         extends GetTransactionResponse {
     private String statementDescriptor;
@@ -42,6 +52,7 @@ public class GetDebitCardTransactionResponse
      */
     public GetDebitCardTransactionResponse() {
         super();
+        setTransactionType("debit_card");
     }
 
     /**
@@ -145,7 +156,7 @@ public class GetDebitCardTransactionResponse
             String acquirerAuthCode, String operationType, GetCardResponse card,
             String acquirerMessage, String acquirerReturnCode, String mpi, String eci,
             String authenticationType, String threedAuthenticationUrl,
-            OptionalNullable<LocalDateTime> nextAttempt, OptionalNullable<String> transactionType,
+            OptionalNullable<LocalDateTime> nextAttempt, String transactionType,
             OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue) {
@@ -484,9 +495,9 @@ public class GetDebitCardTransactionResponse
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(),
                 statementDescriptor, acquirerName, acquirerAffiliationCode, acquirerTid,
                 acquirerNsu, acquirerAuthCode, operationType, card, acquirerMessage,
-                acquirerReturnCode, mpi, eci, authenticationType, threedAuthenticationUrl);
+                acquirerReturnCode, mpi, eci, authenticationType, threedAuthenticationUrl)
+                .transactionType(getTransactionType());
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -526,7 +537,7 @@ public class GetDebitCardTransactionResponse
         private String authenticationType;
         private String threedAuthenticationUrl;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "debit_card";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
@@ -901,16 +912,7 @@ public class GetDebitCardTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 

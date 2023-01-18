@@ -78,8 +78,8 @@ public class CreateSubscriptionRequest {
      * @param  shipping  CreateShippingRequest value for shipping.
      * @param  discounts  List of CreateDiscountRequest value for discounts.
      * @param  metadata  Map of String, value for metadata.
-     * @param  setup  CreateSetupRequest value for setup.
      * @param  increments  List of CreateIncrementRequest value for increments.
+     * @param  setup  CreateSetupRequest value for setup.
      * @param  planId  String value for planId.
      * @param  customerId  String value for customerId.
      * @param  cardId  String value for cardId.
@@ -113,8 +113,8 @@ public class CreateSubscriptionRequest {
             CreateShippingRequest shipping,
             List<CreateDiscountRequest> discounts,
             Map<String, String> metadata,
-            CreateSetupRequest setup,
             List<CreateIncrementRequest> increments,
+            CreateSetupRequest setup,
             String planId,
             String customerId,
             String cardId,
@@ -472,6 +472,7 @@ public class CreateSubscriptionRequest {
      * @return Returns the CreateSetupRequest
      */
     @JsonGetter("setup")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateSetupRequest getSetup() {
         return setup;
     }
@@ -854,7 +855,7 @@ public class CreateSubscriptionRequest {
                 + ", currency=" + currency + ", interval=" + interval + ", intervalCount="
                 + intervalCount + ", pricingScheme=" + pricingScheme + ", items=" + items
                 + ", shipping=" + shipping + ", discounts=" + discounts + ", metadata=" + metadata
-                + ", setup=" + setup + ", increments=" + increments + ", planId=" + planId
+                + ", increments=" + increments + ", setup=" + setup + ", planId=" + planId
                 + ", customerId=" + customerId + ", cardId=" + cardId + ", billingDay=" + billingDay
                 + ", installments=" + installments + ", startAt=" + startAt + ", minimumPrice="
                 + minimumPrice + ", cycles=" + cycles + ", cardToken=" + cardToken
@@ -871,7 +872,8 @@ public class CreateSubscriptionRequest {
     public Builder toBuilder() {
         Builder builder = new Builder(customer, card, code, paymentMethod, billingType,
                 statementDescriptor, description, currency, interval, intervalCount, pricingScheme,
-                items, shipping, discounts, metadata, setup, increments)
+                items, shipping, discounts, metadata, increments)
+                .setup(getSetup())
                 .planId(getPlanId())
                 .customerId(getCustomerId())
                 .cardId(getCardId())
@@ -910,8 +912,8 @@ public class CreateSubscriptionRequest {
         private CreateShippingRequest shipping;
         private List<CreateDiscountRequest> discounts;
         private Map<String, String> metadata;
-        private CreateSetupRequest setup;
         private List<CreateIncrementRequest> increments;
+        private CreateSetupRequest setup;
         private String planId;
         private String customerId;
         private String cardId;
@@ -952,7 +954,6 @@ public class CreateSubscriptionRequest {
          * @param  shipping  CreateShippingRequest value for shipping.
          * @param  discounts  List of CreateDiscountRequest value for discounts.
          * @param  metadata  Map of String, value for metadata.
-         * @param  setup  CreateSetupRequest value for setup.
          * @param  increments  List of CreateIncrementRequest value for increments.
          */
         public Builder(CreateCustomerRequest customer, CreateCardRequest card, String code,
@@ -960,8 +961,7 @@ public class CreateSubscriptionRequest {
                 String description, String currency, String interval, int intervalCount,
                 CreatePricingSchemeRequest pricingScheme, List<CreateSubscriptionItemRequest> items,
                 CreateShippingRequest shipping, List<CreateDiscountRequest> discounts,
-                Map<String, String> metadata, CreateSetupRequest setup,
-                List<CreateIncrementRequest> increments) {
+                Map<String, String> metadata, List<CreateIncrementRequest> increments) {
             this.customer = customer;
             this.card = card;
             this.code = code;
@@ -977,7 +977,6 @@ public class CreateSubscriptionRequest {
             this.shipping = shipping;
             this.discounts = discounts;
             this.metadata = metadata;
-            this.setup = setup;
             this.increments = increments;
         }
 
@@ -1132,22 +1131,22 @@ public class CreateSubscriptionRequest {
         }
 
         /**
-         * Setter for setup.
-         * @param  setup  CreateSetupRequest value for setup.
-         * @return Builder
-         */
-        public Builder setup(CreateSetupRequest setup) {
-            this.setup = setup;
-            return this;
-        }
-
-        /**
          * Setter for increments.
          * @param  increments  List of CreateIncrementRequest value for increments.
          * @return Builder
          */
         public Builder increments(List<CreateIncrementRequest> increments) {
             this.increments = increments;
+            return this;
+        }
+
+        /**
+         * Setter for setup.
+         * @param  setup  CreateSetupRequest value for setup.
+         * @return Builder
+         */
+        public Builder setup(CreateSetupRequest setup) {
+            this.setup = setup;
             return this;
         }
 
@@ -1318,7 +1317,7 @@ public class CreateSubscriptionRequest {
         public CreateSubscriptionRequest build() {
             return new CreateSubscriptionRequest(customer, card, code, paymentMethod, billingType,
                     statementDescriptor, description, currency, interval, intervalCount,
-                    pricingScheme, items, shipping, discounts, metadata, setup, increments, planId,
+                    pricingScheme, items, shipping, discounts, metadata, increments, setup, planId,
                     customerId, cardId, billingDay, installments, startAt, minimumPrice, cycles,
                     cardToken, gatewayAffiliationId, quantity, boletoDueDays, period, submerchant,
                     split, boleto);

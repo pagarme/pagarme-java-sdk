@@ -75,6 +75,7 @@ public class CreatePricingSchemeRequest {
      * @return Returns the List of CreatePriceBracketRequest
      */
     @JsonGetter("price_brackets")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<CreatePriceBracketRequest> getPriceBrackets() {
         return priceBrackets;
     }
@@ -169,7 +170,8 @@ public class CreatePricingSchemeRequest {
      * @return a new {@link CreatePricingSchemeRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(schemeType, priceBrackets)
+        Builder builder = new Builder(schemeType)
+                .priceBrackets(getPriceBrackets())
                 .price(getPrice())
                 .minimumPrice(getMinimumPrice())
                 .percentage(getPercentage());
@@ -195,11 +197,9 @@ public class CreatePricingSchemeRequest {
         /**
          * Initialization constructor.
          * @param  schemeType  String value for schemeType.
-         * @param  priceBrackets  List of CreatePriceBracketRequest value for priceBrackets.
          */
-        public Builder(String schemeType, List<CreatePriceBracketRequest> priceBrackets) {
+        public Builder(String schemeType) {
             this.schemeType = schemeType;
-            this.priceBrackets = priceBrackets;
         }
 
         /**

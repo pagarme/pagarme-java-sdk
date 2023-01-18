@@ -26,7 +26,7 @@ Request for creating a subcription
 | `Shipping` | [`CreateShippingRequest`](../../doc/models/create-shipping-request.md) | Required | Shipping | CreateShippingRequest getShipping() | setShipping(CreateShippingRequest shipping) |
 | `Discounts` | [`List<CreateDiscountRequest>`](../../doc/models/create-discount-request.md) | Required | Discounts | List<CreateDiscountRequest> getDiscounts() | setDiscounts(List<CreateDiscountRequest> discounts) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Setup` | [`CreateSetupRequest`](../../doc/models/create-setup-request.md) | Required | Setup data | CreateSetupRequest getSetup() | setSetup(CreateSetupRequest setup) |
+| `Setup` | [`CreateSetupRequest`](../../doc/models/create-setup-request.md) | Optional | Setup data | CreateSetupRequest getSetup() | setSetup(CreateSetupRequest setup) |
 | `PlanId` | `String` | Optional | Plan id | String getPlanId() | setPlanId(String planId) |
 | `CustomerId` | `String` | Optional | Customer id | String getCustomerId() | setCustomerId(String customerId) |
 | `CardId` | `String` | Optional | Card id | String getCardId() | setCardId(String cardId) |
@@ -87,7 +87,6 @@ Request for creating a subcription
   "shipping": null,
   "discounts": null,
   "metadata": null,
-  "setup": null,
   "increments": null
 }
 ```

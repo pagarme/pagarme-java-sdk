@@ -8,7 +8,11 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -21,6 +25,24 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetTransactionResponse.class,
+        visible = true)
+@JsonSubTypes({
+    @Type(value = GetBankTransferTransactionResponse.class, name = "bank_transfer"),
+    @Type(value = GetSafetyPayTransactionResponse.class, name = "safetypay"),
+    @Type(value = GetVoucherTransactionResponse.class, name = "voucher"),
+    @Type(value = GetBoletoTransactionResponse.class, name = "boleto"),
+    @Type(value = GetDebitCardTransactionResponse.class, name = "debit_card"),
+    @Type(value = GetPrivateLabelTransactionResponse.class, name = "private_label"),
+    @Type(value = GetCashTransactionResponse.class, name = "cash"),
+    @Type(value = GetCreditCardTransactionResponse.class, name = "credit_card"),
+    @Type(value = GetPixTransactionResponse.class, name = "pix")
+})
+@JsonInclude(Include.ALWAYS)
 public class GetTransactionResponse {
     private String gatewayId;
     private Integer amount;
@@ -32,7 +54,7 @@ public class GetTransactionResponse {
     private Integer maxAttempts;
     private List<GetSplitResponse> splits;
     private OptionalNullable<LocalDateTime> nextAttempt;
-    private OptionalNullable<String> transactionType;
+    private String transactionType;
     private String id;
     private GetGatewayResponseResponse gatewayResponse;
     private GetAntifraudResponse antifraudResponse;
@@ -46,6 +68,7 @@ public class GetTransactionResponse {
      * Default constructor.
      */
     public GetTransactionResponse() {
+        setTransactionType("transaction");
     }
 
     /**
@@ -100,7 +123,7 @@ public class GetTransactionResponse {
         this.maxAttempts = maxAttempts;
         this.splits = splits;
         this.nextAttempt = OptionalNullable.of(nextAttempt);
-        this.transactionType = OptionalNullable.of(transactionType);
+        this.transactionType = transactionType;
         this.id = id;
         this.gatewayResponse = gatewayResponse;
         this.antifraudResponse = antifraudResponse;
@@ -119,8 +142,7 @@ public class GetTransactionResponse {
             Integer maxAttempts, List<GetSplitResponse> splits, String id,
             GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
             List<GetSplitResponse> split, OptionalNullable<LocalDateTime> nextAttempt,
-            OptionalNullable<String> transactionType,
-            OptionalNullable<Map<String, String>> metadata,
+            String transactionType, OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue) {
         this.gatewayId = gatewayId;
@@ -369,22 +391,13 @@ public class GetTransactionResponse {
     }
 
     /**
-     * Internal Getter for TransactionType.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("transaction_type")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetTransactionType() {
-        return this.transactionType;
-    }
-
-    /**
      * Getter for TransactionType.
      * @return Returns the String
      */
+    @JsonGetter("transaction_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getTransactionType() {
-        return OptionalNullable.getFrom(transactionType);
+        return transactionType;
     }
 
     /**
@@ -393,14 +406,7 @@ public class GetTransactionResponse {
      */
     @JsonSetter("transaction_type")
     public void setTransactionType(String transactionType) {
-        this.transactionType = OptionalNullable.of(transactionType);
-    }
-
-    /**
-     * UnSetter for TransactionType.
-     */
-    public void unsetTransactionType() {
-        transactionType = null;
+        this.transactionType = transactionType;
     }
 
     /**
@@ -642,9 +648,9 @@ public class GetTransactionResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(gatewayId, amount, status, success, createdAt, updatedAt,
-                attemptCount, maxAttempts, splits, id, gatewayResponse, antifraudResponse, split);
+                attemptCount, maxAttempts, splits, id, gatewayResponse, antifraudResponse, split)
+                .transactionType(getTransactionType());
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -670,7 +676,7 @@ public class GetTransactionResponse {
         private GetAntifraudResponse antifraudResponse;
         private List<GetSplitResponse> split;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "transaction";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
@@ -873,16 +879,7 @@ public class GetTransactionResponse {
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 

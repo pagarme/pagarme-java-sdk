@@ -8,7 +8,9 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -21,6 +23,13 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetSafetyPayTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetSafetyPayTransactionResponse.class,
+        visible = true)
+@JsonInclude(Include.ALWAYS)
 public class GetSafetyPayTransactionResponse
         extends GetTransactionResponse {
     private String url;
@@ -33,6 +42,7 @@ public class GetSafetyPayTransactionResponse
      */
     public GetSafetyPayTransactionResponse() {
         super();
+        setTransactionType("safetypay");
     }
 
     /**
@@ -102,7 +112,7 @@ public class GetSafetyPayTransactionResponse
             Integer maxAttempts, List<GetSplitResponse> splits, String id,
             GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
             List<GetSplitResponse> split, String url, String bankTid,
-            OptionalNullable<LocalDateTime> nextAttempt, OptionalNullable<String> transactionType,
+            OptionalNullable<LocalDateTime> nextAttempt, String transactionType,
             OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<LocalDateTime> paidAt,
@@ -262,11 +272,11 @@ public class GetSafetyPayTransactionResponse
     public Builder toGetSafetyPayTransactionResponseBuilder() {
         Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
-                getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, bankTid);
+                getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, bankTid)
+                .transactionType(getTransactionType());
         builder.paidAt = internalGetPaidAt();
         builder.paidAmount = internalGetPaidAmount();
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -294,7 +304,7 @@ public class GetSafetyPayTransactionResponse
         private String url;
         private String bankTid;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "safetypay";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
@@ -523,16 +533,7 @@ public class GetSafetyPayTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 

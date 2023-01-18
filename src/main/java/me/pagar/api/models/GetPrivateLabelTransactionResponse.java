@@ -8,7 +8,9 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -21,6 +23,13 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetPrivateLabelTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetPrivateLabelTransactionResponse.class,
+        visible = true)
+@JsonInclude(Include.ALWAYS)
 public class GetPrivateLabelTransactionResponse
         extends GetTransactionResponse {
     private String statementDescriptor;
@@ -40,6 +49,7 @@ public class GetPrivateLabelTransactionResponse
      */
     public GetPrivateLabelTransactionResponse() {
         super();
+        setTransactionType("private_label");
     }
 
     /**
@@ -133,7 +143,7 @@ public class GetPrivateLabelTransactionResponse
             String acquirerAffiliationCode, String acquirerTid, String acquirerNsu,
             String acquirerAuthCode, String operationType, GetCardResponse card,
             String acquirerMessage, String acquirerReturnCode,
-            OptionalNullable<LocalDateTime> nextAttempt, OptionalNullable<String> transactionType,
+            OptionalNullable<LocalDateTime> nextAttempt, String transactionType,
             OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue,
@@ -427,10 +437,10 @@ public class GetPrivateLabelTransactionResponse
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(),
                 statementDescriptor, acquirerName, acquirerAffiliationCode, acquirerTid,
                 acquirerNsu, acquirerAuthCode, operationType, card, acquirerMessage,
-                acquirerReturnCode);
+                acquirerReturnCode)
+                .transactionType(getTransactionType());
         builder.installments = internalGetInstallments();
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -466,7 +476,7 @@ public class GetPrivateLabelTransactionResponse
         private String acquirerMessage;
         private String acquirerReturnCode;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "private_label";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
@@ -793,16 +803,7 @@ public class GetPrivateLabelTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 

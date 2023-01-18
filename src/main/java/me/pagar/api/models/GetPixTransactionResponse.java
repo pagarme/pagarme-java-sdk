@@ -7,7 +7,10 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -20,6 +23,13 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetPixTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetPixTransactionResponse.class,
+        visible = true)
+@JsonInclude(Include.ALWAYS)
 public class GetPixTransactionResponse
         extends GetTransactionResponse {
     private String qrCode;
@@ -34,6 +44,7 @@ public class GetPixTransactionResponse
      */
     public GetPixTransactionResponse() {
         super();
+        setTransactionType("pix");
     }
 
     /**
@@ -112,8 +123,7 @@ public class GetPixTransactionResponse
             List<GetSplitResponse> split, String qrCode, String qrCodeUrl, LocalDateTime expiresAt,
             List<PixAdditionalInformation> additionalInformation, String endToEndId,
             GetPixPayerResponse payer, OptionalNullable<LocalDateTime> nextAttempt,
-            OptionalNullable<String> transactionType,
-            OptionalNullable<Map<String, String>> metadata,
+            String transactionType, OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
@@ -266,9 +276,9 @@ public class GetPixTransactionResponse
         Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), qrCode,
-                qrCodeUrl, expiresAt, additionalInformation, endToEndId, payer);
+                qrCodeUrl, expiresAt, additionalInformation, endToEndId, payer)
+                .transactionType(getTransactionType());
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -300,7 +310,7 @@ public class GetPixTransactionResponse
         private String endToEndId;
         private GetPixPayerResponse payer;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "pix";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
@@ -580,16 +590,7 @@ public class GetPixTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 

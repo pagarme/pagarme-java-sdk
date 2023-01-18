@@ -31,7 +31,7 @@ public class GetChargeResponse {
     private LocalDateTime dueAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private OptionalNullable<GetTransactionResponse> lastTransaction;
+    private GetTransactionResponse lastTransaction;
     private OptionalNullable<GetInvoiceResponse> invoice;
     private OptionalNullable<GetOrderResponse> order;
     private OptionalNullable<GetCustomerResponse> customer;
@@ -61,10 +61,10 @@ public class GetChargeResponse {
      * @param  dueAt  LocalDateTime value for dueAt.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
+     * @param  lastTransaction  GetTransactionResponse value for lastTransaction.
      * @param  metadata  Map of String, value for metadata.
      * @param  canceledAmount  Integer value for canceledAmount.
      * @param  paidAmount  Integer value for paidAmount.
-     * @param  lastTransaction  GetTransactionResponse value for lastTransaction.
      * @param  invoice  GetInvoiceResponse value for invoice.
      * @param  order  GetOrderResponse value for order.
      * @param  customer  GetCustomerResponse value for customer.
@@ -84,10 +84,10 @@ public class GetChargeResponse {
             LocalDateTime dueAt,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
+            GetTransactionResponse lastTransaction,
             Map<String, String> metadata,
             Integer canceledAmount,
             Integer paidAmount,
-            GetTransactionResponse lastTransaction,
             GetInvoiceResponse invoice,
             GetOrderResponse order,
             GetCustomerResponse customer,
@@ -105,7 +105,7 @@ public class GetChargeResponse {
         this.dueAt = dueAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.lastTransaction = OptionalNullable.of(lastTransaction);
+        this.lastTransaction = lastTransaction;
         this.invoice = OptionalNullable.of(invoice);
         this.order = OptionalNullable.of(order);
         this.customer = OptionalNullable.of(customer);
@@ -123,9 +123,9 @@ public class GetChargeResponse {
      */
     protected GetChargeResponse(String id, String code, String gatewayId, Integer amount,
             String status, String currency, String paymentMethod, LocalDateTime dueAt,
-            LocalDateTime createdAt, LocalDateTime updatedAt, Map<String, String> metadata,
+            LocalDateTime createdAt, LocalDateTime updatedAt,
+            GetTransactionResponse lastTransaction, Map<String, String> metadata,
             Integer canceledAmount, Integer paidAmount,
-            OptionalNullable<GetTransactionResponse> lastTransaction,
             OptionalNullable<GetInvoiceResponse> invoice, OptionalNullable<GetOrderResponse> order,
             OptionalNullable<GetCustomerResponse> customer, OptionalNullable<LocalDateTime> paidAt,
             OptionalNullable<LocalDateTime> canceledAt,
@@ -341,22 +341,12 @@ public class GetChargeResponse {
     }
 
     /**
-     * Internal Getter for LastTransaction.
-     * @return Returns the Internal GetTransactionResponse
-     */
-    @JsonGetter("last_transaction")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<GetTransactionResponse> internalGetLastTransaction() {
-        return this.lastTransaction;
-    }
-
-    /**
      * Getter for LastTransaction.
      * @return Returns the GetTransactionResponse
      */
+    @JsonGetter("last_transaction")
     public GetTransactionResponse getLastTransaction() {
-        return OptionalNullable.getFrom(lastTransaction);
+        return lastTransaction;
     }
 
     /**
@@ -365,14 +355,7 @@ public class GetChargeResponse {
      */
     @JsonSetter("last_transaction")
     public void setLastTransaction(GetTransactionResponse lastTransaction) {
-        this.lastTransaction = OptionalNullable.of(lastTransaction);
-    }
-
-    /**
-     * UnSetter for LastTransaction.
-     */
-    public void unsetLastTransaction() {
-        lastTransaction = null;
+        this.lastTransaction = lastTransaction;
     }
 
     /**
@@ -697,11 +680,11 @@ public class GetChargeResponse {
         return "GetChargeResponse [" + "id=" + id + ", code=" + code + ", gatewayId=" + gatewayId
                 + ", amount=" + amount + ", status=" + status + ", currency=" + currency
                 + ", paymentMethod=" + paymentMethod + ", dueAt=" + dueAt + ", createdAt="
-                + createdAt + ", updatedAt=" + updatedAt + ", metadata=" + metadata
-                + ", canceledAmount=" + canceledAmount + ", paidAmount=" + paidAmount
-                + ", lastTransaction=" + lastTransaction + ", invoice=" + invoice + ", order="
-                + order + ", customer=" + customer + ", paidAt=" + paidAt + ", canceledAt="
-                + canceledAt + ", interestAndFinePaid=" + interestAndFinePaid + ", recurrencyCycle="
+                + createdAt + ", updatedAt=" + updatedAt + ", lastTransaction=" + lastTransaction
+                + ", metadata=" + metadata + ", canceledAmount=" + canceledAmount + ", paidAmount="
+                + paidAmount + ", invoice=" + invoice + ", order=" + order + ", customer="
+                + customer + ", paidAt=" + paidAt + ", canceledAt=" + canceledAt
+                + ", interestAndFinePaid=" + interestAndFinePaid + ", recurrencyCycle="
                 + recurrencyCycle + "]";
     }
 
@@ -712,8 +695,7 @@ public class GetChargeResponse {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(id, code, gatewayId, amount, status, currency, paymentMethod,
-                dueAt, createdAt, updatedAt, metadata, canceledAmount, paidAmount);
-        builder.lastTransaction = internalGetLastTransaction();
+                dueAt, createdAt, updatedAt, lastTransaction, metadata, canceledAmount, paidAmount);
         builder.invoice = internalGetInvoice();
         builder.order = internalGetOrder();
         builder.customer = internalGetCustomer();
@@ -738,10 +720,10 @@ public class GetChargeResponse {
         private LocalDateTime dueAt;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+        private GetTransactionResponse lastTransaction;
         private Map<String, String> metadata;
         private Integer canceledAmount;
         private Integer paidAmount;
-        private OptionalNullable<GetTransactionResponse> lastTransaction;
         private OptionalNullable<GetInvoiceResponse> invoice;
         private OptionalNullable<GetOrderResponse> order;
         private OptionalNullable<GetCustomerResponse> customer;
@@ -768,14 +750,15 @@ public class GetChargeResponse {
          * @param  dueAt  LocalDateTime value for dueAt.
          * @param  createdAt  LocalDateTime value for createdAt.
          * @param  updatedAt  LocalDateTime value for updatedAt.
+         * @param  lastTransaction  GetTransactionResponse value for lastTransaction.
          * @param  metadata  Map of String, value for metadata.
          * @param  canceledAmount  Integer value for canceledAmount.
          * @param  paidAmount  Integer value for paidAmount.
          */
         public Builder(String id, String code, String gatewayId, Integer amount, String status,
                 String currency, String paymentMethod, LocalDateTime dueAt, LocalDateTime createdAt,
-                LocalDateTime updatedAt, Map<String, String> metadata, Integer canceledAmount,
-                Integer paidAmount) {
+                LocalDateTime updatedAt, GetTransactionResponse lastTransaction,
+                Map<String, String> metadata, Integer canceledAmount, Integer paidAmount) {
             this.id = id;
             this.code = code;
             this.gatewayId = gatewayId;
@@ -786,6 +769,7 @@ public class GetChargeResponse {
             this.dueAt = dueAt;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
+            this.lastTransaction = lastTransaction;
             this.metadata = metadata;
             this.canceledAmount = canceledAmount;
             this.paidAmount = paidAmount;
@@ -892,6 +876,16 @@ public class GetChargeResponse {
         }
 
         /**
+         * Setter for lastTransaction.
+         * @param  lastTransaction  GetTransactionResponse value for lastTransaction.
+         * @return Builder
+         */
+        public Builder lastTransaction(GetTransactionResponse lastTransaction) {
+            this.lastTransaction = lastTransaction;
+            return this;
+        }
+
+        /**
          * Setter for metadata.
          * @param  metadata  Map of String, value for metadata.
          * @return Builder
@@ -918,25 +912,6 @@ public class GetChargeResponse {
          */
         public Builder paidAmount(Integer paidAmount) {
             this.paidAmount = paidAmount;
-            return this;
-        }
-
-        /**
-         * Setter for lastTransaction.
-         * @param  lastTransaction  GetTransactionResponse value for lastTransaction.
-         * @return Builder
-         */
-        public Builder lastTransaction(GetTransactionResponse lastTransaction) {
-            this.lastTransaction = OptionalNullable.of(lastTransaction);
-            return this;
-        }
-
-        /**
-         * UnSetter for lastTransaction.
-         * @return Builder
-         */
-        public Builder unsetLastTransaction() {
-            lastTransaction = null;
             return this;
         }
 
@@ -1079,8 +1054,8 @@ public class GetChargeResponse {
          */
         public GetChargeResponse build() {
             return new GetChargeResponse(id, code, gatewayId, amount, status, currency,
-                    paymentMethod, dueAt, createdAt, updatedAt, metadata, canceledAmount,
-                    paidAmount, lastTransaction, invoice, order, customer, paidAt, canceledAt,
+                    paymentMethod, dueAt, createdAt, updatedAt, lastTransaction, metadata,
+                    canceledAmount, paidAmount, invoice, order, customer, paidAt, canceledAt,
                     interestAndFinePaid, recurrencyCycle);
         }
     }

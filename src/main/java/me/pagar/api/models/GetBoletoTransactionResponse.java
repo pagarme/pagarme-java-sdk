@@ -8,7 +8,9 @@ package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
@@ -21,6 +23,13 @@ import me.pagar.api.DateTimeHelper;
 /**
  * This is a model class for GetBoletoTransactionResponse type.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "transaction_type",
+        defaultImpl = GetBoletoTransactionResponse.class,
+        visible = true)
+@JsonInclude(Include.ALWAYS)
 public class GetBoletoTransactionResponse
         extends GetTransactionResponse {
     private String url;
@@ -46,6 +55,7 @@ public class GetBoletoTransactionResponse
      */
     public GetBoletoTransactionResponse() {
         super();
+        setTransactionType("boleto");
     }
 
     /**
@@ -158,8 +168,7 @@ public class GetBoletoTransactionResponse
             GetBillingAddressResponse billingAddress, String qrCode, String line,
             String pdfPassword, String pdf, String paidAmount, String type,
             String statementDescriptor, OptionalNullable<LocalDateTime> nextAttempt,
-            OptionalNullable<String> transactionType,
-            OptionalNullable<Map<String, String>> metadata,
+            String transactionType, OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<LocalDateTime> dueAt,
             OptionalNullable<LocalDateTime> paidAt, OptionalNullable<LocalDateTime> creditAt) {
@@ -581,12 +590,12 @@ public class GetBoletoTransactionResponse
                 getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
                 getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, barcode,
                 nossoNumero, bank, documentNumber, instructions, billingAddress, qrCode, line,
-                pdfPassword, pdf, paidAmount, type, statementDescriptor);
+                pdfPassword, pdf, paidAmount, type, statementDescriptor)
+                .transactionType(getTransactionType());
         builder.dueAt = internalGetDueAt();
         builder.paidAt = internalGetPaidAt();
         builder.creditAt = internalGetCreditAt();
         builder.nextAttempt = internalGetNextAttempt();
-        builder.transactionType = internalGetTransactionType();
         builder.metadata = internalGetMetadata();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
@@ -626,7 +635,7 @@ public class GetBoletoTransactionResponse
         private String type;
         private String statementDescriptor;
         private OptionalNullable<LocalDateTime> nextAttempt;
-        private OptionalNullable<String> transactionType;
+        private String transactionType = "boleto";
         private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
@@ -1004,16 +1013,7 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder transactionType(String transactionType) {
-            this.transactionType = OptionalNullable.of(transactionType);
-            return this;
-        }
-
-        /**
-         * UnSetter for transactionType.
-         * @return Builder
-         */
-        public Builder unsetTransactionType() {
-            transactionType = null;
+            this.transactionType = transactionType;
             return this;
         }
 
