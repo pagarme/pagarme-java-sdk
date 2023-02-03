@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetUsageReportResponse type.
  */
 public class GetUsageReportResponse {
-    private String url;
-    private String usageReportUrl;
-    private String groupedReportUrl;
+    private OptionalNullable<String> url;
+    private OptionalNullable<String> usageReportUrl;
+    private OptionalNullable<String> groupedReportUrl;
 
     /**
      * Default constructor.
@@ -34,18 +37,38 @@ public class GetUsageReportResponse {
             String url,
             String usageReportUrl,
             String groupedReportUrl) {
+        this.url = OptionalNullable.of(url);
+        this.usageReportUrl = OptionalNullable.of(usageReportUrl);
+        this.groupedReportUrl = OptionalNullable.of(groupedReportUrl);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetUsageReportResponse(OptionalNullable<String> url,
+            OptionalNullable<String> usageReportUrl, OptionalNullable<String> groupedReportUrl) {
         this.url = url;
         this.usageReportUrl = usageReportUrl;
         this.groupedReportUrl = groupedReportUrl;
     }
 
     /**
+     * Internal Getter for Url.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUrl() {
+        return this.url;
+    }
+
+    /**
      * Getter for Url.
      * @return Returns the String
      */
-    @JsonGetter("url")
     public String getUrl() {
-        return url;
+        return OptionalNullable.getFrom(url);
     }
 
     /**
@@ -54,16 +77,33 @@ public class GetUsageReportResponse {
      */
     @JsonSetter("url")
     public void setUrl(String url) {
-        this.url = url;
+        this.url = OptionalNullable.of(url);
+    }
+
+    /**
+     * UnSetter for Url.
+     */
+    public void unsetUrl() {
+        url = null;
+    }
+
+    /**
+     * Internal Getter for UsageReportUrl.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("usage_report_url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUsageReportUrl() {
+        return this.usageReportUrl;
     }
 
     /**
      * Getter for UsageReportUrl.
      * @return Returns the String
      */
-    @JsonGetter("usage_report_url")
     public String getUsageReportUrl() {
-        return usageReportUrl;
+        return OptionalNullable.getFrom(usageReportUrl);
     }
 
     /**
@@ -72,16 +112,33 @@ public class GetUsageReportResponse {
      */
     @JsonSetter("usage_report_url")
     public void setUsageReportUrl(String usageReportUrl) {
-        this.usageReportUrl = usageReportUrl;
+        this.usageReportUrl = OptionalNullable.of(usageReportUrl);
+    }
+
+    /**
+     * UnSetter for UsageReportUrl.
+     */
+    public void unsetUsageReportUrl() {
+        usageReportUrl = null;
+    }
+
+    /**
+     * Internal Getter for GroupedReportUrl.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("grouped_report_url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGroupedReportUrl() {
+        return this.groupedReportUrl;
     }
 
     /**
      * Getter for GroupedReportUrl.
      * @return Returns the String
      */
-    @JsonGetter("grouped_report_url")
     public String getGroupedReportUrl() {
-        return groupedReportUrl;
+        return OptionalNullable.getFrom(groupedReportUrl);
     }
 
     /**
@@ -90,7 +147,14 @@ public class GetUsageReportResponse {
      */
     @JsonSetter("grouped_report_url")
     public void setGroupedReportUrl(String groupedReportUrl) {
-        this.groupedReportUrl = groupedReportUrl;
+        this.groupedReportUrl = OptionalNullable.of(groupedReportUrl);
+    }
+
+    /**
+     * UnSetter for GroupedReportUrl.
+     */
+    public void unsetGroupedReportUrl() {
+        groupedReportUrl = null;
     }
 
     /**
@@ -109,7 +173,10 @@ public class GetUsageReportResponse {
      * @return a new {@link GetUsageReportResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(url, usageReportUrl, groupedReportUrl);
+        Builder builder = new Builder();
+        builder.url = internalGetUrl();
+        builder.usageReportUrl = internalGetUsageReportUrl();
+        builder.groupedReportUrl = internalGetGroupedReportUrl();
         return builder;
     }
 
@@ -117,27 +184,11 @@ public class GetUsageReportResponse {
      * Class to build instances of {@link GetUsageReportResponse}.
      */
     public static class Builder {
-        private String url;
-        private String usageReportUrl;
-        private String groupedReportUrl;
+        private OptionalNullable<String> url;
+        private OptionalNullable<String> usageReportUrl;
+        private OptionalNullable<String> groupedReportUrl;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  url  String value for url.
-         * @param  usageReportUrl  String value for usageReportUrl.
-         * @param  groupedReportUrl  String value for groupedReportUrl.
-         */
-        public Builder(String url, String usageReportUrl, String groupedReportUrl) {
-            this.url = url;
-            this.usageReportUrl = usageReportUrl;
-            this.groupedReportUrl = groupedReportUrl;
-        }
 
         /**
          * Setter for url.
@@ -145,7 +196,16 @@ public class GetUsageReportResponse {
          * @return Builder
          */
         public Builder url(String url) {
-            this.url = url;
+            this.url = OptionalNullable.of(url);
+            return this;
+        }
+
+        /**
+         * UnSetter for url.
+         * @return Builder
+         */
+        public Builder unsetUrl() {
+            url = null;
             return this;
         }
 
@@ -155,7 +215,16 @@ public class GetUsageReportResponse {
          * @return Builder
          */
         public Builder usageReportUrl(String usageReportUrl) {
-            this.usageReportUrl = usageReportUrl;
+            this.usageReportUrl = OptionalNullable.of(usageReportUrl);
+            return this;
+        }
+
+        /**
+         * UnSetter for usageReportUrl.
+         * @return Builder
+         */
+        public Builder unsetUsageReportUrl() {
+            usageReportUrl = null;
             return this;
         }
 
@@ -165,7 +234,16 @@ public class GetUsageReportResponse {
          * @return Builder
          */
         public Builder groupedReportUrl(String groupedReportUrl) {
-            this.groupedReportUrl = groupedReportUrl;
+            this.groupedReportUrl = OptionalNullable.of(groupedReportUrl);
+            return this;
+        }
+
+        /**
+         * UnSetter for groupedReportUrl.
+         * @return Builder
+         */
+        public Builder unsetGroupedReportUrl() {
+            groupedReportUrl = null;
             return this;
         }
 

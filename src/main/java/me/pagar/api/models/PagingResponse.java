@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for PagingResponse type.
  */
 public class PagingResponse {
-    private Integer total;
-    private String previous;
-    private String next;
+    private OptionalNullable<Integer> total;
+    private OptionalNullable<String> previous;
+    private OptionalNullable<String> next;
 
     /**
      * Default constructor.
@@ -34,9 +37,31 @@ public class PagingResponse {
             Integer total,
             String previous,
             String next) {
+        this.total = OptionalNullable.of(total);
+        this.previous = OptionalNullable.of(previous);
+        this.next = OptionalNullable.of(next);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected PagingResponse(OptionalNullable<Integer> total, OptionalNullable<String> previous,
+            OptionalNullable<String> next) {
         this.total = total;
         this.previous = previous;
         this.next = next;
+    }
+
+    /**
+     * Internal Getter for Total.
+     * Total number of pages
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("total")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetTotal() {
+        return this.total;
     }
 
     /**
@@ -44,9 +69,8 @@ public class PagingResponse {
      * Total number of pages
      * @return Returns the Integer
      */
-    @JsonGetter("total")
     public Integer getTotal() {
-        return total;
+        return OptionalNullable.getFrom(total);
     }
 
     /**
@@ -56,7 +80,27 @@ public class PagingResponse {
      */
     @JsonSetter("total")
     public void setTotal(Integer total) {
-        this.total = total;
+        this.total = OptionalNullable.of(total);
+    }
+
+    /**
+     * UnSetter for Total.
+     * Total number of pages
+     */
+    public void unsetTotal() {
+        total = null;
+    }
+
+    /**
+     * Internal Getter for Previous.
+     * Previous page
+     * @return Returns the Internal String
+     */
+    @JsonGetter("previous")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPrevious() {
+        return this.previous;
     }
 
     /**
@@ -64,9 +108,8 @@ public class PagingResponse {
      * Previous page
      * @return Returns the String
      */
-    @JsonGetter("previous")
     public String getPrevious() {
-        return previous;
+        return OptionalNullable.getFrom(previous);
     }
 
     /**
@@ -76,7 +119,27 @@ public class PagingResponse {
      */
     @JsonSetter("previous")
     public void setPrevious(String previous) {
-        this.previous = previous;
+        this.previous = OptionalNullable.of(previous);
+    }
+
+    /**
+     * UnSetter for Previous.
+     * Previous page
+     */
+    public void unsetPrevious() {
+        previous = null;
+    }
+
+    /**
+     * Internal Getter for Next.
+     * Next page
+     * @return Returns the Internal String
+     */
+    @JsonGetter("next")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNext() {
+        return this.next;
     }
 
     /**
@@ -84,9 +147,8 @@ public class PagingResponse {
      * Next page
      * @return Returns the String
      */
-    @JsonGetter("next")
     public String getNext() {
-        return next;
+        return OptionalNullable.getFrom(next);
     }
 
     /**
@@ -96,7 +158,15 @@ public class PagingResponse {
      */
     @JsonSetter("next")
     public void setNext(String next) {
-        this.next = next;
+        this.next = OptionalNullable.of(next);
+    }
+
+    /**
+     * UnSetter for Next.
+     * Next page
+     */
+    public void unsetNext() {
+        next = null;
     }
 
     /**
@@ -115,7 +185,10 @@ public class PagingResponse {
      * @return a new {@link PagingResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(total, previous, next);
+        Builder builder = new Builder();
+        builder.total = internalGetTotal();
+        builder.previous = internalGetPrevious();
+        builder.next = internalGetNext();
         return builder;
     }
 
@@ -123,27 +196,11 @@ public class PagingResponse {
      * Class to build instances of {@link PagingResponse}.
      */
     public static class Builder {
-        private Integer total;
-        private String previous;
-        private String next;
+        private OptionalNullable<Integer> total;
+        private OptionalNullable<String> previous;
+        private OptionalNullable<String> next;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  total  Integer value for total.
-         * @param  previous  String value for previous.
-         * @param  next  String value for next.
-         */
-        public Builder(Integer total, String previous, String next) {
-            this.total = total;
-            this.previous = previous;
-            this.next = next;
-        }
 
         /**
          * Setter for total.
@@ -151,7 +208,16 @@ public class PagingResponse {
          * @return Builder
          */
         public Builder total(Integer total) {
-            this.total = total;
+            this.total = OptionalNullable.of(total);
+            return this;
+        }
+
+        /**
+         * UnSetter for total.
+         * @return Builder
+         */
+        public Builder unsetTotal() {
+            total = null;
             return this;
         }
 
@@ -161,7 +227,16 @@ public class PagingResponse {
          * @return Builder
          */
         public Builder previous(String previous) {
-            this.previous = previous;
+            this.previous = OptionalNullable.of(previous);
+            return this;
+        }
+
+        /**
+         * UnSetter for previous.
+         * @return Builder
+         */
+        public Builder unsetPrevious() {
+            previous = null;
             return this;
         }
 
@@ -171,7 +246,16 @@ public class PagingResponse {
          * @return Builder
          */
         public Builder next(String next) {
-            this.next = next;
+            this.next = OptionalNullable.of(next);
+            return this;
+        }
+
+        /**
+         * UnSetter for next.
+         * @return Builder
+         */
+        public Builder unsetNext() {
+            next = null;
             return this;
         }
 

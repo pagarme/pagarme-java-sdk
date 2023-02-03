@@ -7,17 +7,20 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetPixPayerResponse type.
  */
 public class GetPixPayerResponse {
-    private String name;
-    private String document;
-    private String documentType;
-    private GetPixBankAccountResponse bankAccount;
+    private OptionalNullable<String> name;
+    private OptionalNullable<String> document;
+    private OptionalNullable<String> documentType;
+    private OptionalNullable<GetPixBankAccountResponse> bankAccount;
 
     /**
      * Default constructor.
@@ -37,6 +40,18 @@ public class GetPixPayerResponse {
             String document,
             String documentType,
             GetPixBankAccountResponse bankAccount) {
+        this.name = OptionalNullable.of(name);
+        this.document = OptionalNullable.of(document);
+        this.documentType = OptionalNullable.of(documentType);
+        this.bankAccount = OptionalNullable.of(bankAccount);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPixPayerResponse(OptionalNullable<String> name, OptionalNullable<String> document,
+            OptionalNullable<String> documentType,
+            OptionalNullable<GetPixBankAccountResponse> bankAccount) {
         this.name = name;
         this.document = document;
         this.documentType = documentType;
@@ -44,12 +59,22 @@ public class GetPixPayerResponse {
     }
 
     /**
+     * Internal Getter for Name.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
+    }
+
+    /**
      * Getter for Name.
      * @return Returns the String
      */
-    @JsonGetter("name")
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -58,16 +83,33 @@ public class GetPixPayerResponse {
      */
     @JsonSetter("name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     */
+    public void unsetName() {
+        name = null;
+    }
+
+    /**
+     * Internal Getter for Document.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("document")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDocument() {
+        return this.document;
     }
 
     /**
      * Getter for Document.
      * @return Returns the String
      */
-    @JsonGetter("document")
     public String getDocument() {
-        return document;
+        return OptionalNullable.getFrom(document);
     }
 
     /**
@@ -76,16 +118,33 @@ public class GetPixPayerResponse {
      */
     @JsonSetter("document")
     public void setDocument(String document) {
-        this.document = document;
+        this.document = OptionalNullable.of(document);
+    }
+
+    /**
+     * UnSetter for Document.
+     */
+    public void unsetDocument() {
+        document = null;
+    }
+
+    /**
+     * Internal Getter for DocumentType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("document_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDocumentType() {
+        return this.documentType;
     }
 
     /**
      * Getter for DocumentType.
      * @return Returns the String
      */
-    @JsonGetter("document_type")
     public String getDocumentType() {
-        return documentType;
+        return OptionalNullable.getFrom(documentType);
     }
 
     /**
@@ -94,16 +153,33 @@ public class GetPixPayerResponse {
      */
     @JsonSetter("document_type")
     public void setDocumentType(String documentType) {
-        this.documentType = documentType;
+        this.documentType = OptionalNullable.of(documentType);
+    }
+
+    /**
+     * UnSetter for DocumentType.
+     */
+    public void unsetDocumentType() {
+        documentType = null;
+    }
+
+    /**
+     * Internal Getter for BankAccount.
+     * @return Returns the Internal GetPixBankAccountResponse
+     */
+    @JsonGetter("bank_account")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetPixBankAccountResponse> internalGetBankAccount() {
+        return this.bankAccount;
     }
 
     /**
      * Getter for BankAccount.
      * @return Returns the GetPixBankAccountResponse
      */
-    @JsonGetter("bank_account")
     public GetPixBankAccountResponse getBankAccount() {
-        return bankAccount;
+        return OptionalNullable.getFrom(bankAccount);
     }
 
     /**
@@ -112,7 +188,14 @@ public class GetPixPayerResponse {
      */
     @JsonSetter("bank_account")
     public void setBankAccount(GetPixBankAccountResponse bankAccount) {
-        this.bankAccount = bankAccount;
+        this.bankAccount = OptionalNullable.of(bankAccount);
+    }
+
+    /**
+     * UnSetter for BankAccount.
+     */
+    public void unsetBankAccount() {
+        bankAccount = null;
     }
 
     /**
@@ -131,7 +214,11 @@ public class GetPixPayerResponse {
      * @return a new {@link GetPixPayerResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(name, document, documentType, bankAccount);
+        Builder builder = new Builder();
+        builder.name = internalGetName();
+        builder.document = internalGetDocument();
+        builder.documentType = internalGetDocumentType();
+        builder.bankAccount = internalGetBankAccount();
         return builder;
     }
 
@@ -139,31 +226,12 @@ public class GetPixPayerResponse {
      * Class to build instances of {@link GetPixPayerResponse}.
      */
     public static class Builder {
-        private String name;
-        private String document;
-        private String documentType;
-        private GetPixBankAccountResponse bankAccount;
+        private OptionalNullable<String> name;
+        private OptionalNullable<String> document;
+        private OptionalNullable<String> documentType;
+        private OptionalNullable<GetPixBankAccountResponse> bankAccount;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  name  String value for name.
-         * @param  document  String value for document.
-         * @param  documentType  String value for documentType.
-         * @param  bankAccount  GetPixBankAccountResponse value for bankAccount.
-         */
-        public Builder(String name, String document, String documentType,
-                GetPixBankAccountResponse bankAccount) {
-            this.name = name;
-            this.document = document;
-            this.documentType = documentType;
-            this.bankAccount = bankAccount;
-        }
 
         /**
          * Setter for name.
@@ -171,7 +239,16 @@ public class GetPixPayerResponse {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 
@@ -181,7 +258,16 @@ public class GetPixPayerResponse {
          * @return Builder
          */
         public Builder document(String document) {
-            this.document = document;
+            this.document = OptionalNullable.of(document);
+            return this;
+        }
+
+        /**
+         * UnSetter for document.
+         * @return Builder
+         */
+        public Builder unsetDocument() {
+            document = null;
             return this;
         }
 
@@ -191,7 +277,16 @@ public class GetPixPayerResponse {
          * @return Builder
          */
         public Builder documentType(String documentType) {
-            this.documentType = documentType;
+            this.documentType = OptionalNullable.of(documentType);
+            return this;
+        }
+
+        /**
+         * UnSetter for documentType.
+         * @return Builder
+         */
+        public Builder unsetDocumentType() {
+            documentType = null;
             return this;
         }
 
@@ -201,7 +296,16 @@ public class GetPixPayerResponse {
          * @return Builder
          */
         public Builder bankAccount(GetPixBankAccountResponse bankAccount) {
-            this.bankAccount = bankAccount;
+            this.bankAccount = OptionalNullable.of(bankAccount);
+            return this;
+        }
+
+        /**
+         * UnSetter for bankAccount.
+         * @return Builder
+         */
+        public Builder unsetBankAccount() {
+            bankAccount = null;
             return this;
         }
 

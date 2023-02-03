@@ -11,15 +11,13 @@ Bank transfer checkout response
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Bank` | `List<String>` | Required | bank list response | List<String> getBank() | setBank(List<String> bank) |
+| `Bank` | `List<String>` | Optional | bank list response | List<String> getBank() | setBank(List<String> bank) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "bank": [
-    "bank7"
-  ]
+  "bank": null
 }
 ```
 

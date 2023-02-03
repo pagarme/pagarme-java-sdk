@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetAnticipationLimitResponse type.
  */
 public class GetAnticipationLimitResponse {
-    private Integer amount;
-    private Integer anticipationFee;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<Integer> anticipationFee;
 
     /**
      * Default constructor.
@@ -31,8 +34,29 @@ public class GetAnticipationLimitResponse {
     public GetAnticipationLimitResponse(
             Integer amount,
             Integer anticipationFee) {
+        this.amount = OptionalNullable.of(amount);
+        this.anticipationFee = OptionalNullable.of(anticipationFee);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAnticipationLimitResponse(OptionalNullable<Integer> amount,
+            OptionalNullable<Integer> anticipationFee) {
         this.amount = amount;
         this.anticipationFee = anticipationFee;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * Amount
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
@@ -40,9 +64,8 @@ public class GetAnticipationLimitResponse {
      * Amount
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -52,7 +75,27 @@ public class GetAnticipationLimitResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Amount
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for AnticipationFee.
+     * Anticipation fee
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("anticipation_fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAnticipationFee() {
+        return this.anticipationFee;
     }
 
     /**
@@ -60,9 +103,8 @@ public class GetAnticipationLimitResponse {
      * Anticipation fee
      * @return Returns the Integer
      */
-    @JsonGetter("anticipation_fee")
     public Integer getAnticipationFee() {
-        return anticipationFee;
+        return OptionalNullable.getFrom(anticipationFee);
     }
 
     /**
@@ -72,7 +114,15 @@ public class GetAnticipationLimitResponse {
      */
     @JsonSetter("anticipation_fee")
     public void setAnticipationFee(Integer anticipationFee) {
-        this.anticipationFee = anticipationFee;
+        this.anticipationFee = OptionalNullable.of(anticipationFee);
+    }
+
+    /**
+     * UnSetter for AnticipationFee.
+     * Anticipation fee
+     */
+    public void unsetAnticipationFee() {
+        anticipationFee = null;
     }
 
     /**
@@ -91,7 +141,9 @@ public class GetAnticipationLimitResponse {
      * @return a new {@link GetAnticipationLimitResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(amount, anticipationFee);
+        Builder builder = new Builder();
+        builder.amount = internalGetAmount();
+        builder.anticipationFee = internalGetAnticipationFee();
         return builder;
     }
 
@@ -99,24 +151,10 @@ public class GetAnticipationLimitResponse {
      * Class to build instances of {@link GetAnticipationLimitResponse}.
      */
     public static class Builder {
-        private Integer amount;
-        private Integer anticipationFee;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<Integer> anticipationFee;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  amount  Integer value for amount.
-         * @param  anticipationFee  Integer value for anticipationFee.
-         */
-        public Builder(Integer amount, Integer anticipationFee) {
-            this.amount = amount;
-            this.anticipationFee = anticipationFee;
-        }
 
         /**
          * Setter for amount.
@@ -124,7 +162,16 @@ public class GetAnticipationLimitResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -134,7 +181,16 @@ public class GetAnticipationLimitResponse {
          * @return Builder
          */
         public Builder anticipationFee(Integer anticipationFee) {
-            this.anticipationFee = anticipationFee;
+            this.anticipationFee = OptionalNullable.of(anticipationFee);
+            return this;
+        }
+
+        /**
+         * UnSetter for anticipationFee.
+         * @return Builder
+         */
+        public Builder unsetAnticipationFee() {
+            anticipationFee = null;
             return this;
         }
 

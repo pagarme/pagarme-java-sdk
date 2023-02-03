@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetWithdrawSourceResponse type.
  */
 public class GetWithdrawSourceResponse {
-    private String sourceId;
-    private String type;
+    private OptionalNullable<String> sourceId;
+    private OptionalNullable<String> type;
 
     /**
      * Default constructor.
@@ -31,17 +34,36 @@ public class GetWithdrawSourceResponse {
     public GetWithdrawSourceResponse(
             String sourceId,
             String type) {
+        this.sourceId = OptionalNullable.of(sourceId);
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetWithdrawSourceResponse(OptionalNullable<String> sourceId,
+            OptionalNullable<String> type) {
         this.sourceId = sourceId;
         this.type = type;
+    }
+
+    /**
+     * Internal Getter for SourceId.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("source_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetSourceId() {
+        return this.sourceId;
     }
 
     /**
      * Getter for SourceId.
      * @return Returns the String
      */
-    @JsonGetter("source_id")
     public String getSourceId() {
-        return sourceId;
+        return OptionalNullable.getFrom(sourceId);
     }
 
     /**
@@ -50,16 +72,33 @@ public class GetWithdrawSourceResponse {
      */
     @JsonSetter("source_id")
     public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
+        this.sourceId = OptionalNullable.of(sourceId);
+    }
+
+    /**
+     * UnSetter for SourceId.
+     */
+    public void unsetSourceId() {
+        sourceId = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -68,7 +107,14 @@ public class GetWithdrawSourceResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
     }
 
     /**
@@ -86,7 +132,9 @@ public class GetWithdrawSourceResponse {
      * @return a new {@link GetWithdrawSourceResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(sourceId, type);
+        Builder builder = new Builder();
+        builder.sourceId = internalGetSourceId();
+        builder.type = internalGetType();
         return builder;
     }
 
@@ -94,24 +142,10 @@ public class GetWithdrawSourceResponse {
      * Class to build instances of {@link GetWithdrawSourceResponse}.
      */
     public static class Builder {
-        private String sourceId;
-        private String type;
+        private OptionalNullable<String> sourceId;
+        private OptionalNullable<String> type;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  sourceId  String value for sourceId.
-         * @param  type  String value for type.
-         */
-        public Builder(String sourceId, String type) {
-            this.sourceId = sourceId;
-            this.type = type;
-        }
 
         /**
          * Setter for sourceId.
@@ -119,7 +153,16 @@ public class GetWithdrawSourceResponse {
          * @return Builder
          */
         public Builder sourceId(String sourceId) {
-            this.sourceId = sourceId;
+            this.sourceId = OptionalNullable.of(sourceId);
+            return this;
+        }
+
+        /**
+         * UnSetter for sourceId.
+         * @return Builder
+         */
+        public Builder unsetSourceId() {
+            sourceId = null;
             return this;
         }
 
@@ -129,7 +172,16 @@ public class GetWithdrawSourceResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 

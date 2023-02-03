@@ -22,24 +22,24 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetPlanResponse type.
  */
 public class GetPlanResponse {
-    private String id;
-    private String name;
-    private String description;
-    private String url;
-    private String statementDescriptor;
-    private String interval;
-    private Integer intervalCount;
-    private String billingType;
-    private List<String> paymentMethods;
-    private List<Integer> installments;
-    private String status;
-    private String currency;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private List<GetPlanItemResponse> items;
-    private List<Integer> billingDays;
-    private Boolean shippable;
-    private Map<String, String> metadata;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> name;
+    private OptionalNullable<String> description;
+    private OptionalNullable<String> url;
+    private OptionalNullable<String> statementDescriptor;
+    private OptionalNullable<String> interval;
+    private OptionalNullable<Integer> intervalCount;
+    private OptionalNullable<String> billingType;
+    private OptionalNullable<List<String>> paymentMethods;
+    private OptionalNullable<List<Integer>> installments;
+    private OptionalNullable<String> status;
+    private OptionalNullable<String> currency;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
+    private OptionalNullable<List<GetPlanItemResponse>> items;
+    private OptionalNullable<List<Integer>> billingDays;
+    private OptionalNullable<Boolean> shippable;
+    private OptionalNullable<Map<String, String>> metadata;
     private OptionalNullable<Integer> trialPeriodDays;
     private OptionalNullable<Integer> minimumPrice;
     private OptionalNullable<LocalDateTime> deletedAt;
@@ -96,24 +96,24 @@ public class GetPlanResponse {
             Integer trialPeriodDays,
             Integer minimumPrice,
             LocalDateTime deletedAt) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.url = url;
-        this.statementDescriptor = statementDescriptor;
-        this.interval = interval;
-        this.intervalCount = intervalCount;
-        this.billingType = billingType;
-        this.paymentMethods = paymentMethods;
-        this.installments = installments;
-        this.status = status;
-        this.currency = currency;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.items = items;
-        this.billingDays = billingDays;
-        this.shippable = shippable;
-        this.metadata = metadata;
+        this.id = OptionalNullable.of(id);
+        this.name = OptionalNullable.of(name);
+        this.description = OptionalNullable.of(description);
+        this.url = OptionalNullable.of(url);
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+        this.interval = OptionalNullable.of(interval);
+        this.intervalCount = OptionalNullable.of(intervalCount);
+        this.billingType = OptionalNullable.of(billingType);
+        this.paymentMethods = OptionalNullable.of(paymentMethods);
+        this.installments = OptionalNullable.of(installments);
+        this.status = OptionalNullable.of(status);
+        this.currency = OptionalNullable.of(currency);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+        this.items = OptionalNullable.of(items);
+        this.billingDays = OptionalNullable.of(billingDays);
+        this.shippable = OptionalNullable.of(shippable);
+        this.metadata = OptionalNullable.of(metadata);
         this.trialPeriodDays = OptionalNullable.of(trialPeriodDays);
         this.minimumPrice = OptionalNullable.of(minimumPrice);
         this.deletedAt = OptionalNullable.of(deletedAt);
@@ -122,11 +122,17 @@ public class GetPlanResponse {
     /**
      * Internal initialization constructor.
      */
-    protected GetPlanResponse(String id, String name, String description, String url,
-            String statementDescriptor, String interval, Integer intervalCount, String billingType,
-            List<String> paymentMethods, List<Integer> installments, String status, String currency,
-            LocalDateTime createdAt, LocalDateTime updatedAt, List<GetPlanItemResponse> items,
-            List<Integer> billingDays, Boolean shippable, Map<String, String> metadata,
+    protected GetPlanResponse(OptionalNullable<String> id, OptionalNullable<String> name,
+            OptionalNullable<String> description, OptionalNullable<String> url,
+            OptionalNullable<String> statementDescriptor, OptionalNullable<String> interval,
+            OptionalNullable<Integer> intervalCount, OptionalNullable<String> billingType,
+            OptionalNullable<List<String>> paymentMethods,
+            OptionalNullable<List<Integer>> installments, OptionalNullable<String> status,
+            OptionalNullable<String> currency, OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<LocalDateTime> updatedAt,
+            OptionalNullable<List<GetPlanItemResponse>> items,
+            OptionalNullable<List<Integer>> billingDays, OptionalNullable<Boolean> shippable,
+            OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<Integer> trialPeriodDays, OptionalNullable<Integer> minimumPrice,
             OptionalNullable<LocalDateTime> deletedAt) {
         this.id = id;
@@ -153,12 +159,22 @@ public class GetPlanResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -167,16 +183,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Name.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
     }
 
     /**
      * Getter for Name.
      * @return Returns the String
      */
-    @JsonGetter("name")
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -185,16 +218,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     */
+    public void unsetName() {
+        name = null;
+    }
+
+    /**
+     * Internal Getter for Description.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDescription() {
+        return this.description;
     }
 
     /**
      * Getter for Description.
      * @return Returns the String
      */
-    @JsonGetter("description")
     public String getDescription() {
-        return description;
+        return OptionalNullable.getFrom(description);
     }
 
     /**
@@ -203,16 +253,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("description")
     public void setDescription(String description) {
-        this.description = description;
+        this.description = OptionalNullable.of(description);
+    }
+
+    /**
+     * UnSetter for Description.
+     */
+    public void unsetDescription() {
+        description = null;
+    }
+
+    /**
+     * Internal Getter for Url.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUrl() {
+        return this.url;
     }
 
     /**
      * Getter for Url.
      * @return Returns the String
      */
-    @JsonGetter("url")
     public String getUrl() {
-        return url;
+        return OptionalNullable.getFrom(url);
     }
 
     /**
@@ -221,16 +288,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("url")
     public void setUrl(String url) {
-        this.url = url;
+        this.url = OptionalNullable.of(url);
+    }
+
+    /**
+     * UnSetter for Url.
+     */
+    public void unsetUrl() {
+        url = null;
+    }
+
+    /**
+     * Internal Getter for StatementDescriptor.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatementDescriptor() {
+        return this.statementDescriptor;
     }
 
     /**
      * Getter for StatementDescriptor.
      * @return Returns the String
      */
-    @JsonGetter("statement_descriptor")
     public String getStatementDescriptor() {
-        return statementDescriptor;
+        return OptionalNullable.getFrom(statementDescriptor);
     }
 
     /**
@@ -239,16 +323,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("statement_descriptor")
     public void setStatementDescriptor(String statementDescriptor) {
-        this.statementDescriptor = statementDescriptor;
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+    }
+
+    /**
+     * UnSetter for StatementDescriptor.
+     */
+    public void unsetStatementDescriptor() {
+        statementDescriptor = null;
+    }
+
+    /**
+     * Internal Getter for Interval.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("interval")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetInterval() {
+        return this.interval;
     }
 
     /**
      * Getter for Interval.
      * @return Returns the String
      */
-    @JsonGetter("interval")
     public String getInterval() {
-        return interval;
+        return OptionalNullable.getFrom(interval);
     }
 
     /**
@@ -257,16 +358,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("interval")
     public void setInterval(String interval) {
-        this.interval = interval;
+        this.interval = OptionalNullable.of(interval);
+    }
+
+    /**
+     * UnSetter for Interval.
+     */
+    public void unsetInterval() {
+        interval = null;
+    }
+
+    /**
+     * Internal Getter for IntervalCount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("interval_count")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetIntervalCount() {
+        return this.intervalCount;
     }
 
     /**
      * Getter for IntervalCount.
      * @return Returns the Integer
      */
-    @JsonGetter("interval_count")
     public Integer getIntervalCount() {
-        return intervalCount;
+        return OptionalNullable.getFrom(intervalCount);
     }
 
     /**
@@ -275,16 +393,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("interval_count")
     public void setIntervalCount(Integer intervalCount) {
-        this.intervalCount = intervalCount;
+        this.intervalCount = OptionalNullable.of(intervalCount);
+    }
+
+    /**
+     * UnSetter for IntervalCount.
+     */
+    public void unsetIntervalCount() {
+        intervalCount = null;
+    }
+
+    /**
+     * Internal Getter for BillingType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("billing_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBillingType() {
+        return this.billingType;
     }
 
     /**
      * Getter for BillingType.
      * @return Returns the String
      */
-    @JsonGetter("billing_type")
     public String getBillingType() {
-        return billingType;
+        return OptionalNullable.getFrom(billingType);
     }
 
     /**
@@ -293,16 +428,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("billing_type")
     public void setBillingType(String billingType) {
-        this.billingType = billingType;
+        this.billingType = OptionalNullable.of(billingType);
+    }
+
+    /**
+     * UnSetter for BillingType.
+     */
+    public void unsetBillingType() {
+        billingType = null;
+    }
+
+    /**
+     * Internal Getter for PaymentMethods.
+     * @return Returns the Internal List of String
+     */
+    @JsonGetter("payment_methods")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<String>> internalGetPaymentMethods() {
+        return this.paymentMethods;
     }
 
     /**
      * Getter for PaymentMethods.
      * @return Returns the List of String
      */
-    @JsonGetter("payment_methods")
     public List<String> getPaymentMethods() {
-        return paymentMethods;
+        return OptionalNullable.getFrom(paymentMethods);
     }
 
     /**
@@ -311,16 +463,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("payment_methods")
     public void setPaymentMethods(List<String> paymentMethods) {
-        this.paymentMethods = paymentMethods;
+        this.paymentMethods = OptionalNullable.of(paymentMethods);
+    }
+
+    /**
+     * UnSetter for PaymentMethods.
+     */
+    public void unsetPaymentMethods() {
+        paymentMethods = null;
+    }
+
+    /**
+     * Internal Getter for Installments.
+     * @return Returns the Internal List of Integer
+     */
+    @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<Integer>> internalGetInstallments() {
+        return this.installments;
     }
 
     /**
      * Getter for Installments.
      * @return Returns the List of Integer
      */
-    @JsonGetter("installments")
     public List<Integer> getInstallments() {
-        return installments;
+        return OptionalNullable.getFrom(installments);
     }
 
     /**
@@ -329,16 +498,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("installments")
     public void setInstallments(List<Integer> installments) {
-        this.installments = installments;
+        this.installments = OptionalNullable.of(installments);
+    }
+
+    /**
+     * UnSetter for Installments.
+     */
+    public void unsetInstallments() {
+        installments = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -347,16 +533,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for Currency.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("currency")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCurrency() {
+        return this.currency;
     }
 
     /**
      * Getter for Currency.
      * @return Returns the String
      */
-    @JsonGetter("currency")
     public String getCurrency() {
-        return currency;
+        return OptionalNullable.getFrom(currency);
     }
 
     /**
@@ -365,17 +568,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("currency")
     public void setCurrency(String currency) {
-        this.currency = currency;
+        this.currency = OptionalNullable.of(currency);
+    }
+
+    /**
+     * UnSetter for Currency.
+     */
+    public void unsetCurrency() {
+        currency = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -385,17 +604,33 @@ public class GetPlanResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
      * Getter for UpdatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -405,16 +640,33 @@ public class GetPlanResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
+    }
+
+    /**
+     * Internal Getter for Items.
+     * @return Returns the Internal List of GetPlanItemResponse
+     */
+    @JsonGetter("items")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetPlanItemResponse>> internalGetItems() {
+        return this.items;
     }
 
     /**
      * Getter for Items.
      * @return Returns the List of GetPlanItemResponse
      */
-    @JsonGetter("items")
     public List<GetPlanItemResponse> getItems() {
-        return items;
+        return OptionalNullable.getFrom(items);
     }
 
     /**
@@ -423,16 +675,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("items")
     public void setItems(List<GetPlanItemResponse> items) {
-        this.items = items;
+        this.items = OptionalNullable.of(items);
+    }
+
+    /**
+     * UnSetter for Items.
+     */
+    public void unsetItems() {
+        items = null;
+    }
+
+    /**
+     * Internal Getter for BillingDays.
+     * @return Returns the Internal List of Integer
+     */
+    @JsonGetter("billing_days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<Integer>> internalGetBillingDays() {
+        return this.billingDays;
     }
 
     /**
      * Getter for BillingDays.
      * @return Returns the List of Integer
      */
-    @JsonGetter("billing_days")
     public List<Integer> getBillingDays() {
-        return billingDays;
+        return OptionalNullable.getFrom(billingDays);
     }
 
     /**
@@ -441,16 +710,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("billing_days")
     public void setBillingDays(List<Integer> billingDays) {
-        this.billingDays = billingDays;
+        this.billingDays = OptionalNullable.of(billingDays);
+    }
+
+    /**
+     * UnSetter for BillingDays.
+     */
+    public void unsetBillingDays() {
+        billingDays = null;
+    }
+
+    /**
+     * Internal Getter for Shippable.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("shippable")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetShippable() {
+        return this.shippable;
     }
 
     /**
      * Getter for Shippable.
      * @return Returns the Boolean
      */
-    @JsonGetter("shippable")
     public Boolean getShippable() {
-        return shippable;
+        return OptionalNullable.getFrom(shippable);
     }
 
     /**
@@ -459,16 +745,33 @@ public class GetPlanResponse {
      */
     @JsonSetter("shippable")
     public void setShippable(Boolean shippable) {
-        this.shippable = shippable;
+        this.shippable = OptionalNullable.of(shippable);
+    }
+
+    /**
+     * UnSetter for Shippable.
+     */
+    public void unsetShippable() {
+        shippable = null;
+    }
+
+    /**
+     * Internal Getter for Metadata.
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
     }
 
     /**
      * Getter for Metadata.
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -477,7 +780,14 @@ public class GetPlanResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
     }
 
     /**
@@ -609,9 +919,25 @@ public class GetPlanResponse {
      * @return a new {@link GetPlanResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, name, description, url, statementDescriptor, interval,
-                intervalCount, billingType, paymentMethods, installments, status, currency,
-                createdAt, updatedAt, items, billingDays, shippable, metadata);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.name = internalGetName();
+        builder.description = internalGetDescription();
+        builder.url = internalGetUrl();
+        builder.statementDescriptor = internalGetStatementDescriptor();
+        builder.interval = internalGetInterval();
+        builder.intervalCount = internalGetIntervalCount();
+        builder.billingType = internalGetBillingType();
+        builder.paymentMethods = internalGetPaymentMethods();
+        builder.installments = internalGetInstallments();
+        builder.status = internalGetStatus();
+        builder.currency = internalGetCurrency();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.items = internalGetItems();
+        builder.billingDays = internalGetBillingDays();
+        builder.shippable = internalGetShippable();
+        builder.metadata = internalGetMetadata();
         builder.trialPeriodDays = internalGetTrialPeriodDays();
         builder.minimumPrice = internalGetMinimumPrice();
         builder.deletedAt = internalGetDeletedAt();
@@ -622,80 +948,29 @@ public class GetPlanResponse {
      * Class to build instances of {@link GetPlanResponse}.
      */
     public static class Builder {
-        private String id;
-        private String name;
-        private String description;
-        private String url;
-        private String statementDescriptor;
-        private String interval;
-        private Integer intervalCount;
-        private String billingType;
-        private List<String> paymentMethods;
-        private List<Integer> installments;
-        private String status;
-        private String currency;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private List<GetPlanItemResponse> items;
-        private List<Integer> billingDays;
-        private Boolean shippable;
-        private Map<String, String> metadata;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> name;
+        private OptionalNullable<String> description;
+        private OptionalNullable<String> url;
+        private OptionalNullable<String> statementDescriptor;
+        private OptionalNullable<String> interval;
+        private OptionalNullable<Integer> intervalCount;
+        private OptionalNullable<String> billingType;
+        private OptionalNullable<List<String>> paymentMethods;
+        private OptionalNullable<List<Integer>> installments;
+        private OptionalNullable<String> status;
+        private OptionalNullable<String> currency;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<List<GetPlanItemResponse>> items;
+        private OptionalNullable<List<Integer>> billingDays;
+        private OptionalNullable<Boolean> shippable;
+        private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<Integer> trialPeriodDays;
         private OptionalNullable<Integer> minimumPrice;
         private OptionalNullable<LocalDateTime> deletedAt;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  name  String value for name.
-         * @param  description  String value for description.
-         * @param  url  String value for url.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @param  interval  String value for interval.
-         * @param  intervalCount  Integer value for intervalCount.
-         * @param  billingType  String value for billingType.
-         * @param  paymentMethods  List of String value for paymentMethods.
-         * @param  installments  List of Integer value for installments.
-         * @param  status  String value for status.
-         * @param  currency  String value for currency.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  items  List of GetPlanItemResponse value for items.
-         * @param  billingDays  List of Integer value for billingDays.
-         * @param  shippable  Boolean value for shippable.
-         * @param  metadata  Map of String, value for metadata.
-         */
-        public Builder(String id, String name, String description, String url,
-                String statementDescriptor, String interval, Integer intervalCount,
-                String billingType, List<String> paymentMethods, List<Integer> installments,
-                String status, String currency, LocalDateTime createdAt, LocalDateTime updatedAt,
-                List<GetPlanItemResponse> items, List<Integer> billingDays, Boolean shippable,
-                Map<String, String> metadata) {
-            this.id = id;
-            this.name = name;
-            this.description = description;
-            this.url = url;
-            this.statementDescriptor = statementDescriptor;
-            this.interval = interval;
-            this.intervalCount = intervalCount;
-            this.billingType = billingType;
-            this.paymentMethods = paymentMethods;
-            this.installments = installments;
-            this.status = status;
-            this.currency = currency;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.items = items;
-            this.billingDays = billingDays;
-            this.shippable = shippable;
-            this.metadata = metadata;
-        }
 
         /**
          * Setter for id.
@@ -703,7 +978,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -713,7 +997,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 
@@ -723,7 +1016,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder description(String description) {
-            this.description = description;
+            this.description = OptionalNullable.of(description);
+            return this;
+        }
+
+        /**
+         * UnSetter for description.
+         * @return Builder
+         */
+        public Builder unsetDescription() {
+            description = null;
             return this;
         }
 
@@ -733,7 +1035,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder url(String url) {
-            this.url = url;
+            this.url = OptionalNullable.of(url);
+            return this;
+        }
+
+        /**
+         * UnSetter for url.
+         * @return Builder
+         */
+        public Builder unsetUrl() {
+            url = null;
             return this;
         }
 
@@ -743,7 +1054,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder statementDescriptor(String statementDescriptor) {
-            this.statementDescriptor = statementDescriptor;
+            this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for statementDescriptor.
+         * @return Builder
+         */
+        public Builder unsetStatementDescriptor() {
+            statementDescriptor = null;
             return this;
         }
 
@@ -753,7 +1073,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder interval(String interval) {
-            this.interval = interval;
+            this.interval = OptionalNullable.of(interval);
+            return this;
+        }
+
+        /**
+         * UnSetter for interval.
+         * @return Builder
+         */
+        public Builder unsetInterval() {
+            interval = null;
             return this;
         }
 
@@ -763,7 +1092,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder intervalCount(Integer intervalCount) {
-            this.intervalCount = intervalCount;
+            this.intervalCount = OptionalNullable.of(intervalCount);
+            return this;
+        }
+
+        /**
+         * UnSetter for intervalCount.
+         * @return Builder
+         */
+        public Builder unsetIntervalCount() {
+            intervalCount = null;
             return this;
         }
 
@@ -773,7 +1111,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder billingType(String billingType) {
-            this.billingType = billingType;
+            this.billingType = OptionalNullable.of(billingType);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingType.
+         * @return Builder
+         */
+        public Builder unsetBillingType() {
+            billingType = null;
             return this;
         }
 
@@ -783,7 +1130,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder paymentMethods(List<String> paymentMethods) {
-            this.paymentMethods = paymentMethods;
+            this.paymentMethods = OptionalNullable.of(paymentMethods);
+            return this;
+        }
+
+        /**
+         * UnSetter for paymentMethods.
+         * @return Builder
+         */
+        public Builder unsetPaymentMethods() {
+            paymentMethods = null;
             return this;
         }
 
@@ -793,7 +1149,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder installments(List<Integer> installments) {
-            this.installments = installments;
+            this.installments = OptionalNullable.of(installments);
+            return this;
+        }
+
+        /**
+         * UnSetter for installments.
+         * @return Builder
+         */
+        public Builder unsetInstallments() {
+            installments = null;
             return this;
         }
 
@@ -803,7 +1168,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -813,7 +1187,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder currency(String currency) {
-            this.currency = currency;
+            this.currency = OptionalNullable.of(currency);
+            return this;
+        }
+
+        /**
+         * UnSetter for currency.
+         * @return Builder
+         */
+        public Builder unsetCurrency() {
+            currency = null;
             return this;
         }
 
@@ -823,7 +1206,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -833,7 +1225,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -843,7 +1244,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder items(List<GetPlanItemResponse> items) {
-            this.items = items;
+            this.items = OptionalNullable.of(items);
+            return this;
+        }
+
+        /**
+         * UnSetter for items.
+         * @return Builder
+         */
+        public Builder unsetItems() {
+            items = null;
             return this;
         }
 
@@ -853,7 +1263,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder billingDays(List<Integer> billingDays) {
-            this.billingDays = billingDays;
+            this.billingDays = OptionalNullable.of(billingDays);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingDays.
+         * @return Builder
+         */
+        public Builder unsetBillingDays() {
+            billingDays = null;
             return this;
         }
 
@@ -863,7 +1282,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder shippable(Boolean shippable) {
-            this.shippable = shippable;
+            this.shippable = OptionalNullable.of(shippable);
+            return this;
+        }
+
+        /**
+         * UnSetter for shippable.
+         * @return Builder
+         */
+        public Builder unsetShippable() {
+            shippable = null;
             return this;
         }
 
@@ -873,7 +1301,16 @@ public class GetPlanResponse {
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 

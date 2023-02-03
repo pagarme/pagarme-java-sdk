@@ -9,24 +9,15 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Enabled` | `Boolean` | Required | Defines if the split is enabled | Boolean getEnabled() | setEnabled(Boolean enabled) |
-| `Rules` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | Split | List<GetSplitResponse> getRules() | setRules(List<GetSplitResponse> rules) |
+| `Enabled` | `Boolean` | Optional | Defines if the split is enabled | Boolean getEnabled() | setEnabled(Boolean enabled) |
+| `Rules` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Optional | Split | List<GetSplitResponse> getRules() | setRules(List<GetSplitResponse> rules) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "enabled": false,
-  "rules": [
-    {
-      "type": "type6",
-      "amount": 210,
-      "recipient": null,
-      "gateway_id": "gateway_id6",
-      "options": null,
-      "id": "id4"
-    }
-  ]
+  "enabled": null,
+  "rules": null
 }
 ```
 

@@ -22,35 +22,36 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetSubscriptionResponse type.
  */
 public class GetSubscriptionResponse {
-    private String id;
-    private String code;
-    private LocalDateTime startAt;
-    private String interval;
-    private Integer intervalCount;
-    private String billingType;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> code;
+    private OptionalNullable<LocalDateTime> startAt;
+    private OptionalNullable<String> interval;
+    private OptionalNullable<Integer> intervalCount;
+    private OptionalNullable<String> billingType;
     private OptionalNullable<GetPeriodResponse> currentCycle;
-    private String paymentMethod;
-    private String currency;
-    private Integer installments;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private OptionalNullable<String> paymentMethod;
+    private OptionalNullable<String> currency;
+    private OptionalNullable<Integer> installments;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
     private OptionalNullable<GetCustomerResponse> customer;
-    private GetCardResponse card;
-    private List<GetSubscriptionItemResponse> items;
-    private String statementDescriptor;
-    private Map<String, String> metadata;
-    private GetSetupResponse setup;
-    private String gatewayAffiliationId;
+    private OptionalNullable<GetCardResponse> card;
+    private OptionalNullable<List<GetSubscriptionItemResponse>> items;
+    private OptionalNullable<String> statementDescriptor;
+    private OptionalNullable<Map<String, String>> metadata;
+    private OptionalNullable<GetSetupResponse> setup;
+    private OptionalNullable<String> gatewayAffiliationId;
     private OptionalNullable<LocalDateTime> nextBillingAt;
     private OptionalNullable<Integer> billingDay;
     private OptionalNullable<Integer> minimumPrice;
     private OptionalNullable<LocalDateTime> canceledAt;
     private OptionalNullable<List<GetDiscountResponse>> discounts;
-    private List<GetIncrementResponse> increments;
+    private OptionalNullable<List<GetIncrementResponse>> increments;
     private OptionalNullable<Integer> boletoDueDays;
-    private GetSubscriptionSplitResponse split;
+    private OptionalNullable<GetSubscriptionSplitResponse> split;
     private OptionalNullable<GetSubscriptionBoletoResponse> boleto;
+    private OptionalNullable<Boolean> manualBilling;
 
     /**
      * Default constructor.
@@ -66,29 +67,30 @@ public class GetSubscriptionResponse {
      * @param  interval  String value for interval.
      * @param  intervalCount  Integer value for intervalCount.
      * @param  billingType  String value for billingType.
+     * @param  currentCycle  GetPeriodResponse value for currentCycle.
      * @param  paymentMethod  String value for paymentMethod.
      * @param  currency  String value for currency.
      * @param  installments  Integer value for installments.
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
+     * @param  customer  GetCustomerResponse value for customer.
      * @param  card  GetCardResponse value for card.
      * @param  items  List of GetSubscriptionItemResponse value for items.
      * @param  statementDescriptor  String value for statementDescriptor.
      * @param  metadata  Map of String, value for metadata.
      * @param  setup  GetSetupResponse value for setup.
      * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
-     * @param  increments  List of GetIncrementResponse value for increments.
-     * @param  split  GetSubscriptionSplitResponse value for split.
-     * @param  currentCycle  GetPeriodResponse value for currentCycle.
-     * @param  customer  GetCustomerResponse value for customer.
      * @param  nextBillingAt  LocalDateTime value for nextBillingAt.
      * @param  billingDay  Integer value for billingDay.
      * @param  minimumPrice  Integer value for minimumPrice.
      * @param  canceledAt  LocalDateTime value for canceledAt.
      * @param  discounts  List of GetDiscountResponse value for discounts.
+     * @param  increments  List of GetIncrementResponse value for increments.
      * @param  boletoDueDays  Integer value for boletoDueDays.
+     * @param  split  GetSubscriptionSplitResponse value for split.
      * @param  boleto  GetSubscriptionBoletoResponse value for boleto.
+     * @param  manualBilling  Boolean value for manualBilling.
      */
     public GetSubscriptionResponse(
             String id,
@@ -97,76 +99,85 @@ public class GetSubscriptionResponse {
             String interval,
             Integer intervalCount,
             String billingType,
+            GetPeriodResponse currentCycle,
             String paymentMethod,
             String currency,
             Integer installments,
             String status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
+            GetCustomerResponse customer,
             GetCardResponse card,
             List<GetSubscriptionItemResponse> items,
             String statementDescriptor,
             Map<String, String> metadata,
             GetSetupResponse setup,
             String gatewayAffiliationId,
-            List<GetIncrementResponse> increments,
-            GetSubscriptionSplitResponse split,
-            GetPeriodResponse currentCycle,
-            GetCustomerResponse customer,
             LocalDateTime nextBillingAt,
             Integer billingDay,
             Integer minimumPrice,
             LocalDateTime canceledAt,
             List<GetDiscountResponse> discounts,
+            List<GetIncrementResponse> increments,
             Integer boletoDueDays,
-            GetSubscriptionBoletoResponse boleto) {
-        this.id = id;
-        this.code = code;
-        this.startAt = startAt;
-        this.interval = interval;
-        this.intervalCount = intervalCount;
-        this.billingType = billingType;
+            GetSubscriptionSplitResponse split,
+            GetSubscriptionBoletoResponse boleto,
+            Boolean manualBilling) {
+        this.id = OptionalNullable.of(id);
+        this.code = OptionalNullable.of(code);
+        this.startAt = OptionalNullable.of(startAt);
+        this.interval = OptionalNullable.of(interval);
+        this.intervalCount = OptionalNullable.of(intervalCount);
+        this.billingType = OptionalNullable.of(billingType);
         this.currentCycle = OptionalNullable.of(currentCycle);
-        this.paymentMethod = paymentMethod;
-        this.currency = currency;
-        this.installments = installments;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.paymentMethod = OptionalNullable.of(paymentMethod);
+        this.currency = OptionalNullable.of(currency);
+        this.installments = OptionalNullable.of(installments);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
         this.customer = OptionalNullable.of(customer);
-        this.card = card;
-        this.items = items;
-        this.statementDescriptor = statementDescriptor;
-        this.metadata = metadata;
-        this.setup = setup;
-        this.gatewayAffiliationId = gatewayAffiliationId;
+        this.card = OptionalNullable.of(card);
+        this.items = OptionalNullable.of(items);
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+        this.metadata = OptionalNullable.of(metadata);
+        this.setup = OptionalNullable.of(setup);
+        this.gatewayAffiliationId = OptionalNullable.of(gatewayAffiliationId);
         this.nextBillingAt = OptionalNullable.of(nextBillingAt);
         this.billingDay = OptionalNullable.of(billingDay);
         this.minimumPrice = OptionalNullable.of(minimumPrice);
         this.canceledAt = OptionalNullable.of(canceledAt);
         this.discounts = OptionalNullable.of(discounts);
-        this.increments = increments;
+        this.increments = OptionalNullable.of(increments);
         this.boletoDueDays = OptionalNullable.of(boletoDueDays);
-        this.split = split;
+        this.split = OptionalNullable.of(split);
         this.boleto = OptionalNullable.of(boleto);
+        this.manualBilling = OptionalNullable.of(manualBilling);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetSubscriptionResponse(String id, String code, LocalDateTime startAt,
-            String interval, Integer intervalCount, String billingType, String paymentMethod,
-            String currency, Integer installments, String status, LocalDateTime createdAt,
-            LocalDateTime updatedAt, GetCardResponse card, List<GetSubscriptionItemResponse> items,
-            String statementDescriptor, Map<String, String> metadata, GetSetupResponse setup,
-            String gatewayAffiliationId, List<GetIncrementResponse> increments,
-            GetSubscriptionSplitResponse split, OptionalNullable<GetPeriodResponse> currentCycle,
-            OptionalNullable<GetCustomerResponse> customer,
+    protected GetSubscriptionResponse(OptionalNullable<String> id, OptionalNullable<String> code,
+            OptionalNullable<LocalDateTime> startAt, OptionalNullable<String> interval,
+            OptionalNullable<Integer> intervalCount, OptionalNullable<String> billingType,
+            OptionalNullable<GetPeriodResponse> currentCycle,
+            OptionalNullable<String> paymentMethod, OptionalNullable<String> currency,
+            OptionalNullable<Integer> installments, OptionalNullable<String> status,
+            OptionalNullable<LocalDateTime> createdAt, OptionalNullable<LocalDateTime> updatedAt,
+            OptionalNullable<GetCustomerResponse> customer, OptionalNullable<GetCardResponse> card,
+            OptionalNullable<List<GetSubscriptionItemResponse>> items,
+            OptionalNullable<String> statementDescriptor,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<GetSetupResponse> setup, OptionalNullable<String> gatewayAffiliationId,
             OptionalNullable<LocalDateTime> nextBillingAt, OptionalNullable<Integer> billingDay,
             OptionalNullable<Integer> minimumPrice, OptionalNullable<LocalDateTime> canceledAt,
             OptionalNullable<List<GetDiscountResponse>> discounts,
+            OptionalNullable<List<GetIncrementResponse>> increments,
             OptionalNullable<Integer> boletoDueDays,
-            OptionalNullable<GetSubscriptionBoletoResponse> boleto) {
+            OptionalNullable<GetSubscriptionSplitResponse> split,
+            OptionalNullable<GetSubscriptionBoletoResponse> boleto,
+            OptionalNullable<Boolean> manualBilling) {
         this.id = id;
         this.code = code;
         this.startAt = startAt;
@@ -196,15 +207,26 @@ public class GetSubscriptionResponse {
         this.boletoDueDays = boletoDueDays;
         this.split = split;
         this.boleto = boleto;
+        this.manualBilling = manualBilling;
+    }
+
+    /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
     }
 
     /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -213,16 +235,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Code.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
     }
 
     /**
      * Getter for Code.
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -231,17 +270,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for StartAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("start_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetStartAt() {
+        return this.startAt;
     }
 
     /**
      * Getter for StartAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("start_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getStartAt() {
-        return startAt;
+        return OptionalNullable.getFrom(startAt);
     }
 
     /**
@@ -251,16 +306,33 @@ public class GetSubscriptionResponse {
     @JsonSetter("start_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
+        this.startAt = OptionalNullable.of(startAt);
+    }
+
+    /**
+     * UnSetter for StartAt.
+     */
+    public void unsetStartAt() {
+        startAt = null;
+    }
+
+    /**
+     * Internal Getter for Interval.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("interval")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetInterval() {
+        return this.interval;
     }
 
     /**
      * Getter for Interval.
      * @return Returns the String
      */
-    @JsonGetter("interval")
     public String getInterval() {
-        return interval;
+        return OptionalNullable.getFrom(interval);
     }
 
     /**
@@ -269,16 +341,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("interval")
     public void setInterval(String interval) {
-        this.interval = interval;
+        this.interval = OptionalNullable.of(interval);
+    }
+
+    /**
+     * UnSetter for Interval.
+     */
+    public void unsetInterval() {
+        interval = null;
+    }
+
+    /**
+     * Internal Getter for IntervalCount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("interval_count")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetIntervalCount() {
+        return this.intervalCount;
     }
 
     /**
      * Getter for IntervalCount.
      * @return Returns the Integer
      */
-    @JsonGetter("interval_count")
     public Integer getIntervalCount() {
-        return intervalCount;
+        return OptionalNullable.getFrom(intervalCount);
     }
 
     /**
@@ -287,16 +376,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("interval_count")
     public void setIntervalCount(Integer intervalCount) {
-        this.intervalCount = intervalCount;
+        this.intervalCount = OptionalNullable.of(intervalCount);
+    }
+
+    /**
+     * UnSetter for IntervalCount.
+     */
+    public void unsetIntervalCount() {
+        intervalCount = null;
+    }
+
+    /**
+     * Internal Getter for BillingType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("billing_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBillingType() {
+        return this.billingType;
     }
 
     /**
      * Getter for BillingType.
      * @return Returns the String
      */
-    @JsonGetter("billing_type")
     public String getBillingType() {
-        return billingType;
+        return OptionalNullable.getFrom(billingType);
     }
 
     /**
@@ -305,7 +411,14 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("billing_type")
     public void setBillingType(String billingType) {
-        this.billingType = billingType;
+        this.billingType = OptionalNullable.of(billingType);
+    }
+
+    /**
+     * UnSetter for BillingType.
+     */
+    public void unsetBillingType() {
+        billingType = null;
     }
 
     /**
@@ -344,12 +457,22 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Internal Getter for PaymentMethod.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("payment_method")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPaymentMethod() {
+        return this.paymentMethod;
+    }
+
+    /**
      * Getter for PaymentMethod.
      * @return Returns the String
      */
-    @JsonGetter("payment_method")
     public String getPaymentMethod() {
-        return paymentMethod;
+        return OptionalNullable.getFrom(paymentMethod);
     }
 
     /**
@@ -358,16 +481,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("payment_method")
     public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+        this.paymentMethod = OptionalNullable.of(paymentMethod);
+    }
+
+    /**
+     * UnSetter for PaymentMethod.
+     */
+    public void unsetPaymentMethod() {
+        paymentMethod = null;
+    }
+
+    /**
+     * Internal Getter for Currency.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("currency")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCurrency() {
+        return this.currency;
     }
 
     /**
      * Getter for Currency.
      * @return Returns the String
      */
-    @JsonGetter("currency")
     public String getCurrency() {
-        return currency;
+        return OptionalNullable.getFrom(currency);
     }
 
     /**
@@ -376,16 +516,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("currency")
     public void setCurrency(String currency) {
-        this.currency = currency;
+        this.currency = OptionalNullable.of(currency);
+    }
+
+    /**
+     * UnSetter for Currency.
+     */
+    public void unsetCurrency() {
+        currency = null;
+    }
+
+    /**
+     * Internal Getter for Installments.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetInstallments() {
+        return this.installments;
     }
 
     /**
      * Getter for Installments.
      * @return Returns the Integer
      */
-    @JsonGetter("installments")
     public Integer getInstallments() {
-        return installments;
+        return OptionalNullable.getFrom(installments);
     }
 
     /**
@@ -394,16 +551,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("installments")
     public void setInstallments(Integer installments) {
-        this.installments = installments;
+        this.installments = OptionalNullable.of(installments);
+    }
+
+    /**
+     * UnSetter for Installments.
+     */
+    public void unsetInstallments() {
+        installments = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -412,17 +586,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -432,17 +622,33 @@ public class GetSubscriptionResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
      * Getter for UpdatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -452,7 +658,14 @@ public class GetSubscriptionResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
     }
 
     /**
@@ -491,12 +704,22 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Internal Getter for Card.
+     * @return Returns the Internal GetCardResponse
+     */
+    @JsonGetter("card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCardResponse> internalGetCard() {
+        return this.card;
+    }
+
+    /**
      * Getter for Card.
      * @return Returns the GetCardResponse
      */
-    @JsonGetter("card")
     public GetCardResponse getCard() {
-        return card;
+        return OptionalNullable.getFrom(card);
     }
 
     /**
@@ -505,16 +728,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("card")
     public void setCard(GetCardResponse card) {
-        this.card = card;
+        this.card = OptionalNullable.of(card);
+    }
+
+    /**
+     * UnSetter for Card.
+     */
+    public void unsetCard() {
+        card = null;
+    }
+
+    /**
+     * Internal Getter for Items.
+     * @return Returns the Internal List of GetSubscriptionItemResponse
+     */
+    @JsonGetter("items")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetSubscriptionItemResponse>> internalGetItems() {
+        return this.items;
     }
 
     /**
      * Getter for Items.
      * @return Returns the List of GetSubscriptionItemResponse
      */
-    @JsonGetter("items")
     public List<GetSubscriptionItemResponse> getItems() {
-        return items;
+        return OptionalNullable.getFrom(items);
     }
 
     /**
@@ -523,16 +763,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("items")
     public void setItems(List<GetSubscriptionItemResponse> items) {
-        this.items = items;
+        this.items = OptionalNullable.of(items);
+    }
+
+    /**
+     * UnSetter for Items.
+     */
+    public void unsetItems() {
+        items = null;
+    }
+
+    /**
+     * Internal Getter for StatementDescriptor.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatementDescriptor() {
+        return this.statementDescriptor;
     }
 
     /**
      * Getter for StatementDescriptor.
      * @return Returns the String
      */
-    @JsonGetter("statement_descriptor")
     public String getStatementDescriptor() {
-        return statementDescriptor;
+        return OptionalNullable.getFrom(statementDescriptor);
     }
 
     /**
@@ -541,16 +798,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("statement_descriptor")
     public void setStatementDescriptor(String statementDescriptor) {
-        this.statementDescriptor = statementDescriptor;
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+    }
+
+    /**
+     * UnSetter for StatementDescriptor.
+     */
+    public void unsetStatementDescriptor() {
+        statementDescriptor = null;
+    }
+
+    /**
+     * Internal Getter for Metadata.
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
     }
 
     /**
      * Getter for Metadata.
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -559,16 +833,33 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
+    }
+
+    /**
+     * Internal Getter for Setup.
+     * @return Returns the Internal GetSetupResponse
+     */
+    @JsonGetter("setup")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSetupResponse> internalGetSetup() {
+        return this.setup;
     }
 
     /**
      * Getter for Setup.
      * @return Returns the GetSetupResponse
      */
-    @JsonGetter("setup")
     public GetSetupResponse getSetup() {
-        return setup;
+        return OptionalNullable.getFrom(setup);
     }
 
     /**
@@ -577,7 +868,26 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("setup")
     public void setSetup(GetSetupResponse setup) {
-        this.setup = setup;
+        this.setup = OptionalNullable.of(setup);
+    }
+
+    /**
+     * UnSetter for Setup.
+     */
+    public void unsetSetup() {
+        setup = null;
+    }
+
+    /**
+     * Internal Getter for GatewayAffiliationId.
+     * Affiliation Code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("gateway_affiliation_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGatewayAffiliationId() {
+        return this.gatewayAffiliationId;
     }
 
     /**
@@ -585,9 +895,8 @@ public class GetSubscriptionResponse {
      * Affiliation Code
      * @return Returns the String
      */
-    @JsonGetter("gateway_affiliation_id")
     public String getGatewayAffiliationId() {
-        return gatewayAffiliationId;
+        return OptionalNullable.getFrom(gatewayAffiliationId);
     }
 
     /**
@@ -597,7 +906,15 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("gateway_affiliation_id")
     public void setGatewayAffiliationId(String gatewayAffiliationId) {
-        this.gatewayAffiliationId = gatewayAffiliationId;
+        this.gatewayAffiliationId = OptionalNullable.of(gatewayAffiliationId);
+    }
+
+    /**
+     * UnSetter for GatewayAffiliationId.
+     * Affiliation Code
+     */
+    public void unsetGatewayAffiliationId() {
+        gatewayAffiliationId = null;
     }
 
     /**
@@ -782,13 +1099,24 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Internal Getter for Increments.
+     * Subscription increments
+     * @return Returns the Internal List of GetIncrementResponse
+     */
+    @JsonGetter("increments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetIncrementResponse>> internalGetIncrements() {
+        return this.increments;
+    }
+
+    /**
      * Getter for Increments.
      * Subscription increments
      * @return Returns the List of GetIncrementResponse
      */
-    @JsonGetter("increments")
     public List<GetIncrementResponse> getIncrements() {
-        return increments;
+        return OptionalNullable.getFrom(increments);
     }
 
     /**
@@ -798,7 +1126,15 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("increments")
     public void setIncrements(List<GetIncrementResponse> increments) {
-        this.increments = increments;
+        this.increments = OptionalNullable.of(increments);
+    }
+
+    /**
+     * UnSetter for Increments.
+     * Subscription increments
+     */
+    public void unsetIncrements() {
+        increments = null;
     }
 
     /**
@@ -841,13 +1177,24 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Internal Getter for Split.
+     * Subscription's split response
+     * @return Returns the Internal GetSubscriptionSplitResponse
+     */
+    @JsonGetter("split")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSubscriptionSplitResponse> internalGetSplit() {
+        return this.split;
+    }
+
+    /**
      * Getter for Split.
      * Subscription's split response
      * @return Returns the GetSubscriptionSplitResponse
      */
-    @JsonGetter("split")
     public GetSubscriptionSplitResponse getSplit() {
-        return split;
+        return OptionalNullable.getFrom(split);
     }
 
     /**
@@ -857,7 +1204,15 @@ public class GetSubscriptionResponse {
      */
     @JsonSetter("split")
     public void setSplit(GetSubscriptionSplitResponse split) {
-        this.split = split;
+        this.split = OptionalNullable.of(split);
+    }
+
+    /**
+     * UnSetter for Split.
+     * Subscription's split response
+     */
+    public void unsetSplit() {
+        split = null;
     }
 
     /**
@@ -896,6 +1251,41 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Internal Getter for ManualBilling.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("manual_billing")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetManualBilling() {
+        return this.manualBilling;
+    }
+
+    /**
+     * Getter for ManualBilling.
+     * @return Returns the Boolean
+     */
+    public Boolean getManualBilling() {
+        return OptionalNullable.getFrom(manualBilling);
+    }
+
+    /**
+     * Setter for ManualBilling.
+     * @param manualBilling Value for Boolean
+     */
+    @JsonSetter("manual_billing")
+    public void setManualBilling(Boolean manualBilling) {
+        this.manualBilling = OptionalNullable.of(manualBilling);
+    }
+
+    /**
+     * UnSetter for ManualBilling.
+     */
+    public void unsetManualBilling() {
+        manualBilling = null;
+    }
+
+    /**
      * Converts this GetSubscriptionResponse into string format.
      * @return String representation of this class
      */
@@ -903,16 +1293,17 @@ public class GetSubscriptionResponse {
     public String toString() {
         return "GetSubscriptionResponse [" + "id=" + id + ", code=" + code + ", startAt=" + startAt
                 + ", interval=" + interval + ", intervalCount=" + intervalCount + ", billingType="
-                + billingType + ", paymentMethod=" + paymentMethod + ", currency=" + currency
-                + ", installments=" + installments + ", status=" + status + ", createdAt="
-                + createdAt + ", updatedAt=" + updatedAt + ", card=" + card + ", items=" + items
+                + billingType + ", currentCycle=" + currentCycle + ", paymentMethod="
+                + paymentMethod + ", currency=" + currency + ", installments=" + installments
+                + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+                + ", customer=" + customer + ", card=" + card + ", items=" + items
                 + ", statementDescriptor=" + statementDescriptor + ", metadata=" + metadata
                 + ", setup=" + setup + ", gatewayAffiliationId=" + gatewayAffiliationId
-                + ", increments=" + increments + ", split=" + split + ", currentCycle="
-                + currentCycle + ", customer=" + customer + ", nextBillingAt=" + nextBillingAt
-                + ", billingDay=" + billingDay + ", minimumPrice=" + minimumPrice + ", canceledAt="
-                + canceledAt + ", discounts=" + discounts + ", boletoDueDays=" + boletoDueDays
-                + ", boleto=" + boleto + "]";
+                + ", nextBillingAt=" + nextBillingAt + ", billingDay=" + billingDay
+                + ", minimumPrice=" + minimumPrice + ", canceledAt=" + canceledAt + ", discounts="
+                + discounts + ", increments=" + increments + ", boletoDueDays=" + boletoDueDays
+                + ", split=" + split + ", boleto=" + boleto + ", manualBilling=" + manualBilling
+                + "]";
     }
 
     /**
@@ -921,18 +1312,37 @@ public class GetSubscriptionResponse {
      * @return a new {@link GetSubscriptionResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, code, startAt, interval, intervalCount, billingType,
-                paymentMethod, currency, installments, status, createdAt, updatedAt, card, items,
-                statementDescriptor, metadata, setup, gatewayAffiliationId, increments, split);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.code = internalGetCode();
+        builder.startAt = internalGetStartAt();
+        builder.interval = internalGetInterval();
+        builder.intervalCount = internalGetIntervalCount();
+        builder.billingType = internalGetBillingType();
         builder.currentCycle = internalGetCurrentCycle();
+        builder.paymentMethod = internalGetPaymentMethod();
+        builder.currency = internalGetCurrency();
+        builder.installments = internalGetInstallments();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
         builder.customer = internalGetCustomer();
+        builder.card = internalGetCard();
+        builder.items = internalGetItems();
+        builder.statementDescriptor = internalGetStatementDescriptor();
+        builder.metadata = internalGetMetadata();
+        builder.setup = internalGetSetup();
+        builder.gatewayAffiliationId = internalGetGatewayAffiliationId();
         builder.nextBillingAt = internalGetNextBillingAt();
         builder.billingDay = internalGetBillingDay();
         builder.minimumPrice = internalGetMinimumPrice();
         builder.canceledAt = internalGetCanceledAt();
         builder.discounts = internalGetDiscounts();
+        builder.increments = internalGetIncrements();
         builder.boletoDueDays = internalGetBoletoDueDays();
+        builder.split = internalGetSplit();
         builder.boleto = internalGetBoleto();
+        builder.manualBilling = internalGetManualBilling();
         return builder;
     }
 
@@ -940,93 +1350,38 @@ public class GetSubscriptionResponse {
      * Class to build instances of {@link GetSubscriptionResponse}.
      */
     public static class Builder {
-        private String id;
-        private String code;
-        private LocalDateTime startAt;
-        private String interval;
-        private Integer intervalCount;
-        private String billingType;
-        private String paymentMethod;
-        private String currency;
-        private Integer installments;
-        private String status;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private GetCardResponse card;
-        private List<GetSubscriptionItemResponse> items;
-        private String statementDescriptor;
-        private Map<String, String> metadata;
-        private GetSetupResponse setup;
-        private String gatewayAffiliationId;
-        private List<GetIncrementResponse> increments;
-        private GetSubscriptionSplitResponse split;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> code;
+        private OptionalNullable<LocalDateTime> startAt;
+        private OptionalNullable<String> interval;
+        private OptionalNullable<Integer> intervalCount;
+        private OptionalNullable<String> billingType;
         private OptionalNullable<GetPeriodResponse> currentCycle;
+        private OptionalNullable<String> paymentMethod;
+        private OptionalNullable<String> currency;
+        private OptionalNullable<Integer> installments;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
         private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<GetCardResponse> card;
+        private OptionalNullable<List<GetSubscriptionItemResponse>> items;
+        private OptionalNullable<String> statementDescriptor;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<GetSetupResponse> setup;
+        private OptionalNullable<String> gatewayAffiliationId;
         private OptionalNullable<LocalDateTime> nextBillingAt;
         private OptionalNullable<Integer> billingDay;
         private OptionalNullable<Integer> minimumPrice;
         private OptionalNullable<LocalDateTime> canceledAt;
         private OptionalNullable<List<GetDiscountResponse>> discounts;
+        private OptionalNullable<List<GetIncrementResponse>> increments;
         private OptionalNullable<Integer> boletoDueDays;
+        private OptionalNullable<GetSubscriptionSplitResponse> split;
         private OptionalNullable<GetSubscriptionBoletoResponse> boleto;
+        private OptionalNullable<Boolean> manualBilling;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  code  String value for code.
-         * @param  startAt  LocalDateTime value for startAt.
-         * @param  interval  String value for interval.
-         * @param  intervalCount  Integer value for intervalCount.
-         * @param  billingType  String value for billingType.
-         * @param  paymentMethod  String value for paymentMethod.
-         * @param  currency  String value for currency.
-         * @param  installments  Integer value for installments.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  card  GetCardResponse value for card.
-         * @param  items  List of GetSubscriptionItemResponse value for items.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  setup  GetSetupResponse value for setup.
-         * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
-         * @param  increments  List of GetIncrementResponse value for increments.
-         * @param  split  GetSubscriptionSplitResponse value for split.
-         */
-        public Builder(String id, String code, LocalDateTime startAt, String interval,
-                Integer intervalCount, String billingType, String paymentMethod, String currency,
-                Integer installments, String status, LocalDateTime createdAt,
-                LocalDateTime updatedAt, GetCardResponse card,
-                List<GetSubscriptionItemResponse> items, String statementDescriptor,
-                Map<String, String> metadata, GetSetupResponse setup, String gatewayAffiliationId,
-                List<GetIncrementResponse> increments, GetSubscriptionSplitResponse split) {
-            this.id = id;
-            this.code = code;
-            this.startAt = startAt;
-            this.interval = interval;
-            this.intervalCount = intervalCount;
-            this.billingType = billingType;
-            this.paymentMethod = paymentMethod;
-            this.currency = currency;
-            this.installments = installments;
-            this.status = status;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.card = card;
-            this.items = items;
-            this.statementDescriptor = statementDescriptor;
-            this.metadata = metadata;
-            this.setup = setup;
-            this.gatewayAffiliationId = gatewayAffiliationId;
-            this.increments = increments;
-            this.split = split;
-        }
 
         /**
          * Setter for id.
@@ -1034,7 +1389,16 @@ public class GetSubscriptionResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -1044,7 +1408,16 @@ public class GetSubscriptionResponse {
          * @return Builder
          */
         public Builder code(String code) {
-            this.code = code;
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
             return this;
         }
 
@@ -1054,7 +1427,16 @@ public class GetSubscriptionResponse {
          * @return Builder
          */
         public Builder startAt(LocalDateTime startAt) {
-            this.startAt = startAt;
+            this.startAt = OptionalNullable.of(startAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for startAt.
+         * @return Builder
+         */
+        public Builder unsetStartAt() {
+            startAt = null;
             return this;
         }
 
@@ -1064,7 +1446,16 @@ public class GetSubscriptionResponse {
          * @return Builder
          */
         public Builder interval(String interval) {
-            this.interval = interval;
+            this.interval = OptionalNullable.of(interval);
+            return this;
+        }
+
+        /**
+         * UnSetter for interval.
+         * @return Builder
+         */
+        public Builder unsetInterval() {
+            interval = null;
             return this;
         }
 
@@ -1074,7 +1465,16 @@ public class GetSubscriptionResponse {
          * @return Builder
          */
         public Builder intervalCount(Integer intervalCount) {
-            this.intervalCount = intervalCount;
+            this.intervalCount = OptionalNullable.of(intervalCount);
+            return this;
+        }
+
+        /**
+         * UnSetter for intervalCount.
+         * @return Builder
+         */
+        public Builder unsetIntervalCount() {
+            intervalCount = null;
             return this;
         }
 
@@ -1084,147 +1484,16 @@ public class GetSubscriptionResponse {
          * @return Builder
          */
         public Builder billingType(String billingType) {
-            this.billingType = billingType;
+            this.billingType = OptionalNullable.of(billingType);
             return this;
         }
 
         /**
-         * Setter for paymentMethod.
-         * @param  paymentMethod  String value for paymentMethod.
+         * UnSetter for billingType.
          * @return Builder
          */
-        public Builder paymentMethod(String paymentMethod) {
-            this.paymentMethod = paymentMethod;
-            return this;
-        }
-
-        /**
-         * Setter for currency.
-         * @param  currency  String value for currency.
-         * @return Builder
-         */
-        public Builder currency(String currency) {
-            this.currency = currency;
-            return this;
-        }
-
-        /**
-         * Setter for installments.
-         * @param  installments  Integer value for installments.
-         * @return Builder
-         */
-        public Builder installments(Integer installments) {
-            this.installments = installments;
-            return this;
-        }
-
-        /**
-         * Setter for status.
-         * @param  status  String value for status.
-         * @return Builder
-         */
-        public Builder status(String status) {
-            this.status = status;
-            return this;
-        }
-
-        /**
-         * Setter for createdAt.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @return Builder
-         */
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        /**
-         * Setter for updatedAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @return Builder
-         */
-        public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        /**
-         * Setter for card.
-         * @param  card  GetCardResponse value for card.
-         * @return Builder
-         */
-        public Builder card(GetCardResponse card) {
-            this.card = card;
-            return this;
-        }
-
-        /**
-         * Setter for items.
-         * @param  items  List of GetSubscriptionItemResponse value for items.
-         * @return Builder
-         */
-        public Builder items(List<GetSubscriptionItemResponse> items) {
-            this.items = items;
-            return this;
-        }
-
-        /**
-         * Setter for statementDescriptor.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @return Builder
-         */
-        public Builder statementDescriptor(String statementDescriptor) {
-            this.statementDescriptor = statementDescriptor;
-            return this;
-        }
-
-        /**
-         * Setter for metadata.
-         * @param  metadata  Map of String, value for metadata.
-         * @return Builder
-         */
-        public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
-         * Setter for setup.
-         * @param  setup  GetSetupResponse value for setup.
-         * @return Builder
-         */
-        public Builder setup(GetSetupResponse setup) {
-            this.setup = setup;
-            return this;
-        }
-
-        /**
-         * Setter for gatewayAffiliationId.
-         * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
-         * @return Builder
-         */
-        public Builder gatewayAffiliationId(String gatewayAffiliationId) {
-            this.gatewayAffiliationId = gatewayAffiliationId;
-            return this;
-        }
-
-        /**
-         * Setter for increments.
-         * @param  increments  List of GetIncrementResponse value for increments.
-         * @return Builder
-         */
-        public Builder increments(List<GetIncrementResponse> increments) {
-            this.increments = increments;
-            return this;
-        }
-
-        /**
-         * Setter for split.
-         * @param  split  GetSubscriptionSplitResponse value for split.
-         * @return Builder
-         */
-        public Builder split(GetSubscriptionSplitResponse split) {
-            this.split = split;
+        public Builder unsetBillingType() {
+            billingType = null;
             return this;
         }
 
@@ -1248,6 +1517,120 @@ public class GetSubscriptionResponse {
         }
 
         /**
+         * Setter for paymentMethod.
+         * @param  paymentMethod  String value for paymentMethod.
+         * @return Builder
+         */
+        public Builder paymentMethod(String paymentMethod) {
+            this.paymentMethod = OptionalNullable.of(paymentMethod);
+            return this;
+        }
+
+        /**
+         * UnSetter for paymentMethod.
+         * @return Builder
+         */
+        public Builder unsetPaymentMethod() {
+            paymentMethod = null;
+            return this;
+        }
+
+        /**
+         * Setter for currency.
+         * @param  currency  String value for currency.
+         * @return Builder
+         */
+        public Builder currency(String currency) {
+            this.currency = OptionalNullable.of(currency);
+            return this;
+        }
+
+        /**
+         * UnSetter for currency.
+         * @return Builder
+         */
+        public Builder unsetCurrency() {
+            currency = null;
+            return this;
+        }
+
+        /**
+         * Setter for installments.
+         * @param  installments  Integer value for installments.
+         * @return Builder
+         */
+        public Builder installments(Integer installments) {
+            this.installments = OptionalNullable.of(installments);
+            return this;
+        }
+
+        /**
+         * UnSetter for installments.
+         * @return Builder
+         */
+        public Builder unsetInstallments() {
+            installments = null;
+            return this;
+        }
+
+        /**
+         * Setter for status.
+         * @param  status  String value for status.
+         * @return Builder
+         */
+        public Builder status(String status) {
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
+            return this;
+        }
+
+        /**
+         * Setter for createdAt.
+         * @param  createdAt  LocalDateTime value for createdAt.
+         * @return Builder
+         */
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
+            return this;
+        }
+
+        /**
+         * Setter for updatedAt.
+         * @param  updatedAt  LocalDateTime value for updatedAt.
+         * @return Builder
+         */
+        public Builder updatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
+            return this;
+        }
+
+        /**
          * Setter for customer.
          * @param  customer  GetCustomerResponse value for customer.
          * @return Builder
@@ -1263,6 +1646,120 @@ public class GetSubscriptionResponse {
          */
         public Builder unsetCustomer() {
             customer = null;
+            return this;
+        }
+
+        /**
+         * Setter for card.
+         * @param  card  GetCardResponse value for card.
+         * @return Builder
+         */
+        public Builder card(GetCardResponse card) {
+            this.card = OptionalNullable.of(card);
+            return this;
+        }
+
+        /**
+         * UnSetter for card.
+         * @return Builder
+         */
+        public Builder unsetCard() {
+            card = null;
+            return this;
+        }
+
+        /**
+         * Setter for items.
+         * @param  items  List of GetSubscriptionItemResponse value for items.
+         * @return Builder
+         */
+        public Builder items(List<GetSubscriptionItemResponse> items) {
+            this.items = OptionalNullable.of(items);
+            return this;
+        }
+
+        /**
+         * UnSetter for items.
+         * @return Builder
+         */
+        public Builder unsetItems() {
+            items = null;
+            return this;
+        }
+
+        /**
+         * Setter for statementDescriptor.
+         * @param  statementDescriptor  String value for statementDescriptor.
+         * @return Builder
+         */
+        public Builder statementDescriptor(String statementDescriptor) {
+            this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for statementDescriptor.
+         * @return Builder
+         */
+        public Builder unsetStatementDescriptor() {
+            statementDescriptor = null;
+            return this;
+        }
+
+        /**
+         * Setter for metadata.
+         * @param  metadata  Map of String, value for metadata.
+         * @return Builder
+         */
+        public Builder metadata(Map<String, String> metadata) {
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
+            return this;
+        }
+
+        /**
+         * Setter for setup.
+         * @param  setup  GetSetupResponse value for setup.
+         * @return Builder
+         */
+        public Builder setup(GetSetupResponse setup) {
+            this.setup = OptionalNullable.of(setup);
+            return this;
+        }
+
+        /**
+         * UnSetter for setup.
+         * @return Builder
+         */
+        public Builder unsetSetup() {
+            setup = null;
+            return this;
+        }
+
+        /**
+         * Setter for gatewayAffiliationId.
+         * @param  gatewayAffiliationId  String value for gatewayAffiliationId.
+         * @return Builder
+         */
+        public Builder gatewayAffiliationId(String gatewayAffiliationId) {
+            this.gatewayAffiliationId = OptionalNullable.of(gatewayAffiliationId);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayAffiliationId.
+         * @return Builder
+         */
+        public Builder unsetGatewayAffiliationId() {
+            gatewayAffiliationId = null;
             return this;
         }
 
@@ -1362,6 +1859,25 @@ public class GetSubscriptionResponse {
         }
 
         /**
+         * Setter for increments.
+         * @param  increments  List of GetIncrementResponse value for increments.
+         * @return Builder
+         */
+        public Builder increments(List<GetIncrementResponse> increments) {
+            this.increments = OptionalNullable.of(increments);
+            return this;
+        }
+
+        /**
+         * UnSetter for increments.
+         * @return Builder
+         */
+        public Builder unsetIncrements() {
+            increments = null;
+            return this;
+        }
+
+        /**
          * Setter for boletoDueDays.
          * @param  boletoDueDays  Integer value for boletoDueDays.
          * @return Builder
@@ -1377,6 +1893,25 @@ public class GetSubscriptionResponse {
          */
         public Builder unsetBoletoDueDays() {
             boletoDueDays = null;
+            return this;
+        }
+
+        /**
+         * Setter for split.
+         * @param  split  GetSubscriptionSplitResponse value for split.
+         * @return Builder
+         */
+        public Builder split(GetSubscriptionSplitResponse split) {
+            this.split = OptionalNullable.of(split);
+            return this;
+        }
+
+        /**
+         * UnSetter for split.
+         * @return Builder
+         */
+        public Builder unsetSplit() {
+            split = null;
             return this;
         }
 
@@ -1400,15 +1935,34 @@ public class GetSubscriptionResponse {
         }
 
         /**
+         * Setter for manualBilling.
+         * @param  manualBilling  Boolean value for manualBilling.
+         * @return Builder
+         */
+        public Builder manualBilling(Boolean manualBilling) {
+            this.manualBilling = OptionalNullable.of(manualBilling);
+            return this;
+        }
+
+        /**
+         * UnSetter for manualBilling.
+         * @return Builder
+         */
+        public Builder unsetManualBilling() {
+            manualBilling = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetSubscriptionResponse} object using the set fields.
          * @return {@link GetSubscriptionResponse}
          */
         public GetSubscriptionResponse build() {
             return new GetSubscriptionResponse(id, code, startAt, interval, intervalCount,
-                    billingType, paymentMethod, currency, installments, status, createdAt,
-                    updatedAt, card, items, statementDescriptor, metadata, setup,
-                    gatewayAffiliationId, increments, split, currentCycle, customer, nextBillingAt,
-                    billingDay, minimumPrice, canceledAt, discounts, boletoDueDays, boleto);
+                    billingType, currentCycle, paymentMethod, currency, installments, status,
+                    createdAt, updatedAt, customer, card, items, statementDescriptor, metadata,
+                    setup, gatewayAffiliationId, nextBillingAt, billingDay, minimumPrice,
+                    canceledAt, discounts, increments, boletoDueDays, split, boleto, manualBilling);
         }
     }
 }

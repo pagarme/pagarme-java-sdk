@@ -7,18 +7,21 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetGatewayRecipientResponse type.
  */
 public class GetGatewayRecipientResponse {
-    private String gateway;
-    private String status;
-    private String pgid;
-    private String createdAt;
-    private String updatedAt;
+    private OptionalNullable<String> gateway;
+    private OptionalNullable<String> status;
+    private OptionalNullable<String> pgid;
+    private OptionalNullable<String> createdAt;
+    private OptionalNullable<String> updatedAt;
 
     /**
      * Default constructor.
@@ -40,6 +43,19 @@ public class GetGatewayRecipientResponse {
             String pgid,
             String createdAt,
             String updatedAt) {
+        this.gateway = OptionalNullable.of(gateway);
+        this.status = OptionalNullable.of(status);
+        this.pgid = OptionalNullable.of(pgid);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetGatewayRecipientResponse(OptionalNullable<String> gateway,
+            OptionalNullable<String> status, OptionalNullable<String> pgid,
+            OptionalNullable<String> createdAt, OptionalNullable<String> updatedAt) {
         this.gateway = gateway;
         this.status = status;
         this.pgid = pgid;
@@ -48,13 +64,24 @@ public class GetGatewayRecipientResponse {
     }
 
     /**
+     * Internal Getter for Gateway.
+     * Gateway name
+     * @return Returns the Internal String
+     */
+    @JsonGetter("gateway")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGateway() {
+        return this.gateway;
+    }
+
+    /**
      * Getter for Gateway.
      * Gateway name
      * @return Returns the String
      */
-    @JsonGetter("gateway")
     public String getGateway() {
-        return gateway;
+        return OptionalNullable.getFrom(gateway);
     }
 
     /**
@@ -64,7 +91,27 @@ public class GetGatewayRecipientResponse {
      */
     @JsonSetter("gateway")
     public void setGateway(String gateway) {
-        this.gateway = gateway;
+        this.gateway = OptionalNullable.of(gateway);
+    }
+
+    /**
+     * UnSetter for Gateway.
+     * Gateway name
+     */
+    public void unsetGateway() {
+        gateway = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * Status of the recipient on the gateway
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
@@ -72,9 +119,8 @@ public class GetGatewayRecipientResponse {
      * Status of the recipient on the gateway
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -84,7 +130,27 @@ public class GetGatewayRecipientResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     * Status of the recipient on the gateway
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for Pgid.
+     * Recipient id on the gateway
+     * @return Returns the Internal String
+     */
+    @JsonGetter("pgid")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPgid() {
+        return this.pgid;
     }
 
     /**
@@ -92,9 +158,8 @@ public class GetGatewayRecipientResponse {
      * Recipient id on the gateway
      * @return Returns the String
      */
-    @JsonGetter("pgid")
     public String getPgid() {
-        return pgid;
+        return OptionalNullable.getFrom(pgid);
     }
 
     /**
@@ -104,7 +169,27 @@ public class GetGatewayRecipientResponse {
      */
     @JsonSetter("pgid")
     public void setPgid(String pgid) {
-        this.pgid = pgid;
+        this.pgid = OptionalNullable.of(pgid);
+    }
+
+    /**
+     * UnSetter for Pgid.
+     * Recipient id on the gateway
+     */
+    public void unsetPgid() {
+        pgid = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * Creation date
+     * @return Returns the Internal String
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
@@ -112,9 +197,8 @@ public class GetGatewayRecipientResponse {
      * Creation date
      * @return Returns the String
      */
-    @JsonGetter("created_at")
     public String getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -124,7 +208,27 @@ public class GetGatewayRecipientResponse {
      */
     @JsonSetter("created_at")
     public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     * Creation date
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * Last update date
+     * @return Returns the Internal String
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
@@ -132,9 +236,8 @@ public class GetGatewayRecipientResponse {
      * Last update date
      * @return Returns the String
      */
-    @JsonGetter("updated_at")
     public String getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -144,7 +247,15 @@ public class GetGatewayRecipientResponse {
      */
     @JsonSetter("updated_at")
     public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     * Last update date
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
     }
 
     /**
@@ -163,7 +274,12 @@ public class GetGatewayRecipientResponse {
      * @return a new {@link GetGatewayRecipientResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(gateway, status, pgid, createdAt, updatedAt);
+        Builder builder = new Builder();
+        builder.gateway = internalGetGateway();
+        builder.status = internalGetStatus();
+        builder.pgid = internalGetPgid();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
         return builder;
     }
 
@@ -171,34 +287,13 @@ public class GetGatewayRecipientResponse {
      * Class to build instances of {@link GetGatewayRecipientResponse}.
      */
     public static class Builder {
-        private String gateway;
-        private String status;
-        private String pgid;
-        private String createdAt;
-        private String updatedAt;
+        private OptionalNullable<String> gateway;
+        private OptionalNullable<String> status;
+        private OptionalNullable<String> pgid;
+        private OptionalNullable<String> createdAt;
+        private OptionalNullable<String> updatedAt;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  gateway  String value for gateway.
-         * @param  status  String value for status.
-         * @param  pgid  String value for pgid.
-         * @param  createdAt  String value for createdAt.
-         * @param  updatedAt  String value for updatedAt.
-         */
-        public Builder(String gateway, String status, String pgid, String createdAt,
-                String updatedAt) {
-            this.gateway = gateway;
-            this.status = status;
-            this.pgid = pgid;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-        }
 
         /**
          * Setter for gateway.
@@ -206,7 +301,16 @@ public class GetGatewayRecipientResponse {
          * @return Builder
          */
         public Builder gateway(String gateway) {
-            this.gateway = gateway;
+            this.gateway = OptionalNullable.of(gateway);
+            return this;
+        }
+
+        /**
+         * UnSetter for gateway.
+         * @return Builder
+         */
+        public Builder unsetGateway() {
+            gateway = null;
             return this;
         }
 
@@ -216,7 +320,16 @@ public class GetGatewayRecipientResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -226,7 +339,16 @@ public class GetGatewayRecipientResponse {
          * @return Builder
          */
         public Builder pgid(String pgid) {
-            this.pgid = pgid;
+            this.pgid = OptionalNullable.of(pgid);
+            return this;
+        }
+
+        /**
+         * UnSetter for pgid.
+         * @return Builder
+         */
+        public Builder unsetPgid() {
+            pgid = null;
             return this;
         }
 
@@ -236,7 +358,16 @@ public class GetGatewayRecipientResponse {
          * @return Builder
          */
         public Builder createdAt(String createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -246,7 +377,16 @@ public class GetGatewayRecipientResponse {
          * @return Builder
          */
         public Builder updatedAt(String updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 

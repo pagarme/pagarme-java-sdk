@@ -21,19 +21,19 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetWithdrawResponse type.
  */
 public class GetWithdrawResponse {
-    private String id;
-    private String gatewayId;
-    private Integer amount;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> gatewayId;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
     private OptionalNullable<List<String>> metadata;
     private OptionalNullable<Integer> fee;
     private OptionalNullable<LocalDateTime> fundingDate;
     private OptionalNullable<LocalDateTime> fundingEstimatedDate;
-    private String type;
-    private GetWithdrawSourceResponse source;
-    private GetWithdrawTargetResponse target;
+    private OptionalNullable<String> type;
+    private OptionalNullable<GetWithdrawSourceResponse> source;
+    private OptionalNullable<GetWithdrawTargetResponse> target;
 
     /**
      * Default constructor.
@@ -49,13 +49,13 @@ public class GetWithdrawResponse {
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
-     * @param  type  String value for type.
-     * @param  source  GetWithdrawSourceResponse value for source.
-     * @param  target  GetWithdrawTargetResponse value for target.
      * @param  metadata  List of String value for metadata.
      * @param  fee  Integer value for fee.
      * @param  fundingDate  LocalDateTime value for fundingDate.
      * @param  fundingEstimatedDate  LocalDateTime value for fundingEstimatedDate.
+     * @param  type  String value for type.
+     * @param  source  GetWithdrawSourceResponse value for source.
+     * @param  target  GetWithdrawTargetResponse value for target.
      */
     public GetWithdrawResponse(
             String id,
@@ -64,37 +64,39 @@ public class GetWithdrawResponse {
             String status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
-            String type,
-            GetWithdrawSourceResponse source,
-            GetWithdrawTargetResponse target,
             List<String> metadata,
             Integer fee,
             LocalDateTime fundingDate,
-            LocalDateTime fundingEstimatedDate) {
-        this.id = id;
-        this.gatewayId = gatewayId;
-        this.amount = amount;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+            LocalDateTime fundingEstimatedDate,
+            String type,
+            GetWithdrawSourceResponse source,
+            GetWithdrawTargetResponse target) {
+        this.id = OptionalNullable.of(id);
+        this.gatewayId = OptionalNullable.of(gatewayId);
+        this.amount = OptionalNullable.of(amount);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
         this.metadata = OptionalNullable.of(metadata);
         this.fee = OptionalNullable.of(fee);
         this.fundingDate = OptionalNullable.of(fundingDate);
         this.fundingEstimatedDate = OptionalNullable.of(fundingEstimatedDate);
-        this.type = type;
-        this.source = source;
-        this.target = target;
+        this.type = OptionalNullable.of(type);
+        this.source = OptionalNullable.of(source);
+        this.target = OptionalNullable.of(target);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetWithdrawResponse(String id, String gatewayId, Integer amount, String status,
-            LocalDateTime createdAt, LocalDateTime updatedAt, String type,
-            GetWithdrawSourceResponse source, GetWithdrawTargetResponse target,
+    protected GetWithdrawResponse(OptionalNullable<String> id, OptionalNullable<String> gatewayId,
+            OptionalNullable<Integer> amount, OptionalNullable<String> status,
+            OptionalNullable<LocalDateTime> createdAt, OptionalNullable<LocalDateTime> updatedAt,
             OptionalNullable<List<String>> metadata, OptionalNullable<Integer> fee,
             OptionalNullable<LocalDateTime> fundingDate,
-            OptionalNullable<LocalDateTime> fundingEstimatedDate) {
+            OptionalNullable<LocalDateTime> fundingEstimatedDate, OptionalNullable<String> type,
+            OptionalNullable<GetWithdrawSourceResponse> source,
+            OptionalNullable<GetWithdrawTargetResponse> target) {
         this.id = id;
         this.gatewayId = gatewayId;
         this.amount = amount;
@@ -111,12 +113,22 @@ public class GetWithdrawResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -125,16 +137,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for GatewayId.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("gateway_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGatewayId() {
+        return this.gatewayId;
     }
 
     /**
      * Getter for GatewayId.
      * @return Returns the String
      */
-    @JsonGetter("gateway_id")
     public String getGatewayId() {
-        return gatewayId;
+        return OptionalNullable.getFrom(gatewayId);
     }
 
     /**
@@ -143,16 +172,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("gateway_id")
     public void setGatewayId(String gatewayId) {
-        this.gatewayId = gatewayId;
+        this.gatewayId = OptionalNullable.of(gatewayId);
+    }
+
+    /**
+     * UnSetter for GatewayId.
+     */
+    public void unsetGatewayId() {
+        gatewayId = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
      * Getter for Amount.
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -161,16 +207,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -179,17 +242,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -199,17 +278,33 @@ public class GetWithdrawResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
      * Getter for UpdatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -219,7 +314,14 @@ public class GetWithdrawResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
     }
 
     /**
@@ -365,12 +467,22 @@ public class GetWithdrawResponse {
     }
 
     /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
+    }
+
+    /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -379,16 +491,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for Source.
+     * @return Returns the Internal GetWithdrawSourceResponse
+     */
+    @JsonGetter("source")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetWithdrawSourceResponse> internalGetSource() {
+        return this.source;
     }
 
     /**
      * Getter for Source.
      * @return Returns the GetWithdrawSourceResponse
      */
-    @JsonGetter("source")
     public GetWithdrawSourceResponse getSource() {
-        return source;
+        return OptionalNullable.getFrom(source);
     }
 
     /**
@@ -397,16 +526,33 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("source")
     public void setSource(GetWithdrawSourceResponse source) {
-        this.source = source;
+        this.source = OptionalNullable.of(source);
+    }
+
+    /**
+     * UnSetter for Source.
+     */
+    public void unsetSource() {
+        source = null;
+    }
+
+    /**
+     * Internal Getter for Target.
+     * @return Returns the Internal GetWithdrawTargetResponse
+     */
+    @JsonGetter("target")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetWithdrawTargetResponse> internalGetTarget() {
+        return this.target;
     }
 
     /**
      * Getter for Target.
      * @return Returns the GetWithdrawTargetResponse
      */
-    @JsonGetter("target")
     public GetWithdrawTargetResponse getTarget() {
-        return target;
+        return OptionalNullable.getFrom(target);
     }
 
     /**
@@ -415,7 +561,14 @@ public class GetWithdrawResponse {
      */
     @JsonSetter("target")
     public void setTarget(GetWithdrawTargetResponse target) {
-        this.target = target;
+        this.target = OptionalNullable.of(target);
+    }
+
+    /**
+     * UnSetter for Target.
+     */
+    public void unsetTarget() {
+        target = null;
     }
 
     /**
@@ -426,9 +579,9 @@ public class GetWithdrawResponse {
     public String toString() {
         return "GetWithdrawResponse [" + "id=" + id + ", gatewayId=" + gatewayId + ", amount="
                 + amount + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt="
-                + updatedAt + ", type=" + type + ", source=" + source + ", target=" + target
-                + ", metadata=" + metadata + ", fee=" + fee + ", fundingDate=" + fundingDate
-                + ", fundingEstimatedDate=" + fundingEstimatedDate + "]";
+                + updatedAt + ", metadata=" + metadata + ", fee=" + fee + ", fundingDate="
+                + fundingDate + ", fundingEstimatedDate=" + fundingEstimatedDate + ", type=" + type
+                + ", source=" + source + ", target=" + target + "]";
     }
 
     /**
@@ -437,12 +590,20 @@ public class GetWithdrawResponse {
      * @return a new {@link GetWithdrawResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, gatewayId, amount, status, createdAt, updatedAt, type,
-                source, target);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.gatewayId = internalGetGatewayId();
+        builder.amount = internalGetAmount();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
         builder.metadata = internalGetMetadata();
         builder.fee = internalGetFee();
         builder.fundingDate = internalGetFundingDate();
         builder.fundingEstimatedDate = internalGetFundingEstimatedDate();
+        builder.type = internalGetType();
+        builder.source = internalGetSource();
+        builder.target = internalGetTarget();
         return builder;
     }
 
@@ -450,51 +611,21 @@ public class GetWithdrawResponse {
      * Class to build instances of {@link GetWithdrawResponse}.
      */
     public static class Builder {
-        private String id;
-        private String gatewayId;
-        private Integer amount;
-        private String status;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private String type;
-        private GetWithdrawSourceResponse source;
-        private GetWithdrawTargetResponse target;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> gatewayId;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
         private OptionalNullable<List<String>> metadata;
         private OptionalNullable<Integer> fee;
         private OptionalNullable<LocalDateTime> fundingDate;
         private OptionalNullable<LocalDateTime> fundingEstimatedDate;
+        private OptionalNullable<String> type;
+        private OptionalNullable<GetWithdrawSourceResponse> source;
+        private OptionalNullable<GetWithdrawTargetResponse> target;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  gatewayId  String value for gatewayId.
-         * @param  amount  Integer value for amount.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  type  String value for type.
-         * @param  source  GetWithdrawSourceResponse value for source.
-         * @param  target  GetWithdrawTargetResponse value for target.
-         */
-        public Builder(String id, String gatewayId, Integer amount, String status,
-                LocalDateTime createdAt, LocalDateTime updatedAt, String type,
-                GetWithdrawSourceResponse source, GetWithdrawTargetResponse target) {
-            this.id = id;
-            this.gatewayId = gatewayId;
-            this.amount = amount;
-            this.status = status;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.type = type;
-            this.source = source;
-            this.target = target;
-        }
 
         /**
          * Setter for id.
@@ -502,7 +633,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -512,7 +652,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder gatewayId(String gatewayId) {
-            this.gatewayId = gatewayId;
+            this.gatewayId = OptionalNullable.of(gatewayId);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayId.
+         * @return Builder
+         */
+        public Builder unsetGatewayId() {
+            gatewayId = null;
             return this;
         }
 
@@ -522,7 +671,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -532,7 +690,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -542,7 +709,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -552,37 +728,16 @@ public class GetWithdrawResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
             return this;
         }
 
         /**
-         * Setter for type.
-         * @param  type  String value for type.
+         * UnSetter for updatedAt.
          * @return Builder
          */
-        public Builder type(String type) {
-            this.type = type;
-            return this;
-        }
-
-        /**
-         * Setter for source.
-         * @param  source  GetWithdrawSourceResponse value for source.
-         * @return Builder
-         */
-        public Builder source(GetWithdrawSourceResponse source) {
-            this.source = source;
-            return this;
-        }
-
-        /**
-         * Setter for target.
-         * @param  target  GetWithdrawTargetResponse value for target.
-         * @return Builder
-         */
-        public Builder target(GetWithdrawTargetResponse target) {
-            this.target = target;
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -663,12 +818,69 @@ public class GetWithdrawResponse {
         }
 
         /**
+         * Setter for type.
+         * @param  type  String value for type.
+         * @return Builder
+         */
+        public Builder type(String type) {
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
+            return this;
+        }
+
+        /**
+         * Setter for source.
+         * @param  source  GetWithdrawSourceResponse value for source.
+         * @return Builder
+         */
+        public Builder source(GetWithdrawSourceResponse source) {
+            this.source = OptionalNullable.of(source);
+            return this;
+        }
+
+        /**
+         * UnSetter for source.
+         * @return Builder
+         */
+        public Builder unsetSource() {
+            source = null;
+            return this;
+        }
+
+        /**
+         * Setter for target.
+         * @param  target  GetWithdrawTargetResponse value for target.
+         * @return Builder
+         */
+        public Builder target(GetWithdrawTargetResponse target) {
+            this.target = OptionalNullable.of(target);
+            return this;
+        }
+
+        /**
+         * UnSetter for target.
+         * @return Builder
+         */
+        public Builder unsetTarget() {
+            target = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetWithdrawResponse} object using the set fields.
          * @return {@link GetWithdrawResponse}
          */
         public GetWithdrawResponse build() {
             return new GetWithdrawResponse(id, gatewayId, amount, status, createdAt, updatedAt,
-                    type, source, target, metadata, fee, fundingDate, fundingEstimatedDate);
+                    metadata, fee, fundingDate, fundingEstimatedDate, type, source, target);
         }
     }
 }

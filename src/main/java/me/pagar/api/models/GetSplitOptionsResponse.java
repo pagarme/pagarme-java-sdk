@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetSplitOptionsResponse type.
  */
 public class GetSplitOptionsResponse {
-    private Boolean liable;
-    private Boolean chargeProcessingFee;
-    private String chargeRemainderFee;
+    private OptionalNullable<Boolean> liable;
+    private OptionalNullable<Boolean> chargeProcessingFee;
+    private OptionalNullable<String> chargeRemainderFee;
 
     /**
      * Default constructor.
@@ -34,18 +37,39 @@ public class GetSplitOptionsResponse {
             Boolean liable,
             Boolean chargeProcessingFee,
             String chargeRemainderFee) {
+        this.liable = OptionalNullable.of(liable);
+        this.chargeProcessingFee = OptionalNullable.of(chargeProcessingFee);
+        this.chargeRemainderFee = OptionalNullable.of(chargeRemainderFee);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetSplitOptionsResponse(OptionalNullable<Boolean> liable,
+            OptionalNullable<Boolean> chargeProcessingFee,
+            OptionalNullable<String> chargeRemainderFee) {
         this.liable = liable;
         this.chargeProcessingFee = chargeProcessingFee;
         this.chargeRemainderFee = chargeRemainderFee;
     }
 
     /**
+     * Internal Getter for Liable.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("liable")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetLiable() {
+        return this.liable;
+    }
+
+    /**
      * Getter for Liable.
      * @return Returns the Boolean
      */
-    @JsonGetter("liable")
     public Boolean getLiable() {
-        return liable;
+        return OptionalNullable.getFrom(liable);
     }
 
     /**
@@ -54,16 +78,33 @@ public class GetSplitOptionsResponse {
      */
     @JsonSetter("liable")
     public void setLiable(Boolean liable) {
-        this.liable = liable;
+        this.liable = OptionalNullable.of(liable);
+    }
+
+    /**
+     * UnSetter for Liable.
+     */
+    public void unsetLiable() {
+        liable = null;
+    }
+
+    /**
+     * Internal Getter for ChargeProcessingFee.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("charge_processing_fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetChargeProcessingFee() {
+        return this.chargeProcessingFee;
     }
 
     /**
      * Getter for ChargeProcessingFee.
      * @return Returns the Boolean
      */
-    @JsonGetter("charge_processing_fee")
     public Boolean getChargeProcessingFee() {
-        return chargeProcessingFee;
+        return OptionalNullable.getFrom(chargeProcessingFee);
     }
 
     /**
@@ -72,16 +113,33 @@ public class GetSplitOptionsResponse {
      */
     @JsonSetter("charge_processing_fee")
     public void setChargeProcessingFee(Boolean chargeProcessingFee) {
-        this.chargeProcessingFee = chargeProcessingFee;
+        this.chargeProcessingFee = OptionalNullable.of(chargeProcessingFee);
+    }
+
+    /**
+     * UnSetter for ChargeProcessingFee.
+     */
+    public void unsetChargeProcessingFee() {
+        chargeProcessingFee = null;
+    }
+
+    /**
+     * Internal Getter for ChargeRemainderFee.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("charge_remainder_fee")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetChargeRemainderFee() {
+        return this.chargeRemainderFee;
     }
 
     /**
      * Getter for ChargeRemainderFee.
      * @return Returns the String
      */
-    @JsonGetter("charge_remainder_fee")
     public String getChargeRemainderFee() {
-        return chargeRemainderFee;
+        return OptionalNullable.getFrom(chargeRemainderFee);
     }
 
     /**
@@ -90,7 +148,14 @@ public class GetSplitOptionsResponse {
      */
     @JsonSetter("charge_remainder_fee")
     public void setChargeRemainderFee(String chargeRemainderFee) {
-        this.chargeRemainderFee = chargeRemainderFee;
+        this.chargeRemainderFee = OptionalNullable.of(chargeRemainderFee);
+    }
+
+    /**
+     * UnSetter for ChargeRemainderFee.
+     */
+    public void unsetChargeRemainderFee() {
+        chargeRemainderFee = null;
     }
 
     /**
@@ -109,7 +174,10 @@ public class GetSplitOptionsResponse {
      * @return a new {@link GetSplitOptionsResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(liable, chargeProcessingFee, chargeRemainderFee);
+        Builder builder = new Builder();
+        builder.liable = internalGetLiable();
+        builder.chargeProcessingFee = internalGetChargeProcessingFee();
+        builder.chargeRemainderFee = internalGetChargeRemainderFee();
         return builder;
     }
 
@@ -117,27 +185,11 @@ public class GetSplitOptionsResponse {
      * Class to build instances of {@link GetSplitOptionsResponse}.
      */
     public static class Builder {
-        private Boolean liable;
-        private Boolean chargeProcessingFee;
-        private String chargeRemainderFee;
+        private OptionalNullable<Boolean> liable;
+        private OptionalNullable<Boolean> chargeProcessingFee;
+        private OptionalNullable<String> chargeRemainderFee;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  liable  Boolean value for liable.
-         * @param  chargeProcessingFee  Boolean value for chargeProcessingFee.
-         * @param  chargeRemainderFee  String value for chargeRemainderFee.
-         */
-        public Builder(Boolean liable, Boolean chargeProcessingFee, String chargeRemainderFee) {
-            this.liable = liable;
-            this.chargeProcessingFee = chargeProcessingFee;
-            this.chargeRemainderFee = chargeRemainderFee;
-        }
 
         /**
          * Setter for liable.
@@ -145,7 +197,16 @@ public class GetSplitOptionsResponse {
          * @return Builder
          */
         public Builder liable(Boolean liable) {
-            this.liable = liable;
+            this.liable = OptionalNullable.of(liable);
+            return this;
+        }
+
+        /**
+         * UnSetter for liable.
+         * @return Builder
+         */
+        public Builder unsetLiable() {
+            liable = null;
             return this;
         }
 
@@ -155,7 +216,16 @@ public class GetSplitOptionsResponse {
          * @return Builder
          */
         public Builder chargeProcessingFee(Boolean chargeProcessingFee) {
-            this.chargeProcessingFee = chargeProcessingFee;
+            this.chargeProcessingFee = OptionalNullable.of(chargeProcessingFee);
+            return this;
+        }
+
+        /**
+         * UnSetter for chargeProcessingFee.
+         * @return Builder
+         */
+        public Builder unsetChargeProcessingFee() {
+            chargeProcessingFee = null;
             return this;
         }
 
@@ -165,7 +235,16 @@ public class GetSplitOptionsResponse {
          * @return Builder
          */
         public Builder chargeRemainderFee(String chargeRemainderFee) {
-            this.chargeRemainderFee = chargeRemainderFee;
+            this.chargeRemainderFee = OptionalNullable.of(chargeRemainderFee);
+            return this;
+        }
+
+        /**
+         * UnSetter for chargeRemainderFee.
+         * @return Builder
+         */
+        public Builder unsetChargeRemainderFee() {
+            chargeRemainderFee = null;
             return this;
         }
 

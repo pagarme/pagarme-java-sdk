@@ -7,19 +7,22 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for GetAutomaticAnticipationResponse type.
  */
 public class GetAutomaticAnticipationResponse {
-    private Boolean enabled;
-    private String type;
-    private Integer volumePercentage;
-    private Integer delay;
-    private List<Integer> days;
+    private OptionalNullable<Boolean> enabled;
+    private OptionalNullable<String> type;
+    private OptionalNullable<Integer> volumePercentage;
+    private OptionalNullable<Integer> delay;
+    private OptionalNullable<List<Integer>> days;
 
     /**
      * Default constructor.
@@ -41,6 +44,19 @@ public class GetAutomaticAnticipationResponse {
             Integer volumePercentage,
             Integer delay,
             List<Integer> days) {
+        this.enabled = OptionalNullable.of(enabled);
+        this.type = OptionalNullable.of(type);
+        this.volumePercentage = OptionalNullable.of(volumePercentage);
+        this.delay = OptionalNullable.of(delay);
+        this.days = OptionalNullable.of(days);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAutomaticAnticipationResponse(OptionalNullable<Boolean> enabled,
+            OptionalNullable<String> type, OptionalNullable<Integer> volumePercentage,
+            OptionalNullable<Integer> delay, OptionalNullable<List<Integer>> days) {
         this.enabled = enabled;
         this.type = type;
         this.volumePercentage = volumePercentage;
@@ -49,12 +65,22 @@ public class GetAutomaticAnticipationResponse {
     }
 
     /**
+     * Internal Getter for Enabled.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetEnabled() {
+        return this.enabled;
+    }
+
+    /**
      * Getter for Enabled.
      * @return Returns the Boolean
      */
-    @JsonGetter("enabled")
     public Boolean getEnabled() {
-        return enabled;
+        return OptionalNullable.getFrom(enabled);
     }
 
     /**
@@ -63,16 +89,33 @@ public class GetAutomaticAnticipationResponse {
      */
     @JsonSetter("enabled")
     public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+        this.enabled = OptionalNullable.of(enabled);
+    }
+
+    /**
+     * UnSetter for Enabled.
+     */
+    public void unsetEnabled() {
+        enabled = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -81,16 +124,33 @@ public class GetAutomaticAnticipationResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for VolumePercentage.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("volume_percentage")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetVolumePercentage() {
+        return this.volumePercentage;
     }
 
     /**
      * Getter for VolumePercentage.
      * @return Returns the Integer
      */
-    @JsonGetter("volume_percentage")
     public Integer getVolumePercentage() {
-        return volumePercentage;
+        return OptionalNullable.getFrom(volumePercentage);
     }
 
     /**
@@ -99,16 +159,33 @@ public class GetAutomaticAnticipationResponse {
      */
     @JsonSetter("volume_percentage")
     public void setVolumePercentage(Integer volumePercentage) {
-        this.volumePercentage = volumePercentage;
+        this.volumePercentage = OptionalNullable.of(volumePercentage);
+    }
+
+    /**
+     * UnSetter for VolumePercentage.
+     */
+    public void unsetVolumePercentage() {
+        volumePercentage = null;
+    }
+
+    /**
+     * Internal Getter for Delay.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("delay")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetDelay() {
+        return this.delay;
     }
 
     /**
      * Getter for Delay.
      * @return Returns the Integer
      */
-    @JsonGetter("delay")
     public Integer getDelay() {
-        return delay;
+        return OptionalNullable.getFrom(delay);
     }
 
     /**
@@ -117,16 +194,33 @@ public class GetAutomaticAnticipationResponse {
      */
     @JsonSetter("delay")
     public void setDelay(Integer delay) {
-        this.delay = delay;
+        this.delay = OptionalNullable.of(delay);
+    }
+
+    /**
+     * UnSetter for Delay.
+     */
+    public void unsetDelay() {
+        delay = null;
+    }
+
+    /**
+     * Internal Getter for Days.
+     * @return Returns the Internal List of Integer
+     */
+    @JsonGetter("days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<Integer>> internalGetDays() {
+        return this.days;
     }
 
     /**
      * Getter for Days.
      * @return Returns the List of Integer
      */
-    @JsonGetter("days")
     public List<Integer> getDays() {
-        return days;
+        return OptionalNullable.getFrom(days);
     }
 
     /**
@@ -135,7 +229,14 @@ public class GetAutomaticAnticipationResponse {
      */
     @JsonSetter("days")
     public void setDays(List<Integer> days) {
-        this.days = days;
+        this.days = OptionalNullable.of(days);
+    }
+
+    /**
+     * UnSetter for Days.
+     */
+    public void unsetDays() {
+        days = null;
     }
 
     /**
@@ -155,7 +256,12 @@ public class GetAutomaticAnticipationResponse {
      * @return a new {@link GetAutomaticAnticipationResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(enabled, type, volumePercentage, delay, days);
+        Builder builder = new Builder();
+        builder.enabled = internalGetEnabled();
+        builder.type = internalGetType();
+        builder.volumePercentage = internalGetVolumePercentage();
+        builder.delay = internalGetDelay();
+        builder.days = internalGetDays();
         return builder;
     }
 
@@ -163,34 +269,13 @@ public class GetAutomaticAnticipationResponse {
      * Class to build instances of {@link GetAutomaticAnticipationResponse}.
      */
     public static class Builder {
-        private Boolean enabled;
-        private String type;
-        private Integer volumePercentage;
-        private Integer delay;
-        private List<Integer> days;
+        private OptionalNullable<Boolean> enabled;
+        private OptionalNullable<String> type;
+        private OptionalNullable<Integer> volumePercentage;
+        private OptionalNullable<Integer> delay;
+        private OptionalNullable<List<Integer>> days;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  enabled  Boolean value for enabled.
-         * @param  type  String value for type.
-         * @param  volumePercentage  Integer value for volumePercentage.
-         * @param  delay  Integer value for delay.
-         * @param  days  List of Integer value for days.
-         */
-        public Builder(Boolean enabled, String type, Integer volumePercentage, Integer delay,
-                List<Integer> days) {
-            this.enabled = enabled;
-            this.type = type;
-            this.volumePercentage = volumePercentage;
-            this.delay = delay;
-            this.days = days;
-        }
 
         /**
          * Setter for enabled.
@@ -198,7 +283,16 @@ public class GetAutomaticAnticipationResponse {
          * @return Builder
          */
         public Builder enabled(Boolean enabled) {
-            this.enabled = enabled;
+            this.enabled = OptionalNullable.of(enabled);
+            return this;
+        }
+
+        /**
+         * UnSetter for enabled.
+         * @return Builder
+         */
+        public Builder unsetEnabled() {
+            enabled = null;
             return this;
         }
 
@@ -208,7 +302,16 @@ public class GetAutomaticAnticipationResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -218,7 +321,16 @@ public class GetAutomaticAnticipationResponse {
          * @return Builder
          */
         public Builder volumePercentage(Integer volumePercentage) {
-            this.volumePercentage = volumePercentage;
+            this.volumePercentage = OptionalNullable.of(volumePercentage);
+            return this;
+        }
+
+        /**
+         * UnSetter for volumePercentage.
+         * @return Builder
+         */
+        public Builder unsetVolumePercentage() {
+            volumePercentage = null;
             return this;
         }
 
@@ -228,7 +340,16 @@ public class GetAutomaticAnticipationResponse {
          * @return Builder
          */
         public Builder delay(Integer delay) {
-            this.delay = delay;
+            this.delay = OptionalNullable.of(delay);
+            return this;
+        }
+
+        /**
+         * UnSetter for delay.
+         * @return Builder
+         */
+        public Builder unsetDelay() {
+            delay = null;
             return this;
         }
 
@@ -238,7 +359,16 @@ public class GetAutomaticAnticipationResponse {
          * @return Builder
          */
         public Builder days(List<Integer> days) {
-            this.days = days;
+            this.days = OptionalNullable.of(days);
+            return this;
+        }
+
+        /**
+         * UnSetter for days.
+         * @return Builder
+         */
+        public Builder unsetDays() {
+            days = null;
             return this;
         }
 

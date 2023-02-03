@@ -7,14 +7,17 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetChargesSummaryResponse type.
  */
 public class GetChargesSummaryResponse {
-    private Integer total;
+    private OptionalNullable<Integer> total;
 
     /**
      * Default constructor.
@@ -28,16 +31,33 @@ public class GetChargesSummaryResponse {
      */
     public GetChargesSummaryResponse(
             Integer total) {
+        this.total = OptionalNullable.of(total);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetChargesSummaryResponse(OptionalNullable<Integer> total) {
         this.total = total;
+    }
+
+    /**
+     * Internal Getter for Total.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("total")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetTotal() {
+        return this.total;
     }
 
     /**
      * Getter for Total.
      * @return Returns the Integer
      */
-    @JsonGetter("total")
     public Integer getTotal() {
-        return total;
+        return OptionalNullable.getFrom(total);
     }
 
     /**
@@ -46,7 +66,14 @@ public class GetChargesSummaryResponse {
      */
     @JsonSetter("total")
     public void setTotal(Integer total) {
-        this.total = total;
+        this.total = OptionalNullable.of(total);
+    }
+
+    /**
+     * UnSetter for Total.
+     */
+    public void unsetTotal() {
+        total = null;
     }
 
     /**
@@ -64,7 +91,8 @@ public class GetChargesSummaryResponse {
      * @return a new {@link GetChargesSummaryResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(total);
+        Builder builder = new Builder();
+        builder.total = internalGetTotal();
         return builder;
     }
 
@@ -72,21 +100,9 @@ public class GetChargesSummaryResponse {
      * Class to build instances of {@link GetChargesSummaryResponse}.
      */
     public static class Builder {
-        private Integer total;
+        private OptionalNullable<Integer> total;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  total  Integer value for total.
-         */
-        public Builder(Integer total) {
-            this.total = total;
-        }
 
         /**
          * Setter for total.
@@ -94,7 +110,16 @@ public class GetChargesSummaryResponse {
          * @return Builder
          */
         public Builder total(Integer total) {
-            this.total = total;
+            this.total = OptionalNullable.of(total);
+            return this;
+        }
+
+        /**
+         * UnSetter for total.
+         * @return Builder
+         */
+        public Builder unsetTotal() {
+            total = null;
             return this;
         }
 

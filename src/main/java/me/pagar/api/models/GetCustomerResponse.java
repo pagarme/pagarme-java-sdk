@@ -21,21 +21,21 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetCustomerResponse type.
  */
 public class GetCustomerResponse {
-    private String id;
-    private String name;
-    private String email;
-    private Boolean delinquent;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private String document;
-    private String type;
-    private String fbAccessToken;
-    private GetAddressResponse address;
-    private Map<String, String> metadata;
-    private GetPhonesResponse phones;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> name;
+    private OptionalNullable<String> email;
+    private OptionalNullable<Boolean> delinquent;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
+    private OptionalNullable<String> document;
+    private OptionalNullable<String> type;
+    private OptionalNullable<String> fbAccessToken;
+    private OptionalNullable<GetAddressResponse> address;
+    private OptionalNullable<Map<String, String>> metadata;
+    private OptionalNullable<GetPhonesResponse> phones;
     private OptionalNullable<Long> fbId;
-    private String code;
-    private String documentType;
+    private OptionalNullable<String> code;
+    private OptionalNullable<String> documentType;
 
     /**
      * Default constructor.
@@ -57,9 +57,9 @@ public class GetCustomerResponse {
      * @param  address  GetAddressResponse value for address.
      * @param  metadata  Map of String, value for metadata.
      * @param  phones  GetPhonesResponse value for phones.
+     * @param  fbId  Long value for fbId.
      * @param  code  String value for code.
      * @param  documentType  String value for documentType.
-     * @param  fbId  Long value for fbId.
      */
     public GetCustomerResponse(
             String id,
@@ -74,34 +74,37 @@ public class GetCustomerResponse {
             GetAddressResponse address,
             Map<String, String> metadata,
             GetPhonesResponse phones,
+            Long fbId,
             String code,
-            String documentType,
-            Long fbId) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.delinquent = delinquent;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.document = document;
-        this.type = type;
-        this.fbAccessToken = fbAccessToken;
-        this.address = address;
-        this.metadata = metadata;
-        this.phones = phones;
+            String documentType) {
+        this.id = OptionalNullable.of(id);
+        this.name = OptionalNullable.of(name);
+        this.email = OptionalNullable.of(email);
+        this.delinquent = OptionalNullable.of(delinquent);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+        this.document = OptionalNullable.of(document);
+        this.type = OptionalNullable.of(type);
+        this.fbAccessToken = OptionalNullable.of(fbAccessToken);
+        this.address = OptionalNullable.of(address);
+        this.metadata = OptionalNullable.of(metadata);
+        this.phones = OptionalNullable.of(phones);
         this.fbId = OptionalNullable.of(fbId);
-        this.code = code;
-        this.documentType = documentType;
+        this.code = OptionalNullable.of(code);
+        this.documentType = OptionalNullable.of(documentType);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetCustomerResponse(String id, String name, String email, Boolean delinquent,
-            LocalDateTime createdAt, LocalDateTime updatedAt, String document, String type,
-            String fbAccessToken, GetAddressResponse address, Map<String, String> metadata,
-            GetPhonesResponse phones, String code, String documentType,
-            OptionalNullable<Long> fbId) {
+    protected GetCustomerResponse(OptionalNullable<String> id, OptionalNullable<String> name,
+            OptionalNullable<String> email, OptionalNullable<Boolean> delinquent,
+            OptionalNullable<LocalDateTime> createdAt, OptionalNullable<LocalDateTime> updatedAt,
+            OptionalNullable<String> document, OptionalNullable<String> type,
+            OptionalNullable<String> fbAccessToken, OptionalNullable<GetAddressResponse> address,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<GetPhonesResponse> phones, OptionalNullable<Long> fbId,
+            OptionalNullable<String> code, OptionalNullable<String> documentType) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -120,12 +123,22 @@ public class GetCustomerResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -134,16 +147,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Name.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
     }
 
     /**
      * Getter for Name.
      * @return Returns the String
      */
-    @JsonGetter("name")
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -152,16 +182,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     */
+    public void unsetName() {
+        name = null;
+    }
+
+    /**
+     * Internal Getter for Email.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("email")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetEmail() {
+        return this.email;
     }
 
     /**
      * Getter for Email.
      * @return Returns the String
      */
-    @JsonGetter("email")
     public String getEmail() {
-        return email;
+        return OptionalNullable.getFrom(email);
     }
 
     /**
@@ -170,16 +217,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("email")
     public void setEmail(String email) {
-        this.email = email;
+        this.email = OptionalNullable.of(email);
+    }
+
+    /**
+     * UnSetter for Email.
+     */
+    public void unsetEmail() {
+        email = null;
+    }
+
+    /**
+     * Internal Getter for Delinquent.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("delinquent")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetDelinquent() {
+        return this.delinquent;
     }
 
     /**
      * Getter for Delinquent.
      * @return Returns the Boolean
      */
-    @JsonGetter("delinquent")
     public Boolean getDelinquent() {
-        return delinquent;
+        return OptionalNullable.getFrom(delinquent);
     }
 
     /**
@@ -188,17 +252,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("delinquent")
     public void setDelinquent(Boolean delinquent) {
-        this.delinquent = delinquent;
+        this.delinquent = OptionalNullable.of(delinquent);
+    }
+
+    /**
+     * UnSetter for Delinquent.
+     */
+    public void unsetDelinquent() {
+        delinquent = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -208,17 +288,33 @@ public class GetCustomerResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
      * Getter for UpdatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -228,16 +324,33 @@ public class GetCustomerResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
+    }
+
+    /**
+     * Internal Getter for Document.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("document")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDocument() {
+        return this.document;
     }
 
     /**
      * Getter for Document.
      * @return Returns the String
      */
-    @JsonGetter("document")
     public String getDocument() {
-        return document;
+        return OptionalNullable.getFrom(document);
     }
 
     /**
@@ -246,16 +359,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("document")
     public void setDocument(String document) {
-        this.document = document;
+        this.document = OptionalNullable.of(document);
+    }
+
+    /**
+     * UnSetter for Document.
+     */
+    public void unsetDocument() {
+        document = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -264,16 +394,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for FbAccessToken.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("fb_access_token")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetFbAccessToken() {
+        return this.fbAccessToken;
     }
 
     /**
      * Getter for FbAccessToken.
      * @return Returns the String
      */
-    @JsonGetter("fb_access_token")
     public String getFbAccessToken() {
-        return fbAccessToken;
+        return OptionalNullable.getFrom(fbAccessToken);
     }
 
     /**
@@ -282,16 +429,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("fb_access_token")
     public void setFbAccessToken(String fbAccessToken) {
-        this.fbAccessToken = fbAccessToken;
+        this.fbAccessToken = OptionalNullable.of(fbAccessToken);
+    }
+
+    /**
+     * UnSetter for FbAccessToken.
+     */
+    public void unsetFbAccessToken() {
+        fbAccessToken = null;
+    }
+
+    /**
+     * Internal Getter for Address.
+     * @return Returns the Internal GetAddressResponse
+     */
+    @JsonGetter("address")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetAddressResponse> internalGetAddress() {
+        return this.address;
     }
 
     /**
      * Getter for Address.
      * @return Returns the GetAddressResponse
      */
-    @JsonGetter("address")
     public GetAddressResponse getAddress() {
-        return address;
+        return OptionalNullable.getFrom(address);
     }
 
     /**
@@ -300,16 +464,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("address")
     public void setAddress(GetAddressResponse address) {
-        this.address = address;
+        this.address = OptionalNullable.of(address);
+    }
+
+    /**
+     * UnSetter for Address.
+     */
+    public void unsetAddress() {
+        address = null;
+    }
+
+    /**
+     * Internal Getter for Metadata.
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
     }
 
     /**
      * Getter for Metadata.
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -318,16 +499,33 @@ public class GetCustomerResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
+    }
+
+    /**
+     * Internal Getter for Phones.
+     * @return Returns the Internal GetPhonesResponse
+     */
+    @JsonGetter("phones")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetPhonesResponse> internalGetPhones() {
+        return this.phones;
     }
 
     /**
      * Getter for Phones.
      * @return Returns the GetPhonesResponse
      */
-    @JsonGetter("phones")
     public GetPhonesResponse getPhones() {
-        return phones;
+        return OptionalNullable.getFrom(phones);
     }
 
     /**
@@ -336,7 +534,14 @@ public class GetCustomerResponse {
      */
     @JsonSetter("phones")
     public void setPhones(GetPhonesResponse phones) {
-        this.phones = phones;
+        this.phones = OptionalNullable.of(phones);
+    }
+
+    /**
+     * UnSetter for Phones.
+     */
+    public void unsetPhones() {
+        phones = null;
     }
 
     /**
@@ -375,13 +580,24 @@ public class GetCustomerResponse {
     }
 
     /**
+     * Internal Getter for Code.
+     * Código de referência do cliente no sistema da loja. Max: 52 caracteres
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
+    }
+
+    /**
      * Getter for Code.
      * Código de referência do cliente no sistema da loja. Max: 52 caracteres
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -391,16 +607,34 @@ public class GetCustomerResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     * Código de referência do cliente no sistema da loja. Max: 52 caracteres
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for DocumentType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("document_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDocumentType() {
+        return this.documentType;
     }
 
     /**
      * Getter for DocumentType.
      * @return Returns the String
      */
-    @JsonGetter("document_type")
     public String getDocumentType() {
-        return documentType;
+        return OptionalNullable.getFrom(documentType);
     }
 
     /**
@@ -409,7 +643,14 @@ public class GetCustomerResponse {
      */
     @JsonSetter("document_type")
     public void setDocumentType(String documentType) {
-        this.documentType = documentType;
+        this.documentType = OptionalNullable.of(documentType);
+    }
+
+    /**
+     * UnSetter for DocumentType.
+     */
+    public void unsetDocumentType() {
+        documentType = null;
     }
 
     /**
@@ -422,7 +663,7 @@ public class GetCustomerResponse {
                 + ", delinquent=" + delinquent + ", createdAt=" + createdAt + ", updatedAt="
                 + updatedAt + ", document=" + document + ", type=" + type + ", fbAccessToken="
                 + fbAccessToken + ", address=" + address + ", metadata=" + metadata + ", phones="
-                + phones + ", code=" + code + ", documentType=" + documentType + ", fbId=" + fbId
+                + phones + ", fbId=" + fbId + ", code=" + code + ", documentType=" + documentType
                 + "]";
     }
 
@@ -432,9 +673,22 @@ public class GetCustomerResponse {
      * @return a new {@link GetCustomerResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, name, email, delinquent, createdAt, updatedAt, document,
-                type, fbAccessToken, address, metadata, phones, code, documentType);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.name = internalGetName();
+        builder.email = internalGetEmail();
+        builder.delinquent = internalGetDelinquent();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.document = internalGetDocument();
+        builder.type = internalGetType();
+        builder.fbAccessToken = internalGetFbAccessToken();
+        builder.address = internalGetAddress();
+        builder.metadata = internalGetMetadata();
+        builder.phones = internalGetPhones();
         builder.fbId = internalGetFbId();
+        builder.code = internalGetCode();
+        builder.documentType = internalGetDocumentType();
         return builder;
     }
 
@@ -442,64 +696,23 @@ public class GetCustomerResponse {
      * Class to build instances of {@link GetCustomerResponse}.
      */
     public static class Builder {
-        private String id;
-        private String name;
-        private String email;
-        private Boolean delinquent;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private String document;
-        private String type;
-        private String fbAccessToken;
-        private GetAddressResponse address;
-        private Map<String, String> metadata;
-        private GetPhonesResponse phones;
-        private String code;
-        private String documentType;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> name;
+        private OptionalNullable<String> email;
+        private OptionalNullable<Boolean> delinquent;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<String> document;
+        private OptionalNullable<String> type;
+        private OptionalNullable<String> fbAccessToken;
+        private OptionalNullable<GetAddressResponse> address;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<GetPhonesResponse> phones;
         private OptionalNullable<Long> fbId;
+        private OptionalNullable<String> code;
+        private OptionalNullable<String> documentType;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  name  String value for name.
-         * @param  email  String value for email.
-         * @param  delinquent  Boolean value for delinquent.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  document  String value for document.
-         * @param  type  String value for type.
-         * @param  fbAccessToken  String value for fbAccessToken.
-         * @param  address  GetAddressResponse value for address.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  phones  GetPhonesResponse value for phones.
-         * @param  code  String value for code.
-         * @param  documentType  String value for documentType.
-         */
-        public Builder(String id, String name, String email, Boolean delinquent,
-                LocalDateTime createdAt, LocalDateTime updatedAt, String document, String type,
-                String fbAccessToken, GetAddressResponse address, Map<String, String> metadata,
-                GetPhonesResponse phones, String code, String documentType) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-            this.delinquent = delinquent;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.document = document;
-            this.type = type;
-            this.fbAccessToken = fbAccessToken;
-            this.address = address;
-            this.metadata = metadata;
-            this.phones = phones;
-            this.code = code;
-            this.documentType = documentType;
-        }
 
         /**
          * Setter for id.
@@ -507,7 +720,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -517,7 +739,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 
@@ -527,7 +758,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder email(String email) {
-            this.email = email;
+            this.email = OptionalNullable.of(email);
+            return this;
+        }
+
+        /**
+         * UnSetter for email.
+         * @return Builder
+         */
+        public Builder unsetEmail() {
+            email = null;
             return this;
         }
 
@@ -537,7 +777,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder delinquent(Boolean delinquent) {
-            this.delinquent = delinquent;
+            this.delinquent = OptionalNullable.of(delinquent);
+            return this;
+        }
+
+        /**
+         * UnSetter for delinquent.
+         * @return Builder
+         */
+        public Builder unsetDelinquent() {
+            delinquent = null;
             return this;
         }
 
@@ -547,7 +796,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -557,7 +815,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -567,7 +834,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder document(String document) {
-            this.document = document;
+            this.document = OptionalNullable.of(document);
+            return this;
+        }
+
+        /**
+         * UnSetter for document.
+         * @return Builder
+         */
+        public Builder unsetDocument() {
+            document = null;
             return this;
         }
 
@@ -577,7 +853,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -587,7 +872,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder fbAccessToken(String fbAccessToken) {
-            this.fbAccessToken = fbAccessToken;
+            this.fbAccessToken = OptionalNullable.of(fbAccessToken);
+            return this;
+        }
+
+        /**
+         * UnSetter for fbAccessToken.
+         * @return Builder
+         */
+        public Builder unsetFbAccessToken() {
+            fbAccessToken = null;
             return this;
         }
 
@@ -597,7 +891,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder address(GetAddressResponse address) {
-            this.address = address;
+            this.address = OptionalNullable.of(address);
+            return this;
+        }
+
+        /**
+         * UnSetter for address.
+         * @return Builder
+         */
+        public Builder unsetAddress() {
+            address = null;
             return this;
         }
 
@@ -607,7 +910,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -617,27 +929,16 @@ public class GetCustomerResponse {
          * @return Builder
          */
         public Builder phones(GetPhonesResponse phones) {
-            this.phones = phones;
+            this.phones = OptionalNullable.of(phones);
             return this;
         }
 
         /**
-         * Setter for code.
-         * @param  code  String value for code.
+         * UnSetter for phones.
          * @return Builder
          */
-        public Builder code(String code) {
-            this.code = code;
-            return this;
-        }
-
-        /**
-         * Setter for documentType.
-         * @param  documentType  String value for documentType.
-         * @return Builder
-         */
-        public Builder documentType(String documentType) {
-            this.documentType = documentType;
+        public Builder unsetPhones() {
+            phones = null;
             return this;
         }
 
@@ -661,13 +962,51 @@ public class GetCustomerResponse {
         }
 
         /**
+         * Setter for code.
+         * @param  code  String value for code.
+         * @return Builder
+         */
+        public Builder code(String code) {
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
+            return this;
+        }
+
+        /**
+         * Setter for documentType.
+         * @param  documentType  String value for documentType.
+         * @return Builder
+         */
+        public Builder documentType(String documentType) {
+            this.documentType = OptionalNullable.of(documentType);
+            return this;
+        }
+
+        /**
+         * UnSetter for documentType.
+         * @return Builder
+         */
+        public Builder unsetDocumentType() {
+            documentType = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetCustomerResponse} object using the set fields.
          * @return {@link GetCustomerResponse}
          */
         public GetCustomerResponse build() {
             return new GetCustomerResponse(id, name, email, delinquent, createdAt, updatedAt,
-                    document, type, fbAccessToken, address, metadata, phones, code, documentType,
-                    fbId);
+                    document, type, fbAccessToken, address, metadata, phones, fbId, code,
+                    documentType);
         }
     }
 }

@@ -11,21 +11,21 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Mpi` | `String` | Required | MPI Vendor | String getMpi() | setMpi(String mpi) |
-| `Eci` | `String` | Required | Electronic Commerce Indicator (ECI) (Opcional) | String getEci() | setEci(String eci) |
-| `Cavv` | `String` | Required | Online payment cryptogram, definido pelo 3-D Secure. | String getCavv() | setCavv(String cavv) |
-| `TransactionId` | `String` | Required | Identificador da transação (XID) | String getTransactionId() | setTransactionId(String transactionId) |
-| `SuccessUrl` | `String` | Required | Url de redirecionamento de sucessso | String getSuccessUrl() | setSuccessUrl(String successUrl) |
+| `Mpi` | `String` | Optional | MPI Vendor | String getMpi() | setMpi(String mpi) |
+| `Eci` | `String` | Optional | Electronic Commerce Indicator (ECI) (Opcional) | String getEci() | setEci(String eci) |
+| `Cavv` | `String` | Optional | Online payment cryptogram, definido pelo 3-D Secure. | String getCavv() | setCavv(String cavv) |
+| `TransactionId` | `String` | Optional | Identificador da transação (XID) | String getTransactionId() | setTransactionId(String transactionId) |
+| `SuccessUrl` | `String` | Optional | Url de redirecionamento de sucessso | String getSuccessUrl() | setSuccessUrl(String successUrl) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "mpi": "mpi2",
-  "eci": "eci0",
-  "cavv": "cavv4",
-  "transaction_Id": "transaction_Id4",
-  "success_url": "success_url2"
+  "mpi": null,
+  "eci": null,
+  "cavv": null,
+  "transaction_Id": null,
+  "success_url": null
 }
 ```
 

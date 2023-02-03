@@ -23,19 +23,19 @@ public abstract class BaseController {
             new HashMap<String, ErrorCase<ApiException>>();
     private GlobalConfiguration globalConfig;
     static {
-        GLOBAL_ERROR_CASES.put("400", ErrorCase.create("Invalid request",
+        GLOBAL_ERROR_CASES.put("400", ErrorCase.setReason("Invalid request",
                 (reason, context) -> new ErrorException(reason, context)));
-        GLOBAL_ERROR_CASES.put("401", ErrorCase.create("Invalid API key",
+        GLOBAL_ERROR_CASES.put("401", ErrorCase.setReason("Invalid API key",
                 (reason, context) -> new ErrorException(reason, context)));
-        GLOBAL_ERROR_CASES.put("404", ErrorCase.create("An informed resource was not found",
+        GLOBAL_ERROR_CASES.put("404", ErrorCase.setReason("An informed resource was not found",
                 (reason, context) -> new ErrorException(reason, context)));
-        GLOBAL_ERROR_CASES.put("412", ErrorCase.create("Business validation error",
+        GLOBAL_ERROR_CASES.put("412", ErrorCase.setReason("Business validation error",
                 (reason, context) -> new ErrorException(reason, context)));
-        GLOBAL_ERROR_CASES.put("422", ErrorCase.create("Contract validation error",
+        GLOBAL_ERROR_CASES.put("422", ErrorCase.setReason("Contract validation error",
                 (reason, context) -> new ErrorException(reason, context)));
-        GLOBAL_ERROR_CASES.put("500", ErrorCase.create("Internal server error",
+        GLOBAL_ERROR_CASES.put("500", ErrorCase.setReason("Internal server error",
                 (reason, context) -> new ErrorException(reason, context)));
-        GLOBAL_ERROR_CASES.put(ErrorCase.DEFAULT, ErrorCase.create("HTTP Response Not OK",
+        GLOBAL_ERROR_CASES.put(ErrorCase.DEFAULT, ErrorCase.setReason("HTTP Response Not OK",
                 (reason, context) -> new ApiException(reason, context)));
     }
 

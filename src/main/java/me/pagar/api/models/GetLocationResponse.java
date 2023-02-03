@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetLocationResponse type.
  */
 public class GetLocationResponse {
-    private String latitude;
-    private String longitude;
+    private OptionalNullable<String> latitude;
+    private OptionalNullable<String> longitude;
 
     /**
      * Default constructor.
@@ -31,8 +34,29 @@ public class GetLocationResponse {
     public GetLocationResponse(
             String latitude,
             String longitude) {
+        this.latitude = OptionalNullable.of(latitude);
+        this.longitude = OptionalNullable.of(longitude);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetLocationResponse(OptionalNullable<String> latitude,
+            OptionalNullable<String> longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    /**
+     * Internal Getter for Latitude.
+     * Latitude
+     * @return Returns the Internal String
+     */
+    @JsonGetter("latitude")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLatitude() {
+        return this.latitude;
     }
 
     /**
@@ -40,9 +64,8 @@ public class GetLocationResponse {
      * Latitude
      * @return Returns the String
      */
-    @JsonGetter("latitude")
     public String getLatitude() {
-        return latitude;
+        return OptionalNullable.getFrom(latitude);
     }
 
     /**
@@ -52,7 +75,27 @@ public class GetLocationResponse {
      */
     @JsonSetter("latitude")
     public void setLatitude(String latitude) {
-        this.latitude = latitude;
+        this.latitude = OptionalNullable.of(latitude);
+    }
+
+    /**
+     * UnSetter for Latitude.
+     * Latitude
+     */
+    public void unsetLatitude() {
+        latitude = null;
+    }
+
+    /**
+     * Internal Getter for Longitude.
+     * Longitude
+     * @return Returns the Internal String
+     */
+    @JsonGetter("longitude")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLongitude() {
+        return this.longitude;
     }
 
     /**
@@ -60,9 +103,8 @@ public class GetLocationResponse {
      * Longitude
      * @return Returns the String
      */
-    @JsonGetter("longitude")
     public String getLongitude() {
-        return longitude;
+        return OptionalNullable.getFrom(longitude);
     }
 
     /**
@@ -72,7 +114,15 @@ public class GetLocationResponse {
      */
     @JsonSetter("longitude")
     public void setLongitude(String longitude) {
-        this.longitude = longitude;
+        this.longitude = OptionalNullable.of(longitude);
+    }
+
+    /**
+     * UnSetter for Longitude.
+     * Longitude
+     */
+    public void unsetLongitude() {
+        longitude = null;
     }
 
     /**
@@ -90,7 +140,9 @@ public class GetLocationResponse {
      * @return a new {@link GetLocationResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(latitude, longitude);
+        Builder builder = new Builder();
+        builder.latitude = internalGetLatitude();
+        builder.longitude = internalGetLongitude();
         return builder;
     }
 
@@ -98,24 +150,10 @@ public class GetLocationResponse {
      * Class to build instances of {@link GetLocationResponse}.
      */
     public static class Builder {
-        private String latitude;
-        private String longitude;
+        private OptionalNullable<String> latitude;
+        private OptionalNullable<String> longitude;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  latitude  String value for latitude.
-         * @param  longitude  String value for longitude.
-         */
-        public Builder(String latitude, String longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
 
         /**
          * Setter for latitude.
@@ -123,7 +161,16 @@ public class GetLocationResponse {
          * @return Builder
          */
         public Builder latitude(String latitude) {
-            this.latitude = latitude;
+            this.latitude = OptionalNullable.of(latitude);
+            return this;
+        }
+
+        /**
+         * UnSetter for latitude.
+         * @return Builder
+         */
+        public Builder unsetLatitude() {
+            latitude = null;
             return this;
         }
 
@@ -133,7 +180,16 @@ public class GetLocationResponse {
          * @return Builder
          */
         public Builder longitude(String longitude) {
-            this.longitude = longitude;
+            this.longitude = OptionalNullable.of(longitude);
+            return this;
+        }
+
+        /**
+         * UnSetter for longitude.
+         * @return Builder
+         */
+        public Builder unsetLongitude() {
+            longitude = null;
             return this;
         }
 

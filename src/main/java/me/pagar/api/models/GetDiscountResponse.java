@@ -20,11 +20,11 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetDiscountResponse type.
  */
 public class GetDiscountResponse {
-    private String id;
-    private Double value;
-    private String discountType;
-    private String status;
-    private LocalDateTime createdAt;
+    private OptionalNullable<String> id;
+    private OptionalNullable<Double> value;
+    private OptionalNullable<String> discountType;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
     private OptionalNullable<Integer> cycles;
     private OptionalNullable<LocalDateTime> deletedAt;
     private OptionalNullable<String> description;
@@ -61,11 +61,11 @@ public class GetDiscountResponse {
             String description,
             GetSubscriptionResponse subscription,
             GetSubscriptionItemResponse subscriptionItem) {
-        this.id = id;
-        this.value = value;
-        this.discountType = discountType;
-        this.status = status;
-        this.createdAt = createdAt;
+        this.id = OptionalNullable.of(id);
+        this.value = OptionalNullable.of(value);
+        this.discountType = OptionalNullable.of(discountType);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
         this.cycles = OptionalNullable.of(cycles);
         this.deletedAt = OptionalNullable.of(deletedAt);
         this.description = OptionalNullable.of(description);
@@ -76,8 +76,9 @@ public class GetDiscountResponse {
     /**
      * Internal initialization constructor.
      */
-    protected GetDiscountResponse(String id, Double value, String discountType, String status,
-            LocalDateTime createdAt, OptionalNullable<Integer> cycles,
+    protected GetDiscountResponse(OptionalNullable<String> id, OptionalNullable<Double> value,
+            OptionalNullable<String> discountType, OptionalNullable<String> status,
+            OptionalNullable<LocalDateTime> createdAt, OptionalNullable<Integer> cycles,
             OptionalNullable<LocalDateTime> deletedAt, OptionalNullable<String> description,
             OptionalNullable<GetSubscriptionResponse> subscription,
             OptionalNullable<GetSubscriptionItemResponse> subscriptionItem) {
@@ -94,12 +95,22 @@ public class GetDiscountResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -108,16 +119,33 @@ public class GetDiscountResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Value.
+     * @return Returns the Internal Double
+     */
+    @JsonGetter("value")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Double> internalGetValue() {
+        return this.value;
     }
 
     /**
      * Getter for Value.
      * @return Returns the Double
      */
-    @JsonGetter("value")
     public Double getValue() {
-        return value;
+        return OptionalNullable.getFrom(value);
     }
 
     /**
@@ -126,16 +154,33 @@ public class GetDiscountResponse {
      */
     @JsonSetter("value")
     public void setValue(Double value) {
-        this.value = value;
+        this.value = OptionalNullable.of(value);
+    }
+
+    /**
+     * UnSetter for Value.
+     */
+    public void unsetValue() {
+        value = null;
+    }
+
+    /**
+     * Internal Getter for DiscountType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("discount_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDiscountType() {
+        return this.discountType;
     }
 
     /**
      * Getter for DiscountType.
      * @return Returns the String
      */
-    @JsonGetter("discount_type")
     public String getDiscountType() {
-        return discountType;
+        return OptionalNullable.getFrom(discountType);
     }
 
     /**
@@ -144,16 +189,33 @@ public class GetDiscountResponse {
      */
     @JsonSetter("discount_type")
     public void setDiscountType(String discountType) {
-        this.discountType = discountType;
+        this.discountType = OptionalNullable.of(discountType);
+    }
+
+    /**
+     * UnSetter for DiscountType.
+     */
+    public void unsetDiscountType() {
+        discountType = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -162,17 +224,33 @@ public class GetDiscountResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -182,7 +260,14 @@ public class GetDiscountResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
     }
 
     /**
@@ -383,7 +468,12 @@ public class GetDiscountResponse {
      * @return a new {@link GetDiscountResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, value, discountType, status, createdAt);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.value = internalGetValue();
+        builder.discountType = internalGetDiscountType();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
         builder.cycles = internalGetCycles();
         builder.deletedAt = internalGetDeletedAt();
         builder.description = internalGetDescription();
@@ -396,39 +486,18 @@ public class GetDiscountResponse {
      * Class to build instances of {@link GetDiscountResponse}.
      */
     public static class Builder {
-        private String id;
-        private Double value;
-        private String discountType;
-        private String status;
-        private LocalDateTime createdAt;
+        private OptionalNullable<String> id;
+        private OptionalNullable<Double> value;
+        private OptionalNullable<String> discountType;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
         private OptionalNullable<Integer> cycles;
         private OptionalNullable<LocalDateTime> deletedAt;
         private OptionalNullable<String> description;
         private OptionalNullable<GetSubscriptionResponse> subscription;
         private OptionalNullable<GetSubscriptionItemResponse> subscriptionItem;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  value  Double value for value.
-         * @param  discountType  String value for discountType.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         */
-        public Builder(String id, Double value, String discountType, String status,
-                LocalDateTime createdAt) {
-            this.id = id;
-            this.value = value;
-            this.discountType = discountType;
-            this.status = status;
-            this.createdAt = createdAt;
-        }
 
         /**
          * Setter for id.
@@ -436,7 +505,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -446,7 +524,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder value(Double value) {
-            this.value = value;
+            this.value = OptionalNullable.of(value);
+            return this;
+        }
+
+        /**
+         * UnSetter for value.
+         * @return Builder
+         */
+        public Builder unsetValue() {
+            value = null;
             return this;
         }
 
@@ -456,7 +543,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder discountType(String discountType) {
-            this.discountType = discountType;
+            this.discountType = OptionalNullable.of(discountType);
+            return this;
+        }
+
+        /**
+         * UnSetter for discountType.
+         * @return Builder
+         */
+        public Builder unsetDiscountType() {
+            discountType = null;
             return this;
         }
 
@@ -466,7 +562,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -476,7 +581,16 @@ public class GetDiscountResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 

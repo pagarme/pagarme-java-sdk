@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetWithdrawTargetResponse type.
  */
 public class GetWithdrawTargetResponse {
-    private String targetId;
-    private String type;
+    private OptionalNullable<String> targetId;
+    private OptionalNullable<String> type;
 
     /**
      * Default constructor.
@@ -31,17 +34,36 @@ public class GetWithdrawTargetResponse {
     public GetWithdrawTargetResponse(
             String targetId,
             String type) {
+        this.targetId = OptionalNullable.of(targetId);
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetWithdrawTargetResponse(OptionalNullable<String> targetId,
+            OptionalNullable<String> type) {
         this.targetId = targetId;
         this.type = type;
+    }
+
+    /**
+     * Internal Getter for TargetId.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("target_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetTargetId() {
+        return this.targetId;
     }
 
     /**
      * Getter for TargetId.
      * @return Returns the String
      */
-    @JsonGetter("target_id")
     public String getTargetId() {
-        return targetId;
+        return OptionalNullable.getFrom(targetId);
     }
 
     /**
@@ -50,16 +72,33 @@ public class GetWithdrawTargetResponse {
      */
     @JsonSetter("target_id")
     public void setTargetId(String targetId) {
-        this.targetId = targetId;
+        this.targetId = OptionalNullable.of(targetId);
+    }
+
+    /**
+     * UnSetter for TargetId.
+     */
+    public void unsetTargetId() {
+        targetId = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -68,7 +107,14 @@ public class GetWithdrawTargetResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
     }
 
     /**
@@ -86,7 +132,9 @@ public class GetWithdrawTargetResponse {
      * @return a new {@link GetWithdrawTargetResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(targetId, type);
+        Builder builder = new Builder();
+        builder.targetId = internalGetTargetId();
+        builder.type = internalGetType();
         return builder;
     }
 
@@ -94,24 +142,10 @@ public class GetWithdrawTargetResponse {
      * Class to build instances of {@link GetWithdrawTargetResponse}.
      */
     public static class Builder {
-        private String targetId;
-        private String type;
+        private OptionalNullable<String> targetId;
+        private OptionalNullable<String> type;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  targetId  String value for targetId.
-         * @param  type  String value for type.
-         */
-        public Builder(String targetId, String type) {
-            this.targetId = targetId;
-            this.type = type;
-        }
 
         /**
          * Setter for targetId.
@@ -119,7 +153,16 @@ public class GetWithdrawTargetResponse {
          * @return Builder
          */
         public Builder targetId(String targetId) {
-            this.targetId = targetId;
+            this.targetId = OptionalNullable.of(targetId);
+            return this;
+        }
+
+        /**
+         * UnSetter for targetId.
+         * @return Builder
+         */
+        public Builder unsetTargetId() {
+            targetId = null;
             return this;
         }
 
@@ -129,7 +172,16 @@ public class GetWithdrawTargetResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 

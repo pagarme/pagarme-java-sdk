@@ -7,23 +7,26 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetBillingAddressResponse type.
  */
 public class GetBillingAddressResponse {
-    private String street;
-    private String number;
-    private String zipCode;
-    private String neighborhood;
-    private String city;
-    private String state;
-    private String country;
-    private String complement;
-    private String line1;
-    private String line2;
+    private OptionalNullable<String> street;
+    private OptionalNullable<String> number;
+    private OptionalNullable<String> zipCode;
+    private OptionalNullable<String> neighborhood;
+    private OptionalNullable<String> city;
+    private OptionalNullable<String> state;
+    private OptionalNullable<String> country;
+    private OptionalNullable<String> complement;
+    private OptionalNullable<String> line1;
+    private OptionalNullable<String> line2;
 
     /**
      * Default constructor.
@@ -55,6 +58,27 @@ public class GetBillingAddressResponse {
             String complement,
             String line1,
             String line2) {
+        this.street = OptionalNullable.of(street);
+        this.number = OptionalNullable.of(number);
+        this.zipCode = OptionalNullable.of(zipCode);
+        this.neighborhood = OptionalNullable.of(neighborhood);
+        this.city = OptionalNullable.of(city);
+        this.state = OptionalNullable.of(state);
+        this.country = OptionalNullable.of(country);
+        this.complement = OptionalNullable.of(complement);
+        this.line1 = OptionalNullable.of(line1);
+        this.line2 = OptionalNullable.of(line2);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetBillingAddressResponse(OptionalNullable<String> street,
+            OptionalNullable<String> number, OptionalNullable<String> zipCode,
+            OptionalNullable<String> neighborhood, OptionalNullable<String> city,
+            OptionalNullable<String> state, OptionalNullable<String> country,
+            OptionalNullable<String> complement, OptionalNullable<String> line1,
+            OptionalNullable<String> line2) {
         this.street = street;
         this.number = number;
         this.zipCode = zipCode;
@@ -68,12 +92,22 @@ public class GetBillingAddressResponse {
     }
 
     /**
+     * Internal Getter for Street.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("street")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStreet() {
+        return this.street;
+    }
+
+    /**
      * Getter for Street.
      * @return Returns the String
      */
-    @JsonGetter("street")
     public String getStreet() {
-        return street;
+        return OptionalNullable.getFrom(street);
     }
 
     /**
@@ -82,16 +116,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("street")
     public void setStreet(String street) {
-        this.street = street;
+        this.street = OptionalNullable.of(street);
+    }
+
+    /**
+     * UnSetter for Street.
+     */
+    public void unsetStreet() {
+        street = null;
+    }
+
+    /**
+     * Internal Getter for Number.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNumber() {
+        return this.number;
     }
 
     /**
      * Getter for Number.
      * @return Returns the String
      */
-    @JsonGetter("number")
     public String getNumber() {
-        return number;
+        return OptionalNullable.getFrom(number);
     }
 
     /**
@@ -100,16 +151,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("number")
     public void setNumber(String number) {
-        this.number = number;
+        this.number = OptionalNullable.of(number);
+    }
+
+    /**
+     * UnSetter for Number.
+     */
+    public void unsetNumber() {
+        number = null;
+    }
+
+    /**
+     * Internal Getter for ZipCode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("zip_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetZipCode() {
+        return this.zipCode;
     }
 
     /**
      * Getter for ZipCode.
      * @return Returns the String
      */
-    @JsonGetter("zip_code")
     public String getZipCode() {
-        return zipCode;
+        return OptionalNullable.getFrom(zipCode);
     }
 
     /**
@@ -118,16 +186,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("zip_code")
     public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+        this.zipCode = OptionalNullable.of(zipCode);
+    }
+
+    /**
+     * UnSetter for ZipCode.
+     */
+    public void unsetZipCode() {
+        zipCode = null;
+    }
+
+    /**
+     * Internal Getter for Neighborhood.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("neighborhood")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNeighborhood() {
+        return this.neighborhood;
     }
 
     /**
      * Getter for Neighborhood.
      * @return Returns the String
      */
-    @JsonGetter("neighborhood")
     public String getNeighborhood() {
-        return neighborhood;
+        return OptionalNullable.getFrom(neighborhood);
     }
 
     /**
@@ -136,16 +221,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("neighborhood")
     public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+        this.neighborhood = OptionalNullable.of(neighborhood);
+    }
+
+    /**
+     * UnSetter for Neighborhood.
+     */
+    public void unsetNeighborhood() {
+        neighborhood = null;
+    }
+
+    /**
+     * Internal Getter for City.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("city")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCity() {
+        return this.city;
     }
 
     /**
      * Getter for City.
      * @return Returns the String
      */
-    @JsonGetter("city")
     public String getCity() {
-        return city;
+        return OptionalNullable.getFrom(city);
     }
 
     /**
@@ -154,16 +256,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("city")
     public void setCity(String city) {
-        this.city = city;
+        this.city = OptionalNullable.of(city);
+    }
+
+    /**
+     * UnSetter for City.
+     */
+    public void unsetCity() {
+        city = null;
+    }
+
+    /**
+     * Internal Getter for State.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("state")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetState() {
+        return this.state;
     }
 
     /**
      * Getter for State.
      * @return Returns the String
      */
-    @JsonGetter("state")
     public String getState() {
-        return state;
+        return OptionalNullable.getFrom(state);
     }
 
     /**
@@ -172,16 +291,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("state")
     public void setState(String state) {
-        this.state = state;
+        this.state = OptionalNullable.of(state);
+    }
+
+    /**
+     * UnSetter for State.
+     */
+    public void unsetState() {
+        state = null;
+    }
+
+    /**
+     * Internal Getter for Country.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("country")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCountry() {
+        return this.country;
     }
 
     /**
      * Getter for Country.
      * @return Returns the String
      */
-    @JsonGetter("country")
     public String getCountry() {
-        return country;
+        return OptionalNullable.getFrom(country);
     }
 
     /**
@@ -190,16 +326,33 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("country")
     public void setCountry(String country) {
-        this.country = country;
+        this.country = OptionalNullable.of(country);
+    }
+
+    /**
+     * UnSetter for Country.
+     */
+    public void unsetCountry() {
+        country = null;
+    }
+
+    /**
+     * Internal Getter for Complement.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("complement")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetComplement() {
+        return this.complement;
     }
 
     /**
      * Getter for Complement.
      * @return Returns the String
      */
-    @JsonGetter("complement")
     public String getComplement() {
-        return complement;
+        return OptionalNullable.getFrom(complement);
     }
 
     /**
@@ -208,7 +361,26 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("complement")
     public void setComplement(String complement) {
-        this.complement = complement;
+        this.complement = OptionalNullable.of(complement);
+    }
+
+    /**
+     * UnSetter for Complement.
+     */
+    public void unsetComplement() {
+        complement = null;
+    }
+
+    /**
+     * Internal Getter for Line1.
+     * Line 1 for address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("line_1")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLine1() {
+        return this.line1;
     }
 
     /**
@@ -216,9 +388,8 @@ public class GetBillingAddressResponse {
      * Line 1 for address
      * @return Returns the String
      */
-    @JsonGetter("line_1")
     public String getLine1() {
-        return line1;
+        return OptionalNullable.getFrom(line1);
     }
 
     /**
@@ -228,7 +399,27 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("line_1")
     public void setLine1(String line1) {
-        this.line1 = line1;
+        this.line1 = OptionalNullable.of(line1);
+    }
+
+    /**
+     * UnSetter for Line1.
+     * Line 1 for address
+     */
+    public void unsetLine1() {
+        line1 = null;
+    }
+
+    /**
+     * Internal Getter for Line2.
+     * Line 2 for address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("line_2")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLine2() {
+        return this.line2;
     }
 
     /**
@@ -236,9 +427,8 @@ public class GetBillingAddressResponse {
      * Line 2 for address
      * @return Returns the String
      */
-    @JsonGetter("line_2")
     public String getLine2() {
-        return line2;
+        return OptionalNullable.getFrom(line2);
     }
 
     /**
@@ -248,7 +438,15 @@ public class GetBillingAddressResponse {
      */
     @JsonSetter("line_2")
     public void setLine2(String line2) {
-        this.line2 = line2;
+        this.line2 = OptionalNullable.of(line2);
+    }
+
+    /**
+     * UnSetter for Line2.
+     * Line 2 for address
+     */
+    public void unsetLine2() {
+        line2 = null;
     }
 
     /**
@@ -269,8 +467,17 @@ public class GetBillingAddressResponse {
      * @return a new {@link GetBillingAddressResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(street, number, zipCode, neighborhood, city, state, country,
-                complement, line1, line2);
+        Builder builder = new Builder();
+        builder.street = internalGetStreet();
+        builder.number = internalGetNumber();
+        builder.zipCode = internalGetZipCode();
+        builder.neighborhood = internalGetNeighborhood();
+        builder.city = internalGetCity();
+        builder.state = internalGetState();
+        builder.country = internalGetCountry();
+        builder.complement = internalGetComplement();
+        builder.line1 = internalGetLine1();
+        builder.line2 = internalGetLine2();
         return builder;
     }
 
@@ -278,50 +485,18 @@ public class GetBillingAddressResponse {
      * Class to build instances of {@link GetBillingAddressResponse}.
      */
     public static class Builder {
-        private String street;
-        private String number;
-        private String zipCode;
-        private String neighborhood;
-        private String city;
-        private String state;
-        private String country;
-        private String complement;
-        private String line1;
-        private String line2;
+        private OptionalNullable<String> street;
+        private OptionalNullable<String> number;
+        private OptionalNullable<String> zipCode;
+        private OptionalNullable<String> neighborhood;
+        private OptionalNullable<String> city;
+        private OptionalNullable<String> state;
+        private OptionalNullable<String> country;
+        private OptionalNullable<String> complement;
+        private OptionalNullable<String> line1;
+        private OptionalNullable<String> line2;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  street  String value for street.
-         * @param  number  String value for number.
-         * @param  zipCode  String value for zipCode.
-         * @param  neighborhood  String value for neighborhood.
-         * @param  city  String value for city.
-         * @param  state  String value for state.
-         * @param  country  String value for country.
-         * @param  complement  String value for complement.
-         * @param  line1  String value for line1.
-         * @param  line2  String value for line2.
-         */
-        public Builder(String street, String number, String zipCode, String neighborhood,
-                String city, String state, String country, String complement, String line1,
-                String line2) {
-            this.street = street;
-            this.number = number;
-            this.zipCode = zipCode;
-            this.neighborhood = neighborhood;
-            this.city = city;
-            this.state = state;
-            this.country = country;
-            this.complement = complement;
-            this.line1 = line1;
-            this.line2 = line2;
-        }
 
         /**
          * Setter for street.
@@ -329,7 +504,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder street(String street) {
-            this.street = street;
+            this.street = OptionalNullable.of(street);
+            return this;
+        }
+
+        /**
+         * UnSetter for street.
+         * @return Builder
+         */
+        public Builder unsetStreet() {
+            street = null;
             return this;
         }
 
@@ -339,7 +523,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder number(String number) {
-            this.number = number;
+            this.number = OptionalNullable.of(number);
+            return this;
+        }
+
+        /**
+         * UnSetter for number.
+         * @return Builder
+         */
+        public Builder unsetNumber() {
+            number = null;
             return this;
         }
 
@@ -349,7 +542,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder zipCode(String zipCode) {
-            this.zipCode = zipCode;
+            this.zipCode = OptionalNullable.of(zipCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for zipCode.
+         * @return Builder
+         */
+        public Builder unsetZipCode() {
+            zipCode = null;
             return this;
         }
 
@@ -359,7 +561,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder neighborhood(String neighborhood) {
-            this.neighborhood = neighborhood;
+            this.neighborhood = OptionalNullable.of(neighborhood);
+            return this;
+        }
+
+        /**
+         * UnSetter for neighborhood.
+         * @return Builder
+         */
+        public Builder unsetNeighborhood() {
+            neighborhood = null;
             return this;
         }
 
@@ -369,7 +580,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder city(String city) {
-            this.city = city;
+            this.city = OptionalNullable.of(city);
+            return this;
+        }
+
+        /**
+         * UnSetter for city.
+         * @return Builder
+         */
+        public Builder unsetCity() {
+            city = null;
             return this;
         }
 
@@ -379,7 +599,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder state(String state) {
-            this.state = state;
+            this.state = OptionalNullable.of(state);
+            return this;
+        }
+
+        /**
+         * UnSetter for state.
+         * @return Builder
+         */
+        public Builder unsetState() {
+            state = null;
             return this;
         }
 
@@ -389,7 +618,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder country(String country) {
-            this.country = country;
+            this.country = OptionalNullable.of(country);
+            return this;
+        }
+
+        /**
+         * UnSetter for country.
+         * @return Builder
+         */
+        public Builder unsetCountry() {
+            country = null;
             return this;
         }
 
@@ -399,7 +637,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder complement(String complement) {
-            this.complement = complement;
+            this.complement = OptionalNullable.of(complement);
+            return this;
+        }
+
+        /**
+         * UnSetter for complement.
+         * @return Builder
+         */
+        public Builder unsetComplement() {
+            complement = null;
             return this;
         }
 
@@ -409,7 +656,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder line1(String line1) {
-            this.line1 = line1;
+            this.line1 = OptionalNullable.of(line1);
+            return this;
+        }
+
+        /**
+         * UnSetter for line1.
+         * @return Builder
+         */
+        public Builder unsetLine1() {
+            line1 = null;
             return this;
         }
 
@@ -419,7 +675,16 @@ public class GetBillingAddressResponse {
          * @return Builder
          */
         public Builder line2(String line2) {
-            this.line2 = line2;
+            this.line2 = OptionalNullable.of(line2);
+            return this;
+        }
+
+        /**
+         * UnSetter for line2.
+         * @return Builder
+         */
+        public Builder unsetLine2() {
+            line2 = null;
             return this;
         }
 

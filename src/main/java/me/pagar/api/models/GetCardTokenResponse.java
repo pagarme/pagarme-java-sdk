@@ -7,21 +7,24 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetCardTokenResponse type.
  */
 public class GetCardTokenResponse {
-    private String lastFourDigits;
-    private String holderName;
-    private String holderDocument;
-    private String expMonth;
-    private String expYear;
-    private String brand;
-    private String type;
-    private String label;
+    private OptionalNullable<String> lastFourDigits;
+    private OptionalNullable<String> holderName;
+    private OptionalNullable<String> holderDocument;
+    private OptionalNullable<String> expMonth;
+    private OptionalNullable<String> expYear;
+    private OptionalNullable<String> brand;
+    private OptionalNullable<String> type;
+    private OptionalNullable<String> label;
 
     /**
      * Default constructor.
@@ -49,6 +52,24 @@ public class GetCardTokenResponse {
             String brand,
             String type,
             String label) {
+        this.lastFourDigits = OptionalNullable.of(lastFourDigits);
+        this.holderName = OptionalNullable.of(holderName);
+        this.holderDocument = OptionalNullable.of(holderDocument);
+        this.expMonth = OptionalNullable.of(expMonth);
+        this.expYear = OptionalNullable.of(expYear);
+        this.brand = OptionalNullable.of(brand);
+        this.type = OptionalNullable.of(type);
+        this.label = OptionalNullable.of(label);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCardTokenResponse(OptionalNullable<String> lastFourDigits,
+            OptionalNullable<String> holderName, OptionalNullable<String> holderDocument,
+            OptionalNullable<String> expMonth, OptionalNullable<String> expYear,
+            OptionalNullable<String> brand, OptionalNullable<String> type,
+            OptionalNullable<String> label) {
         this.lastFourDigits = lastFourDigits;
         this.holderName = holderName;
         this.holderDocument = holderDocument;
@@ -60,12 +81,22 @@ public class GetCardTokenResponse {
     }
 
     /**
+     * Internal Getter for LastFourDigits.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("last_four_digits")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLastFourDigits() {
+        return this.lastFourDigits;
+    }
+
+    /**
      * Getter for LastFourDigits.
      * @return Returns the String
      */
-    @JsonGetter("last_four_digits")
     public String getLastFourDigits() {
-        return lastFourDigits;
+        return OptionalNullable.getFrom(lastFourDigits);
     }
 
     /**
@@ -74,16 +105,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("last_four_digits")
     public void setLastFourDigits(String lastFourDigits) {
-        this.lastFourDigits = lastFourDigits;
+        this.lastFourDigits = OptionalNullable.of(lastFourDigits);
+    }
+
+    /**
+     * UnSetter for LastFourDigits.
+     */
+    public void unsetLastFourDigits() {
+        lastFourDigits = null;
+    }
+
+    /**
+     * Internal Getter for HolderName.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("holder_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetHolderName() {
+        return this.holderName;
     }
 
     /**
      * Getter for HolderName.
      * @return Returns the String
      */
-    @JsonGetter("holder_name")
     public String getHolderName() {
-        return holderName;
+        return OptionalNullable.getFrom(holderName);
     }
 
     /**
@@ -92,16 +140,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("holder_name")
     public void setHolderName(String holderName) {
-        this.holderName = holderName;
+        this.holderName = OptionalNullable.of(holderName);
+    }
+
+    /**
+     * UnSetter for HolderName.
+     */
+    public void unsetHolderName() {
+        holderName = null;
+    }
+
+    /**
+     * Internal Getter for HolderDocument.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("holder_document")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetHolderDocument() {
+        return this.holderDocument;
     }
 
     /**
      * Getter for HolderDocument.
      * @return Returns the String
      */
-    @JsonGetter("holder_document")
     public String getHolderDocument() {
-        return holderDocument;
+        return OptionalNullable.getFrom(holderDocument);
     }
 
     /**
@@ -110,16 +175,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("holder_document")
     public void setHolderDocument(String holderDocument) {
-        this.holderDocument = holderDocument;
+        this.holderDocument = OptionalNullable.of(holderDocument);
+    }
+
+    /**
+     * UnSetter for HolderDocument.
+     */
+    public void unsetHolderDocument() {
+        holderDocument = null;
+    }
+
+    /**
+     * Internal Getter for ExpMonth.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("exp_month")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetExpMonth() {
+        return this.expMonth;
     }
 
     /**
      * Getter for ExpMonth.
      * @return Returns the String
      */
-    @JsonGetter("exp_month")
     public String getExpMonth() {
-        return expMonth;
+        return OptionalNullable.getFrom(expMonth);
     }
 
     /**
@@ -128,16 +210,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("exp_month")
     public void setExpMonth(String expMonth) {
-        this.expMonth = expMonth;
+        this.expMonth = OptionalNullable.of(expMonth);
+    }
+
+    /**
+     * UnSetter for ExpMonth.
+     */
+    public void unsetExpMonth() {
+        expMonth = null;
+    }
+
+    /**
+     * Internal Getter for ExpYear.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("exp_year")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetExpYear() {
+        return this.expYear;
     }
 
     /**
      * Getter for ExpYear.
      * @return Returns the String
      */
-    @JsonGetter("exp_year")
     public String getExpYear() {
-        return expYear;
+        return OptionalNullable.getFrom(expYear);
     }
 
     /**
@@ -146,16 +245,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("exp_year")
     public void setExpYear(String expYear) {
-        this.expYear = expYear;
+        this.expYear = OptionalNullable.of(expYear);
+    }
+
+    /**
+     * UnSetter for ExpYear.
+     */
+    public void unsetExpYear() {
+        expYear = null;
+    }
+
+    /**
+     * Internal Getter for Brand.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("brand")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBrand() {
+        return this.brand;
     }
 
     /**
      * Getter for Brand.
      * @return Returns the String
      */
-    @JsonGetter("brand")
     public String getBrand() {
-        return brand;
+        return OptionalNullable.getFrom(brand);
     }
 
     /**
@@ -164,16 +280,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("brand")
     public void setBrand(String brand) {
-        this.brand = brand;
+        this.brand = OptionalNullable.of(brand);
+    }
+
+    /**
+     * UnSetter for Brand.
+     */
+    public void unsetBrand() {
+        brand = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -182,16 +315,33 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for Label.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("label")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLabel() {
+        return this.label;
     }
 
     /**
      * Getter for Label.
      * @return Returns the String
      */
-    @JsonGetter("label")
     public String getLabel() {
-        return label;
+        return OptionalNullable.getFrom(label);
     }
 
     /**
@@ -200,7 +350,14 @@ public class GetCardTokenResponse {
      */
     @JsonSetter("label")
     public void setLabel(String label) {
-        this.label = label;
+        this.label = OptionalNullable.of(label);
+    }
+
+    /**
+     * UnSetter for Label.
+     */
+    public void unsetLabel() {
+        label = null;
     }
 
     /**
@@ -221,8 +378,15 @@ public class GetCardTokenResponse {
      * @return a new {@link GetCardTokenResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(lastFourDigits, holderName, holderDocument, expMonth, expYear,
-                brand, type, label);
+        Builder builder = new Builder();
+        builder.lastFourDigits = internalGetLastFourDigits();
+        builder.holderName = internalGetHolderName();
+        builder.holderDocument = internalGetHolderDocument();
+        builder.expMonth = internalGetExpMonth();
+        builder.expYear = internalGetExpYear();
+        builder.brand = internalGetBrand();
+        builder.type = internalGetType();
+        builder.label = internalGetLabel();
         return builder;
     }
 
@@ -230,43 +394,16 @@ public class GetCardTokenResponse {
      * Class to build instances of {@link GetCardTokenResponse}.
      */
     public static class Builder {
-        private String lastFourDigits;
-        private String holderName;
-        private String holderDocument;
-        private String expMonth;
-        private String expYear;
-        private String brand;
-        private String type;
-        private String label;
+        private OptionalNullable<String> lastFourDigits;
+        private OptionalNullable<String> holderName;
+        private OptionalNullable<String> holderDocument;
+        private OptionalNullable<String> expMonth;
+        private OptionalNullable<String> expYear;
+        private OptionalNullable<String> brand;
+        private OptionalNullable<String> type;
+        private OptionalNullable<String> label;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  lastFourDigits  String value for lastFourDigits.
-         * @param  holderName  String value for holderName.
-         * @param  holderDocument  String value for holderDocument.
-         * @param  expMonth  String value for expMonth.
-         * @param  expYear  String value for expYear.
-         * @param  brand  String value for brand.
-         * @param  type  String value for type.
-         * @param  label  String value for label.
-         */
-        public Builder(String lastFourDigits, String holderName, String holderDocument,
-                String expMonth, String expYear, String brand, String type, String label) {
-            this.lastFourDigits = lastFourDigits;
-            this.holderName = holderName;
-            this.holderDocument = holderDocument;
-            this.expMonth = expMonth;
-            this.expYear = expYear;
-            this.brand = brand;
-            this.type = type;
-            this.label = label;
-        }
 
         /**
          * Setter for lastFourDigits.
@@ -274,7 +411,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder lastFourDigits(String lastFourDigits) {
-            this.lastFourDigits = lastFourDigits;
+            this.lastFourDigits = OptionalNullable.of(lastFourDigits);
+            return this;
+        }
+
+        /**
+         * UnSetter for lastFourDigits.
+         * @return Builder
+         */
+        public Builder unsetLastFourDigits() {
+            lastFourDigits = null;
             return this;
         }
 
@@ -284,7 +430,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder holderName(String holderName) {
-            this.holderName = holderName;
+            this.holderName = OptionalNullable.of(holderName);
+            return this;
+        }
+
+        /**
+         * UnSetter for holderName.
+         * @return Builder
+         */
+        public Builder unsetHolderName() {
+            holderName = null;
             return this;
         }
 
@@ -294,7 +449,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder holderDocument(String holderDocument) {
-            this.holderDocument = holderDocument;
+            this.holderDocument = OptionalNullable.of(holderDocument);
+            return this;
+        }
+
+        /**
+         * UnSetter for holderDocument.
+         * @return Builder
+         */
+        public Builder unsetHolderDocument() {
+            holderDocument = null;
             return this;
         }
 
@@ -304,7 +468,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder expMonth(String expMonth) {
-            this.expMonth = expMonth;
+            this.expMonth = OptionalNullable.of(expMonth);
+            return this;
+        }
+
+        /**
+         * UnSetter for expMonth.
+         * @return Builder
+         */
+        public Builder unsetExpMonth() {
+            expMonth = null;
             return this;
         }
 
@@ -314,7 +487,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder expYear(String expYear) {
-            this.expYear = expYear;
+            this.expYear = OptionalNullable.of(expYear);
+            return this;
+        }
+
+        /**
+         * UnSetter for expYear.
+         * @return Builder
+         */
+        public Builder unsetExpYear() {
+            expYear = null;
             return this;
         }
 
@@ -324,7 +506,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder brand(String brand) {
-            this.brand = brand;
+            this.brand = OptionalNullable.of(brand);
+            return this;
+        }
+
+        /**
+         * UnSetter for brand.
+         * @return Builder
+         */
+        public Builder unsetBrand() {
+            brand = null;
             return this;
         }
 
@@ -334,7 +525,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -344,7 +544,16 @@ public class GetCardTokenResponse {
          * @return Builder
          */
         public Builder label(String label) {
-            this.label = label;
+            this.label = OptionalNullable.of(label);
+            return this;
+        }
+
+        /**
+         * UnSetter for label.
+         * @return Builder
+         */
+        public Builder unsetLabel() {
+            label = null;
             return this;
         }
 

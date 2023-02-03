@@ -7,18 +7,21 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetThreeDSecureResponse type.
  */
 public class GetThreeDSecureResponse {
-    private String mpi;
-    private String eci;
-    private String cavv;
-    private String transactionId;
-    private String successUrl;
+    private OptionalNullable<String> mpi;
+    private OptionalNullable<String> eci;
+    private OptionalNullable<String> cavv;
+    private OptionalNullable<String> transactionId;
+    private OptionalNullable<String> successUrl;
 
     /**
      * Default constructor.
@@ -40,6 +43,19 @@ public class GetThreeDSecureResponse {
             String cavv,
             String transactionId,
             String successUrl) {
+        this.mpi = OptionalNullable.of(mpi);
+        this.eci = OptionalNullable.of(eci);
+        this.cavv = OptionalNullable.of(cavv);
+        this.transactionId = OptionalNullable.of(transactionId);
+        this.successUrl = OptionalNullable.of(successUrl);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetThreeDSecureResponse(OptionalNullable<String> mpi, OptionalNullable<String> eci,
+            OptionalNullable<String> cavv, OptionalNullable<String> transactionId,
+            OptionalNullable<String> successUrl) {
         this.mpi = mpi;
         this.eci = eci;
         this.cavv = cavv;
@@ -48,13 +64,24 @@ public class GetThreeDSecureResponse {
     }
 
     /**
+     * Internal Getter for Mpi.
+     * MPI Vendor
+     * @return Returns the Internal String
+     */
+    @JsonGetter("mpi")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetMpi() {
+        return this.mpi;
+    }
+
+    /**
      * Getter for Mpi.
      * MPI Vendor
      * @return Returns the String
      */
-    @JsonGetter("mpi")
     public String getMpi() {
-        return mpi;
+        return OptionalNullable.getFrom(mpi);
     }
 
     /**
@@ -64,7 +91,27 @@ public class GetThreeDSecureResponse {
      */
     @JsonSetter("mpi")
     public void setMpi(String mpi) {
-        this.mpi = mpi;
+        this.mpi = OptionalNullable.of(mpi);
+    }
+
+    /**
+     * UnSetter for Mpi.
+     * MPI Vendor
+     */
+    public void unsetMpi() {
+        mpi = null;
+    }
+
+    /**
+     * Internal Getter for Eci.
+     * Electronic Commerce Indicator (ECI) (Opcional)
+     * @return Returns the Internal String
+     */
+    @JsonGetter("eci")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetEci() {
+        return this.eci;
     }
 
     /**
@@ -72,9 +119,8 @@ public class GetThreeDSecureResponse {
      * Electronic Commerce Indicator (ECI) (Opcional)
      * @return Returns the String
      */
-    @JsonGetter("eci")
     public String getEci() {
-        return eci;
+        return OptionalNullable.getFrom(eci);
     }
 
     /**
@@ -84,7 +130,27 @@ public class GetThreeDSecureResponse {
      */
     @JsonSetter("eci")
     public void setEci(String eci) {
-        this.eci = eci;
+        this.eci = OptionalNullable.of(eci);
+    }
+
+    /**
+     * UnSetter for Eci.
+     * Electronic Commerce Indicator (ECI) (Opcional)
+     */
+    public void unsetEci() {
+        eci = null;
+    }
+
+    /**
+     * Internal Getter for Cavv.
+     * Online payment cryptogram, definido pelo 3-D Secure.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("cavv")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCavv() {
+        return this.cavv;
     }
 
     /**
@@ -92,9 +158,8 @@ public class GetThreeDSecureResponse {
      * Online payment cryptogram, definido pelo 3-D Secure.
      * @return Returns the String
      */
-    @JsonGetter("cavv")
     public String getCavv() {
-        return cavv;
+        return OptionalNullable.getFrom(cavv);
     }
 
     /**
@@ -104,7 +169,27 @@ public class GetThreeDSecureResponse {
      */
     @JsonSetter("cavv")
     public void setCavv(String cavv) {
-        this.cavv = cavv;
+        this.cavv = OptionalNullable.of(cavv);
+    }
+
+    /**
+     * UnSetter for Cavv.
+     * Online payment cryptogram, definido pelo 3-D Secure.
+     */
+    public void unsetCavv() {
+        cavv = null;
+    }
+
+    /**
+     * Internal Getter for TransactionId.
+     * Identificador da transação (XID)
+     * @return Returns the Internal String
+     */
+    @JsonGetter("transaction_Id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetTransactionId() {
+        return this.transactionId;
     }
 
     /**
@@ -112,9 +197,8 @@ public class GetThreeDSecureResponse {
      * Identificador da transação (XID)
      * @return Returns the String
      */
-    @JsonGetter("transaction_Id")
     public String getTransactionId() {
-        return transactionId;
+        return OptionalNullable.getFrom(transactionId);
     }
 
     /**
@@ -124,7 +208,27 @@ public class GetThreeDSecureResponse {
      */
     @JsonSetter("transaction_Id")
     public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
+        this.transactionId = OptionalNullable.of(transactionId);
+    }
+
+    /**
+     * UnSetter for TransactionId.
+     * Identificador da transação (XID)
+     */
+    public void unsetTransactionId() {
+        transactionId = null;
+    }
+
+    /**
+     * Internal Getter for SuccessUrl.
+     * Url de redirecionamento de sucessso
+     * @return Returns the Internal String
+     */
+    @JsonGetter("success_url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetSuccessUrl() {
+        return this.successUrl;
     }
 
     /**
@@ -132,9 +236,8 @@ public class GetThreeDSecureResponse {
      * Url de redirecionamento de sucessso
      * @return Returns the String
      */
-    @JsonGetter("success_url")
     public String getSuccessUrl() {
-        return successUrl;
+        return OptionalNullable.getFrom(successUrl);
     }
 
     /**
@@ -144,7 +247,15 @@ public class GetThreeDSecureResponse {
      */
     @JsonSetter("success_url")
     public void setSuccessUrl(String successUrl) {
-        this.successUrl = successUrl;
+        this.successUrl = OptionalNullable.of(successUrl);
+    }
+
+    /**
+     * UnSetter for SuccessUrl.
+     * Url de redirecionamento de sucessso
+     */
+    public void unsetSuccessUrl() {
+        successUrl = null;
     }
 
     /**
@@ -163,7 +274,12 @@ public class GetThreeDSecureResponse {
      * @return a new {@link GetThreeDSecureResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(mpi, eci, cavv, transactionId, successUrl);
+        Builder builder = new Builder();
+        builder.mpi = internalGetMpi();
+        builder.eci = internalGetEci();
+        builder.cavv = internalGetCavv();
+        builder.transactionId = internalGetTransactionId();
+        builder.successUrl = internalGetSuccessUrl();
         return builder;
     }
 
@@ -171,34 +287,13 @@ public class GetThreeDSecureResponse {
      * Class to build instances of {@link GetThreeDSecureResponse}.
      */
     public static class Builder {
-        private String mpi;
-        private String eci;
-        private String cavv;
-        private String transactionId;
-        private String successUrl;
+        private OptionalNullable<String> mpi;
+        private OptionalNullable<String> eci;
+        private OptionalNullable<String> cavv;
+        private OptionalNullable<String> transactionId;
+        private OptionalNullable<String> successUrl;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  mpi  String value for mpi.
-         * @param  eci  String value for eci.
-         * @param  cavv  String value for cavv.
-         * @param  transactionId  String value for transactionId.
-         * @param  successUrl  String value for successUrl.
-         */
-        public Builder(String mpi, String eci, String cavv, String transactionId,
-                String successUrl) {
-            this.mpi = mpi;
-            this.eci = eci;
-            this.cavv = cavv;
-            this.transactionId = transactionId;
-            this.successUrl = successUrl;
-        }
 
         /**
          * Setter for mpi.
@@ -206,7 +301,16 @@ public class GetThreeDSecureResponse {
          * @return Builder
          */
         public Builder mpi(String mpi) {
-            this.mpi = mpi;
+            this.mpi = OptionalNullable.of(mpi);
+            return this;
+        }
+
+        /**
+         * UnSetter for mpi.
+         * @return Builder
+         */
+        public Builder unsetMpi() {
+            mpi = null;
             return this;
         }
 
@@ -216,7 +320,16 @@ public class GetThreeDSecureResponse {
          * @return Builder
          */
         public Builder eci(String eci) {
-            this.eci = eci;
+            this.eci = OptionalNullable.of(eci);
+            return this;
+        }
+
+        /**
+         * UnSetter for eci.
+         * @return Builder
+         */
+        public Builder unsetEci() {
+            eci = null;
             return this;
         }
 
@@ -226,7 +339,16 @@ public class GetThreeDSecureResponse {
          * @return Builder
          */
         public Builder cavv(String cavv) {
-            this.cavv = cavv;
+            this.cavv = OptionalNullable.of(cavv);
+            return this;
+        }
+
+        /**
+         * UnSetter for cavv.
+         * @return Builder
+         */
+        public Builder unsetCavv() {
+            cavv = null;
             return this;
         }
 
@@ -236,7 +358,16 @@ public class GetThreeDSecureResponse {
          * @return Builder
          */
         public Builder transactionId(String transactionId) {
-            this.transactionId = transactionId;
+            this.transactionId = OptionalNullable.of(transactionId);
+            return this;
+        }
+
+        /**
+         * UnSetter for transactionId.
+         * @return Builder
+         */
+        public Builder unsetTransactionId() {
+            transactionId = null;
             return this;
         }
 
@@ -246,7 +377,16 @@ public class GetThreeDSecureResponse {
          * @return Builder
          */
         public Builder successUrl(String successUrl) {
-            this.successUrl = successUrl;
+            this.successUrl = OptionalNullable.of(successUrl);
+            return this;
+        }
+
+        /**
+         * UnSetter for successUrl.
+         * @return Builder
+         */
+        public Builder unsetSuccessUrl() {
+            successUrl = null;
             return this;
         }
 

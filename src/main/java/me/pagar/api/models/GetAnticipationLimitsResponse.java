@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetAnticipationLimitsResponse type.
  */
 public class GetAnticipationLimitsResponse {
-    private GetAnticipationLimitResponse max;
-    private GetAnticipationLimitResponse min;
+    private OptionalNullable<GetAnticipationLimitResponse> max;
+    private OptionalNullable<GetAnticipationLimitResponse> min;
 
     /**
      * Default constructor.
@@ -31,8 +34,29 @@ public class GetAnticipationLimitsResponse {
     public GetAnticipationLimitsResponse(
             GetAnticipationLimitResponse max,
             GetAnticipationLimitResponse min) {
+        this.max = OptionalNullable.of(max);
+        this.min = OptionalNullable.of(min);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAnticipationLimitsResponse(OptionalNullable<GetAnticipationLimitResponse> max,
+            OptionalNullable<GetAnticipationLimitResponse> min) {
         this.max = max;
         this.min = min;
+    }
+
+    /**
+     * Internal Getter for Max.
+     * Max limit
+     * @return Returns the Internal GetAnticipationLimitResponse
+     */
+    @JsonGetter("max")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetAnticipationLimitResponse> internalGetMax() {
+        return this.max;
     }
 
     /**
@@ -40,9 +64,8 @@ public class GetAnticipationLimitsResponse {
      * Max limit
      * @return Returns the GetAnticipationLimitResponse
      */
-    @JsonGetter("max")
     public GetAnticipationLimitResponse getMax() {
-        return max;
+        return OptionalNullable.getFrom(max);
     }
 
     /**
@@ -52,7 +75,27 @@ public class GetAnticipationLimitsResponse {
      */
     @JsonSetter("max")
     public void setMax(GetAnticipationLimitResponse max) {
-        this.max = max;
+        this.max = OptionalNullable.of(max);
+    }
+
+    /**
+     * UnSetter for Max.
+     * Max limit
+     */
+    public void unsetMax() {
+        max = null;
+    }
+
+    /**
+     * Internal Getter for Min.
+     * Min limit
+     * @return Returns the Internal GetAnticipationLimitResponse
+     */
+    @JsonGetter("min")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetAnticipationLimitResponse> internalGetMin() {
+        return this.min;
     }
 
     /**
@@ -60,9 +103,8 @@ public class GetAnticipationLimitsResponse {
      * Min limit
      * @return Returns the GetAnticipationLimitResponse
      */
-    @JsonGetter("min")
     public GetAnticipationLimitResponse getMin() {
-        return min;
+        return OptionalNullable.getFrom(min);
     }
 
     /**
@@ -72,7 +114,15 @@ public class GetAnticipationLimitsResponse {
      */
     @JsonSetter("min")
     public void setMin(GetAnticipationLimitResponse min) {
-        this.min = min;
+        this.min = OptionalNullable.of(min);
+    }
+
+    /**
+     * UnSetter for Min.
+     * Min limit
+     */
+    public void unsetMin() {
+        min = null;
     }
 
     /**
@@ -90,7 +140,9 @@ public class GetAnticipationLimitsResponse {
      * @return a new {@link GetAnticipationLimitsResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(max, min);
+        Builder builder = new Builder();
+        builder.max = internalGetMax();
+        builder.min = internalGetMin();
         return builder;
     }
 
@@ -98,24 +150,10 @@ public class GetAnticipationLimitsResponse {
      * Class to build instances of {@link GetAnticipationLimitsResponse}.
      */
     public static class Builder {
-        private GetAnticipationLimitResponse max;
-        private GetAnticipationLimitResponse min;
+        private OptionalNullable<GetAnticipationLimitResponse> max;
+        private OptionalNullable<GetAnticipationLimitResponse> min;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  max  GetAnticipationLimitResponse value for max.
-         * @param  min  GetAnticipationLimitResponse value for min.
-         */
-        public Builder(GetAnticipationLimitResponse max, GetAnticipationLimitResponse min) {
-            this.max = max;
-            this.min = min;
-        }
 
         /**
          * Setter for max.
@@ -123,7 +161,16 @@ public class GetAnticipationLimitsResponse {
          * @return Builder
          */
         public Builder max(GetAnticipationLimitResponse max) {
-            this.max = max;
+            this.max = OptionalNullable.of(max);
+            return this;
+        }
+
+        /**
+         * UnSetter for max.
+         * @return Builder
+         */
+        public Builder unsetMax() {
+            max = null;
             return this;
         }
 
@@ -133,7 +180,16 @@ public class GetAnticipationLimitsResponse {
          * @return Builder
          */
         public Builder min(GetAnticipationLimitResponse min) {
-            this.min = min;
+            this.min = OptionalNullable.of(min);
+            return this;
+        }
+
+        /**
+         * UnSetter for min.
+         * @return Builder
+         */
+        public Builder unsetMin() {
+            min = null;
             return this;
         }
 

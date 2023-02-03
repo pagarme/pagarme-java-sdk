@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for GetGatewayResponseResponse type.
  */
 public class GetGatewayResponseResponse {
-    private String code;
-    private List<GetGatewayErrorResponse> errors;
+    private OptionalNullable<String> code;
+    private OptionalNullable<List<GetGatewayErrorResponse>> errors;
 
     /**
      * Default constructor.
@@ -32,8 +35,29 @@ public class GetGatewayResponseResponse {
     public GetGatewayResponseResponse(
             String code,
             List<GetGatewayErrorResponse> errors) {
+        this.code = OptionalNullable.of(code);
+        this.errors = OptionalNullable.of(errors);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetGatewayResponseResponse(OptionalNullable<String> code,
+            OptionalNullable<List<GetGatewayErrorResponse>> errors) {
         this.code = code;
         this.errors = errors;
+    }
+
+    /**
+     * Internal Getter for Code.
+     * The error code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
     }
 
     /**
@@ -41,9 +65,8 @@ public class GetGatewayResponseResponse {
      * The error code
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -53,7 +76,27 @@ public class GetGatewayResponseResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     * The error code
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for Errors.
+     * The gateway response errors list
+     * @return Returns the Internal List of GetGatewayErrorResponse
+     */
+    @JsonGetter("errors")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetGatewayErrorResponse>> internalGetErrors() {
+        return this.errors;
     }
 
     /**
@@ -61,9 +104,8 @@ public class GetGatewayResponseResponse {
      * The gateway response errors list
      * @return Returns the List of GetGatewayErrorResponse
      */
-    @JsonGetter("errors")
     public List<GetGatewayErrorResponse> getErrors() {
-        return errors;
+        return OptionalNullable.getFrom(errors);
     }
 
     /**
@@ -73,7 +115,15 @@ public class GetGatewayResponseResponse {
      */
     @JsonSetter("errors")
     public void setErrors(List<GetGatewayErrorResponse> errors) {
-        this.errors = errors;
+        this.errors = OptionalNullable.of(errors);
+    }
+
+    /**
+     * UnSetter for Errors.
+     * The gateway response errors list
+     */
+    public void unsetErrors() {
+        errors = null;
     }
 
     /**
@@ -91,7 +141,9 @@ public class GetGatewayResponseResponse {
      * @return a new {@link GetGatewayResponseResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(code, errors);
+        Builder builder = new Builder();
+        builder.code = internalGetCode();
+        builder.errors = internalGetErrors();
         return builder;
     }
 
@@ -99,24 +151,10 @@ public class GetGatewayResponseResponse {
      * Class to build instances of {@link GetGatewayResponseResponse}.
      */
     public static class Builder {
-        private String code;
-        private List<GetGatewayErrorResponse> errors;
+        private OptionalNullable<String> code;
+        private OptionalNullable<List<GetGatewayErrorResponse>> errors;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  code  String value for code.
-         * @param  errors  List of GetGatewayErrorResponse value for errors.
-         */
-        public Builder(String code, List<GetGatewayErrorResponse> errors) {
-            this.code = code;
-            this.errors = errors;
-        }
 
         /**
          * Setter for code.
@@ -124,7 +162,16 @@ public class GetGatewayResponseResponse {
          * @return Builder
          */
         public Builder code(String code) {
-            this.code = code;
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
             return this;
         }
 
@@ -134,7 +181,16 @@ public class GetGatewayResponseResponse {
          * @return Builder
          */
         public Builder errors(List<GetGatewayErrorResponse> errors) {
-            this.errors = errors;
+            this.errors = OptionalNullable.of(errors);
+            return this;
+        }
+
+        /**
+         * UnSetter for errors.
+         * @return Builder
+         */
+        public Builder unsetErrors() {
+            errors = null;
             return this;
         }
 

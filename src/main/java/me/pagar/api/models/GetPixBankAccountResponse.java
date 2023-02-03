@@ -7,17 +7,20 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetPixBankAccountResponse type.
  */
 public class GetPixBankAccountResponse {
-    private String bankName;
-    private String ispb;
-    private String branchCode;
-    private String accountNumber;
+    private OptionalNullable<String> bankName;
+    private OptionalNullable<String> ispb;
+    private OptionalNullable<String> branchCode;
+    private OptionalNullable<String> accountNumber;
 
     /**
      * Default constructor.
@@ -37,6 +40,18 @@ public class GetPixBankAccountResponse {
             String ispb,
             String branchCode,
             String accountNumber) {
+        this.bankName = OptionalNullable.of(bankName);
+        this.ispb = OptionalNullable.of(ispb);
+        this.branchCode = OptionalNullable.of(branchCode);
+        this.accountNumber = OptionalNullable.of(accountNumber);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPixBankAccountResponse(OptionalNullable<String> bankName,
+            OptionalNullable<String> ispb, OptionalNullable<String> branchCode,
+            OptionalNullable<String> accountNumber) {
         this.bankName = bankName;
         this.ispb = ispb;
         this.branchCode = branchCode;
@@ -44,12 +59,22 @@ public class GetPixBankAccountResponse {
     }
 
     /**
+     * Internal Getter for BankName.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("bank_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBankName() {
+        return this.bankName;
+    }
+
+    /**
      * Getter for BankName.
      * @return Returns the String
      */
-    @JsonGetter("bank_name")
     public String getBankName() {
-        return bankName;
+        return OptionalNullable.getFrom(bankName);
     }
 
     /**
@@ -58,16 +83,33 @@ public class GetPixBankAccountResponse {
      */
     @JsonSetter("bank_name")
     public void setBankName(String bankName) {
-        this.bankName = bankName;
+        this.bankName = OptionalNullable.of(bankName);
+    }
+
+    /**
+     * UnSetter for BankName.
+     */
+    public void unsetBankName() {
+        bankName = null;
+    }
+
+    /**
+     * Internal Getter for Ispb.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("ispb")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetIspb() {
+        return this.ispb;
     }
 
     /**
      * Getter for Ispb.
      * @return Returns the String
      */
-    @JsonGetter("ispb")
     public String getIspb() {
-        return ispb;
+        return OptionalNullable.getFrom(ispb);
     }
 
     /**
@@ -76,16 +118,33 @@ public class GetPixBankAccountResponse {
      */
     @JsonSetter("ispb")
     public void setIspb(String ispb) {
-        this.ispb = ispb;
+        this.ispb = OptionalNullable.of(ispb);
+    }
+
+    /**
+     * UnSetter for Ispb.
+     */
+    public void unsetIspb() {
+        ispb = null;
+    }
+
+    /**
+     * Internal Getter for BranchCode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("branch_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBranchCode() {
+        return this.branchCode;
     }
 
     /**
      * Getter for BranchCode.
      * @return Returns the String
      */
-    @JsonGetter("branch_code")
     public String getBranchCode() {
-        return branchCode;
+        return OptionalNullable.getFrom(branchCode);
     }
 
     /**
@@ -94,16 +153,33 @@ public class GetPixBankAccountResponse {
      */
     @JsonSetter("branch_code")
     public void setBranchCode(String branchCode) {
-        this.branchCode = branchCode;
+        this.branchCode = OptionalNullable.of(branchCode);
+    }
+
+    /**
+     * UnSetter for BranchCode.
+     */
+    public void unsetBranchCode() {
+        branchCode = null;
+    }
+
+    /**
+     * Internal Getter for AccountNumber.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("account_number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAccountNumber() {
+        return this.accountNumber;
     }
 
     /**
      * Getter for AccountNumber.
      * @return Returns the String
      */
-    @JsonGetter("account_number")
     public String getAccountNumber() {
-        return accountNumber;
+        return OptionalNullable.getFrom(accountNumber);
     }
 
     /**
@@ -112,7 +188,14 @@ public class GetPixBankAccountResponse {
      */
     @JsonSetter("account_number")
     public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+        this.accountNumber = OptionalNullable.of(accountNumber);
+    }
+
+    /**
+     * UnSetter for AccountNumber.
+     */
+    public void unsetAccountNumber() {
+        accountNumber = null;
     }
 
     /**
@@ -131,7 +214,11 @@ public class GetPixBankAccountResponse {
      * @return a new {@link GetPixBankAccountResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(bankName, ispb, branchCode, accountNumber);
+        Builder builder = new Builder();
+        builder.bankName = internalGetBankName();
+        builder.ispb = internalGetIspb();
+        builder.branchCode = internalGetBranchCode();
+        builder.accountNumber = internalGetAccountNumber();
         return builder;
     }
 
@@ -139,30 +226,12 @@ public class GetPixBankAccountResponse {
      * Class to build instances of {@link GetPixBankAccountResponse}.
      */
     public static class Builder {
-        private String bankName;
-        private String ispb;
-        private String branchCode;
-        private String accountNumber;
+        private OptionalNullable<String> bankName;
+        private OptionalNullable<String> ispb;
+        private OptionalNullable<String> branchCode;
+        private OptionalNullable<String> accountNumber;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  bankName  String value for bankName.
-         * @param  ispb  String value for ispb.
-         * @param  branchCode  String value for branchCode.
-         * @param  accountNumber  String value for accountNumber.
-         */
-        public Builder(String bankName, String ispb, String branchCode, String accountNumber) {
-            this.bankName = bankName;
-            this.ispb = ispb;
-            this.branchCode = branchCode;
-            this.accountNumber = accountNumber;
-        }
 
         /**
          * Setter for bankName.
@@ -170,7 +239,16 @@ public class GetPixBankAccountResponse {
          * @return Builder
          */
         public Builder bankName(String bankName) {
-            this.bankName = bankName;
+            this.bankName = OptionalNullable.of(bankName);
+            return this;
+        }
+
+        /**
+         * UnSetter for bankName.
+         * @return Builder
+         */
+        public Builder unsetBankName() {
+            bankName = null;
             return this;
         }
 
@@ -180,7 +258,16 @@ public class GetPixBankAccountResponse {
          * @return Builder
          */
         public Builder ispb(String ispb) {
-            this.ispb = ispb;
+            this.ispb = OptionalNullable.of(ispb);
+            return this;
+        }
+
+        /**
+         * UnSetter for ispb.
+         * @return Builder
+         */
+        public Builder unsetIspb() {
+            ispb = null;
             return this;
         }
 
@@ -190,7 +277,16 @@ public class GetPixBankAccountResponse {
          * @return Builder
          */
         public Builder branchCode(String branchCode) {
-            this.branchCode = branchCode;
+            this.branchCode = OptionalNullable.of(branchCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for branchCode.
+         * @return Builder
+         */
+        public Builder unsetBranchCode() {
+            branchCode = null;
             return this;
         }
 
@@ -200,7 +296,16 @@ public class GetPixBankAccountResponse {
          * @return Builder
          */
         public Builder accountNumber(String accountNumber) {
-            this.accountNumber = accountNumber;
+            this.accountNumber = OptionalNullable.of(accountNumber);
+            return this;
+        }
+
+        /**
+         * UnSetter for accountNumber.
+         * @return Builder
+         */
+        public Builder unsetAccountNumber() {
+            accountNumber = null;
             return this;
         }
 

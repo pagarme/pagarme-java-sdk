@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetPhonesResponse type.
  */
 public class GetPhonesResponse {
-    private GetPhoneResponse homePhone;
-    private GetPhoneResponse mobilePhone;
+    private OptionalNullable<GetPhoneResponse> homePhone;
+    private OptionalNullable<GetPhoneResponse> mobilePhone;
 
     /**
      * Default constructor.
@@ -31,17 +34,36 @@ public class GetPhonesResponse {
     public GetPhonesResponse(
             GetPhoneResponse homePhone,
             GetPhoneResponse mobilePhone) {
+        this.homePhone = OptionalNullable.of(homePhone);
+        this.mobilePhone = OptionalNullable.of(mobilePhone);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPhonesResponse(OptionalNullable<GetPhoneResponse> homePhone,
+            OptionalNullable<GetPhoneResponse> mobilePhone) {
         this.homePhone = homePhone;
         this.mobilePhone = mobilePhone;
+    }
+
+    /**
+     * Internal Getter for HomePhone.
+     * @return Returns the Internal GetPhoneResponse
+     */
+    @JsonGetter("home_phone")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetPhoneResponse> internalGetHomePhone() {
+        return this.homePhone;
     }
 
     /**
      * Getter for HomePhone.
      * @return Returns the GetPhoneResponse
      */
-    @JsonGetter("home_phone")
     public GetPhoneResponse getHomePhone() {
-        return homePhone;
+        return OptionalNullable.getFrom(homePhone);
     }
 
     /**
@@ -50,16 +72,33 @@ public class GetPhonesResponse {
      */
     @JsonSetter("home_phone")
     public void setHomePhone(GetPhoneResponse homePhone) {
-        this.homePhone = homePhone;
+        this.homePhone = OptionalNullable.of(homePhone);
+    }
+
+    /**
+     * UnSetter for HomePhone.
+     */
+    public void unsetHomePhone() {
+        homePhone = null;
+    }
+
+    /**
+     * Internal Getter for MobilePhone.
+     * @return Returns the Internal GetPhoneResponse
+     */
+    @JsonGetter("mobile_phone")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetPhoneResponse> internalGetMobilePhone() {
+        return this.mobilePhone;
     }
 
     /**
      * Getter for MobilePhone.
      * @return Returns the GetPhoneResponse
      */
-    @JsonGetter("mobile_phone")
     public GetPhoneResponse getMobilePhone() {
-        return mobilePhone;
+        return OptionalNullable.getFrom(mobilePhone);
     }
 
     /**
@@ -68,7 +107,14 @@ public class GetPhonesResponse {
      */
     @JsonSetter("mobile_phone")
     public void setMobilePhone(GetPhoneResponse mobilePhone) {
-        this.mobilePhone = mobilePhone;
+        this.mobilePhone = OptionalNullable.of(mobilePhone);
+    }
+
+    /**
+     * UnSetter for MobilePhone.
+     */
+    public void unsetMobilePhone() {
+        mobilePhone = null;
     }
 
     /**
@@ -87,7 +133,9 @@ public class GetPhonesResponse {
      * @return a new {@link GetPhonesResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(homePhone, mobilePhone);
+        Builder builder = new Builder();
+        builder.homePhone = internalGetHomePhone();
+        builder.mobilePhone = internalGetMobilePhone();
         return builder;
     }
 
@@ -95,24 +143,10 @@ public class GetPhonesResponse {
      * Class to build instances of {@link GetPhonesResponse}.
      */
     public static class Builder {
-        private GetPhoneResponse homePhone;
-        private GetPhoneResponse mobilePhone;
+        private OptionalNullable<GetPhoneResponse> homePhone;
+        private OptionalNullable<GetPhoneResponse> mobilePhone;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  homePhone  GetPhoneResponse value for homePhone.
-         * @param  mobilePhone  GetPhoneResponse value for mobilePhone.
-         */
-        public Builder(GetPhoneResponse homePhone, GetPhoneResponse mobilePhone) {
-            this.homePhone = homePhone;
-            this.mobilePhone = mobilePhone;
-        }
 
         /**
          * Setter for homePhone.
@@ -120,7 +154,16 @@ public class GetPhonesResponse {
          * @return Builder
          */
         public Builder homePhone(GetPhoneResponse homePhone) {
-            this.homePhone = homePhone;
+            this.homePhone = OptionalNullable.of(homePhone);
+            return this;
+        }
+
+        /**
+         * UnSetter for homePhone.
+         * @return Builder
+         */
+        public Builder unsetHomePhone() {
+            homePhone = null;
             return this;
         }
 
@@ -130,7 +173,16 @@ public class GetPhonesResponse {
          * @return Builder
          */
         public Builder mobilePhone(GetPhoneResponse mobilePhone) {
-            this.mobilePhone = mobilePhone;
+            this.mobilePhone = OptionalNullable.of(mobilePhone);
+            return this;
+        }
+
+        /**
+         * UnSetter for mobilePhone.
+         * @return Builder
+         */
+        public Builder unsetMobilePhone() {
+            mobilePhone = null;
             return this;
         }
 

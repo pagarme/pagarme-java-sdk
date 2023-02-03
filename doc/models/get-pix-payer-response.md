@@ -11,24 +11,19 @@ Pix payer data.
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Name` | `String` | Required | - | String getName() | setName(String name) |
-| `Document` | `String` | Required | - | String getDocument() | setDocument(String document) |
-| `DocumentType` | `String` | Required | - | String getDocumentType() | setDocumentType(String documentType) |
-| `BankAccount` | [`GetPixBankAccountResponse`](../../doc/models/get-pix-bank-account-response.md) | Required | - | GetPixBankAccountResponse getBankAccount() | setBankAccount(GetPixBankAccountResponse bankAccount) |
+| `Name` | `String` | Optional | - | String getName() | setName(String name) |
+| `Document` | `String` | Optional | - | String getDocument() | setDocument(String document) |
+| `DocumentType` | `String` | Optional | - | String getDocumentType() | setDocumentType(String documentType) |
+| `BankAccount` | [`GetPixBankAccountResponse`](../../doc/models/get-pix-bank-account-response.md) | Optional | - | GetPixBankAccountResponse getBankAccount() | setBankAccount(GetPixBankAccountResponse bankAccount) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "name": "name0",
-  "document": "document6",
-  "document_type": "document_type8",
-  "bank_account": {
-    "bank_name": "bank_name0",
-    "ispb": "ispb8",
-    "branch_code": "branch_code2",
-    "account_number": "account_number4"
-  }
+  "name": null,
+  "document": null,
+  "document_type": null,
+  "bank_account": null
 }
 ```
 

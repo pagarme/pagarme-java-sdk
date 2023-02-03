@@ -17,12 +17,12 @@ import io.apimatic.core.types.OptionalNullable;
  * This is a model class for GetSplitResponse type.
  */
 public class GetSplitResponse {
-    private String type;
-    private Integer amount;
+    private OptionalNullable<String> type;
+    private OptionalNullable<Integer> amount;
     private OptionalNullable<GetRecipientResponse> recipient;
-    private String gatewayId;
+    private OptionalNullable<String> gatewayId;
     private OptionalNullable<GetSplitOptionsResponse> options;
-    private String id;
+    private OptionalNullable<String> id;
 
     /**
      * Default constructor.
@@ -34,32 +34,32 @@ public class GetSplitResponse {
      * Initialization constructor.
      * @param  type  String value for type.
      * @param  amount  Integer value for amount.
-     * @param  gatewayId  String value for gatewayId.
-     * @param  id  String value for id.
      * @param  recipient  GetRecipientResponse value for recipient.
+     * @param  gatewayId  String value for gatewayId.
      * @param  options  GetSplitOptionsResponse value for options.
+     * @param  id  String value for id.
      */
     public GetSplitResponse(
             String type,
             Integer amount,
-            String gatewayId,
-            String id,
             GetRecipientResponse recipient,
-            GetSplitOptionsResponse options) {
-        this.type = type;
-        this.amount = amount;
+            String gatewayId,
+            GetSplitOptionsResponse options,
+            String id) {
+        this.type = OptionalNullable.of(type);
+        this.amount = OptionalNullable.of(amount);
         this.recipient = OptionalNullable.of(recipient);
-        this.gatewayId = gatewayId;
+        this.gatewayId = OptionalNullable.of(gatewayId);
         this.options = OptionalNullable.of(options);
-        this.id = id;
+        this.id = OptionalNullable.of(id);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetSplitResponse(String type, Integer amount, String gatewayId, String id,
-            OptionalNullable<GetRecipientResponse> recipient,
-            OptionalNullable<GetSplitOptionsResponse> options) {
+    protected GetSplitResponse(OptionalNullable<String> type, OptionalNullable<Integer> amount,
+            OptionalNullable<GetRecipientResponse> recipient, OptionalNullable<String> gatewayId,
+            OptionalNullable<GetSplitOptionsResponse> options, OptionalNullable<String> id) {
         this.type = type;
         this.amount = amount;
         this.recipient = recipient;
@@ -69,13 +69,24 @@ public class GetSplitResponse {
     }
 
     /**
+     * Internal Getter for Type.
+     * Type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
+    }
+
+    /**
      * Getter for Type.
      * Type
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -85,7 +96,27 @@ public class GetSplitResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     * Type
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * Amount
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
@@ -93,9 +124,8 @@ public class GetSplitResponse {
      * Amount
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -105,7 +135,15 @@ public class GetSplitResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Amount
+     */
+    public void unsetAmount() {
+        amount = null;
     }
 
     /**
@@ -148,13 +186,24 @@ public class GetSplitResponse {
     }
 
     /**
+     * Internal Getter for GatewayId.
+     * The split rule gateway id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("gateway_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetGatewayId() {
+        return this.gatewayId;
+    }
+
+    /**
      * Getter for GatewayId.
      * The split rule gateway id
      * @return Returns the String
      */
-    @JsonGetter("gateway_id")
     public String getGatewayId() {
-        return gatewayId;
+        return OptionalNullable.getFrom(gatewayId);
     }
 
     /**
@@ -164,7 +213,15 @@ public class GetSplitResponse {
      */
     @JsonSetter("gateway_id")
     public void setGatewayId(String gatewayId) {
-        this.gatewayId = gatewayId;
+        this.gatewayId = OptionalNullable.of(gatewayId);
+    }
+
+    /**
+     * UnSetter for GatewayId.
+     * The split rule gateway id
+     */
+    public void unsetGatewayId() {
+        gatewayId = null;
     }
 
     /**
@@ -203,12 +260,22 @@ public class GetSplitResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -217,7 +284,14 @@ public class GetSplitResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
     }
 
     /**
@@ -226,8 +300,8 @@ public class GetSplitResponse {
      */
     @Override
     public String toString() {
-        return "GetSplitResponse [" + "type=" + type + ", amount=" + amount + ", gatewayId="
-                + gatewayId + ", id=" + id + ", recipient=" + recipient + ", options=" + options
+        return "GetSplitResponse [" + "type=" + type + ", amount=" + amount + ", recipient="
+                + recipient + ", gatewayId=" + gatewayId + ", options=" + options + ", id=" + id
                 + "]";
     }
 
@@ -237,9 +311,13 @@ public class GetSplitResponse {
      * @return a new {@link GetSplitResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(type, amount, gatewayId, id);
+        Builder builder = new Builder();
+        builder.type = internalGetType();
+        builder.amount = internalGetAmount();
         builder.recipient = internalGetRecipient();
+        builder.gatewayId = internalGetGatewayId();
         builder.options = internalGetOptions();
+        builder.id = internalGetId();
         return builder;
     }
 
@@ -247,32 +325,14 @@ public class GetSplitResponse {
      * Class to build instances of {@link GetSplitResponse}.
      */
     public static class Builder {
-        private String type;
-        private Integer amount;
-        private String gatewayId;
-        private String id;
+        private OptionalNullable<String> type;
+        private OptionalNullable<Integer> amount;
         private OptionalNullable<GetRecipientResponse> recipient;
+        private OptionalNullable<String> gatewayId;
         private OptionalNullable<GetSplitOptionsResponse> options;
+        private OptionalNullable<String> id;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  type  String value for type.
-         * @param  amount  Integer value for amount.
-         * @param  gatewayId  String value for gatewayId.
-         * @param  id  String value for id.
-         */
-        public Builder(String type, Integer amount, String gatewayId, String id) {
-            this.type = type;
-            this.amount = amount;
-            this.gatewayId = gatewayId;
-            this.id = id;
-        }
 
         /**
          * Setter for type.
@@ -280,7 +340,16 @@ public class GetSplitResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -290,27 +359,16 @@ public class GetSplitResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
             return this;
         }
 
         /**
-         * Setter for gatewayId.
-         * @param  gatewayId  String value for gatewayId.
+         * UnSetter for amount.
          * @return Builder
          */
-        public Builder gatewayId(String gatewayId) {
-            this.gatewayId = gatewayId;
-            return this;
-        }
-
-        /**
-         * Setter for id.
-         * @param  id  String value for id.
-         * @return Builder
-         */
-        public Builder id(String id) {
-            this.id = id;
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -334,6 +392,25 @@ public class GetSplitResponse {
         }
 
         /**
+         * Setter for gatewayId.
+         * @param  gatewayId  String value for gatewayId.
+         * @return Builder
+         */
+        public Builder gatewayId(String gatewayId) {
+            this.gatewayId = OptionalNullable.of(gatewayId);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayId.
+         * @return Builder
+         */
+        public Builder unsetGatewayId() {
+            gatewayId = null;
+            return this;
+        }
+
+        /**
          * Setter for options.
          * @param  options  GetSplitOptionsResponse value for options.
          * @return Builder
@@ -353,11 +430,30 @@ public class GetSplitResponse {
         }
 
         /**
+         * Setter for id.
+         * @param  id  String value for id.
+         * @return Builder
+         */
+        public Builder id(String id) {
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetSplitResponse} object using the set fields.
          * @return {@link GetSplitResponse}
          */
         public GetSplitResponse build() {
-            return new GetSplitResponse(type, amount, gatewayId, id, recipient, options);
+            return new GetSplitResponse(type, amount, recipient, gatewayId, options, id);
         }
     }
 }

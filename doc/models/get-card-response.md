@@ -11,60 +11,45 @@ Response object for getting a credit card
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Id` | `String` | Required | - | String getId() | setId(String id) |
-| `LastFourDigits` | `String` | Required | - | String getLastFourDigits() | setLastFourDigits(String lastFourDigits) |
-| `Brand` | `String` | Required | - | String getBrand() | setBrand(String brand) |
-| `HolderName` | `String` | Required | - | String getHolderName() | setHolderName(String holderName) |
-| `ExpMonth` | `Integer` | Required | - | Integer getExpMonth() | setExpMonth(Integer expMonth) |
-| `ExpYear` | `Integer` | Required | - | Integer getExpYear() | setExpYear(Integer expYear) |
-| `Status` | `String` | Required | - | String getStatus() | setStatus(String status) |
-| `CreatedAt` | `LocalDateTime` | Required | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
-| `UpdatedAt` | `LocalDateTime` | Required | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `BillingAddress` | [`GetBillingAddressResponse`](../../doc/models/get-billing-address-response.md) | Required | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
+| `Id` | `String` | Optional | - | String getId() | setId(String id) |
+| `LastFourDigits` | `String` | Optional | - | String getLastFourDigits() | setLastFourDigits(String lastFourDigits) |
+| `Brand` | `String` | Optional | - | String getBrand() | setBrand(String brand) |
+| `HolderName` | `String` | Optional | - | String getHolderName() | setHolderName(String holderName) |
+| `ExpMonth` | `Integer` | Optional | - | Integer getExpMonth() | setExpMonth(Integer expMonth) |
+| `ExpYear` | `Integer` | Optional | - | Integer getExpYear() | setExpYear(Integer expYear) |
+| `Status` | `String` | Optional | - | String getStatus() | setStatus(String status) |
+| `CreatedAt` | `LocalDateTime` | Optional | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
+| `UpdatedAt` | `LocalDateTime` | Optional | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
+| `BillingAddress` | [`GetBillingAddressResponse`](../../doc/models/get-billing-address-response.md) | Optional | - | GetBillingAddressResponse getBillingAddress() | setBillingAddress(GetBillingAddressResponse billingAddress) |
 | `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
-| `Metadata` | `Map<String, String>` | Required | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Type` | `String` | Required | Card type | String getType() | setType(String type) |
-| `HolderDocument` | `String` | Required | Document number for the card's holder | String getHolderDocument() | setHolderDocument(String holderDocument) |
+| `Metadata` | `Map<String, String>` | Optional | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
+| `Type` | `String` | Optional | Card type | String getType() | setType(String type) |
+| `HolderDocument` | `String` | Optional | Document number for the card's holder | String getHolderDocument() | setHolderDocument(String holderDocument) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
-| `FirstSixDigits` | `String` | Required | First six digits | String getFirstSixDigits() | setFirstSixDigits(String firstSixDigits) |
-| `Label` | `String` | Required | - | String getLabel() | setLabel(String label) |
+| `FirstSixDigits` | `String` | Optional | First six digits | String getFirstSixDigits() | setFirstSixDigits(String firstSixDigits) |
+| `Label` | `String` | Optional | - | String getLabel() | setLabel(String label) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "id": "id0",
-  "last_four_digits": "last_four_digits6",
-  "brand": "brand4",
-  "holder_name": "holder_name4",
-  "exp_month": 42,
-  "exp_year": 254,
-  "status": "status8",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z",
-  "billing_address": {
-    "street": "street8",
-    "number": "number4",
-    "zip_code": "zip_code2",
-    "neighborhood": "neighborhood4",
-    "city": "city2",
-    "state": "state6",
-    "country": "country2",
-    "complement": "complement6",
-    "line_1": "line_18",
-    "line_2": "line_26"
-  },
+  "id": null,
+  "last_four_digits": null,
+  "brand": null,
+  "holder_name": null,
+  "exp_month": null,
+  "exp_year": null,
+  "status": null,
+  "created_at": null,
+  "updated_at": null,
+  "billing_address": null,
   "customer": null,
-  "metadata": {
-    "key0": "metadata3",
-    "key1": "metadata4",
-    "key2": "metadata5"
-  },
-  "type": "type0",
-  "holder_document": "holder_document6",
+  "metadata": null,
+  "type": null,
+  "holder_document": null,
   "deleted_at": null,
-  "first_six_digits": "first_six_digits0",
-  "label": "label0"
+  "first_six_digits": null,
+  "label": null
 }
 ```
 

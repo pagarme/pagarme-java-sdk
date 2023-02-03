@@ -22,29 +22,29 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetRecipientResponse type.
  */
 public class GetRecipientResponse {
-    private String id;
-    private String name;
-    private String email;
-    private String document;
-    private String description;
-    private String type;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
-    private GetBankAccountResponse defaultBankAccount;
-    private List<GetGatewayRecipientResponse> gatewayRecipients;
-    private Map<String, String> metadata;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> name;
+    private OptionalNullable<String> email;
+    private OptionalNullable<String> document;
+    private OptionalNullable<String> description;
+    private OptionalNullable<String> type;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
+    private OptionalNullable<LocalDateTime> deletedAt;
+    private OptionalNullable<GetBankAccountResponse> defaultBankAccount;
+    private OptionalNullable<List<GetGatewayRecipientResponse>> gatewayRecipients;
+    private OptionalNullable<Map<String, String>> metadata;
     private OptionalNullable<GetAutomaticAnticipationResponse> automaticAnticipationSettings;
     private OptionalNullable<GetTransferSettingsResponse> transferSettings;
-    private String code;
-    private String paymentMode;
+    private OptionalNullable<String> code;
+    private OptionalNullable<String> paymentMode;
 
     /**
      * Default constructor.
      */
     public GetRecipientResponse() {
-        paymentMode = "bank_transfer";
+        paymentMode = OptionalNullable.of("bank_transfer");
     }
 
     /**
@@ -62,11 +62,11 @@ public class GetRecipientResponse {
      * @param  defaultBankAccount  GetBankAccountResponse value for defaultBankAccount.
      * @param  gatewayRecipients  List of GetGatewayRecipientResponse value for gatewayRecipients.
      * @param  metadata  Map of String, value for metadata.
-     * @param  code  String value for code.
-     * @param  paymentMode  String value for paymentMode.
      * @param  automaticAnticipationSettings  GetAutomaticAnticipationResponse value for
      *         automaticAnticipationSettings.
      * @param  transferSettings  GetTransferSettingsResponse value for transferSettings.
+     * @param  code  String value for code.
+     * @param  paymentMode  String value for paymentMode.
      */
     public GetRecipientResponse(
             String id,
@@ -82,40 +82,43 @@ public class GetRecipientResponse {
             GetBankAccountResponse defaultBankAccount,
             List<GetGatewayRecipientResponse> gatewayRecipients,
             Map<String, String> metadata,
-            String code,
-            String paymentMode,
             GetAutomaticAnticipationResponse automaticAnticipationSettings,
-            GetTransferSettingsResponse transferSettings) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.document = document;
-        this.description = description;
-        this.type = type;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-        this.defaultBankAccount = defaultBankAccount;
-        this.gatewayRecipients = gatewayRecipients;
-        this.metadata = metadata;
+            GetTransferSettingsResponse transferSettings,
+            String code,
+            String paymentMode) {
+        this.id = OptionalNullable.of(id);
+        this.name = OptionalNullable.of(name);
+        this.email = OptionalNullable.of(email);
+        this.document = OptionalNullable.of(document);
+        this.description = OptionalNullable.of(description);
+        this.type = OptionalNullable.of(type);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+        this.deletedAt = OptionalNullable.of(deletedAt);
+        this.defaultBankAccount = OptionalNullable.of(defaultBankAccount);
+        this.gatewayRecipients = OptionalNullable.of(gatewayRecipients);
+        this.metadata = OptionalNullable.of(metadata);
         this.automaticAnticipationSettings = OptionalNullable.of(automaticAnticipationSettings);
         this.transferSettings = OptionalNullable.of(transferSettings);
-        this.code = code;
-        this.paymentMode = paymentMode;
+        this.code = OptionalNullable.of(code);
+        this.paymentMode = OptionalNullable.of(paymentMode);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetRecipientResponse(String id, String name, String email, String document,
-            String description, String type, String status, LocalDateTime createdAt,
-            LocalDateTime updatedAt, LocalDateTime deletedAt,
-            GetBankAccountResponse defaultBankAccount,
-            List<GetGatewayRecipientResponse> gatewayRecipients, Map<String, String> metadata,
-            String code, String paymentMode,
+    protected GetRecipientResponse(OptionalNullable<String> id, OptionalNullable<String> name,
+            OptionalNullable<String> email, OptionalNullable<String> document,
+            OptionalNullable<String> description, OptionalNullable<String> type,
+            OptionalNullable<String> status, OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<LocalDateTime> updatedAt, OptionalNullable<LocalDateTime> deletedAt,
+            OptionalNullable<GetBankAccountResponse> defaultBankAccount,
+            OptionalNullable<List<GetGatewayRecipientResponse>> gatewayRecipients,
+            OptionalNullable<Map<String, String>> metadata,
             OptionalNullable<GetAutomaticAnticipationResponse> automaticAnticipationSettings,
-            OptionalNullable<GetTransferSettingsResponse> transferSettings) {
+            OptionalNullable<GetTransferSettingsResponse> transferSettings,
+            OptionalNullable<String> code, OptionalNullable<String> paymentMode) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -136,13 +139,24 @@ public class GetRecipientResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * Id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * Id
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -152,7 +166,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     * Id
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Name.
+     * Name
+     * @return Returns the Internal String
+     */
+    @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
     }
 
     /**
@@ -160,9 +194,8 @@ public class GetRecipientResponse {
      * Name
      * @return Returns the String
      */
-    @JsonGetter("name")
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -172,7 +205,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     * Name
+     */
+    public void unsetName() {
+        name = null;
+    }
+
+    /**
+     * Internal Getter for Email.
+     * Email
+     * @return Returns the Internal String
+     */
+    @JsonGetter("email")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetEmail() {
+        return this.email;
     }
 
     /**
@@ -180,9 +233,8 @@ public class GetRecipientResponse {
      * Email
      * @return Returns the String
      */
-    @JsonGetter("email")
     public String getEmail() {
-        return email;
+        return OptionalNullable.getFrom(email);
     }
 
     /**
@@ -192,7 +244,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("email")
     public void setEmail(String email) {
-        this.email = email;
+        this.email = OptionalNullable.of(email);
+    }
+
+    /**
+     * UnSetter for Email.
+     * Email
+     */
+    public void unsetEmail() {
+        email = null;
+    }
+
+    /**
+     * Internal Getter for Document.
+     * Document
+     * @return Returns the Internal String
+     */
+    @JsonGetter("document")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDocument() {
+        return this.document;
     }
 
     /**
@@ -200,9 +272,8 @@ public class GetRecipientResponse {
      * Document
      * @return Returns the String
      */
-    @JsonGetter("document")
     public String getDocument() {
-        return document;
+        return OptionalNullable.getFrom(document);
     }
 
     /**
@@ -212,7 +283,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("document")
     public void setDocument(String document) {
-        this.document = document;
+        this.document = OptionalNullable.of(document);
+    }
+
+    /**
+     * UnSetter for Document.
+     * Document
+     */
+    public void unsetDocument() {
+        document = null;
+    }
+
+    /**
+     * Internal Getter for Description.
+     * Description
+     * @return Returns the Internal String
+     */
+    @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDescription() {
+        return this.description;
     }
 
     /**
@@ -220,9 +311,8 @@ public class GetRecipientResponse {
      * Description
      * @return Returns the String
      */
-    @JsonGetter("description")
     public String getDescription() {
-        return description;
+        return OptionalNullable.getFrom(description);
     }
 
     /**
@@ -232,7 +322,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("description")
     public void setDescription(String description) {
-        this.description = description;
+        this.description = OptionalNullable.of(description);
+    }
+
+    /**
+     * UnSetter for Description.
+     * Description
+     */
+    public void unsetDescription() {
+        description = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * Type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
@@ -240,9 +350,8 @@ public class GetRecipientResponse {
      * Type
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -252,7 +361,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     * Type
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * Status
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
@@ -260,9 +389,8 @@ public class GetRecipientResponse {
      * Status
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -272,7 +400,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     * Status
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * Creation date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
@@ -280,10 +428,8 @@ public class GetRecipientResponse {
      * Creation date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -294,7 +440,27 @@ public class GetRecipientResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     * Creation date
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * Last update date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
@@ -302,10 +468,8 @@ public class GetRecipientResponse {
      * Last update date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -316,7 +480,27 @@ public class GetRecipientResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     * Last update date
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
+    }
+
+    /**
+     * Internal Getter for DeletedAt.
+     * Deletion date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
     }
 
     /**
@@ -324,10 +508,8 @@ public class GetRecipientResponse {
      * Deletion date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("deleted_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -338,7 +520,27 @@ public class GetRecipientResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     * Deletion date
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
+    }
+
+    /**
+     * Internal Getter for DefaultBankAccount.
+     * Default bank account
+     * @return Returns the Internal GetBankAccountResponse
+     */
+    @JsonGetter("default_bank_account")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetBankAccountResponse> internalGetDefaultBankAccount() {
+        return this.defaultBankAccount;
     }
 
     /**
@@ -346,9 +548,8 @@ public class GetRecipientResponse {
      * Default bank account
      * @return Returns the GetBankAccountResponse
      */
-    @JsonGetter("default_bank_account")
     public GetBankAccountResponse getDefaultBankAccount() {
-        return defaultBankAccount;
+        return OptionalNullable.getFrom(defaultBankAccount);
     }
 
     /**
@@ -358,7 +559,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("default_bank_account")
     public void setDefaultBankAccount(GetBankAccountResponse defaultBankAccount) {
-        this.defaultBankAccount = defaultBankAccount;
+        this.defaultBankAccount = OptionalNullable.of(defaultBankAccount);
+    }
+
+    /**
+     * UnSetter for DefaultBankAccount.
+     * Default bank account
+     */
+    public void unsetDefaultBankAccount() {
+        defaultBankAccount = null;
+    }
+
+    /**
+     * Internal Getter for GatewayRecipients.
+     * Info about the recipient on the gateway
+     * @return Returns the Internal List of GetGatewayRecipientResponse
+     */
+    @JsonGetter("gateway_recipients")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetGatewayRecipientResponse>> internalGetGatewayRecipients() {
+        return this.gatewayRecipients;
     }
 
     /**
@@ -366,9 +587,8 @@ public class GetRecipientResponse {
      * Info about the recipient on the gateway
      * @return Returns the List of GetGatewayRecipientResponse
      */
-    @JsonGetter("gateway_recipients")
     public List<GetGatewayRecipientResponse> getGatewayRecipients() {
-        return gatewayRecipients;
+        return OptionalNullable.getFrom(gatewayRecipients);
     }
 
     /**
@@ -378,7 +598,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("gateway_recipients")
     public void setGatewayRecipients(List<GetGatewayRecipientResponse> gatewayRecipients) {
-        this.gatewayRecipients = gatewayRecipients;
+        this.gatewayRecipients = OptionalNullable.of(gatewayRecipients);
+    }
+
+    /**
+     * UnSetter for GatewayRecipients.
+     * Info about the recipient on the gateway
+     */
+    public void unsetGatewayRecipients() {
+        gatewayRecipients = null;
+    }
+
+    /**
+     * Internal Getter for Metadata.
+     * Metadata
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
     }
 
     /**
@@ -386,9 +626,8 @@ public class GetRecipientResponse {
      * Metadata
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -398,7 +637,15 @@ public class GetRecipientResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     * Metadata
+     */
+    public void unsetMetadata() {
+        metadata = null;
     }
 
     /**
@@ -472,13 +719,24 @@ public class GetRecipientResponse {
     }
 
     /**
+     * Internal Getter for Code.
+     * Recipient code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
+    }
+
+    /**
      * Getter for Code.
      * Recipient code
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -488,7 +746,27 @@ public class GetRecipientResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     * Recipient code
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for PaymentMode.
+     * Payment mode
+     * @return Returns the Internal String
+     */
+    @JsonGetter("payment_mode")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPaymentMode() {
+        return this.paymentMode;
     }
 
     /**
@@ -496,9 +774,8 @@ public class GetRecipientResponse {
      * Payment mode
      * @return Returns the String
      */
-    @JsonGetter("payment_mode")
     public String getPaymentMode() {
-        return paymentMode;
+        return OptionalNullable.getFrom(paymentMode);
     }
 
     /**
@@ -508,7 +785,15 @@ public class GetRecipientResponse {
      */
     @JsonSetter("payment_mode")
     public void setPaymentMode(String paymentMode) {
-        this.paymentMode = paymentMode;
+        this.paymentMode = OptionalNullable.of(paymentMode);
+    }
+
+    /**
+     * UnSetter for PaymentMode.
+     * Payment mode
+     */
+    public void unsetPaymentMode() {
+        paymentMode = null;
     }
 
     /**
@@ -521,9 +806,10 @@ public class GetRecipientResponse {
                 + ", document=" + document + ", description=" + description + ", type=" + type
                 + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
                 + ", deletedAt=" + deletedAt + ", defaultBankAccount=" + defaultBankAccount
-                + ", gatewayRecipients=" + gatewayRecipients + ", metadata=" + metadata + ", code="
-                + code + ", paymentMode=" + paymentMode + ", automaticAnticipationSettings="
-                + automaticAnticipationSettings + ", transferSettings=" + transferSettings + "]";
+                + ", gatewayRecipients=" + gatewayRecipients + ", metadata=" + metadata
+                + ", automaticAnticipationSettings=" + automaticAnticipationSettings
+                + ", transferSettings=" + transferSettings + ", code=" + code + ", paymentMode="
+                + paymentMode + "]";
     }
 
     /**
@@ -532,11 +818,24 @@ public class GetRecipientResponse {
      * @return a new {@link GetRecipientResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, name, email, document, description, type, status,
-                createdAt, updatedAt, deletedAt, defaultBankAccount, gatewayRecipients, metadata,
-                code, paymentMode);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.name = internalGetName();
+        builder.email = internalGetEmail();
+        builder.document = internalGetDocument();
+        builder.description = internalGetDescription();
+        builder.type = internalGetType();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.deletedAt = internalGetDeletedAt();
+        builder.defaultBankAccount = internalGetDefaultBankAccount();
+        builder.gatewayRecipients = internalGetGatewayRecipients();
+        builder.metadata = internalGetMetadata();
         builder.automaticAnticipationSettings = internalGetAutomaticAnticipationSettings();
         builder.transferSettings = internalGetTransferSettings();
+        builder.code = internalGetCode();
+        builder.paymentMode = internalGetPaymentMode();
         return builder;
     }
 
@@ -544,70 +843,25 @@ public class GetRecipientResponse {
      * Class to build instances of {@link GetRecipientResponse}.
      */
     public static class Builder {
-        private String id;
-        private String name;
-        private String email;
-        private String document;
-        private String description;
-        private String type;
-        private String status;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private LocalDateTime deletedAt;
-        private GetBankAccountResponse defaultBankAccount;
-        private List<GetGatewayRecipientResponse> gatewayRecipients;
-        private Map<String, String> metadata;
-        private String code;
-        private String paymentMode = "bank_transfer";
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> name;
+        private OptionalNullable<String> email;
+        private OptionalNullable<String> document;
+        private OptionalNullable<String> description;
+        private OptionalNullable<String> type;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<LocalDateTime> deletedAt;
+        private OptionalNullable<GetBankAccountResponse> defaultBankAccount;
+        private OptionalNullable<List<GetGatewayRecipientResponse>> gatewayRecipients;
+        private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<GetAutomaticAnticipationResponse> automaticAnticipationSettings;
         private OptionalNullable<GetTransferSettingsResponse> transferSettings;
+        private OptionalNullable<String> code;
+        private OptionalNullable<String> paymentMode = OptionalNullable.of("bank_transfer");
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  name  String value for name.
-         * @param  email  String value for email.
-         * @param  document  String value for document.
-         * @param  description  String value for description.
-         * @param  type  String value for type.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  deletedAt  LocalDateTime value for deletedAt.
-         * @param  defaultBankAccount  GetBankAccountResponse value for defaultBankAccount.
-         * @param  gatewayRecipients  List of GetGatewayRecipientResponse value for
-         *         gatewayRecipients.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  code  String value for code.
-         * @param  paymentMode  String value for paymentMode.
-         */
-        public Builder(String id, String name, String email, String document, String description,
-                String type, String status, LocalDateTime createdAt, LocalDateTime updatedAt,
-                LocalDateTime deletedAt, GetBankAccountResponse defaultBankAccount,
-                List<GetGatewayRecipientResponse> gatewayRecipients, Map<String, String> metadata,
-                String code, String paymentMode) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-            this.document = document;
-            this.description = description;
-            this.type = type;
-            this.status = status;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.deletedAt = deletedAt;
-            this.defaultBankAccount = defaultBankAccount;
-            this.gatewayRecipients = gatewayRecipients;
-            this.metadata = metadata;
-            this.code = code;
-            this.paymentMode = paymentMode;
-        }
 
         /**
          * Setter for id.
@@ -615,7 +869,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -625,7 +888,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 
@@ -635,7 +907,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder email(String email) {
-            this.email = email;
+            this.email = OptionalNullable.of(email);
+            return this;
+        }
+
+        /**
+         * UnSetter for email.
+         * @return Builder
+         */
+        public Builder unsetEmail() {
+            email = null;
             return this;
         }
 
@@ -645,7 +926,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder document(String document) {
-            this.document = document;
+            this.document = OptionalNullable.of(document);
+            return this;
+        }
+
+        /**
+         * UnSetter for document.
+         * @return Builder
+         */
+        public Builder unsetDocument() {
+            document = null;
             return this;
         }
 
@@ -655,7 +945,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder description(String description) {
-            this.description = description;
+            this.description = OptionalNullable.of(description);
+            return this;
+        }
+
+        /**
+         * UnSetter for description.
+         * @return Builder
+         */
+        public Builder unsetDescription() {
+            description = null;
             return this;
         }
 
@@ -665,7 +964,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -675,7 +983,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -685,7 +1002,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -695,7 +1021,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -705,7 +1040,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for deletedAt.
+         * @return Builder
+         */
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 
@@ -715,7 +1059,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder defaultBankAccount(GetBankAccountResponse defaultBankAccount) {
-            this.defaultBankAccount = defaultBankAccount;
+            this.defaultBankAccount = OptionalNullable.of(defaultBankAccount);
+            return this;
+        }
+
+        /**
+         * UnSetter for defaultBankAccount.
+         * @return Builder
+         */
+        public Builder unsetDefaultBankAccount() {
+            defaultBankAccount = null;
             return this;
         }
 
@@ -726,7 +1079,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder gatewayRecipients(List<GetGatewayRecipientResponse> gatewayRecipients) {
-            this.gatewayRecipients = gatewayRecipients;
+            this.gatewayRecipients = OptionalNullable.of(gatewayRecipients);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayRecipients.
+         * @return Builder
+         */
+        public Builder unsetGatewayRecipients() {
+            gatewayRecipients = null;
             return this;
         }
 
@@ -736,27 +1098,16 @@ public class GetRecipientResponse {
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
             return this;
         }
 
         /**
-         * Setter for code.
-         * @param  code  String value for code.
+         * UnSetter for metadata.
          * @return Builder
          */
-        public Builder code(String code) {
-            this.code = code;
-            return this;
-        }
-
-        /**
-         * Setter for paymentMode.
-         * @param  paymentMode  String value for paymentMode.
-         * @return Builder
-         */
-        public Builder paymentMode(String paymentMode) {
-            this.paymentMode = paymentMode;
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -801,13 +1152,51 @@ public class GetRecipientResponse {
         }
 
         /**
+         * Setter for code.
+         * @param  code  String value for code.
+         * @return Builder
+         */
+        public Builder code(String code) {
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
+            return this;
+        }
+
+        /**
+         * Setter for paymentMode.
+         * @param  paymentMode  String value for paymentMode.
+         * @return Builder
+         */
+        public Builder paymentMode(String paymentMode) {
+            this.paymentMode = OptionalNullable.of(paymentMode);
+            return this;
+        }
+
+        /**
+         * UnSetter for paymentMode.
+         * @return Builder
+         */
+        public Builder unsetPaymentMode() {
+            paymentMode = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetRecipientResponse} object using the set fields.
          * @return {@link GetRecipientResponse}
          */
         public GetRecipientResponse build() {
             return new GetRecipientResponse(id, name, email, document, description, type, status,
                     createdAt, updatedAt, deletedAt, defaultBankAccount, gatewayRecipients,
-                    metadata, code, paymentMode, automaticAnticipationSettings, transferSettings);
+                    metadata, automaticAnticipationSettings, transferSettings, code, paymentMode);
         }
     }
 }

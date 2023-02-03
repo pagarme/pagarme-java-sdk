@@ -20,10 +20,10 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetAccessTokenResponse type.
  */
 public class GetAccessTokenResponse {
-    private String id;
-    private String code;
-    private String status;
-    private LocalDateTime createdAt;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> code;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
     private OptionalNullable<GetCustomerResponse> customer;
 
     /**
@@ -46,17 +46,18 @@ public class GetAccessTokenResponse {
             String status,
             LocalDateTime createdAt,
             GetCustomerResponse customer) {
-        this.id = id;
-        this.code = code;
-        this.status = status;
-        this.createdAt = createdAt;
+        this.id = OptionalNullable.of(id);
+        this.code = OptionalNullable.of(code);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
         this.customer = OptionalNullable.of(customer);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetAccessTokenResponse(String id, String code, String status, LocalDateTime createdAt,
+    protected GetAccessTokenResponse(OptionalNullable<String> id, OptionalNullable<String> code,
+            OptionalNullable<String> status, OptionalNullable<LocalDateTime> createdAt,
             OptionalNullable<GetCustomerResponse> customer) {
         this.id = id;
         this.code = code;
@@ -66,12 +67,22 @@ public class GetAccessTokenResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -80,16 +91,33 @@ public class GetAccessTokenResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Code.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
     }
 
     /**
      * Getter for Code.
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -98,16 +126,33 @@ public class GetAccessTokenResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -116,17 +161,33 @@ public class GetAccessTokenResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -136,7 +197,14 @@ public class GetAccessTokenResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
     }
 
     /**
@@ -190,7 +258,11 @@ public class GetAccessTokenResponse {
      * @return a new {@link GetAccessTokenResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, code, status, createdAt);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.code = internalGetCode();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
         builder.customer = internalGetCustomer();
         return builder;
     }
@@ -199,31 +271,13 @@ public class GetAccessTokenResponse {
      * Class to build instances of {@link GetAccessTokenResponse}.
      */
     public static class Builder {
-        private String id;
-        private String code;
-        private String status;
-        private LocalDateTime createdAt;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> code;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
         private OptionalNullable<GetCustomerResponse> customer;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  code  String value for code.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         */
-        public Builder(String id, String code, String status, LocalDateTime createdAt) {
-            this.id = id;
-            this.code = code;
-            this.status = status;
-            this.createdAt = createdAt;
-        }
 
         /**
          * Setter for id.
@@ -231,7 +285,16 @@ public class GetAccessTokenResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -241,7 +304,16 @@ public class GetAccessTokenResponse {
          * @return Builder
          */
         public Builder code(String code) {
-            this.code = code;
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
             return this;
         }
 
@@ -251,7 +323,16 @@ public class GetAccessTokenResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -261,7 +342,16 @@ public class GetAccessTokenResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 

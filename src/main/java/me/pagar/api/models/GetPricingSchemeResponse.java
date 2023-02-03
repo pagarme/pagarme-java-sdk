@@ -18,9 +18,9 @@ import java.util.List;
  * This is a model class for GetPricingSchemeResponse type.
  */
 public class GetPricingSchemeResponse {
-    private Integer price;
-    private String schemeType;
-    private List<GetPriceBracketResponse> priceBrackets;
+    private OptionalNullable<Integer> price;
+    private OptionalNullable<String> schemeType;
+    private OptionalNullable<List<GetPriceBracketResponse>> priceBrackets;
     private OptionalNullable<Integer> minimumPrice;
     private OptionalNullable<Double> percentage;
 
@@ -44,9 +44,9 @@ public class GetPricingSchemeResponse {
             List<GetPriceBracketResponse> priceBrackets,
             Integer minimumPrice,
             Double percentage) {
-        this.price = price;
-        this.schemeType = schemeType;
-        this.priceBrackets = priceBrackets;
+        this.price = OptionalNullable.of(price);
+        this.schemeType = OptionalNullable.of(schemeType);
+        this.priceBrackets = OptionalNullable.of(priceBrackets);
         this.minimumPrice = OptionalNullable.of(minimumPrice);
         this.percentage = OptionalNullable.of(percentage);
     }
@@ -54,9 +54,10 @@ public class GetPricingSchemeResponse {
     /**
      * Internal initialization constructor.
      */
-    protected GetPricingSchemeResponse(Integer price, String schemeType,
-            List<GetPriceBracketResponse> priceBrackets, OptionalNullable<Integer> minimumPrice,
-            OptionalNullable<Double> percentage) {
+    protected GetPricingSchemeResponse(OptionalNullable<Integer> price,
+            OptionalNullable<String> schemeType,
+            OptionalNullable<List<GetPriceBracketResponse>> priceBrackets,
+            OptionalNullable<Integer> minimumPrice, OptionalNullable<Double> percentage) {
         this.price = price;
         this.schemeType = schemeType;
         this.priceBrackets = priceBrackets;
@@ -65,12 +66,22 @@ public class GetPricingSchemeResponse {
     }
 
     /**
+     * Internal Getter for Price.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetPrice() {
+        return this.price;
+    }
+
+    /**
      * Getter for Price.
      * @return Returns the Integer
      */
-    @JsonGetter("price")
     public Integer getPrice() {
-        return price;
+        return OptionalNullable.getFrom(price);
     }
 
     /**
@@ -79,16 +90,33 @@ public class GetPricingSchemeResponse {
      */
     @JsonSetter("price")
     public void setPrice(Integer price) {
-        this.price = price;
+        this.price = OptionalNullable.of(price);
+    }
+
+    /**
+     * UnSetter for Price.
+     */
+    public void unsetPrice() {
+        price = null;
+    }
+
+    /**
+     * Internal Getter for SchemeType.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("scheme_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetSchemeType() {
+        return this.schemeType;
     }
 
     /**
      * Getter for SchemeType.
      * @return Returns the String
      */
-    @JsonGetter("scheme_type")
     public String getSchemeType() {
-        return schemeType;
+        return OptionalNullable.getFrom(schemeType);
     }
 
     /**
@@ -97,16 +125,33 @@ public class GetPricingSchemeResponse {
      */
     @JsonSetter("scheme_type")
     public void setSchemeType(String schemeType) {
-        this.schemeType = schemeType;
+        this.schemeType = OptionalNullable.of(schemeType);
+    }
+
+    /**
+     * UnSetter for SchemeType.
+     */
+    public void unsetSchemeType() {
+        schemeType = null;
+    }
+
+    /**
+     * Internal Getter for PriceBrackets.
+     * @return Returns the Internal List of GetPriceBracketResponse
+     */
+    @JsonGetter("price_brackets")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetPriceBracketResponse>> internalGetPriceBrackets() {
+        return this.priceBrackets;
     }
 
     /**
      * Getter for PriceBrackets.
      * @return Returns the List of GetPriceBracketResponse
      */
-    @JsonGetter("price_brackets")
     public List<GetPriceBracketResponse> getPriceBrackets() {
-        return priceBrackets;
+        return OptionalNullable.getFrom(priceBrackets);
     }
 
     /**
@@ -115,7 +160,14 @@ public class GetPricingSchemeResponse {
      */
     @JsonSetter("price_brackets")
     public void setPriceBrackets(List<GetPriceBracketResponse> priceBrackets) {
-        this.priceBrackets = priceBrackets;
+        this.priceBrackets = OptionalNullable.of(priceBrackets);
+    }
+
+    /**
+     * UnSetter for PriceBrackets.
+     */
+    public void unsetPriceBrackets() {
+        priceBrackets = null;
     }
 
     /**
@@ -209,7 +261,10 @@ public class GetPricingSchemeResponse {
      * @return a new {@link GetPricingSchemeResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(price, schemeType, priceBrackets);
+        Builder builder = new Builder();
+        builder.price = internalGetPrice();
+        builder.schemeType = internalGetSchemeType();
+        builder.priceBrackets = internalGetPriceBrackets();
         builder.minimumPrice = internalGetMinimumPrice();
         builder.percentage = internalGetPercentage();
         return builder;
@@ -219,30 +274,13 @@ public class GetPricingSchemeResponse {
      * Class to build instances of {@link GetPricingSchemeResponse}.
      */
     public static class Builder {
-        private Integer price;
-        private String schemeType;
-        private List<GetPriceBracketResponse> priceBrackets;
+        private OptionalNullable<Integer> price;
+        private OptionalNullable<String> schemeType;
+        private OptionalNullable<List<GetPriceBracketResponse>> priceBrackets;
         private OptionalNullable<Integer> minimumPrice;
         private OptionalNullable<Double> percentage;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  price  Integer value for price.
-         * @param  schemeType  String value for schemeType.
-         * @param  priceBrackets  List of GetPriceBracketResponse value for priceBrackets.
-         */
-        public Builder(Integer price, String schemeType,
-                List<GetPriceBracketResponse> priceBrackets) {
-            this.price = price;
-            this.schemeType = schemeType;
-            this.priceBrackets = priceBrackets;
-        }
 
         /**
          * Setter for price.
@@ -250,7 +288,16 @@ public class GetPricingSchemeResponse {
          * @return Builder
          */
         public Builder price(Integer price) {
-            this.price = price;
+            this.price = OptionalNullable.of(price);
+            return this;
+        }
+
+        /**
+         * UnSetter for price.
+         * @return Builder
+         */
+        public Builder unsetPrice() {
+            price = null;
             return this;
         }
 
@@ -260,7 +307,16 @@ public class GetPricingSchemeResponse {
          * @return Builder
          */
         public Builder schemeType(String schemeType) {
-            this.schemeType = schemeType;
+            this.schemeType = OptionalNullable.of(schemeType);
+            return this;
+        }
+
+        /**
+         * UnSetter for schemeType.
+         * @return Builder
+         */
+        public Builder unsetSchemeType() {
+            schemeType = null;
             return this;
         }
 
@@ -270,7 +326,16 @@ public class GetPricingSchemeResponse {
          * @return Builder
          */
         public Builder priceBrackets(List<GetPriceBracketResponse> priceBrackets) {
-            this.priceBrackets = priceBrackets;
+            this.priceBrackets = OptionalNullable.of(priceBrackets);
+            return this;
+        }
+
+        /**
+         * UnSetter for priceBrackets.
+         * @return Builder
+         */
+        public Builder unsetPriceBrackets() {
+            priceBrackets = null;
             return this;
         }
 

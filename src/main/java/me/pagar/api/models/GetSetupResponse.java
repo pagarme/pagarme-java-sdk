@@ -7,17 +7,20 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetSetupResponse type.
  */
 public class GetSetupResponse {
-    private String id;
-    private String description;
-    private Integer amount;
-    private String status;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> description;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> status;
 
     /**
      * Default constructor.
@@ -37,6 +40,17 @@ public class GetSetupResponse {
             String description,
             Integer amount,
             String status) {
+        this.id = OptionalNullable.of(id);
+        this.description = OptionalNullable.of(description);
+        this.amount = OptionalNullable.of(amount);
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetSetupResponse(OptionalNullable<String> id, OptionalNullable<String> description,
+            OptionalNullable<Integer> amount, OptionalNullable<String> status) {
         this.id = id;
         this.description = description;
         this.amount = amount;
@@ -44,12 +58,22 @@ public class GetSetupResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -58,16 +82,33 @@ public class GetSetupResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Description.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDescription() {
+        return this.description;
     }
 
     /**
      * Getter for Description.
      * @return Returns the String
      */
-    @JsonGetter("description")
     public String getDescription() {
-        return description;
+        return OptionalNullable.getFrom(description);
     }
 
     /**
@@ -76,16 +117,33 @@ public class GetSetupResponse {
      */
     @JsonSetter("description")
     public void setDescription(String description) {
-        this.description = description;
+        this.description = OptionalNullable.of(description);
+    }
+
+    /**
+     * UnSetter for Description.
+     */
+    public void unsetDescription() {
+        description = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
      * Getter for Amount.
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -94,16 +152,33 @@ public class GetSetupResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -112,7 +187,14 @@ public class GetSetupResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
     }
 
     /**
@@ -131,7 +213,11 @@ public class GetSetupResponse {
      * @return a new {@link GetSetupResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, description, amount, status);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.description = internalGetDescription();
+        builder.amount = internalGetAmount();
+        builder.status = internalGetStatus();
         return builder;
     }
 
@@ -139,30 +225,12 @@ public class GetSetupResponse {
      * Class to build instances of {@link GetSetupResponse}.
      */
     public static class Builder {
-        private String id;
-        private String description;
-        private Integer amount;
-        private String status;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> description;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> status;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  description  String value for description.
-         * @param  amount  Integer value for amount.
-         * @param  status  String value for status.
-         */
-        public Builder(String id, String description, Integer amount, String status) {
-            this.id = id;
-            this.description = description;
-            this.amount = amount;
-            this.status = status;
-        }
 
         /**
          * Setter for id.
@@ -170,7 +238,16 @@ public class GetSetupResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -180,7 +257,16 @@ public class GetSetupResponse {
          * @return Builder
          */
         public Builder description(String description) {
-            this.description = description;
+            this.description = OptionalNullable.of(description);
+            return this;
+        }
+
+        /**
+         * UnSetter for description.
+         * @return Builder
+         */
+        public Builder unsetDescription() {
+            description = null;
             return this;
         }
 
@@ -190,7 +276,16 @@ public class GetSetupResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -200,7 +295,16 @@ public class GetSetupResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 

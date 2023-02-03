@@ -32,18 +32,18 @@ import me.pagar.api.DateTimeHelper;
 @JsonInclude(Include.ALWAYS)
 public class GetCreditCardTransactionResponse
         extends GetTransactionResponse {
-    private String statementDescriptor;
+    private OptionalNullable<String> statementDescriptor;
     private String acquirerName;
-    private String acquirerAffiliationCode;
+    private OptionalNullable<String> acquirerAffiliationCode;
     private String acquirerTid;
     private String acquirerNsu;
-    private String acquirerAuthCode;
-    private String operationType;
-    private GetCardResponse card;
-    private String acquirerMessage;
-    private String acquirerReturnCode;
+    private OptionalNullable<String> acquirerAuthCode;
+    private OptionalNullable<String> operationType;
+    private OptionalNullable<GetCardResponse> card;
+    private OptionalNullable<String> acquirerMessage;
+    private OptionalNullable<String> acquirerReturnCode;
     private OptionalNullable<Integer> installments;
-    private String threedAuthenticationUrl;
+    private OptionalNullable<String> threedAuthenticationUrl;
 
     /**
      * Default constructor.
@@ -64,10 +64,16 @@ public class GetCreditCardTransactionResponse
      * @param  attemptCount  Integer value for attemptCount.
      * @param  maxAttempts  Integer value for maxAttempts.
      * @param  splits  List of GetSplitResponse value for splits.
+     * @param  nextAttempt  LocalDateTime value for nextAttempt.
+     * @param  transactionType  String value for transactionType.
      * @param  id  String value for id.
      * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
      * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
+     * @param  metadata  Map of String, value for metadata.
      * @param  split  List of GetSplitResponse value for split.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      * @param  statementDescriptor  String value for statementDescriptor.
      * @param  acquirerName  String value for acquirerName.
      * @param  acquirerAffiliationCode  String value for acquirerAffiliationCode.
@@ -78,14 +84,8 @@ public class GetCreditCardTransactionResponse
      * @param  card  GetCardResponse value for card.
      * @param  acquirerMessage  String value for acquirerMessage.
      * @param  acquirerReturnCode  String value for acquirerReturnCode.
-     * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
-     * @param  nextAttempt  LocalDateTime value for nextAttempt.
-     * @param  transactionType  String value for transactionType.
-     * @param  metadata  Map of String, value for metadata.
-     * @param  interest  GetInterestResponse value for interest.
-     * @param  fine  GetFineResponse value for fine.
-     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      * @param  installments  Integer value for installments.
+     * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
      */
     public GetCreditCardTransactionResponse(
             String gatewayId,
@@ -97,10 +97,16 @@ public class GetCreditCardTransactionResponse
             Integer attemptCount,
             Integer maxAttempts,
             List<GetSplitResponse> splits,
+            LocalDateTime nextAttempt,
+            String transactionType,
             String id,
             GetGatewayResponseResponse gatewayResponse,
             GetAntifraudResponse antifraudResponse,
+            Map<String, String> metadata,
             List<GetSplitResponse> split,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue,
             String statementDescriptor,
             String acquirerName,
             String acquirerAffiliationCode,
@@ -111,50 +117,51 @@ public class GetCreditCardTransactionResponse
             GetCardResponse card,
             String acquirerMessage,
             String acquirerReturnCode,
-            String threedAuthenticationUrl,
-            LocalDateTime nextAttempt,
-            String transactionType,
-            Map<String, String> metadata,
-            GetInterestResponse interest,
-            GetFineResponse fine,
-            Integer maxDaysToPayPastDue,
-            Integer installments) {
+            Integer installments,
+            String threedAuthenticationUrl) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
-                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata, interest, fine, maxDaysToPayPastDue);
-        this.statementDescriptor = statementDescriptor;
+                splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
+                metadata, split, interest, fine, maxDaysToPayPastDue);
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
         this.acquirerName = acquirerName;
-        this.acquirerAffiliationCode = acquirerAffiliationCode;
+        this.acquirerAffiliationCode = OptionalNullable.of(acquirerAffiliationCode);
         this.acquirerTid = acquirerTid;
         this.acquirerNsu = acquirerNsu;
-        this.acquirerAuthCode = acquirerAuthCode;
-        this.operationType = operationType;
-        this.card = card;
-        this.acquirerMessage = acquirerMessage;
-        this.acquirerReturnCode = acquirerReturnCode;
+        this.acquirerAuthCode = OptionalNullable.of(acquirerAuthCode);
+        this.operationType = OptionalNullable.of(operationType);
+        this.card = OptionalNullable.of(card);
+        this.acquirerMessage = OptionalNullable.of(acquirerMessage);
+        this.acquirerReturnCode = OptionalNullable.of(acquirerReturnCode);
         this.installments = OptionalNullable.of(installments);
-        this.threedAuthenticationUrl = threedAuthenticationUrl;
+        this.threedAuthenticationUrl = OptionalNullable.of(threedAuthenticationUrl);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetCreditCardTransactionResponse(String gatewayId, Integer amount, String status,
-            Boolean success, LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
-            Integer maxAttempts, List<GetSplitResponse> splits, String id,
-            GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
-            List<GetSplitResponse> split, String statementDescriptor, String acquirerName,
-            String acquirerAffiliationCode, String acquirerTid, String acquirerNsu,
-            String acquirerAuthCode, String operationType, GetCardResponse card,
-            String acquirerMessage, String acquirerReturnCode, String threedAuthenticationUrl,
+    protected GetCreditCardTransactionResponse(OptionalNullable<String> gatewayId,
+            OptionalNullable<Integer> amount, OptionalNullable<String> status,
+            OptionalNullable<Boolean> success, OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<LocalDateTime> updatedAt, OptionalNullable<Integer> attemptCount,
+            OptionalNullable<Integer> maxAttempts, OptionalNullable<List<GetSplitResponse>> splits,
             OptionalNullable<LocalDateTime> nextAttempt, String transactionType,
+            OptionalNullable<String> id,
+            OptionalNullable<GetGatewayResponseResponse> gatewayResponse,
+            OptionalNullable<GetAntifraudResponse> antifraudResponse,
             OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<List<GetSplitResponse>> split,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue,
-            OptionalNullable<Integer> installments) {
+            OptionalNullable<String> statementDescriptor, String acquirerName,
+            OptionalNullable<String> acquirerAffiliationCode, String acquirerTid,
+            String acquirerNsu, OptionalNullable<String> acquirerAuthCode,
+            OptionalNullable<String> operationType, OptionalNullable<GetCardResponse> card,
+            OptionalNullable<String> acquirerMessage, OptionalNullable<String> acquirerReturnCode,
+            OptionalNullable<Integer> installments,
+            OptionalNullable<String> threedAuthenticationUrl) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
-                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata, interest, fine, maxDaysToPayPastDue);
+                splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
+                metadata, split, interest, fine, maxDaysToPayPastDue);
         this.statementDescriptor = statementDescriptor;
         this.acquirerName = acquirerName;
         this.acquirerAffiliationCode = acquirerAffiliationCode;
@@ -170,13 +177,24 @@ public class GetCreditCardTransactionResponse
     }
 
     /**
+     * Internal Getter for StatementDescriptor.
+     * Text that will appear on the credit card's statement
+     * @return Returns the Internal String
+     */
+    @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatementDescriptor() {
+        return this.statementDescriptor;
+    }
+
+    /**
      * Getter for StatementDescriptor.
      * Text that will appear on the credit card's statement
      * @return Returns the String
      */
-    @JsonGetter("statement_descriptor")
     public String getStatementDescriptor() {
-        return statementDescriptor;
+        return OptionalNullable.getFrom(statementDescriptor);
     }
 
     /**
@@ -186,7 +204,15 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("statement_descriptor")
     public void setStatementDescriptor(String statementDescriptor) {
-        this.statementDescriptor = statementDescriptor;
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+    }
+
+    /**
+     * UnSetter for StatementDescriptor.
+     * Text that will appear on the credit card's statement
+     */
+    public void unsetStatementDescriptor() {
+        statementDescriptor = null;
     }
 
     /**
@@ -195,6 +221,7 @@ public class GetCreditCardTransactionResponse
      * @return Returns the String
      */
     @JsonGetter("acquirer_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getAcquirerName() {
         return acquirerName;
     }
@@ -210,13 +237,24 @@ public class GetCreditCardTransactionResponse
     }
 
     /**
+     * Internal Getter for AcquirerAffiliationCode.
+     * Aquirer affiliation code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("acquirer_affiliation_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAcquirerAffiliationCode() {
+        return this.acquirerAffiliationCode;
+    }
+
+    /**
      * Getter for AcquirerAffiliationCode.
      * Aquirer affiliation code
      * @return Returns the String
      */
-    @JsonGetter("acquirer_affiliation_code")
     public String getAcquirerAffiliationCode() {
-        return acquirerAffiliationCode;
+        return OptionalNullable.getFrom(acquirerAffiliationCode);
     }
 
     /**
@@ -226,7 +264,15 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("acquirer_affiliation_code")
     public void setAcquirerAffiliationCode(String acquirerAffiliationCode) {
-        this.acquirerAffiliationCode = acquirerAffiliationCode;
+        this.acquirerAffiliationCode = OptionalNullable.of(acquirerAffiliationCode);
+    }
+
+    /**
+     * UnSetter for AcquirerAffiliationCode.
+     * Aquirer affiliation code
+     */
+    public void unsetAcquirerAffiliationCode() {
+        acquirerAffiliationCode = null;
     }
 
     /**
@@ -235,6 +281,7 @@ public class GetCreditCardTransactionResponse
      * @return Returns the String
      */
     @JsonGetter("acquirer_tid")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getAcquirerTid() {
         return acquirerTid;
     }
@@ -255,6 +302,7 @@ public class GetCreditCardTransactionResponse
      * @return Returns the String
      */
     @JsonGetter("acquirer_nsu")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getAcquirerNsu() {
         return acquirerNsu;
     }
@@ -270,13 +318,24 @@ public class GetCreditCardTransactionResponse
     }
 
     /**
+     * Internal Getter for AcquirerAuthCode.
+     * Acquirer authorization code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("acquirer_auth_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAcquirerAuthCode() {
+        return this.acquirerAuthCode;
+    }
+
+    /**
      * Getter for AcquirerAuthCode.
      * Acquirer authorization code
      * @return Returns the String
      */
-    @JsonGetter("acquirer_auth_code")
     public String getAcquirerAuthCode() {
-        return acquirerAuthCode;
+        return OptionalNullable.getFrom(acquirerAuthCode);
     }
 
     /**
@@ -286,7 +345,27 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("acquirer_auth_code")
     public void setAcquirerAuthCode(String acquirerAuthCode) {
-        this.acquirerAuthCode = acquirerAuthCode;
+        this.acquirerAuthCode = OptionalNullable.of(acquirerAuthCode);
+    }
+
+    /**
+     * UnSetter for AcquirerAuthCode.
+     * Acquirer authorization code
+     */
+    public void unsetAcquirerAuthCode() {
+        acquirerAuthCode = null;
+    }
+
+    /**
+     * Internal Getter for OperationType.
+     * Operation type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("operation_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetOperationType() {
+        return this.operationType;
     }
 
     /**
@@ -294,9 +373,8 @@ public class GetCreditCardTransactionResponse
      * Operation type
      * @return Returns the String
      */
-    @JsonGetter("operation_type")
     public String getOperationType() {
-        return operationType;
+        return OptionalNullable.getFrom(operationType);
     }
 
     /**
@@ -306,7 +384,27 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("operation_type")
     public void setOperationType(String operationType) {
-        this.operationType = operationType;
+        this.operationType = OptionalNullable.of(operationType);
+    }
+
+    /**
+     * UnSetter for OperationType.
+     * Operation type
+     */
+    public void unsetOperationType() {
+        operationType = null;
+    }
+
+    /**
+     * Internal Getter for Card.
+     * Card data
+     * @return Returns the Internal GetCardResponse
+     */
+    @JsonGetter("card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCardResponse> internalGetCard() {
+        return this.card;
     }
 
     /**
@@ -314,9 +412,8 @@ public class GetCreditCardTransactionResponse
      * Card data
      * @return Returns the GetCardResponse
      */
-    @JsonGetter("card")
     public GetCardResponse getCard() {
-        return card;
+        return OptionalNullable.getFrom(card);
     }
 
     /**
@@ -326,7 +423,27 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("card")
     public void setCard(GetCardResponse card) {
-        this.card = card;
+        this.card = OptionalNullable.of(card);
+    }
+
+    /**
+     * UnSetter for Card.
+     * Card data
+     */
+    public void unsetCard() {
+        card = null;
+    }
+
+    /**
+     * Internal Getter for AcquirerMessage.
+     * Acquirer message
+     * @return Returns the Internal String
+     */
+    @JsonGetter("acquirer_message")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAcquirerMessage() {
+        return this.acquirerMessage;
     }
 
     /**
@@ -334,9 +451,8 @@ public class GetCreditCardTransactionResponse
      * Acquirer message
      * @return Returns the String
      */
-    @JsonGetter("acquirer_message")
     public String getAcquirerMessage() {
-        return acquirerMessage;
+        return OptionalNullable.getFrom(acquirerMessage);
     }
 
     /**
@@ -346,7 +462,27 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("acquirer_message")
     public void setAcquirerMessage(String acquirerMessage) {
-        this.acquirerMessage = acquirerMessage;
+        this.acquirerMessage = OptionalNullable.of(acquirerMessage);
+    }
+
+    /**
+     * UnSetter for AcquirerMessage.
+     * Acquirer message
+     */
+    public void unsetAcquirerMessage() {
+        acquirerMessage = null;
+    }
+
+    /**
+     * Internal Getter for AcquirerReturnCode.
+     * Acquirer Return Code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("acquirer_return_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAcquirerReturnCode() {
+        return this.acquirerReturnCode;
     }
 
     /**
@@ -354,9 +490,8 @@ public class GetCreditCardTransactionResponse
      * Acquirer Return Code
      * @return Returns the String
      */
-    @JsonGetter("acquirer_return_code")
     public String getAcquirerReturnCode() {
-        return acquirerReturnCode;
+        return OptionalNullable.getFrom(acquirerReturnCode);
     }
 
     /**
@@ -366,7 +501,15 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("acquirer_return_code")
     public void setAcquirerReturnCode(String acquirerReturnCode) {
-        this.acquirerReturnCode = acquirerReturnCode;
+        this.acquirerReturnCode = OptionalNullable.of(acquirerReturnCode);
+    }
+
+    /**
+     * UnSetter for AcquirerReturnCode.
+     * Acquirer Return Code
+     */
+    public void unsetAcquirerReturnCode() {
+        acquirerReturnCode = null;
     }
 
     /**
@@ -409,13 +552,24 @@ public class GetCreditCardTransactionResponse
     }
 
     /**
+     * Internal Getter for ThreedAuthenticationUrl.
+     * 3D-S authentication Url
+     * @return Returns the Internal String
+     */
+    @JsonGetter("threed_authentication_url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetThreedAuthenticationUrl() {
+        return this.threedAuthenticationUrl;
+    }
+
+    /**
      * Getter for ThreedAuthenticationUrl.
      * 3D-S authentication Url
      * @return Returns the String
      */
-    @JsonGetter("threed_authentication_url")
     public String getThreedAuthenticationUrl() {
-        return threedAuthenticationUrl;
+        return OptionalNullable.getFrom(threedAuthenticationUrl);
     }
 
     /**
@@ -425,7 +579,15 @@ public class GetCreditCardTransactionResponse
      */
     @JsonSetter("threed_authentication_url")
     public void setThreedAuthenticationUrl(String threedAuthenticationUrl) {
-        this.threedAuthenticationUrl = threedAuthenticationUrl;
+        this.threedAuthenticationUrl = OptionalNullable.of(threedAuthenticationUrl);
+    }
+
+    /**
+     * UnSetter for ThreedAuthenticationUrl.
+     * 3D-S authentication Url
+     */
+    public void unsetThreedAuthenticationUrl() {
+        threedAuthenticationUrl = null;
     }
 
     /**
@@ -439,17 +601,17 @@ public class GetCreditCardTransactionResponse
                 + acquirerAffiliationCode + ", acquirerTid=" + acquirerTid + ", acquirerNsu="
                 + acquirerNsu + ", acquirerAuthCode=" + acquirerAuthCode + ", operationType="
                 + operationType + ", card=" + card + ", acquirerMessage=" + acquirerMessage
-                + ", acquirerReturnCode=" + acquirerReturnCode + ", threedAuthenticationUrl="
-                + threedAuthenticationUrl + ", installments=" + installments + ", gatewayId="
+                + ", acquirerReturnCode=" + acquirerReturnCode + ", installments=" + installments
+                + ", threedAuthenticationUrl=" + threedAuthenticationUrl + ", gatewayId="
                 + getGatewayId() + ", amount=" + getAmount() + ", status=" + getStatus()
                 + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt="
                 + getUpdatedAt() + ", attemptCount=" + getAttemptCount() + ", maxAttempts="
-                + getMaxAttempts() + ", splits=" + getSplits() + ", id=" + getId()
+                + getMaxAttempts() + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
+                + ", transactionType=" + getTransactionType() + ", id=" + getId()
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
-                + getAntifraudResponse() + ", split=" + getSplit() + ", nextAttempt="
-                + getNextAttempt() + ", transactionType=" + getTransactionType() + ", metadata="
-                + getMetadata() + ", interest=" + getInterest() + ", fine=" + getFine()
-                + ", maxDaysToPayPastDue=" + getMaxDaysToPayPastDue() + "]";
+                + getAntifraudResponse() + ", metadata=" + getMetadata() + ", split=" + getSplit()
+                + ", interest=" + getInterest() + ", fine=" + getFine() + ", maxDaysToPayPastDue="
+                + getMaxDaysToPayPastDue() + "]";
     }
 
     /**
@@ -458,16 +620,35 @@ public class GetCreditCardTransactionResponse
      * @return a new {@link GetCreditCardTransactionResponse.Builder} object
      */
     public Builder toGetCreditCardTransactionResponseBuilder() {
-        Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
-                getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
-                getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(),
-                statementDescriptor, acquirerName, acquirerAffiliationCode, acquirerTid,
-                acquirerNsu, acquirerAuthCode, operationType, card, acquirerMessage,
-                acquirerReturnCode, threedAuthenticationUrl)
+        Builder builder = new Builder()
+                .acquirerName(getAcquirerName())
+                .acquirerTid(getAcquirerTid())
+                .acquirerNsu(getAcquirerNsu())
                 .transactionType(getTransactionType());
+        builder.statementDescriptor = internalGetStatementDescriptor();
+        builder.acquirerAffiliationCode = internalGetAcquirerAffiliationCode();
+        builder.acquirerAuthCode = internalGetAcquirerAuthCode();
+        builder.operationType = internalGetOperationType();
+        builder.card = internalGetCard();
+        builder.acquirerMessage = internalGetAcquirerMessage();
+        builder.acquirerReturnCode = internalGetAcquirerReturnCode();
         builder.installments = internalGetInstallments();
+        builder.threedAuthenticationUrl = internalGetThreedAuthenticationUrl();
+        builder.gatewayId = internalGetGatewayId();
+        builder.amount = internalGetAmount();
+        builder.status = internalGetStatus();
+        builder.success = internalGetSuccess();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.attemptCount = internalGetAttemptCount();
+        builder.maxAttempts = internalGetMaxAttempts();
+        builder.splits = internalGetSplits();
         builder.nextAttempt = internalGetNextAttempt();
+        builder.id = internalGetId();
+        builder.gatewayResponse = internalGetGatewayResponse();
+        builder.antifraudResponse = internalGetAntifraudResponse();
         builder.metadata = internalGetMetadata();
+        builder.split = internalGetSplit();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
         builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
@@ -478,104 +659,39 @@ public class GetCreditCardTransactionResponse
      * Class to build instances of {@link GetCreditCardTransactionResponse}.
      */
     public static class Builder {
-        private String gatewayId;
-        private Integer amount;
-        private String status;
-        private Boolean success;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private Integer attemptCount;
-        private Integer maxAttempts;
-        private List<GetSplitResponse> splits;
-        private String id;
-        private GetGatewayResponseResponse gatewayResponse;
-        private GetAntifraudResponse antifraudResponse;
-        private List<GetSplitResponse> split;
-        private String statementDescriptor;
-        private String acquirerName;
-        private String acquirerAffiliationCode;
-        private String acquirerTid;
-        private String acquirerNsu;
-        private String acquirerAuthCode;
-        private String operationType;
-        private GetCardResponse card;
-        private String acquirerMessage;
-        private String acquirerReturnCode;
-        private String threedAuthenticationUrl;
+        private OptionalNullable<String> gatewayId;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> status;
+        private OptionalNullable<Boolean> success;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<Integer> attemptCount;
+        private OptionalNullable<Integer> maxAttempts;
+        private OptionalNullable<List<GetSplitResponse>> splits;
         private OptionalNullable<LocalDateTime> nextAttempt;
         private String transactionType = "credit_card";
+        private OptionalNullable<String> id;
+        private OptionalNullable<GetGatewayResponseResponse> gatewayResponse;
+        private OptionalNullable<GetAntifraudResponse> antifraudResponse;
         private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<List<GetSplitResponse>> split;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
         private OptionalNullable<Integer> maxDaysToPayPastDue;
+        private OptionalNullable<String> statementDescriptor;
+        private String acquirerName;
+        private OptionalNullable<String> acquirerAffiliationCode;
+        private String acquirerTid;
+        private String acquirerNsu;
+        private OptionalNullable<String> acquirerAuthCode;
+        private OptionalNullable<String> operationType;
+        private OptionalNullable<GetCardResponse> card;
+        private OptionalNullable<String> acquirerMessage;
+        private OptionalNullable<String> acquirerReturnCode;
         private OptionalNullable<Integer> installments;
+        private OptionalNullable<String> threedAuthenticationUrl;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  gatewayId  String value for gatewayId.
-         * @param  amount  Integer value for amount.
-         * @param  status  String value for status.
-         * @param  success  Boolean value for success.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  attemptCount  Integer value for attemptCount.
-         * @param  maxAttempts  Integer value for maxAttempts.
-         * @param  splits  List of GetSplitResponse value for splits.
-         * @param  id  String value for id.
-         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
-         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
-         * @param  split  List of GetSplitResponse value for split.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @param  acquirerName  String value for acquirerName.
-         * @param  acquirerAffiliationCode  String value for acquirerAffiliationCode.
-         * @param  acquirerTid  String value for acquirerTid.
-         * @param  acquirerNsu  String value for acquirerNsu.
-         * @param  acquirerAuthCode  String value for acquirerAuthCode.
-         * @param  operationType  String value for operationType.
-         * @param  card  GetCardResponse value for card.
-         * @param  acquirerMessage  String value for acquirerMessage.
-         * @param  acquirerReturnCode  String value for acquirerReturnCode.
-         * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
-         */
-        public Builder(String gatewayId, Integer amount, String status, Boolean success,
-                LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
-                Integer maxAttempts, List<GetSplitResponse> splits, String id,
-                GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
-                List<GetSplitResponse> split, String statementDescriptor, String acquirerName,
-                String acquirerAffiliationCode, String acquirerTid, String acquirerNsu,
-                String acquirerAuthCode, String operationType, GetCardResponse card,
-                String acquirerMessage, String acquirerReturnCode, String threedAuthenticationUrl) {
-            this.gatewayId = gatewayId;
-            this.amount = amount;
-            this.status = status;
-            this.success = success;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.attemptCount = attemptCount;
-            this.maxAttempts = maxAttempts;
-            this.splits = splits;
-            this.id = id;
-            this.gatewayResponse = gatewayResponse;
-            this.antifraudResponse = antifraudResponse;
-            this.split = split;
-            this.statementDescriptor = statementDescriptor;
-            this.acquirerName = acquirerName;
-            this.acquirerAffiliationCode = acquirerAffiliationCode;
-            this.acquirerTid = acquirerTid;
-            this.acquirerNsu = acquirerNsu;
-            this.acquirerAuthCode = acquirerAuthCode;
-            this.operationType = operationType;
-            this.card = card;
-            this.acquirerMessage = acquirerMessage;
-            this.acquirerReturnCode = acquirerReturnCode;
-            this.threedAuthenticationUrl = threedAuthenticationUrl;
-        }
 
         /**
          * Setter for gatewayId.
@@ -583,7 +699,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder gatewayId(String gatewayId) {
-            this.gatewayId = gatewayId;
+            this.gatewayId = OptionalNullable.of(gatewayId);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayId.
+         * @return Builder
+         */
+        public Builder unsetGatewayId() {
+            gatewayId = null;
             return this;
         }
 
@@ -593,7 +718,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -603,7 +737,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -613,7 +756,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder success(Boolean success) {
-            this.success = success;
+            this.success = OptionalNullable.of(success);
+            return this;
+        }
+
+        /**
+         * UnSetter for success.
+         * @return Builder
+         */
+        public Builder unsetSuccess() {
+            success = null;
             return this;
         }
 
@@ -623,7 +775,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -633,7 +794,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -643,7 +813,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder attemptCount(Integer attemptCount) {
-            this.attemptCount = attemptCount;
+            this.attemptCount = OptionalNullable.of(attemptCount);
+            return this;
+        }
+
+        /**
+         * UnSetter for attemptCount.
+         * @return Builder
+         */
+        public Builder unsetAttemptCount() {
+            attemptCount = null;
             return this;
         }
 
@@ -653,7 +832,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder maxAttempts(Integer maxAttempts) {
-            this.maxAttempts = maxAttempts;
+            this.maxAttempts = OptionalNullable.of(maxAttempts);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxAttempts.
+         * @return Builder
+         */
+        public Builder unsetMaxAttempts() {
+            maxAttempts = null;
             return this;
         }
 
@@ -663,157 +851,16 @@ public class GetCreditCardTransactionResponse
          * @return Builder
          */
         public Builder splits(List<GetSplitResponse> splits) {
-            this.splits = splits;
+            this.splits = OptionalNullable.of(splits);
             return this;
         }
 
         /**
-         * Setter for id.
-         * @param  id  String value for id.
+         * UnSetter for splits.
          * @return Builder
          */
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        /**
-         * Setter for gatewayResponse.
-         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
-         * @return Builder
-         */
-        public Builder gatewayResponse(GetGatewayResponseResponse gatewayResponse) {
-            this.gatewayResponse = gatewayResponse;
-            return this;
-        }
-
-        /**
-         * Setter for antifraudResponse.
-         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
-         * @return Builder
-         */
-        public Builder antifraudResponse(GetAntifraudResponse antifraudResponse) {
-            this.antifraudResponse = antifraudResponse;
-            return this;
-        }
-
-        /**
-         * Setter for split.
-         * @param  split  List of GetSplitResponse value for split.
-         * @return Builder
-         */
-        public Builder split(List<GetSplitResponse> split) {
-            this.split = split;
-            return this;
-        }
-
-        /**
-         * Setter for statementDescriptor.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @return Builder
-         */
-        public Builder statementDescriptor(String statementDescriptor) {
-            this.statementDescriptor = statementDescriptor;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerName.
-         * @param  acquirerName  String value for acquirerName.
-         * @return Builder
-         */
-        public Builder acquirerName(String acquirerName) {
-            this.acquirerName = acquirerName;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerAffiliationCode.
-         * @param  acquirerAffiliationCode  String value for acquirerAffiliationCode.
-         * @return Builder
-         */
-        public Builder acquirerAffiliationCode(String acquirerAffiliationCode) {
-            this.acquirerAffiliationCode = acquirerAffiliationCode;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerTid.
-         * @param  acquirerTid  String value for acquirerTid.
-         * @return Builder
-         */
-        public Builder acquirerTid(String acquirerTid) {
-            this.acquirerTid = acquirerTid;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerNsu.
-         * @param  acquirerNsu  String value for acquirerNsu.
-         * @return Builder
-         */
-        public Builder acquirerNsu(String acquirerNsu) {
-            this.acquirerNsu = acquirerNsu;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerAuthCode.
-         * @param  acquirerAuthCode  String value for acquirerAuthCode.
-         * @return Builder
-         */
-        public Builder acquirerAuthCode(String acquirerAuthCode) {
-            this.acquirerAuthCode = acquirerAuthCode;
-            return this;
-        }
-
-        /**
-         * Setter for operationType.
-         * @param  operationType  String value for operationType.
-         * @return Builder
-         */
-        public Builder operationType(String operationType) {
-            this.operationType = operationType;
-            return this;
-        }
-
-        /**
-         * Setter for card.
-         * @param  card  GetCardResponse value for card.
-         * @return Builder
-         */
-        public Builder card(GetCardResponse card) {
-            this.card = card;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerMessage.
-         * @param  acquirerMessage  String value for acquirerMessage.
-         * @return Builder
-         */
-        public Builder acquirerMessage(String acquirerMessage) {
-            this.acquirerMessage = acquirerMessage;
-            return this;
-        }
-
-        /**
-         * Setter for acquirerReturnCode.
-         * @param  acquirerReturnCode  String value for acquirerReturnCode.
-         * @return Builder
-         */
-        public Builder acquirerReturnCode(String acquirerReturnCode) {
-            this.acquirerReturnCode = acquirerReturnCode;
-            return this;
-        }
-
-        /**
-         * Setter for threedAuthenticationUrl.
-         * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
-         * @return Builder
-         */
-        public Builder threedAuthenticationUrl(String threedAuthenticationUrl) {
-            this.threedAuthenticationUrl = threedAuthenticationUrl;
+        public Builder unsetSplits() {
+            splits = null;
             return this;
         }
 
@@ -847,6 +894,63 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for id.
+         * @param  id  String value for id.
+         * @return Builder
+         */
+        public Builder id(String id) {
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
+            return this;
+        }
+
+        /**
+         * Setter for gatewayResponse.
+         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
+         * @return Builder
+         */
+        public Builder gatewayResponse(GetGatewayResponseResponse gatewayResponse) {
+            this.gatewayResponse = OptionalNullable.of(gatewayResponse);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayResponse.
+         * @return Builder
+         */
+        public Builder unsetGatewayResponse() {
+            gatewayResponse = null;
+            return this;
+        }
+
+        /**
+         * Setter for antifraudResponse.
+         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
+         * @return Builder
+         */
+        public Builder antifraudResponse(GetAntifraudResponse antifraudResponse) {
+            this.antifraudResponse = OptionalNullable.of(antifraudResponse);
+            return this;
+        }
+
+        /**
+         * UnSetter for antifraudResponse.
+         * @return Builder
+         */
+        public Builder unsetAntifraudResponse() {
+            antifraudResponse = null;
+            return this;
+        }
+
+        /**
          * Setter for metadata.
          * @param  metadata  Map of String, value for metadata.
          * @return Builder
@@ -862,6 +966,25 @@ public class GetCreditCardTransactionResponse
          */
         public Builder unsetMetadata() {
             metadata = null;
+            return this;
+        }
+
+        /**
+         * Setter for split.
+         * @param  split  List of GetSplitResponse value for split.
+         * @return Builder
+         */
+        public Builder split(List<GetSplitResponse> split) {
+            this.split = OptionalNullable.of(split);
+            return this;
+        }
+
+        /**
+         * UnSetter for split.
+         * @return Builder
+         */
+        public Builder unsetSplit() {
+            split = null;
             return this;
         }
 
@@ -923,6 +1046,169 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for statementDescriptor.
+         * @param  statementDescriptor  String value for statementDescriptor.
+         * @return Builder
+         */
+        public Builder statementDescriptor(String statementDescriptor) {
+            this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for statementDescriptor.
+         * @return Builder
+         */
+        public Builder unsetStatementDescriptor() {
+            statementDescriptor = null;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerName.
+         * @param  acquirerName  String value for acquirerName.
+         * @return Builder
+         */
+        public Builder acquirerName(String acquirerName) {
+            this.acquirerName = acquirerName;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerAffiliationCode.
+         * @param  acquirerAffiliationCode  String value for acquirerAffiliationCode.
+         * @return Builder
+         */
+        public Builder acquirerAffiliationCode(String acquirerAffiliationCode) {
+            this.acquirerAffiliationCode = OptionalNullable.of(acquirerAffiliationCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for acquirerAffiliationCode.
+         * @return Builder
+         */
+        public Builder unsetAcquirerAffiliationCode() {
+            acquirerAffiliationCode = null;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerTid.
+         * @param  acquirerTid  String value for acquirerTid.
+         * @return Builder
+         */
+        public Builder acquirerTid(String acquirerTid) {
+            this.acquirerTid = acquirerTid;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerNsu.
+         * @param  acquirerNsu  String value for acquirerNsu.
+         * @return Builder
+         */
+        public Builder acquirerNsu(String acquirerNsu) {
+            this.acquirerNsu = acquirerNsu;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerAuthCode.
+         * @param  acquirerAuthCode  String value for acquirerAuthCode.
+         * @return Builder
+         */
+        public Builder acquirerAuthCode(String acquirerAuthCode) {
+            this.acquirerAuthCode = OptionalNullable.of(acquirerAuthCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for acquirerAuthCode.
+         * @return Builder
+         */
+        public Builder unsetAcquirerAuthCode() {
+            acquirerAuthCode = null;
+            return this;
+        }
+
+        /**
+         * Setter for operationType.
+         * @param  operationType  String value for operationType.
+         * @return Builder
+         */
+        public Builder operationType(String operationType) {
+            this.operationType = OptionalNullable.of(operationType);
+            return this;
+        }
+
+        /**
+         * UnSetter for operationType.
+         * @return Builder
+         */
+        public Builder unsetOperationType() {
+            operationType = null;
+            return this;
+        }
+
+        /**
+         * Setter for card.
+         * @param  card  GetCardResponse value for card.
+         * @return Builder
+         */
+        public Builder card(GetCardResponse card) {
+            this.card = OptionalNullable.of(card);
+            return this;
+        }
+
+        /**
+         * UnSetter for card.
+         * @return Builder
+         */
+        public Builder unsetCard() {
+            card = null;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerMessage.
+         * @param  acquirerMessage  String value for acquirerMessage.
+         * @return Builder
+         */
+        public Builder acquirerMessage(String acquirerMessage) {
+            this.acquirerMessage = OptionalNullable.of(acquirerMessage);
+            return this;
+        }
+
+        /**
+         * UnSetter for acquirerMessage.
+         * @return Builder
+         */
+        public Builder unsetAcquirerMessage() {
+            acquirerMessage = null;
+            return this;
+        }
+
+        /**
+         * Setter for acquirerReturnCode.
+         * @param  acquirerReturnCode  String value for acquirerReturnCode.
+         * @return Builder
+         */
+        public Builder acquirerReturnCode(String acquirerReturnCode) {
+            this.acquirerReturnCode = OptionalNullable.of(acquirerReturnCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for acquirerReturnCode.
+         * @return Builder
+         */
+        public Builder unsetAcquirerReturnCode() {
+            acquirerReturnCode = null;
+            return this;
+        }
+
+        /**
          * Setter for installments.
          * @param  installments  Integer value for installments.
          * @return Builder
@@ -942,17 +1228,36 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for threedAuthenticationUrl.
+         * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
+         * @return Builder
+         */
+        public Builder threedAuthenticationUrl(String threedAuthenticationUrl) {
+            this.threedAuthenticationUrl = OptionalNullable.of(threedAuthenticationUrl);
+            return this;
+        }
+
+        /**
+         * UnSetter for threedAuthenticationUrl.
+         * @return Builder
+         */
+        public Builder unsetThreedAuthenticationUrl() {
+            threedAuthenticationUrl = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetCreditCardTransactionResponse} object using the set fields.
          * @return {@link GetCreditCardTransactionResponse}
          */
         public GetCreditCardTransactionResponse build() {
             return new GetCreditCardTransactionResponse(gatewayId, amount, status, success,
-                    createdAt, updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
-                    antifraudResponse, split, statementDescriptor, acquirerName,
+                    createdAt, updatedAt, attemptCount, maxAttempts, splits, nextAttempt,
+                    transactionType, id, gatewayResponse, antifraudResponse, metadata, split,
+                    interest, fine, maxDaysToPayPastDue, statementDescriptor, acquirerName,
                     acquirerAffiliationCode, acquirerTid, acquirerNsu, acquirerAuthCode,
-                    operationType, card, acquirerMessage, acquirerReturnCode,
-                    threedAuthenticationUrl, nextAttempt, transactionType, metadata, interest, fine,
-                    maxDaysToPayPastDue, installments);
+                    operationType, card, acquirerMessage, acquirerReturnCode, installments,
+                    threedAuthenticationUrl);
         }
     }
 }

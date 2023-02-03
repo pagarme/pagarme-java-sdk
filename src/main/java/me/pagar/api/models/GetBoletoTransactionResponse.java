@@ -32,23 +32,23 @@ import me.pagar.api.DateTimeHelper;
 @JsonInclude(Include.ALWAYS)
 public class GetBoletoTransactionResponse
         extends GetTransactionResponse {
-    private String url;
-    private String barcode;
-    private String nossoNumero;
-    private String bank;
-    private String documentNumber;
-    private String instructions;
-    private GetBillingAddressResponse billingAddress;
+    private OptionalNullable<String> url;
+    private OptionalNullable<String> barcode;
+    private OptionalNullable<String> nossoNumero;
+    private OptionalNullable<String> bank;
+    private OptionalNullable<String> documentNumber;
+    private OptionalNullable<String> instructions;
+    private OptionalNullable<GetBillingAddressResponse> billingAddress;
     private OptionalNullable<LocalDateTime> dueAt;
-    private String qrCode;
-    private String line;
-    private String pdfPassword;
-    private String pdf;
+    private OptionalNullable<String> qrCode;
+    private OptionalNullable<String> line;
+    private OptionalNullable<String> pdfPassword;
+    private OptionalNullable<String> pdf;
     private OptionalNullable<LocalDateTime> paidAt;
-    private String paidAmount;
-    private String type;
+    private OptionalNullable<String> paidAmount;
+    private OptionalNullable<String> type;
     private OptionalNullable<LocalDateTime> creditAt;
-    private String statementDescriptor;
+    private OptionalNullable<String> statementDescriptor;
 
     /**
      * Default constructor.
@@ -69,10 +69,16 @@ public class GetBoletoTransactionResponse
      * @param  attemptCount  Integer value for attemptCount.
      * @param  maxAttempts  Integer value for maxAttempts.
      * @param  splits  List of GetSplitResponse value for splits.
+     * @param  nextAttempt  LocalDateTime value for nextAttempt.
+     * @param  transactionType  String value for transactionType.
      * @param  id  String value for id.
      * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
      * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
+     * @param  metadata  Map of String, value for metadata.
      * @param  split  List of GetSplitResponse value for split.
+     * @param  interest  GetInterestResponse value for interest.
+     * @param  fine  GetFineResponse value for fine.
+     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
      * @param  url  String value for url.
      * @param  barcode  String value for barcode.
      * @param  nossoNumero  String value for nossoNumero.
@@ -80,22 +86,16 @@ public class GetBoletoTransactionResponse
      * @param  documentNumber  String value for documentNumber.
      * @param  instructions  String value for instructions.
      * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
+     * @param  dueAt  LocalDateTime value for dueAt.
      * @param  qrCode  String value for qrCode.
      * @param  line  String value for line.
      * @param  pdfPassword  String value for pdfPassword.
      * @param  pdf  String value for pdf.
+     * @param  paidAt  LocalDateTime value for paidAt.
      * @param  paidAmount  String value for paidAmount.
      * @param  type  String value for type.
-     * @param  statementDescriptor  String value for statementDescriptor.
-     * @param  nextAttempt  LocalDateTime value for nextAttempt.
-     * @param  transactionType  String value for transactionType.
-     * @param  metadata  Map of String, value for metadata.
-     * @param  interest  GetInterestResponse value for interest.
-     * @param  fine  GetFineResponse value for fine.
-     * @param  maxDaysToPayPastDue  Integer value for maxDaysToPayPastDue.
-     * @param  dueAt  LocalDateTime value for dueAt.
-     * @param  paidAt  LocalDateTime value for paidAt.
      * @param  creditAt  LocalDateTime value for creditAt.
+     * @param  statementDescriptor  String value for statementDescriptor.
      */
     public GetBoletoTransactionResponse(
             String gatewayId,
@@ -107,10 +107,16 @@ public class GetBoletoTransactionResponse
             Integer attemptCount,
             Integer maxAttempts,
             List<GetSplitResponse> splits,
+            LocalDateTime nextAttempt,
+            String transactionType,
             String id,
             GetGatewayResponseResponse gatewayResponse,
             GetAntifraudResponse antifraudResponse,
+            Map<String, String> metadata,
             List<GetSplitResponse> split,
+            GetInterestResponse interest,
+            GetFineResponse fine,
+            Integer maxDaysToPayPastDue,
             String url,
             String barcode,
             String nossoNumero,
@@ -118,63 +124,67 @@ public class GetBoletoTransactionResponse
             String documentNumber,
             String instructions,
             GetBillingAddressResponse billingAddress,
+            LocalDateTime dueAt,
             String qrCode,
             String line,
             String pdfPassword,
             String pdf,
+            LocalDateTime paidAt,
             String paidAmount,
             String type,
-            String statementDescriptor,
-            LocalDateTime nextAttempt,
-            String transactionType,
-            Map<String, String> metadata,
-            GetInterestResponse interest,
-            GetFineResponse fine,
-            Integer maxDaysToPayPastDue,
-            LocalDateTime dueAt,
-            LocalDateTime paidAt,
-            LocalDateTime creditAt) {
+            LocalDateTime creditAt,
+            String statementDescriptor) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
-                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata, interest, fine, maxDaysToPayPastDue);
-        this.url = url;
-        this.barcode = barcode;
-        this.nossoNumero = nossoNumero;
-        this.bank = bank;
-        this.documentNumber = documentNumber;
-        this.instructions = instructions;
-        this.billingAddress = billingAddress;
+                splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
+                metadata, split, interest, fine, maxDaysToPayPastDue);
+        this.url = OptionalNullable.of(url);
+        this.barcode = OptionalNullable.of(barcode);
+        this.nossoNumero = OptionalNullable.of(nossoNumero);
+        this.bank = OptionalNullable.of(bank);
+        this.documentNumber = OptionalNullable.of(documentNumber);
+        this.instructions = OptionalNullable.of(instructions);
+        this.billingAddress = OptionalNullable.of(billingAddress);
         this.dueAt = OptionalNullable.of(dueAt);
-        this.qrCode = qrCode;
-        this.line = line;
-        this.pdfPassword = pdfPassword;
-        this.pdf = pdf;
+        this.qrCode = OptionalNullable.of(qrCode);
+        this.line = OptionalNullable.of(line);
+        this.pdfPassword = OptionalNullable.of(pdfPassword);
+        this.pdf = OptionalNullable.of(pdf);
         this.paidAt = OptionalNullable.of(paidAt);
-        this.paidAmount = paidAmount;
-        this.type = type;
+        this.paidAmount = OptionalNullable.of(paidAmount);
+        this.type = OptionalNullable.of(type);
         this.creditAt = OptionalNullable.of(creditAt);
-        this.statementDescriptor = statementDescriptor;
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetBoletoTransactionResponse(String gatewayId, Integer amount, String status,
-            Boolean success, LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
-            Integer maxAttempts, List<GetSplitResponse> splits, String id,
-            GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
-            List<GetSplitResponse> split, String url, String barcode, String nossoNumero,
-            String bank, String documentNumber, String instructions,
-            GetBillingAddressResponse billingAddress, String qrCode, String line,
-            String pdfPassword, String pdf, String paidAmount, String type,
-            String statementDescriptor, OptionalNullable<LocalDateTime> nextAttempt,
-            String transactionType, OptionalNullable<Map<String, String>> metadata,
+    protected GetBoletoTransactionResponse(OptionalNullable<String> gatewayId,
+            OptionalNullable<Integer> amount, OptionalNullable<String> status,
+            OptionalNullable<Boolean> success, OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<LocalDateTime> updatedAt, OptionalNullable<Integer> attemptCount,
+            OptionalNullable<Integer> maxAttempts, OptionalNullable<List<GetSplitResponse>> splits,
+            OptionalNullable<LocalDateTime> nextAttempt, String transactionType,
+            OptionalNullable<String> id,
+            OptionalNullable<GetGatewayResponseResponse> gatewayResponse,
+            OptionalNullable<GetAntifraudResponse> antifraudResponse,
+            OptionalNullable<Map<String, String>> metadata,
+            OptionalNullable<List<GetSplitResponse>> split,
             OptionalNullable<GetInterestResponse> interest, OptionalNullable<GetFineResponse> fine,
-            OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<LocalDateTime> dueAt,
-            OptionalNullable<LocalDateTime> paidAt, OptionalNullable<LocalDateTime> creditAt) {
+            OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<String> url,
+            OptionalNullable<String> barcode, OptionalNullable<String> nossoNumero,
+            OptionalNullable<String> bank, OptionalNullable<String> documentNumber,
+            OptionalNullable<String> instructions,
+            OptionalNullable<GetBillingAddressResponse> billingAddress,
+            OptionalNullable<LocalDateTime> dueAt, OptionalNullable<String> qrCode,
+            OptionalNullable<String> line, OptionalNullable<String> pdfPassword,
+            OptionalNullable<String> pdf, OptionalNullable<LocalDateTime> paidAt,
+            OptionalNullable<String> paidAmount, OptionalNullable<String> type,
+            OptionalNullable<LocalDateTime> creditAt,
+            OptionalNullable<String> statementDescriptor) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
-                splits, id, gatewayResponse, antifraudResponse, split, nextAttempt, transactionType,
-                metadata, interest, fine, maxDaysToPayPastDue);
+                splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
+                metadata, split, interest, fine, maxDaysToPayPastDue);
         this.url = url;
         this.barcode = barcode;
         this.nossoNumero = nossoNumero;
@@ -195,12 +205,22 @@ public class GetBoletoTransactionResponse
     }
 
     /**
+     * Internal Getter for Url.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUrl() {
+        return this.url;
+    }
+
+    /**
      * Getter for Url.
      * @return Returns the String
      */
-    @JsonGetter("url")
     public String getUrl() {
-        return url;
+        return OptionalNullable.getFrom(url);
     }
 
     /**
@@ -209,16 +229,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("url")
     public void setUrl(String url) {
-        this.url = url;
+        this.url = OptionalNullable.of(url);
+    }
+
+    /**
+     * UnSetter for Url.
+     */
+    public void unsetUrl() {
+        url = null;
+    }
+
+    /**
+     * Internal Getter for Barcode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("barcode")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBarcode() {
+        return this.barcode;
     }
 
     /**
      * Getter for Barcode.
      * @return Returns the String
      */
-    @JsonGetter("barcode")
     public String getBarcode() {
-        return barcode;
+        return OptionalNullable.getFrom(barcode);
     }
 
     /**
@@ -227,16 +264,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("barcode")
     public void setBarcode(String barcode) {
-        this.barcode = barcode;
+        this.barcode = OptionalNullable.of(barcode);
+    }
+
+    /**
+     * UnSetter for Barcode.
+     */
+    public void unsetBarcode() {
+        barcode = null;
+    }
+
+    /**
+     * Internal Getter for NossoNumero.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("nosso_numero")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNossoNumero() {
+        return this.nossoNumero;
     }
 
     /**
      * Getter for NossoNumero.
      * @return Returns the String
      */
-    @JsonGetter("nosso_numero")
     public String getNossoNumero() {
-        return nossoNumero;
+        return OptionalNullable.getFrom(nossoNumero);
     }
 
     /**
@@ -245,16 +299,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("nosso_numero")
     public void setNossoNumero(String nossoNumero) {
-        this.nossoNumero = nossoNumero;
+        this.nossoNumero = OptionalNullable.of(nossoNumero);
+    }
+
+    /**
+     * UnSetter for NossoNumero.
+     */
+    public void unsetNossoNumero() {
+        nossoNumero = null;
+    }
+
+    /**
+     * Internal Getter for Bank.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("bank")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBank() {
+        return this.bank;
     }
 
     /**
      * Getter for Bank.
      * @return Returns the String
      */
-    @JsonGetter("bank")
     public String getBank() {
-        return bank;
+        return OptionalNullable.getFrom(bank);
     }
 
     /**
@@ -263,16 +334,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("bank")
     public void setBank(String bank) {
-        this.bank = bank;
+        this.bank = OptionalNullable.of(bank);
+    }
+
+    /**
+     * UnSetter for Bank.
+     */
+    public void unsetBank() {
+        bank = null;
+    }
+
+    /**
+     * Internal Getter for DocumentNumber.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("document_number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDocumentNumber() {
+        return this.documentNumber;
     }
 
     /**
      * Getter for DocumentNumber.
      * @return Returns the String
      */
-    @JsonGetter("document_number")
     public String getDocumentNumber() {
-        return documentNumber;
+        return OptionalNullable.getFrom(documentNumber);
     }
 
     /**
@@ -281,16 +369,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("document_number")
     public void setDocumentNumber(String documentNumber) {
-        this.documentNumber = documentNumber;
+        this.documentNumber = OptionalNullable.of(documentNumber);
+    }
+
+    /**
+     * UnSetter for DocumentNumber.
+     */
+    public void unsetDocumentNumber() {
+        documentNumber = null;
+    }
+
+    /**
+     * Internal Getter for Instructions.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("instructions")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetInstructions() {
+        return this.instructions;
     }
 
     /**
      * Getter for Instructions.
      * @return Returns the String
      */
-    @JsonGetter("instructions")
     public String getInstructions() {
-        return instructions;
+        return OptionalNullable.getFrom(instructions);
     }
 
     /**
@@ -299,16 +404,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("instructions")
     public void setInstructions(String instructions) {
-        this.instructions = instructions;
+        this.instructions = OptionalNullable.of(instructions);
+    }
+
+    /**
+     * UnSetter for Instructions.
+     */
+    public void unsetInstructions() {
+        instructions = null;
+    }
+
+    /**
+     * Internal Getter for BillingAddress.
+     * @return Returns the Internal GetBillingAddressResponse
+     */
+    @JsonGetter("billing_address")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetBillingAddressResponse> internalGetBillingAddress() {
+        return this.billingAddress;
     }
 
     /**
      * Getter for BillingAddress.
      * @return Returns the GetBillingAddressResponse
      */
-    @JsonGetter("billing_address")
     public GetBillingAddressResponse getBillingAddress() {
-        return billingAddress;
+        return OptionalNullable.getFrom(billingAddress);
     }
 
     /**
@@ -317,7 +439,14 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("billing_address")
     public void setBillingAddress(GetBillingAddressResponse billingAddress) {
-        this.billingAddress = billingAddress;
+        this.billingAddress = OptionalNullable.of(billingAddress);
+    }
+
+    /**
+     * UnSetter for BillingAddress.
+     */
+    public void unsetBillingAddress() {
+        billingAddress = null;
     }
 
     /**
@@ -357,12 +486,22 @@ public class GetBoletoTransactionResponse
     }
 
     /**
+     * Internal Getter for QrCode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("qr_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetQrCode() {
+        return this.qrCode;
+    }
+
+    /**
      * Getter for QrCode.
      * @return Returns the String
      */
-    @JsonGetter("qr_code")
     public String getQrCode() {
-        return qrCode;
+        return OptionalNullable.getFrom(qrCode);
     }
 
     /**
@@ -371,16 +510,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("qr_code")
     public void setQrCode(String qrCode) {
-        this.qrCode = qrCode;
+        this.qrCode = OptionalNullable.of(qrCode);
+    }
+
+    /**
+     * UnSetter for QrCode.
+     */
+    public void unsetQrCode() {
+        qrCode = null;
+    }
+
+    /**
+     * Internal Getter for Line.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("line")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLine() {
+        return this.line;
     }
 
     /**
      * Getter for Line.
      * @return Returns the String
      */
-    @JsonGetter("line")
     public String getLine() {
-        return line;
+        return OptionalNullable.getFrom(line);
     }
 
     /**
@@ -389,16 +545,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("line")
     public void setLine(String line) {
-        this.line = line;
+        this.line = OptionalNullable.of(line);
+    }
+
+    /**
+     * UnSetter for Line.
+     */
+    public void unsetLine() {
+        line = null;
+    }
+
+    /**
+     * Internal Getter for PdfPassword.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("pdf_password")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPdfPassword() {
+        return this.pdfPassword;
     }
 
     /**
      * Getter for PdfPassword.
      * @return Returns the String
      */
-    @JsonGetter("pdf_password")
     public String getPdfPassword() {
-        return pdfPassword;
+        return OptionalNullable.getFrom(pdfPassword);
     }
 
     /**
@@ -407,16 +580,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("pdf_password")
     public void setPdfPassword(String pdfPassword) {
-        this.pdfPassword = pdfPassword;
+        this.pdfPassword = OptionalNullable.of(pdfPassword);
+    }
+
+    /**
+     * UnSetter for PdfPassword.
+     */
+    public void unsetPdfPassword() {
+        pdfPassword = null;
+    }
+
+    /**
+     * Internal Getter for Pdf.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("pdf")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPdf() {
+        return this.pdf;
     }
 
     /**
      * Getter for Pdf.
      * @return Returns the String
      */
-    @JsonGetter("pdf")
     public String getPdf() {
-        return pdf;
+        return OptionalNullable.getFrom(pdf);
     }
 
     /**
@@ -425,7 +615,14 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("pdf")
     public void setPdf(String pdf) {
-        this.pdf = pdf;
+        this.pdf = OptionalNullable.of(pdf);
+    }
+
+    /**
+     * UnSetter for Pdf.
+     */
+    public void unsetPdf() {
+        pdf = null;
     }
 
     /**
@@ -465,12 +662,22 @@ public class GetBoletoTransactionResponse
     }
 
     /**
+     * Internal Getter for PaidAmount.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("paid_amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPaidAmount() {
+        return this.paidAmount;
+    }
+
+    /**
      * Getter for PaidAmount.
      * @return Returns the String
      */
-    @JsonGetter("paid_amount")
     public String getPaidAmount() {
-        return paidAmount;
+        return OptionalNullable.getFrom(paidAmount);
     }
 
     /**
@@ -479,16 +686,33 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("paid_amount")
     public void setPaidAmount(String paidAmount) {
-        this.paidAmount = paidAmount;
+        this.paidAmount = OptionalNullable.of(paidAmount);
+    }
+
+    /**
+     * UnSetter for PaidAmount.
+     */
+    public void unsetPaidAmount() {
+        paidAmount = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -497,7 +721,14 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
     }
 
     /**
@@ -537,13 +768,24 @@ public class GetBoletoTransactionResponse
     }
 
     /**
+     * Internal Getter for StatementDescriptor.
+     * Soft Descriptor
+     * @return Returns the Internal String
+     */
+    @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatementDescriptor() {
+        return this.statementDescriptor;
+    }
+
+    /**
      * Getter for StatementDescriptor.
      * Soft Descriptor
      * @return Returns the String
      */
-    @JsonGetter("statement_descriptor")
     public String getStatementDescriptor() {
-        return statementDescriptor;
+        return OptionalNullable.getFrom(statementDescriptor);
     }
 
     /**
@@ -553,7 +795,15 @@ public class GetBoletoTransactionResponse
      */
     @JsonSetter("statement_descriptor")
     public void setStatementDescriptor(String statementDescriptor) {
-        this.statementDescriptor = statementDescriptor;
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+    }
+
+    /**
+     * UnSetter for StatementDescriptor.
+     * Soft Descriptor
+     */
+    public void unsetStatementDescriptor() {
+        statementDescriptor = null;
     }
 
     /**
@@ -565,17 +815,17 @@ public class GetBoletoTransactionResponse
         return "GetBoletoTransactionResponse [" + "url=" + url + ", barcode=" + barcode
                 + ", nossoNumero=" + nossoNumero + ", bank=" + bank + ", documentNumber="
                 + documentNumber + ", instructions=" + instructions + ", billingAddress="
-                + billingAddress + ", qrCode=" + qrCode + ", line=" + line + ", pdfPassword="
-                + pdfPassword + ", pdf=" + pdf + ", paidAmount=" + paidAmount + ", type=" + type
-                + ", statementDescriptor=" + statementDescriptor + ", dueAt=" + dueAt + ", paidAt="
-                + paidAt + ", creditAt=" + creditAt + ", gatewayId=" + getGatewayId() + ", amount="
-                + getAmount() + ", status=" + getStatus() + ", success=" + getSuccess()
-                + ", createdAt=" + getCreatedAt() + ", updatedAt=" + getUpdatedAt()
+                + billingAddress + ", dueAt=" + dueAt + ", qrCode=" + qrCode + ", line=" + line
+                + ", pdfPassword=" + pdfPassword + ", pdf=" + pdf + ", paidAt=" + paidAt
+                + ", paidAmount=" + paidAmount + ", type=" + type + ", creditAt=" + creditAt
+                + ", statementDescriptor=" + statementDescriptor + ", gatewayId=" + getGatewayId()
+                + ", amount=" + getAmount() + ", status=" + getStatus() + ", success="
+                + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt=" + getUpdatedAt()
                 + ", attemptCount=" + getAttemptCount() + ", maxAttempts=" + getMaxAttempts()
-                + ", splits=" + getSplits() + ", id=" + getId() + ", gatewayResponse="
-                + getGatewayResponse() + ", antifraudResponse=" + getAntifraudResponse()
-                + ", split=" + getSplit() + ", nextAttempt=" + getNextAttempt()
-                + ", transactionType=" + getTransactionType() + ", metadata=" + getMetadata()
+                + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
+                + ", transactionType=" + getTransactionType() + ", id=" + getId()
+                + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
+                + getAntifraudResponse() + ", metadata=" + getMetadata() + ", split=" + getSplit()
                 + ", interest=" + getInterest() + ", fine=" + getFine() + ", maxDaysToPayPastDue="
                 + getMaxDaysToPayPastDue() + "]";
     }
@@ -586,17 +836,40 @@ public class GetBoletoTransactionResponse
      * @return a new {@link GetBoletoTransactionResponse.Builder} object
      */
     public Builder toGetBoletoTransactionResponseBuilder() {
-        Builder builder = new Builder(getGatewayId(), getAmount(), getStatus(), getSuccess(),
-                getCreatedAt(), getUpdatedAt(), getAttemptCount(), getMaxAttempts(), getSplits(),
-                getId(), getGatewayResponse(), getAntifraudResponse(), getSplit(), url, barcode,
-                nossoNumero, bank, documentNumber, instructions, billingAddress, qrCode, line,
-                pdfPassword, pdf, paidAmount, type, statementDescriptor)
+        Builder builder = new Builder()
                 .transactionType(getTransactionType());
+        builder.url = internalGetUrl();
+        builder.barcode = internalGetBarcode();
+        builder.nossoNumero = internalGetNossoNumero();
+        builder.bank = internalGetBank();
+        builder.documentNumber = internalGetDocumentNumber();
+        builder.instructions = internalGetInstructions();
+        builder.billingAddress = internalGetBillingAddress();
         builder.dueAt = internalGetDueAt();
+        builder.qrCode = internalGetQrCode();
+        builder.line = internalGetLine();
+        builder.pdfPassword = internalGetPdfPassword();
+        builder.pdf = internalGetPdf();
         builder.paidAt = internalGetPaidAt();
+        builder.paidAmount = internalGetPaidAmount();
+        builder.type = internalGetType();
         builder.creditAt = internalGetCreditAt();
+        builder.statementDescriptor = internalGetStatementDescriptor();
+        builder.gatewayId = internalGetGatewayId();
+        builder.amount = internalGetAmount();
+        builder.status = internalGetStatus();
+        builder.success = internalGetSuccess();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.attemptCount = internalGetAttemptCount();
+        builder.maxAttempts = internalGetMaxAttempts();
+        builder.splits = internalGetSplits();
         builder.nextAttempt = internalGetNextAttempt();
+        builder.id = internalGetId();
+        builder.gatewayResponse = internalGetGatewayResponse();
+        builder.antifraudResponse = internalGetAntifraudResponse();
         builder.metadata = internalGetMetadata();
+        builder.split = internalGetSplit();
         builder.interest = internalGetInterest();
         builder.fine = internalGetFine();
         builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
@@ -607,116 +880,44 @@ public class GetBoletoTransactionResponse
      * Class to build instances of {@link GetBoletoTransactionResponse}.
      */
     public static class Builder {
-        private String gatewayId;
-        private Integer amount;
-        private String status;
-        private Boolean success;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private Integer attemptCount;
-        private Integer maxAttempts;
-        private List<GetSplitResponse> splits;
-        private String id;
-        private GetGatewayResponseResponse gatewayResponse;
-        private GetAntifraudResponse antifraudResponse;
-        private List<GetSplitResponse> split;
-        private String url;
-        private String barcode;
-        private String nossoNumero;
-        private String bank;
-        private String documentNumber;
-        private String instructions;
-        private GetBillingAddressResponse billingAddress;
-        private String qrCode;
-        private String line;
-        private String pdfPassword;
-        private String pdf;
-        private String paidAmount;
-        private String type;
-        private String statementDescriptor;
+        private OptionalNullable<String> gatewayId;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> status;
+        private OptionalNullable<Boolean> success;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<Integer> attemptCount;
+        private OptionalNullable<Integer> maxAttempts;
+        private OptionalNullable<List<GetSplitResponse>> splits;
         private OptionalNullable<LocalDateTime> nextAttempt;
         private String transactionType = "boleto";
+        private OptionalNullable<String> id;
+        private OptionalNullable<GetGatewayResponseResponse> gatewayResponse;
+        private OptionalNullable<GetAntifraudResponse> antifraudResponse;
         private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<List<GetSplitResponse>> split;
         private OptionalNullable<GetInterestResponse> interest;
         private OptionalNullable<GetFineResponse> fine;
         private OptionalNullable<Integer> maxDaysToPayPastDue;
+        private OptionalNullable<String> url;
+        private OptionalNullable<String> barcode;
+        private OptionalNullable<String> nossoNumero;
+        private OptionalNullable<String> bank;
+        private OptionalNullable<String> documentNumber;
+        private OptionalNullable<String> instructions;
+        private OptionalNullable<GetBillingAddressResponse> billingAddress;
         private OptionalNullable<LocalDateTime> dueAt;
+        private OptionalNullable<String> qrCode;
+        private OptionalNullable<String> line;
+        private OptionalNullable<String> pdfPassword;
+        private OptionalNullable<String> pdf;
         private OptionalNullable<LocalDateTime> paidAt;
+        private OptionalNullable<String> paidAmount;
+        private OptionalNullable<String> type;
         private OptionalNullable<LocalDateTime> creditAt;
+        private OptionalNullable<String> statementDescriptor;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  gatewayId  String value for gatewayId.
-         * @param  amount  Integer value for amount.
-         * @param  status  String value for status.
-         * @param  success  Boolean value for success.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  attemptCount  Integer value for attemptCount.
-         * @param  maxAttempts  Integer value for maxAttempts.
-         * @param  splits  List of GetSplitResponse value for splits.
-         * @param  id  String value for id.
-         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
-         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
-         * @param  split  List of GetSplitResponse value for split.
-         * @param  url  String value for url.
-         * @param  barcode  String value for barcode.
-         * @param  nossoNumero  String value for nossoNumero.
-         * @param  bank  String value for bank.
-         * @param  documentNumber  String value for documentNumber.
-         * @param  instructions  String value for instructions.
-         * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
-         * @param  qrCode  String value for qrCode.
-         * @param  line  String value for line.
-         * @param  pdfPassword  String value for pdfPassword.
-         * @param  pdf  String value for pdf.
-         * @param  paidAmount  String value for paidAmount.
-         * @param  type  String value for type.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         */
-        public Builder(String gatewayId, Integer amount, String status, Boolean success,
-                LocalDateTime createdAt, LocalDateTime updatedAt, Integer attemptCount,
-                Integer maxAttempts, List<GetSplitResponse> splits, String id,
-                GetGatewayResponseResponse gatewayResponse, GetAntifraudResponse antifraudResponse,
-                List<GetSplitResponse> split, String url, String barcode, String nossoNumero,
-                String bank, String documentNumber, String instructions,
-                GetBillingAddressResponse billingAddress, String qrCode, String line,
-                String pdfPassword, String pdf, String paidAmount, String type,
-                String statementDescriptor) {
-            this.gatewayId = gatewayId;
-            this.amount = amount;
-            this.status = status;
-            this.success = success;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.attemptCount = attemptCount;
-            this.maxAttempts = maxAttempts;
-            this.splits = splits;
-            this.id = id;
-            this.gatewayResponse = gatewayResponse;
-            this.antifraudResponse = antifraudResponse;
-            this.split = split;
-            this.url = url;
-            this.barcode = barcode;
-            this.nossoNumero = nossoNumero;
-            this.bank = bank;
-            this.documentNumber = documentNumber;
-            this.instructions = instructions;
-            this.billingAddress = billingAddress;
-            this.qrCode = qrCode;
-            this.line = line;
-            this.pdfPassword = pdfPassword;
-            this.pdf = pdf;
-            this.paidAmount = paidAmount;
-            this.type = type;
-            this.statementDescriptor = statementDescriptor;
-        }
 
         /**
          * Setter for gatewayId.
@@ -724,7 +925,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder gatewayId(String gatewayId) {
-            this.gatewayId = gatewayId;
+            this.gatewayId = OptionalNullable.of(gatewayId);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayId.
+         * @return Builder
+         */
+        public Builder unsetGatewayId() {
+            gatewayId = null;
             return this;
         }
 
@@ -734,7 +944,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -744,7 +963,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -754,7 +982,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder success(Boolean success) {
-            this.success = success;
+            this.success = OptionalNullable.of(success);
+            return this;
+        }
+
+        /**
+         * UnSetter for success.
+         * @return Builder
+         */
+        public Builder unsetSuccess() {
+            success = null;
             return this;
         }
 
@@ -764,7 +1001,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -774,7 +1020,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -784,7 +1039,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder attemptCount(Integer attemptCount) {
-            this.attemptCount = attemptCount;
+            this.attemptCount = OptionalNullable.of(attemptCount);
+            return this;
+        }
+
+        /**
+         * UnSetter for attemptCount.
+         * @return Builder
+         */
+        public Builder unsetAttemptCount() {
+            attemptCount = null;
             return this;
         }
 
@@ -794,7 +1058,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder maxAttempts(Integer maxAttempts) {
-            this.maxAttempts = maxAttempts;
+            this.maxAttempts = OptionalNullable.of(maxAttempts);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxAttempts.
+         * @return Builder
+         */
+        public Builder unsetMaxAttempts() {
+            maxAttempts = null;
             return this;
         }
 
@@ -804,187 +1077,16 @@ public class GetBoletoTransactionResponse
          * @return Builder
          */
         public Builder splits(List<GetSplitResponse> splits) {
-            this.splits = splits;
+            this.splits = OptionalNullable.of(splits);
             return this;
         }
 
         /**
-         * Setter for id.
-         * @param  id  String value for id.
+         * UnSetter for splits.
          * @return Builder
          */
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        /**
-         * Setter for gatewayResponse.
-         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
-         * @return Builder
-         */
-        public Builder gatewayResponse(GetGatewayResponseResponse gatewayResponse) {
-            this.gatewayResponse = gatewayResponse;
-            return this;
-        }
-
-        /**
-         * Setter for antifraudResponse.
-         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
-         * @return Builder
-         */
-        public Builder antifraudResponse(GetAntifraudResponse antifraudResponse) {
-            this.antifraudResponse = antifraudResponse;
-            return this;
-        }
-
-        /**
-         * Setter for split.
-         * @param  split  List of GetSplitResponse value for split.
-         * @return Builder
-         */
-        public Builder split(List<GetSplitResponse> split) {
-            this.split = split;
-            return this;
-        }
-
-        /**
-         * Setter for url.
-         * @param  url  String value for url.
-         * @return Builder
-         */
-        public Builder url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        /**
-         * Setter for barcode.
-         * @param  barcode  String value for barcode.
-         * @return Builder
-         */
-        public Builder barcode(String barcode) {
-            this.barcode = barcode;
-            return this;
-        }
-
-        /**
-         * Setter for nossoNumero.
-         * @param  nossoNumero  String value for nossoNumero.
-         * @return Builder
-         */
-        public Builder nossoNumero(String nossoNumero) {
-            this.nossoNumero = nossoNumero;
-            return this;
-        }
-
-        /**
-         * Setter for bank.
-         * @param  bank  String value for bank.
-         * @return Builder
-         */
-        public Builder bank(String bank) {
-            this.bank = bank;
-            return this;
-        }
-
-        /**
-         * Setter for documentNumber.
-         * @param  documentNumber  String value for documentNumber.
-         * @return Builder
-         */
-        public Builder documentNumber(String documentNumber) {
-            this.documentNumber = documentNumber;
-            return this;
-        }
-
-        /**
-         * Setter for instructions.
-         * @param  instructions  String value for instructions.
-         * @return Builder
-         */
-        public Builder instructions(String instructions) {
-            this.instructions = instructions;
-            return this;
-        }
-
-        /**
-         * Setter for billingAddress.
-         * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
-         * @return Builder
-         */
-        public Builder billingAddress(GetBillingAddressResponse billingAddress) {
-            this.billingAddress = billingAddress;
-            return this;
-        }
-
-        /**
-         * Setter for qrCode.
-         * @param  qrCode  String value for qrCode.
-         * @return Builder
-         */
-        public Builder qrCode(String qrCode) {
-            this.qrCode = qrCode;
-            return this;
-        }
-
-        /**
-         * Setter for line.
-         * @param  line  String value for line.
-         * @return Builder
-         */
-        public Builder line(String line) {
-            this.line = line;
-            return this;
-        }
-
-        /**
-         * Setter for pdfPassword.
-         * @param  pdfPassword  String value for pdfPassword.
-         * @return Builder
-         */
-        public Builder pdfPassword(String pdfPassword) {
-            this.pdfPassword = pdfPassword;
-            return this;
-        }
-
-        /**
-         * Setter for pdf.
-         * @param  pdf  String value for pdf.
-         * @return Builder
-         */
-        public Builder pdf(String pdf) {
-            this.pdf = pdf;
-            return this;
-        }
-
-        /**
-         * Setter for paidAmount.
-         * @param  paidAmount  String value for paidAmount.
-         * @return Builder
-         */
-        public Builder paidAmount(String paidAmount) {
-            this.paidAmount = paidAmount;
-            return this;
-        }
-
-        /**
-         * Setter for type.
-         * @param  type  String value for type.
-         * @return Builder
-         */
-        public Builder type(String type) {
-            this.type = type;
-            return this;
-        }
-
-        /**
-         * Setter for statementDescriptor.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @return Builder
-         */
-        public Builder statementDescriptor(String statementDescriptor) {
-            this.statementDescriptor = statementDescriptor;
+        public Builder unsetSplits() {
+            splits = null;
             return this;
         }
 
@@ -1018,6 +1120,63 @@ public class GetBoletoTransactionResponse
         }
 
         /**
+         * Setter for id.
+         * @param  id  String value for id.
+         * @return Builder
+         */
+        public Builder id(String id) {
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
+            return this;
+        }
+
+        /**
+         * Setter for gatewayResponse.
+         * @param  gatewayResponse  GetGatewayResponseResponse value for gatewayResponse.
+         * @return Builder
+         */
+        public Builder gatewayResponse(GetGatewayResponseResponse gatewayResponse) {
+            this.gatewayResponse = OptionalNullable.of(gatewayResponse);
+            return this;
+        }
+
+        /**
+         * UnSetter for gatewayResponse.
+         * @return Builder
+         */
+        public Builder unsetGatewayResponse() {
+            gatewayResponse = null;
+            return this;
+        }
+
+        /**
+         * Setter for antifraudResponse.
+         * @param  antifraudResponse  GetAntifraudResponse value for antifraudResponse.
+         * @return Builder
+         */
+        public Builder antifraudResponse(GetAntifraudResponse antifraudResponse) {
+            this.antifraudResponse = OptionalNullable.of(antifraudResponse);
+            return this;
+        }
+
+        /**
+         * UnSetter for antifraudResponse.
+         * @return Builder
+         */
+        public Builder unsetAntifraudResponse() {
+            antifraudResponse = null;
+            return this;
+        }
+
+        /**
          * Setter for metadata.
          * @param  metadata  Map of String, value for metadata.
          * @return Builder
@@ -1033,6 +1192,25 @@ public class GetBoletoTransactionResponse
          */
         public Builder unsetMetadata() {
             metadata = null;
+            return this;
+        }
+
+        /**
+         * Setter for split.
+         * @param  split  List of GetSplitResponse value for split.
+         * @return Builder
+         */
+        public Builder split(List<GetSplitResponse> split) {
+            this.split = OptionalNullable.of(split);
+            return this;
+        }
+
+        /**
+         * UnSetter for split.
+         * @return Builder
+         */
+        public Builder unsetSplit() {
+            split = null;
             return this;
         }
 
@@ -1094,6 +1272,139 @@ public class GetBoletoTransactionResponse
         }
 
         /**
+         * Setter for url.
+         * @param  url  String value for url.
+         * @return Builder
+         */
+        public Builder url(String url) {
+            this.url = OptionalNullable.of(url);
+            return this;
+        }
+
+        /**
+         * UnSetter for url.
+         * @return Builder
+         */
+        public Builder unsetUrl() {
+            url = null;
+            return this;
+        }
+
+        /**
+         * Setter for barcode.
+         * @param  barcode  String value for barcode.
+         * @return Builder
+         */
+        public Builder barcode(String barcode) {
+            this.barcode = OptionalNullable.of(barcode);
+            return this;
+        }
+
+        /**
+         * UnSetter for barcode.
+         * @return Builder
+         */
+        public Builder unsetBarcode() {
+            barcode = null;
+            return this;
+        }
+
+        /**
+         * Setter for nossoNumero.
+         * @param  nossoNumero  String value for nossoNumero.
+         * @return Builder
+         */
+        public Builder nossoNumero(String nossoNumero) {
+            this.nossoNumero = OptionalNullable.of(nossoNumero);
+            return this;
+        }
+
+        /**
+         * UnSetter for nossoNumero.
+         * @return Builder
+         */
+        public Builder unsetNossoNumero() {
+            nossoNumero = null;
+            return this;
+        }
+
+        /**
+         * Setter for bank.
+         * @param  bank  String value for bank.
+         * @return Builder
+         */
+        public Builder bank(String bank) {
+            this.bank = OptionalNullable.of(bank);
+            return this;
+        }
+
+        /**
+         * UnSetter for bank.
+         * @return Builder
+         */
+        public Builder unsetBank() {
+            bank = null;
+            return this;
+        }
+
+        /**
+         * Setter for documentNumber.
+         * @param  documentNumber  String value for documentNumber.
+         * @return Builder
+         */
+        public Builder documentNumber(String documentNumber) {
+            this.documentNumber = OptionalNullable.of(documentNumber);
+            return this;
+        }
+
+        /**
+         * UnSetter for documentNumber.
+         * @return Builder
+         */
+        public Builder unsetDocumentNumber() {
+            documentNumber = null;
+            return this;
+        }
+
+        /**
+         * Setter for instructions.
+         * @param  instructions  String value for instructions.
+         * @return Builder
+         */
+        public Builder instructions(String instructions) {
+            this.instructions = OptionalNullable.of(instructions);
+            return this;
+        }
+
+        /**
+         * UnSetter for instructions.
+         * @return Builder
+         */
+        public Builder unsetInstructions() {
+            instructions = null;
+            return this;
+        }
+
+        /**
+         * Setter for billingAddress.
+         * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
+         * @return Builder
+         */
+        public Builder billingAddress(GetBillingAddressResponse billingAddress) {
+            this.billingAddress = OptionalNullable.of(billingAddress);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingAddress.
+         * @return Builder
+         */
+        public Builder unsetBillingAddress() {
+            billingAddress = null;
+            return this;
+        }
+
+        /**
          * Setter for dueAt.
          * @param  dueAt  LocalDateTime value for dueAt.
          * @return Builder
@@ -1109,6 +1420,82 @@ public class GetBoletoTransactionResponse
          */
         public Builder unsetDueAt() {
             dueAt = null;
+            return this;
+        }
+
+        /**
+         * Setter for qrCode.
+         * @param  qrCode  String value for qrCode.
+         * @return Builder
+         */
+        public Builder qrCode(String qrCode) {
+            this.qrCode = OptionalNullable.of(qrCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for qrCode.
+         * @return Builder
+         */
+        public Builder unsetQrCode() {
+            qrCode = null;
+            return this;
+        }
+
+        /**
+         * Setter for line.
+         * @param  line  String value for line.
+         * @return Builder
+         */
+        public Builder line(String line) {
+            this.line = OptionalNullable.of(line);
+            return this;
+        }
+
+        /**
+         * UnSetter for line.
+         * @return Builder
+         */
+        public Builder unsetLine() {
+            line = null;
+            return this;
+        }
+
+        /**
+         * Setter for pdfPassword.
+         * @param  pdfPassword  String value for pdfPassword.
+         * @return Builder
+         */
+        public Builder pdfPassword(String pdfPassword) {
+            this.pdfPassword = OptionalNullable.of(pdfPassword);
+            return this;
+        }
+
+        /**
+         * UnSetter for pdfPassword.
+         * @return Builder
+         */
+        public Builder unsetPdfPassword() {
+            pdfPassword = null;
+            return this;
+        }
+
+        /**
+         * Setter for pdf.
+         * @param  pdf  String value for pdf.
+         * @return Builder
+         */
+        public Builder pdf(String pdf) {
+            this.pdf = OptionalNullable.of(pdf);
+            return this;
+        }
+
+        /**
+         * UnSetter for pdf.
+         * @return Builder
+         */
+        public Builder unsetPdf() {
+            pdf = null;
             return this;
         }
 
@@ -1132,6 +1519,44 @@ public class GetBoletoTransactionResponse
         }
 
         /**
+         * Setter for paidAmount.
+         * @param  paidAmount  String value for paidAmount.
+         * @return Builder
+         */
+        public Builder paidAmount(String paidAmount) {
+            this.paidAmount = OptionalNullable.of(paidAmount);
+            return this;
+        }
+
+        /**
+         * UnSetter for paidAmount.
+         * @return Builder
+         */
+        public Builder unsetPaidAmount() {
+            paidAmount = null;
+            return this;
+        }
+
+        /**
+         * Setter for type.
+         * @param  type  String value for type.
+         * @return Builder
+         */
+        public Builder type(String type) {
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
+            return this;
+        }
+
+        /**
          * Setter for creditAt.
          * @param  creditAt  LocalDateTime value for creditAt.
          * @return Builder
@@ -1151,16 +1576,35 @@ public class GetBoletoTransactionResponse
         }
 
         /**
+         * Setter for statementDescriptor.
+         * @param  statementDescriptor  String value for statementDescriptor.
+         * @return Builder
+         */
+        public Builder statementDescriptor(String statementDescriptor) {
+            this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for statementDescriptor.
+         * @return Builder
+         */
+        public Builder unsetStatementDescriptor() {
+            statementDescriptor = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetBoletoTransactionResponse} object using the set fields.
          * @return {@link GetBoletoTransactionResponse}
          */
         public GetBoletoTransactionResponse build() {
             return new GetBoletoTransactionResponse(gatewayId, amount, status, success, createdAt,
-                    updatedAt, attemptCount, maxAttempts, splits, id, gatewayResponse,
-                    antifraudResponse, split, url, barcode, nossoNumero, bank, documentNumber,
-                    instructions, billingAddress, qrCode, line, pdfPassword, pdf, paidAmount, type,
-                    statementDescriptor, nextAttempt, transactionType, metadata, interest, fine,
-                    maxDaysToPayPastDue, dueAt, paidAt, creditAt);
+                    updatedAt, attemptCount, maxAttempts, splits, nextAttempt, transactionType, id,
+                    gatewayResponse, antifraudResponse, metadata, split, interest, fine,
+                    maxDaysToPayPastDue, url, barcode, nossoNumero, bank, documentNumber,
+                    instructions, billingAddress, dueAt, qrCode, line, pdfPassword, pdf, paidAt,
+                    paidAmount, type, creditAt, statementDescriptor);
         }
     }
 }

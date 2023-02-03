@@ -7,19 +7,22 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetOrderItemResponse type.
  */
 public class GetOrderItemResponse {
-    private String id;
-    private Integer amount;
-    private String description;
-    private Integer quantity;
-    private String category;
-    private String code;
+    private OptionalNullable<String> id;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> description;
+    private OptionalNullable<Integer> quantity;
+    private OptionalNullable<String> category;
+    private OptionalNullable<String> code;
 
     /**
      * Default constructor.
@@ -43,6 +46,20 @@ public class GetOrderItemResponse {
             Integer quantity,
             String category,
             String code) {
+        this.id = OptionalNullable.of(id);
+        this.amount = OptionalNullable.of(amount);
+        this.description = OptionalNullable.of(description);
+        this.quantity = OptionalNullable.of(quantity);
+        this.category = OptionalNullable.of(category);
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetOrderItemResponse(OptionalNullable<String> id, OptionalNullable<Integer> amount,
+            OptionalNullable<String> description, OptionalNullable<Integer> quantity,
+            OptionalNullable<String> category, OptionalNullable<String> code) {
         this.id = id;
         this.amount = amount;
         this.description = description;
@@ -52,13 +69,24 @@ public class GetOrderItemResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * Id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * Id
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -68,16 +96,34 @@ public class GetOrderItemResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     * Id
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
      * Getter for Amount.
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -86,16 +132,33 @@ public class GetOrderItemResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for Description.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDescription() {
+        return this.description;
     }
 
     /**
      * Getter for Description.
      * @return Returns the String
      */
-    @JsonGetter("description")
     public String getDescription() {
-        return description;
+        return OptionalNullable.getFrom(description);
     }
 
     /**
@@ -104,16 +167,33 @@ public class GetOrderItemResponse {
      */
     @JsonSetter("description")
     public void setDescription(String description) {
-        this.description = description;
+        this.description = OptionalNullable.of(description);
+    }
+
+    /**
+     * UnSetter for Description.
+     */
+    public void unsetDescription() {
+        description = null;
+    }
+
+    /**
+     * Internal Getter for Quantity.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetQuantity() {
+        return this.quantity;
     }
 
     /**
      * Getter for Quantity.
      * @return Returns the Integer
      */
-    @JsonGetter("quantity")
     public Integer getQuantity() {
-        return quantity;
+        return OptionalNullable.getFrom(quantity);
     }
 
     /**
@@ -122,7 +202,26 @@ public class GetOrderItemResponse {
      */
     @JsonSetter("quantity")
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        this.quantity = OptionalNullable.of(quantity);
+    }
+
+    /**
+     * UnSetter for Quantity.
+     */
+    public void unsetQuantity() {
+        quantity = null;
+    }
+
+    /**
+     * Internal Getter for Category.
+     * Category
+     * @return Returns the Internal String
+     */
+    @JsonGetter("category")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCategory() {
+        return this.category;
     }
 
     /**
@@ -130,9 +229,8 @@ public class GetOrderItemResponse {
      * Category
      * @return Returns the String
      */
-    @JsonGetter("category")
     public String getCategory() {
-        return category;
+        return OptionalNullable.getFrom(category);
     }
 
     /**
@@ -142,7 +240,27 @@ public class GetOrderItemResponse {
      */
     @JsonSetter("category")
     public void setCategory(String category) {
-        this.category = category;
+        this.category = OptionalNullable.of(category);
+    }
+
+    /**
+     * UnSetter for Category.
+     * Category
+     */
+    public void unsetCategory() {
+        category = null;
+    }
+
+    /**
+     * Internal Getter for Code.
+     * Code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
     }
 
     /**
@@ -150,9 +268,8 @@ public class GetOrderItemResponse {
      * Code
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -162,7 +279,15 @@ public class GetOrderItemResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     * Code
+     */
+    public void unsetCode() {
+        code = null;
     }
 
     /**
@@ -182,7 +307,13 @@ public class GetOrderItemResponse {
      * @return a new {@link GetOrderItemResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, amount, description, quantity, category, code);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.amount = internalGetAmount();
+        builder.description = internalGetDescription();
+        builder.quantity = internalGetQuantity();
+        builder.category = internalGetCategory();
+        builder.code = internalGetCode();
         return builder;
     }
 
@@ -190,37 +321,14 @@ public class GetOrderItemResponse {
      * Class to build instances of {@link GetOrderItemResponse}.
      */
     public static class Builder {
-        private String id;
-        private Integer amount;
-        private String description;
-        private Integer quantity;
-        private String category;
-        private String code;
+        private OptionalNullable<String> id;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> description;
+        private OptionalNullable<Integer> quantity;
+        private OptionalNullable<String> category;
+        private OptionalNullable<String> code;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  amount  Integer value for amount.
-         * @param  description  String value for description.
-         * @param  quantity  Integer value for quantity.
-         * @param  category  String value for category.
-         * @param  code  String value for code.
-         */
-        public Builder(String id, Integer amount, String description, Integer quantity,
-                String category, String code) {
-            this.id = id;
-            this.amount = amount;
-            this.description = description;
-            this.quantity = quantity;
-            this.category = category;
-            this.code = code;
-        }
 
         /**
          * Setter for id.
@@ -228,7 +336,16 @@ public class GetOrderItemResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -238,7 +355,16 @@ public class GetOrderItemResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -248,7 +374,16 @@ public class GetOrderItemResponse {
          * @return Builder
          */
         public Builder description(String description) {
-            this.description = description;
+            this.description = OptionalNullable.of(description);
+            return this;
+        }
+
+        /**
+         * UnSetter for description.
+         * @return Builder
+         */
+        public Builder unsetDescription() {
+            description = null;
             return this;
         }
 
@@ -258,7 +393,16 @@ public class GetOrderItemResponse {
          * @return Builder
          */
         public Builder quantity(Integer quantity) {
-            this.quantity = quantity;
+            this.quantity = OptionalNullable.of(quantity);
+            return this;
+        }
+
+        /**
+         * UnSetter for quantity.
+         * @return Builder
+         */
+        public Builder unsetQuantity() {
+            quantity = null;
             return this;
         }
 
@@ -268,7 +412,16 @@ public class GetOrderItemResponse {
          * @return Builder
          */
         public Builder category(String category) {
-            this.category = category;
+            this.category = OptionalNullable.of(category);
+            return this;
+        }
+
+        /**
+         * UnSetter for category.
+         * @return Builder
+         */
+        public Builder unsetCategory() {
+            category = null;
             return this;
         }
 
@@ -278,7 +431,16 @@ public class GetOrderItemResponse {
          * @return Builder
          */
         public Builder code(String code) {
-            this.code = code;
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
             return this;
         }
 

@@ -11,22 +11,22 @@ Generic response object for getting a transaction.
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `GatewayId` | `String` | Required | Gateway transaction id | String getGatewayId() | setGatewayId(String gatewayId) |
-| `Amount` | `Integer` | Required | Amount in cents | Integer getAmount() | setAmount(Integer amount) |
-| `Status` | `String` | Required | Transaction status | String getStatus() | setStatus(String status) |
-| `Success` | `Boolean` | Required | Indicates if the transaction ocurred successfuly | Boolean getSuccess() | setSuccess(Boolean success) |
-| `CreatedAt` | `LocalDateTime` | Required | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
-| `UpdatedAt` | `LocalDateTime` | Required | Last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
-| `AttemptCount` | `Integer` | Required | Number of attempts tried | Integer getAttemptCount() | setAttemptCount(Integer attemptCount) |
-| `MaxAttempts` | `Integer` | Required | Max attempts | Integer getMaxAttempts() | setMaxAttempts(Integer maxAttempts) |
-| `Splits` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | Splits | List<GetSplitResponse> getSplits() | setSplits(List<GetSplitResponse> splits) |
+| `GatewayId` | `String` | Optional | Gateway transaction id | String getGatewayId() | setGatewayId(String gatewayId) |
+| `Amount` | `Integer` | Optional | Amount in cents | Integer getAmount() | setAmount(Integer amount) |
+| `Status` | `String` | Optional | Transaction status | String getStatus() | setStatus(String status) |
+| `Success` | `Boolean` | Optional | Indicates if the transaction ocurred successfuly | Boolean getSuccess() | setSuccess(Boolean success) |
+| `CreatedAt` | `LocalDateTime` | Optional | Creation date | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
+| `UpdatedAt` | `LocalDateTime` | Optional | Last update date | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
+| `AttemptCount` | `Integer` | Optional | Number of attempts tried | Integer getAttemptCount() | setAttemptCount(Integer attemptCount) |
+| `MaxAttempts` | `Integer` | Optional | Max attempts | Integer getMaxAttempts() | setMaxAttempts(Integer maxAttempts) |
+| `Splits` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Optional | Splits | List<GetSplitResponse> getSplits() | setSplits(List<GetSplitResponse> splits) |
 | `NextAttempt` | `LocalDateTime` | Optional | Date and time of the next attempt | LocalDateTime getNextAttempt() | setNextAttempt(LocalDateTime nextAttempt) |
 | `TransactionType` | `String` | Optional | - | String getTransactionType() | setTransactionType(String transactionType) |
-| `Id` | `String` | Required | Código da transação | String getId() | setId(String id) |
-| `GatewayResponse` | [`GetGatewayResponseResponse`](../../doc/models/get-gateway-response-response.md) | Required | The Gateway Response | GetGatewayResponseResponse getGatewayResponse() | setGatewayResponse(GetGatewayResponseResponse gatewayResponse) |
-| `AntifraudResponse` | [`GetAntifraudResponse`](../../doc/models/get-antifraud-response.md) | Required | - | GetAntifraudResponse getAntifraudResponse() | setAntifraudResponse(GetAntifraudResponse antifraudResponse) |
+| `Id` | `String` | Optional | Código da transação | String getId() | setId(String id) |
+| `GatewayResponse` | [`GetGatewayResponseResponse`](../../doc/models/get-gateway-response-response.md) | Optional | The Gateway Response | GetGatewayResponseResponse getGatewayResponse() | setGatewayResponse(GetGatewayResponseResponse gatewayResponse) |
+| `AntifraudResponse` | [`GetAntifraudResponse`](../../doc/models/get-antifraud-response.md) | Optional | - | GetAntifraudResponse getAntifraudResponse() | setAntifraudResponse(GetAntifraudResponse antifraudResponse) |
 | `Metadata` | `Map<String, String>` | Optional | - | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Split` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Required | - | List<GetSplitResponse> getSplit() | setSplit(List<GetSplitResponse> split) |
+| `Split` | [`List<GetSplitResponse>`](../../doc/models/get-split-response.md) | Optional | - | List<GetSplitResponse> getSplit() | setSplit(List<GetSplitResponse> split) |
 | `Interest` | [`GetInterestResponse`](../../doc/models/get-interest-response.md) | Optional | - | GetInterestResponse getInterest() | setInterest(GetInterestResponse interest) |
 | `Fine` | [`GetFineResponse`](../../doc/models/get-fine-response.md) | Optional | - | GetFineResponse getFine() | setFine(GetFineResponse fine) |
 | `MaxDaysToPayPastDue` | `Integer` | Optional | - | Integer getMaxDaysToPayPastDue() | setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) |
@@ -35,86 +35,25 @@ Generic response object for getting a transaction.
 
 ```json
 {
-  "gateway_id": "gateway_id0",
-  "amount": 46,
-  "status": "status8",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z",
-  "attempt_count": 70,
-  "max_attempts": 174,
-  "splits": [
-    {
-      "type": "type4",
-      "amount": 62,
-      "recipient": null,
-      "gateway_id": "gateway_id4",
-      "options": null,
-      "id": "id6"
-    },
-    {
-      "type": "type3",
-      "amount": 63,
-      "recipient": null,
-      "gateway_id": "gateway_id3",
-      "options": null,
-      "id": "id7"
-    }
-  ],
+  "gateway_id": null,
+  "amount": null,
+  "status": null,
+  "success": null,
+  "created_at": null,
+  "updated_at": null,
+  "attempt_count": null,
+  "max_attempts": null,
+  "splits": null,
   "next_attempt": null,
-  "id": "id0",
-  "gateway_response": {
-    "code": "code6",
-    "errors": [
-      {
-        "message": "message3"
-      },
-      {
-        "message": "message4"
-      },
-      {
-        "message": "message5"
-      }
-    ]
-  },
-  "antifraud_response": {
-    "status": "status0",
-    "return_code": "return_code8",
-    "return_message": "return_message4",
-    "provider_name": "provider_name4",
-    "score": "score8"
-  },
+  "transaction_type": "transaction",
+  "id": null,
+  "gateway_response": null,
+  "antifraud_response": null,
   "metadata": null,
-  "split": [
-    {
-      "type": "type6",
-      "amount": 28,
-      "recipient": null,
-      "gateway_id": "gateway_id6",
-      "options": null,
-      "id": "id4"
-    },
-    {
-      "type": "type5",
-      "amount": 27,
-      "recipient": null,
-      "gateway_id": "gateway_id5",
-      "options": null,
-      "id": "id5"
-    },
-    {
-      "type": "type4",
-      "amount": 26,
-      "recipient": null,
-      "gateway_id": "gateway_id4",
-      "options": null,
-      "id": "id6"
-    }
-  ],
+  "split": null,
   "interest": null,
   "fine": null,
-  "max_days_to_pay_past_due": null,
-  "transaction_type": "transaction"
+  "max_days_to_pay_past_due": null
 }
 ```
 

@@ -7,10 +7,12 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -18,8 +20,8 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetTransactionReportFileResponse type.
  */
 public class GetTransactionReportFileResponse {
-    private String name;
-    private LocalDateTime date;
+    private OptionalNullable<String> name;
+    private OptionalNullable<LocalDateTime> date;
 
     /**
      * Default constructor.
@@ -35,17 +37,36 @@ public class GetTransactionReportFileResponse {
     public GetTransactionReportFileResponse(
             String name,
             LocalDateTime date) {
+        this.name = OptionalNullable.of(name);
+        this.date = OptionalNullable.of(date);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetTransactionReportFileResponse(OptionalNullable<String> name,
+            OptionalNullable<LocalDateTime> date) {
         this.name = name;
         this.date = date;
+    }
+
+    /**
+     * Internal Getter for Name.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
     }
 
     /**
      * Getter for Name.
      * @return Returns the String
      */
-    @JsonGetter("name")
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -54,17 +75,33 @@ public class GetTransactionReportFileResponse {
      */
     @JsonSetter("name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     */
+    public void unsetName() {
+        name = null;
+    }
+
+    /**
+     * Internal Getter for Date.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDate() {
+        return this.date;
     }
 
     /**
      * Getter for Date.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("date")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDate() {
-        return date;
+        return OptionalNullable.getFrom(date);
     }
 
     /**
@@ -74,7 +111,14 @@ public class GetTransactionReportFileResponse {
     @JsonSetter("date")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        this.date = OptionalNullable.of(date);
+    }
+
+    /**
+     * UnSetter for Date.
+     */
+    public void unsetDate() {
+        date = null;
     }
 
     /**
@@ -92,7 +136,9 @@ public class GetTransactionReportFileResponse {
      * @return a new {@link GetTransactionReportFileResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(name, date);
+        Builder builder = new Builder();
+        builder.name = internalGetName();
+        builder.date = internalGetDate();
         return builder;
     }
 
@@ -100,24 +146,10 @@ public class GetTransactionReportFileResponse {
      * Class to build instances of {@link GetTransactionReportFileResponse}.
      */
     public static class Builder {
-        private String name;
-        private LocalDateTime date;
+        private OptionalNullable<String> name;
+        private OptionalNullable<LocalDateTime> date;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  name  String value for name.
-         * @param  date  LocalDateTime value for date.
-         */
-        public Builder(String name, LocalDateTime date) {
-            this.name = name;
-            this.date = date;
-        }
 
         /**
          * Setter for name.
@@ -125,7 +157,16 @@ public class GetTransactionReportFileResponse {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 
@@ -135,7 +176,16 @@ public class GetTransactionReportFileResponse {
          * @return Builder
          */
         public Builder date(LocalDateTime date) {
-            this.date = date;
+            this.date = OptionalNullable.of(date);
+            return this;
+        }
+
+        /**
+         * UnSetter for date.
+         * @return Builder
+         */
+        public Builder unsetDate() {
+            date = null;
             return this;
         }
 

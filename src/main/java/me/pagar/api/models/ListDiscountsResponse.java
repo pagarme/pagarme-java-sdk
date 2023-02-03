@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for ListDiscountsResponse type.
  */
 public class ListDiscountsResponse {
-    private List<GetDiscountResponse> data;
-    private PagingResponse paging;
+    private OptionalNullable<List<GetDiscountResponse>> data;
+    private OptionalNullable<PagingResponse> paging;
 
     /**
      * Default constructor.
@@ -32,8 +35,29 @@ public class ListDiscountsResponse {
     public ListDiscountsResponse(
             List<GetDiscountResponse> data,
             PagingResponse paging) {
+        this.data = OptionalNullable.of(data);
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected ListDiscountsResponse(OptionalNullable<List<GetDiscountResponse>> data,
+            OptionalNullable<PagingResponse> paging) {
         this.data = data;
         this.paging = paging;
+    }
+
+    /**
+     * Internal Getter for Data.
+     * The Discounts response
+     * @return Returns the Internal List of GetDiscountResponse
+     */
+    @JsonGetter("data")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetDiscountResponse>> internalGetData() {
+        return this.data;
     }
 
     /**
@@ -41,9 +65,8 @@ public class ListDiscountsResponse {
      * The Discounts response
      * @return Returns the List of GetDiscountResponse
      */
-    @JsonGetter("data")
     public List<GetDiscountResponse> getData() {
-        return data;
+        return OptionalNullable.getFrom(data);
     }
 
     /**
@@ -53,7 +76,27 @@ public class ListDiscountsResponse {
      */
     @JsonSetter("data")
     public void setData(List<GetDiscountResponse> data) {
-        this.data = data;
+        this.data = OptionalNullable.of(data);
+    }
+
+    /**
+     * UnSetter for Data.
+     * The Discounts response
+     */
+    public void unsetData() {
+        data = null;
+    }
+
+    /**
+     * Internal Getter for Paging.
+     * Paging object
+     * @return Returns the Internal PagingResponse
+     */
+    @JsonGetter("paging")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<PagingResponse> internalGetPaging() {
+        return this.paging;
     }
 
     /**
@@ -61,9 +104,8 @@ public class ListDiscountsResponse {
      * Paging object
      * @return Returns the PagingResponse
      */
-    @JsonGetter("paging")
     public PagingResponse getPaging() {
-        return paging;
+        return OptionalNullable.getFrom(paging);
     }
 
     /**
@@ -73,7 +115,15 @@ public class ListDiscountsResponse {
      */
     @JsonSetter("paging")
     public void setPaging(PagingResponse paging) {
-        this.paging = paging;
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * UnSetter for Paging.
+     * Paging object
+     */
+    public void unsetPaging() {
+        paging = null;
     }
 
     /**
@@ -91,7 +141,9 @@ public class ListDiscountsResponse {
      * @return a new {@link ListDiscountsResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(data, paging);
+        Builder builder = new Builder();
+        builder.data = internalGetData();
+        builder.paging = internalGetPaging();
         return builder;
     }
 
@@ -99,24 +151,10 @@ public class ListDiscountsResponse {
      * Class to build instances of {@link ListDiscountsResponse}.
      */
     public static class Builder {
-        private List<GetDiscountResponse> data;
-        private PagingResponse paging;
+        private OptionalNullable<List<GetDiscountResponse>> data;
+        private OptionalNullable<PagingResponse> paging;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  data  List of GetDiscountResponse value for data.
-         * @param  paging  PagingResponse value for paging.
-         */
-        public Builder(List<GetDiscountResponse> data, PagingResponse paging) {
-            this.data = data;
-            this.paging = paging;
-        }
 
         /**
          * Setter for data.
@@ -124,7 +162,16 @@ public class ListDiscountsResponse {
          * @return Builder
          */
         public Builder data(List<GetDiscountResponse> data) {
-            this.data = data;
+            this.data = OptionalNullable.of(data);
+            return this;
+        }
+
+        /**
+         * UnSetter for data.
+         * @return Builder
+         */
+        public Builder unsetData() {
+            data = null;
             return this;
         }
 
@@ -134,7 +181,16 @@ public class ListDiscountsResponse {
          * @return Builder
          */
         public Builder paging(PagingResponse paging) {
-            this.paging = paging;
+            this.paging = OptionalNullable.of(paging);
+            return this;
+        }
+
+        /**
+         * UnSetter for paging.
+         * @return Builder
+         */
+        public Builder unsetPaging() {
+            paging = null;
             return this;
         }
 

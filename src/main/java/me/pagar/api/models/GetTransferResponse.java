@@ -7,10 +7,12 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -19,13 +21,13 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetTransferResponse type.
  */
 public class GetTransferResponse {
-    private String id;
-    private Integer amount;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private GetBankAccountResponse bankAccount;
-    private Map<String, String> metadata;
+    private OptionalNullable<String> id;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
+    private OptionalNullable<GetBankAccountResponse> bankAccount;
+    private OptionalNullable<Map<String, String>> metadata;
 
     /**
      * Default constructor.
@@ -51,6 +53,23 @@ public class GetTransferResponse {
             LocalDateTime updatedAt,
             GetBankAccountResponse bankAccount,
             Map<String, String> metadata) {
+        this.id = OptionalNullable.of(id);
+        this.amount = OptionalNullable.of(amount);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+        this.bankAccount = OptionalNullable.of(bankAccount);
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetTransferResponse(OptionalNullable<String> id, OptionalNullable<Integer> amount,
+            OptionalNullable<String> status, OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<LocalDateTime> updatedAt,
+            OptionalNullable<GetBankAccountResponse> bankAccount,
+            OptionalNullable<Map<String, String>> metadata) {
         this.id = id;
         this.amount = amount;
         this.status = status;
@@ -61,13 +80,24 @@ public class GetTransferResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * Id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * Id
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -77,7 +107,27 @@ public class GetTransferResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     * Id
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * Transfer amount
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
@@ -85,9 +135,8 @@ public class GetTransferResponse {
      * Transfer amount
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -97,7 +146,27 @@ public class GetTransferResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Transfer amount
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * Transfer status
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
@@ -105,9 +174,8 @@ public class GetTransferResponse {
      * Transfer status
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -117,7 +185,27 @@ public class GetTransferResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     * Transfer status
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * Transfer creation date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
@@ -125,10 +213,8 @@ public class GetTransferResponse {
      * Transfer creation date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -139,7 +225,27 @@ public class GetTransferResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     * Transfer creation date
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * Transfer last update date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
@@ -147,10 +253,8 @@ public class GetTransferResponse {
      * Transfer last update date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -161,7 +265,27 @@ public class GetTransferResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     * Transfer last update date
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
+    }
+
+    /**
+     * Internal Getter for BankAccount.
+     * Bank account
+     * @return Returns the Internal GetBankAccountResponse
+     */
+    @JsonGetter("bank_account")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetBankAccountResponse> internalGetBankAccount() {
+        return this.bankAccount;
     }
 
     /**
@@ -169,9 +293,8 @@ public class GetTransferResponse {
      * Bank account
      * @return Returns the GetBankAccountResponse
      */
-    @JsonGetter("bank_account")
     public GetBankAccountResponse getBankAccount() {
-        return bankAccount;
+        return OptionalNullable.getFrom(bankAccount);
     }
 
     /**
@@ -181,7 +304,27 @@ public class GetTransferResponse {
      */
     @JsonSetter("bank_account")
     public void setBankAccount(GetBankAccountResponse bankAccount) {
-        this.bankAccount = bankAccount;
+        this.bankAccount = OptionalNullable.of(bankAccount);
+    }
+
+    /**
+     * UnSetter for BankAccount.
+     * Bank account
+     */
+    public void unsetBankAccount() {
+        bankAccount = null;
+    }
+
+    /**
+     * Internal Getter for Metadata.
+     * Metadata
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
     }
 
     /**
@@ -189,9 +332,8 @@ public class GetTransferResponse {
      * Metadata
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -201,7 +343,15 @@ public class GetTransferResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     * Metadata
+     */
+    public void unsetMetadata() {
+        metadata = null;
     }
 
     /**
@@ -221,8 +371,14 @@ public class GetTransferResponse {
      * @return a new {@link GetTransferResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, amount, status, createdAt, updatedAt, bankAccount,
-                metadata);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.amount = internalGetAmount();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.bankAccount = internalGetBankAccount();
+        builder.metadata = internalGetMetadata();
         return builder;
     }
 
@@ -230,41 +386,15 @@ public class GetTransferResponse {
      * Class to build instances of {@link GetTransferResponse}.
      */
     public static class Builder {
-        private String id;
-        private Integer amount;
-        private String status;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private GetBankAccountResponse bankAccount;
-        private Map<String, String> metadata;
+        private OptionalNullable<String> id;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<GetBankAccountResponse> bankAccount;
+        private OptionalNullable<Map<String, String>> metadata;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  amount  Integer value for amount.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  bankAccount  GetBankAccountResponse value for bankAccount.
-         * @param  metadata  Map of String, value for metadata.
-         */
-        public Builder(String id, Integer amount, String status, LocalDateTime createdAt,
-                LocalDateTime updatedAt, GetBankAccountResponse bankAccount,
-                Map<String, String> metadata) {
-            this.id = id;
-            this.amount = amount;
-            this.status = status;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.bankAccount = bankAccount;
-            this.metadata = metadata;
-        }
 
         /**
          * Setter for id.
@@ -272,7 +402,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -282,7 +421,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -292,7 +440,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -302,7 +459,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -312,7 +478,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -322,7 +497,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder bankAccount(GetBankAccountResponse bankAccount) {
-            this.bankAccount = bankAccount;
+            this.bankAccount = OptionalNullable.of(bankAccount);
+            return this;
+        }
+
+        /**
+         * UnSetter for bankAccount.
+         * @return Builder
+         */
+        public Builder unsetBankAccount() {
+            bankAccount = null;
             return this;
         }
 
@@ -332,7 +516,16 @@ public class GetTransferResponse {
          * @return Builder
          */
         public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 

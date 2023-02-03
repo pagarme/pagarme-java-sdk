@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetCheckoutDebitCardPaymentResponse type.
  */
 public class GetCheckoutDebitCardPaymentResponse {
-    private String statementDescriptor;
-    private GetPaymentAuthenticationResponse authentication;
+    private OptionalNullable<String> statementDescriptor;
+    private OptionalNullable<GetPaymentAuthenticationResponse> authentication;
 
     /**
      * Default constructor.
@@ -31,8 +34,29 @@ public class GetCheckoutDebitCardPaymentResponse {
     public GetCheckoutDebitCardPaymentResponse(
             String statementDescriptor,
             GetPaymentAuthenticationResponse authentication) {
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+        this.authentication = OptionalNullable.of(authentication);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCheckoutDebitCardPaymentResponse(OptionalNullable<String> statementDescriptor,
+            OptionalNullable<GetPaymentAuthenticationResponse> authentication) {
         this.statementDescriptor = statementDescriptor;
         this.authentication = authentication;
+    }
+
+    /**
+     * Internal Getter for StatementDescriptor.
+     * Descrição na fatura
+     * @return Returns the Internal String
+     */
+    @JsonGetter("statement_descriptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatementDescriptor() {
+        return this.statementDescriptor;
     }
 
     /**
@@ -40,9 +64,8 @@ public class GetCheckoutDebitCardPaymentResponse {
      * Descrição na fatura
      * @return Returns the String
      */
-    @JsonGetter("statement_descriptor")
     public String getStatementDescriptor() {
-        return statementDescriptor;
+        return OptionalNullable.getFrom(statementDescriptor);
     }
 
     /**
@@ -52,7 +75,27 @@ public class GetCheckoutDebitCardPaymentResponse {
      */
     @JsonSetter("statement_descriptor")
     public void setStatementDescriptor(String statementDescriptor) {
-        this.statementDescriptor = statementDescriptor;
+        this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+    }
+
+    /**
+     * UnSetter for StatementDescriptor.
+     * Descrição na fatura
+     */
+    public void unsetStatementDescriptor() {
+        statementDescriptor = null;
+    }
+
+    /**
+     * Internal Getter for Authentication.
+     * Payment Authentication response object data
+     * @return Returns the Internal GetPaymentAuthenticationResponse
+     */
+    @JsonGetter("authentication")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetPaymentAuthenticationResponse> internalGetAuthentication() {
+        return this.authentication;
     }
 
     /**
@@ -60,9 +103,8 @@ public class GetCheckoutDebitCardPaymentResponse {
      * Payment Authentication response object data
      * @return Returns the GetPaymentAuthenticationResponse
      */
-    @JsonGetter("authentication")
     public GetPaymentAuthenticationResponse getAuthentication() {
-        return authentication;
+        return OptionalNullable.getFrom(authentication);
     }
 
     /**
@@ -72,7 +114,15 @@ public class GetCheckoutDebitCardPaymentResponse {
      */
     @JsonSetter("authentication")
     public void setAuthentication(GetPaymentAuthenticationResponse authentication) {
-        this.authentication = authentication;
+        this.authentication = OptionalNullable.of(authentication);
+    }
+
+    /**
+     * UnSetter for Authentication.
+     * Payment Authentication response object data
+     */
+    public void unsetAuthentication() {
+        authentication = null;
     }
 
     /**
@@ -91,7 +141,9 @@ public class GetCheckoutDebitCardPaymentResponse {
      * @return a new {@link GetCheckoutDebitCardPaymentResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(statementDescriptor, authentication);
+        Builder builder = new Builder();
+        builder.statementDescriptor = internalGetStatementDescriptor();
+        builder.authentication = internalGetAuthentication();
         return builder;
     }
 
@@ -99,25 +151,10 @@ public class GetCheckoutDebitCardPaymentResponse {
      * Class to build instances of {@link GetCheckoutDebitCardPaymentResponse}.
      */
     public static class Builder {
-        private String statementDescriptor;
-        private GetPaymentAuthenticationResponse authentication;
+        private OptionalNullable<String> statementDescriptor;
+        private OptionalNullable<GetPaymentAuthenticationResponse> authentication;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  statementDescriptor  String value for statementDescriptor.
-         * @param  authentication  GetPaymentAuthenticationResponse value for authentication.
-         */
-        public Builder(String statementDescriptor,
-                GetPaymentAuthenticationResponse authentication) {
-            this.statementDescriptor = statementDescriptor;
-            this.authentication = authentication;
-        }
 
         /**
          * Setter for statementDescriptor.
@@ -125,7 +162,16 @@ public class GetCheckoutDebitCardPaymentResponse {
          * @return Builder
          */
         public Builder statementDescriptor(String statementDescriptor) {
-            this.statementDescriptor = statementDescriptor;
+            this.statementDescriptor = OptionalNullable.of(statementDescriptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for statementDescriptor.
+         * @return Builder
+         */
+        public Builder unsetStatementDescriptor() {
+            statementDescriptor = null;
             return this;
         }
 
@@ -135,7 +181,16 @@ public class GetCheckoutDebitCardPaymentResponse {
          * @return Builder
          */
         public Builder authentication(GetPaymentAuthenticationResponse authentication) {
-            this.authentication = authentication;
+            this.authentication = OptionalNullable.of(authentication);
+            return this;
+        }
+
+        /**
+         * UnSetter for authentication.
+         * @return Builder
+         */
+        public Builder unsetAuthentication() {
+            authentication = null;
             return this;
         }
 

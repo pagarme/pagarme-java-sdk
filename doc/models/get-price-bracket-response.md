@@ -11,8 +11,8 @@ Response object for getting a price bracket
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `StartQuantity` | `Integer` | Required | - | Integer getStartQuantity() | setStartQuantity(Integer startQuantity) |
-| `Price` | `Integer` | Required | - | Integer getPrice() | setPrice(Integer price) |
+| `StartQuantity` | `Integer` | Optional | - | Integer getStartQuantity() | setStartQuantity(Integer startQuantity) |
+| `Price` | `Integer` | Optional | - | Integer getPrice() | setPrice(Integer price) |
 | `EndQuantity` | `Integer` | Optional | - | Integer getEndQuantity() | setEndQuantity(Integer endQuantity) |
 | `OveragePrice` | `Integer` | Optional | - | Integer getOveragePrice() | setOveragePrice(Integer overagePrice) |
 
@@ -20,8 +20,8 @@ Response object for getting a price bracket
 
 ```json
 {
-  "start_quantity": 46,
-  "price": 16,
+  "start_quantity": null,
+  "price": null,
   "end_quantity": null,
   "overage_price": null
 }

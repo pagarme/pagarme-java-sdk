@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetTransferSettingsResponse type.
  */
 public class GetTransferSettingsResponse {
-    private Boolean transferEnabled;
-    private String transferInterval;
-    private Integer transferDay;
+    private OptionalNullable<Boolean> transferEnabled;
+    private OptionalNullable<String> transferInterval;
+    private OptionalNullable<Integer> transferDay;
 
     /**
      * Default constructor.
@@ -34,18 +37,38 @@ public class GetTransferSettingsResponse {
             Boolean transferEnabled,
             String transferInterval,
             Integer transferDay) {
+        this.transferEnabled = OptionalNullable.of(transferEnabled);
+        this.transferInterval = OptionalNullable.of(transferInterval);
+        this.transferDay = OptionalNullable.of(transferDay);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetTransferSettingsResponse(OptionalNullable<Boolean> transferEnabled,
+            OptionalNullable<String> transferInterval, OptionalNullable<Integer> transferDay) {
         this.transferEnabled = transferEnabled;
         this.transferInterval = transferInterval;
         this.transferDay = transferDay;
     }
 
     /**
+     * Internal Getter for TransferEnabled.
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("transfer_enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetTransferEnabled() {
+        return this.transferEnabled;
+    }
+
+    /**
      * Getter for TransferEnabled.
      * @return Returns the Boolean
      */
-    @JsonGetter("transfer_enabled")
     public Boolean getTransferEnabled() {
-        return transferEnabled;
+        return OptionalNullable.getFrom(transferEnabled);
     }
 
     /**
@@ -54,16 +77,33 @@ public class GetTransferSettingsResponse {
      */
     @JsonSetter("transfer_enabled")
     public void setTransferEnabled(Boolean transferEnabled) {
-        this.transferEnabled = transferEnabled;
+        this.transferEnabled = OptionalNullable.of(transferEnabled);
+    }
+
+    /**
+     * UnSetter for TransferEnabled.
+     */
+    public void unsetTransferEnabled() {
+        transferEnabled = null;
+    }
+
+    /**
+     * Internal Getter for TransferInterval.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("transfer_interval")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetTransferInterval() {
+        return this.transferInterval;
     }
 
     /**
      * Getter for TransferInterval.
      * @return Returns the String
      */
-    @JsonGetter("transfer_interval")
     public String getTransferInterval() {
-        return transferInterval;
+        return OptionalNullable.getFrom(transferInterval);
     }
 
     /**
@@ -72,16 +112,33 @@ public class GetTransferSettingsResponse {
      */
     @JsonSetter("transfer_interval")
     public void setTransferInterval(String transferInterval) {
-        this.transferInterval = transferInterval;
+        this.transferInterval = OptionalNullable.of(transferInterval);
+    }
+
+    /**
+     * UnSetter for TransferInterval.
+     */
+    public void unsetTransferInterval() {
+        transferInterval = null;
+    }
+
+    /**
+     * Internal Getter for TransferDay.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("transfer_day")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetTransferDay() {
+        return this.transferDay;
     }
 
     /**
      * Getter for TransferDay.
      * @return Returns the Integer
      */
-    @JsonGetter("transfer_day")
     public Integer getTransferDay() {
-        return transferDay;
+        return OptionalNullable.getFrom(transferDay);
     }
 
     /**
@@ -90,7 +147,14 @@ public class GetTransferSettingsResponse {
      */
     @JsonSetter("transfer_day")
     public void setTransferDay(Integer transferDay) {
-        this.transferDay = transferDay;
+        this.transferDay = OptionalNullable.of(transferDay);
+    }
+
+    /**
+     * UnSetter for TransferDay.
+     */
+    public void unsetTransferDay() {
+        transferDay = null;
     }
 
     /**
@@ -109,7 +173,10 @@ public class GetTransferSettingsResponse {
      * @return a new {@link GetTransferSettingsResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(transferEnabled, transferInterval, transferDay);
+        Builder builder = new Builder();
+        builder.transferEnabled = internalGetTransferEnabled();
+        builder.transferInterval = internalGetTransferInterval();
+        builder.transferDay = internalGetTransferDay();
         return builder;
     }
 
@@ -117,27 +184,11 @@ public class GetTransferSettingsResponse {
      * Class to build instances of {@link GetTransferSettingsResponse}.
      */
     public static class Builder {
-        private Boolean transferEnabled;
-        private String transferInterval;
-        private Integer transferDay;
+        private OptionalNullable<Boolean> transferEnabled;
+        private OptionalNullable<String> transferInterval;
+        private OptionalNullable<Integer> transferDay;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  transferEnabled  Boolean value for transferEnabled.
-         * @param  transferInterval  String value for transferInterval.
-         * @param  transferDay  Integer value for transferDay.
-         */
-        public Builder(Boolean transferEnabled, String transferInterval, Integer transferDay) {
-            this.transferEnabled = transferEnabled;
-            this.transferInterval = transferInterval;
-            this.transferDay = transferDay;
-        }
 
         /**
          * Setter for transferEnabled.
@@ -145,7 +196,16 @@ public class GetTransferSettingsResponse {
          * @return Builder
          */
         public Builder transferEnabled(Boolean transferEnabled) {
-            this.transferEnabled = transferEnabled;
+            this.transferEnabled = OptionalNullable.of(transferEnabled);
+            return this;
+        }
+
+        /**
+         * UnSetter for transferEnabled.
+         * @return Builder
+         */
+        public Builder unsetTransferEnabled() {
+            transferEnabled = null;
             return this;
         }
 
@@ -155,7 +215,16 @@ public class GetTransferSettingsResponse {
          * @return Builder
          */
         public Builder transferInterval(String transferInterval) {
-            this.transferInterval = transferInterval;
+            this.transferInterval = OptionalNullable.of(transferInterval);
+            return this;
+        }
+
+        /**
+         * UnSetter for transferInterval.
+         * @return Builder
+         */
+        public Builder unsetTransferInterval() {
+            transferInterval = null;
             return this;
         }
 
@@ -165,7 +234,16 @@ public class GetTransferSettingsResponse {
          * @return Builder
          */
         public Builder transferDay(Integer transferDay) {
-            this.transferDay = transferDay;
+            this.transferDay = OptionalNullable.of(transferDay);
+            return this;
+        }
+
+        /**
+         * UnSetter for transferDay.
+         * @return Builder
+         */
+        public Builder unsetTransferDay() {
+            transferDay = null;
             return this;
         }
 

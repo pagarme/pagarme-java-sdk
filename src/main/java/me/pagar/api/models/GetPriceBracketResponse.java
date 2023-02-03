@@ -17,8 +17,8 @@ import io.apimatic.core.types.OptionalNullable;
  * This is a model class for GetPriceBracketResponse type.
  */
 public class GetPriceBracketResponse {
-    private Integer startQuantity;
-    private Integer price;
+    private OptionalNullable<Integer> startQuantity;
+    private OptionalNullable<Integer> price;
     private OptionalNullable<Integer> endQuantity;
     private OptionalNullable<Integer> overagePrice;
 
@@ -40,8 +40,8 @@ public class GetPriceBracketResponse {
             Integer price,
             Integer endQuantity,
             Integer overagePrice) {
-        this.startQuantity = startQuantity;
-        this.price = price;
+        this.startQuantity = OptionalNullable.of(startQuantity);
+        this.price = OptionalNullable.of(price);
         this.endQuantity = OptionalNullable.of(endQuantity);
         this.overagePrice = OptionalNullable.of(overagePrice);
     }
@@ -49,8 +49,9 @@ public class GetPriceBracketResponse {
     /**
      * Internal initialization constructor.
      */
-    protected GetPriceBracketResponse(Integer startQuantity, Integer price,
-            OptionalNullable<Integer> endQuantity, OptionalNullable<Integer> overagePrice) {
+    protected GetPriceBracketResponse(OptionalNullable<Integer> startQuantity,
+            OptionalNullable<Integer> price, OptionalNullable<Integer> endQuantity,
+            OptionalNullable<Integer> overagePrice) {
         this.startQuantity = startQuantity;
         this.price = price;
         this.endQuantity = endQuantity;
@@ -58,12 +59,22 @@ public class GetPriceBracketResponse {
     }
 
     /**
+     * Internal Getter for StartQuantity.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("start_quantity")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetStartQuantity() {
+        return this.startQuantity;
+    }
+
+    /**
      * Getter for StartQuantity.
      * @return Returns the Integer
      */
-    @JsonGetter("start_quantity")
     public Integer getStartQuantity() {
-        return startQuantity;
+        return OptionalNullable.getFrom(startQuantity);
     }
 
     /**
@@ -72,16 +83,33 @@ public class GetPriceBracketResponse {
      */
     @JsonSetter("start_quantity")
     public void setStartQuantity(Integer startQuantity) {
-        this.startQuantity = startQuantity;
+        this.startQuantity = OptionalNullable.of(startQuantity);
+    }
+
+    /**
+     * UnSetter for StartQuantity.
+     */
+    public void unsetStartQuantity() {
+        startQuantity = null;
+    }
+
+    /**
+     * Internal Getter for Price.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("price")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetPrice() {
+        return this.price;
     }
 
     /**
      * Getter for Price.
      * @return Returns the Integer
      */
-    @JsonGetter("price")
     public Integer getPrice() {
-        return price;
+        return OptionalNullable.getFrom(price);
     }
 
     /**
@@ -90,7 +118,14 @@ public class GetPriceBracketResponse {
      */
     @JsonSetter("price")
     public void setPrice(Integer price) {
-        this.price = price;
+        this.price = OptionalNullable.of(price);
+    }
+
+    /**
+     * UnSetter for Price.
+     */
+    public void unsetPrice() {
+        price = null;
     }
 
     /**
@@ -179,7 +214,9 @@ public class GetPriceBracketResponse {
      * @return a new {@link GetPriceBracketResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(startQuantity, price);
+        Builder builder = new Builder();
+        builder.startQuantity = internalGetStartQuantity();
+        builder.price = internalGetPrice();
         builder.endQuantity = internalGetEndQuantity();
         builder.overagePrice = internalGetOveragePrice();
         return builder;
@@ -189,26 +226,12 @@ public class GetPriceBracketResponse {
      * Class to build instances of {@link GetPriceBracketResponse}.
      */
     public static class Builder {
-        private Integer startQuantity;
-        private Integer price;
+        private OptionalNullable<Integer> startQuantity;
+        private OptionalNullable<Integer> price;
         private OptionalNullable<Integer> endQuantity;
         private OptionalNullable<Integer> overagePrice;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  startQuantity  Integer value for startQuantity.
-         * @param  price  Integer value for price.
-         */
-        public Builder(Integer startQuantity, Integer price) {
-            this.startQuantity = startQuantity;
-            this.price = price;
-        }
 
         /**
          * Setter for startQuantity.
@@ -216,7 +239,16 @@ public class GetPriceBracketResponse {
          * @return Builder
          */
         public Builder startQuantity(Integer startQuantity) {
-            this.startQuantity = startQuantity;
+            this.startQuantity = OptionalNullable.of(startQuantity);
+            return this;
+        }
+
+        /**
+         * UnSetter for startQuantity.
+         * @return Builder
+         */
+        public Builder unsetStartQuantity() {
+            startQuantity = null;
             return this;
         }
 
@@ -226,7 +258,16 @@ public class GetPriceBracketResponse {
          * @return Builder
          */
         public Builder price(Integer price) {
-            this.price = price;
+            this.price = OptionalNullable.of(price);
+            return this;
+        }
+
+        /**
+         * UnSetter for price.
+         * @return Builder
+         */
+        public Builder unsetPrice() {
+            price = null;
             return this;
         }
 

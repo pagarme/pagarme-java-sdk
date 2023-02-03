@@ -21,22 +21,22 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetAddressResponse type.
  */
 public class GetAddressResponse {
-    private String id;
-    private String street;
-    private String number;
-    private String complement;
-    private String zipCode;
-    private String neighborhood;
-    private String city;
-    private String state;
-    private String country;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> street;
+    private OptionalNullable<String> number;
+    private OptionalNullable<String> complement;
+    private OptionalNullable<String> zipCode;
+    private OptionalNullable<String> neighborhood;
+    private OptionalNullable<String> city;
+    private OptionalNullable<String> state;
+    private OptionalNullable<String> country;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
     private OptionalNullable<GetCustomerResponse> customer;
-    private Map<String, String> metadata;
-    private String line1;
-    private String line2;
+    private OptionalNullable<Map<String, String>> metadata;
+    private OptionalNullable<String> line1;
+    private OptionalNullable<String> line2;
     private OptionalNullable<LocalDateTime> deletedAt;
 
     /**
@@ -59,10 +59,10 @@ public class GetAddressResponse {
      * @param  status  String value for status.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
+     * @param  customer  GetCustomerResponse value for customer.
      * @param  metadata  Map of String, value for metadata.
      * @param  line1  String value for line1.
      * @param  line2  String value for line2.
-     * @param  customer  GetCustomerResponse value for customer.
      * @param  deletedAt  LocalDateTime value for deletedAt.
      */
     public GetAddressResponse(
@@ -78,39 +78,42 @@ public class GetAddressResponse {
             String status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
+            GetCustomerResponse customer,
             Map<String, String> metadata,
             String line1,
             String line2,
-            GetCustomerResponse customer,
             LocalDateTime deletedAt) {
-        this.id = id;
-        this.street = street;
-        this.number = number;
-        this.complement = complement;
-        this.zipCode = zipCode;
-        this.neighborhood = neighborhood;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.id = OptionalNullable.of(id);
+        this.street = OptionalNullable.of(street);
+        this.number = OptionalNullable.of(number);
+        this.complement = OptionalNullable.of(complement);
+        this.zipCode = OptionalNullable.of(zipCode);
+        this.neighborhood = OptionalNullable.of(neighborhood);
+        this.city = OptionalNullable.of(city);
+        this.state = OptionalNullable.of(state);
+        this.country = OptionalNullable.of(country);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
         this.customer = OptionalNullable.of(customer);
-        this.metadata = metadata;
-        this.line1 = line1;
-        this.line2 = line2;
+        this.metadata = OptionalNullable.of(metadata);
+        this.line1 = OptionalNullable.of(line1);
+        this.line2 = OptionalNullable.of(line2);
         this.deletedAt = OptionalNullable.of(deletedAt);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetAddressResponse(String id, String street, String number, String complement,
-            String zipCode, String neighborhood, String city, String state, String country,
-            String status, LocalDateTime createdAt, LocalDateTime updatedAt,
-            Map<String, String> metadata, String line1, String line2,
+    protected GetAddressResponse(OptionalNullable<String> id, OptionalNullable<String> street,
+            OptionalNullable<String> number, OptionalNullable<String> complement,
+            OptionalNullable<String> zipCode, OptionalNullable<String> neighborhood,
+            OptionalNullable<String> city, OptionalNullable<String> state,
+            OptionalNullable<String> country, OptionalNullable<String> status,
+            OptionalNullable<LocalDateTime> createdAt, OptionalNullable<LocalDateTime> updatedAt,
             OptionalNullable<GetCustomerResponse> customer,
-            OptionalNullable<LocalDateTime> deletedAt) {
+            OptionalNullable<Map<String, String>> metadata, OptionalNullable<String> line1,
+            OptionalNullable<String> line2, OptionalNullable<LocalDateTime> deletedAt) {
         this.id = id;
         this.street = street;
         this.number = number;
@@ -131,12 +134,22 @@ public class GetAddressResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -145,16 +158,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Street.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("street")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStreet() {
+        return this.street;
     }
 
     /**
      * Getter for Street.
      * @return Returns the String
      */
-    @JsonGetter("street")
     public String getStreet() {
-        return street;
+        return OptionalNullable.getFrom(street);
     }
 
     /**
@@ -163,16 +193,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("street")
     public void setStreet(String street) {
-        this.street = street;
+        this.street = OptionalNullable.of(street);
+    }
+
+    /**
+     * UnSetter for Street.
+     */
+    public void unsetStreet() {
+        street = null;
+    }
+
+    /**
+     * Internal Getter for Number.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNumber() {
+        return this.number;
     }
 
     /**
      * Getter for Number.
      * @return Returns the String
      */
-    @JsonGetter("number")
     public String getNumber() {
-        return number;
+        return OptionalNullable.getFrom(number);
     }
 
     /**
@@ -181,16 +228,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("number")
     public void setNumber(String number) {
-        this.number = number;
+        this.number = OptionalNullable.of(number);
+    }
+
+    /**
+     * UnSetter for Number.
+     */
+    public void unsetNumber() {
+        number = null;
+    }
+
+    /**
+     * Internal Getter for Complement.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("complement")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetComplement() {
+        return this.complement;
     }
 
     /**
      * Getter for Complement.
      * @return Returns the String
      */
-    @JsonGetter("complement")
     public String getComplement() {
-        return complement;
+        return OptionalNullable.getFrom(complement);
     }
 
     /**
@@ -199,16 +263,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("complement")
     public void setComplement(String complement) {
-        this.complement = complement;
+        this.complement = OptionalNullable.of(complement);
+    }
+
+    /**
+     * UnSetter for Complement.
+     */
+    public void unsetComplement() {
+        complement = null;
+    }
+
+    /**
+     * Internal Getter for ZipCode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("zip_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetZipCode() {
+        return this.zipCode;
     }
 
     /**
      * Getter for ZipCode.
      * @return Returns the String
      */
-    @JsonGetter("zip_code")
     public String getZipCode() {
-        return zipCode;
+        return OptionalNullable.getFrom(zipCode);
     }
 
     /**
@@ -217,16 +298,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("zip_code")
     public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+        this.zipCode = OptionalNullable.of(zipCode);
+    }
+
+    /**
+     * UnSetter for ZipCode.
+     */
+    public void unsetZipCode() {
+        zipCode = null;
+    }
+
+    /**
+     * Internal Getter for Neighborhood.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("neighborhood")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNeighborhood() {
+        return this.neighborhood;
     }
 
     /**
      * Getter for Neighborhood.
      * @return Returns the String
      */
-    @JsonGetter("neighborhood")
     public String getNeighborhood() {
-        return neighborhood;
+        return OptionalNullable.getFrom(neighborhood);
     }
 
     /**
@@ -235,16 +333,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("neighborhood")
     public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+        this.neighborhood = OptionalNullable.of(neighborhood);
+    }
+
+    /**
+     * UnSetter for Neighborhood.
+     */
+    public void unsetNeighborhood() {
+        neighborhood = null;
+    }
+
+    /**
+     * Internal Getter for City.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("city")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCity() {
+        return this.city;
     }
 
     /**
      * Getter for City.
      * @return Returns the String
      */
-    @JsonGetter("city")
     public String getCity() {
-        return city;
+        return OptionalNullable.getFrom(city);
     }
 
     /**
@@ -253,16 +368,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("city")
     public void setCity(String city) {
-        this.city = city;
+        this.city = OptionalNullable.of(city);
+    }
+
+    /**
+     * UnSetter for City.
+     */
+    public void unsetCity() {
+        city = null;
+    }
+
+    /**
+     * Internal Getter for State.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("state")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetState() {
+        return this.state;
     }
 
     /**
      * Getter for State.
      * @return Returns the String
      */
-    @JsonGetter("state")
     public String getState() {
-        return state;
+        return OptionalNullable.getFrom(state);
     }
 
     /**
@@ -271,16 +403,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("state")
     public void setState(String state) {
-        this.state = state;
+        this.state = OptionalNullable.of(state);
+    }
+
+    /**
+     * UnSetter for State.
+     */
+    public void unsetState() {
+        state = null;
+    }
+
+    /**
+     * Internal Getter for Country.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("country")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCountry() {
+        return this.country;
     }
 
     /**
      * Getter for Country.
      * @return Returns the String
      */
-    @JsonGetter("country")
     public String getCountry() {
-        return country;
+        return OptionalNullable.getFrom(country);
     }
 
     /**
@@ -289,16 +438,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("country")
     public void setCountry(String country) {
-        this.country = country;
+        this.country = OptionalNullable.of(country);
+    }
+
+    /**
+     * UnSetter for Country.
+     */
+    public void unsetCountry() {
+        country = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -307,17 +473,33 @@ public class GetAddressResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -327,17 +509,33 @@ public class GetAddressResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
      * Getter for UpdatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -347,7 +545,14 @@ public class GetAddressResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
     }
 
     /**
@@ -386,12 +591,22 @@ public class GetAddressResponse {
     }
 
     /**
+     * Internal Getter for Metadata.
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
+    }
+
+    /**
      * Getter for Metadata.
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -400,7 +615,26 @@ public class GetAddressResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
+    }
+
+    /**
+     * Internal Getter for Line1.
+     * Line 1 for address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("line_1")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLine1() {
+        return this.line1;
     }
 
     /**
@@ -408,9 +642,8 @@ public class GetAddressResponse {
      * Line 1 for address
      * @return Returns the String
      */
-    @JsonGetter("line_1")
     public String getLine1() {
-        return line1;
+        return OptionalNullable.getFrom(line1);
     }
 
     /**
@@ -420,7 +653,27 @@ public class GetAddressResponse {
      */
     @JsonSetter("line_1")
     public void setLine1(String line1) {
-        this.line1 = line1;
+        this.line1 = OptionalNullable.of(line1);
+    }
+
+    /**
+     * UnSetter for Line1.
+     * Line 1 for address
+     */
+    public void unsetLine1() {
+        line1 = null;
+    }
+
+    /**
+     * Internal Getter for Line2.
+     * Line 2 for address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("line_2")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetLine2() {
+        return this.line2;
     }
 
     /**
@@ -428,9 +681,8 @@ public class GetAddressResponse {
      * Line 2 for address
      * @return Returns the String
      */
-    @JsonGetter("line_2")
     public String getLine2() {
-        return line2;
+        return OptionalNullable.getFrom(line2);
     }
 
     /**
@@ -440,7 +692,15 @@ public class GetAddressResponse {
      */
     @JsonSetter("line_2")
     public void setLine2(String line2) {
-        this.line2 = line2;
+        this.line2 = OptionalNullable.of(line2);
+    }
+
+    /**
+     * UnSetter for Line2.
+     * Line 2 for address
+     */
+    public void unsetLine2() {
+        line2 = null;
     }
 
     /**
@@ -489,8 +749,8 @@ public class GetAddressResponse {
                 + ", complement=" + complement + ", zipCode=" + zipCode + ", neighborhood="
                 + neighborhood + ", city=" + city + ", state=" + state + ", country=" + country
                 + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
-                + ", metadata=" + metadata + ", line1=" + line1 + ", line2=" + line2 + ", customer="
-                + customer + ", deletedAt=" + deletedAt + "]";
+                + ", customer=" + customer + ", metadata=" + metadata + ", line1=" + line1
+                + ", line2=" + line2 + ", deletedAt=" + deletedAt + "]";
     }
 
     /**
@@ -499,9 +759,23 @@ public class GetAddressResponse {
      * @return a new {@link GetAddressResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, street, number, complement, zipCode, neighborhood, city,
-                state, country, status, createdAt, updatedAt, metadata, line1, line2);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.street = internalGetStreet();
+        builder.number = internalGetNumber();
+        builder.complement = internalGetComplement();
+        builder.zipCode = internalGetZipCode();
+        builder.neighborhood = internalGetNeighborhood();
+        builder.city = internalGetCity();
+        builder.state = internalGetState();
+        builder.country = internalGetCountry();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
         builder.customer = internalGetCustomer();
+        builder.metadata = internalGetMetadata();
+        builder.line1 = internalGetLine1();
+        builder.line2 = internalGetLine2();
         builder.deletedAt = internalGetDeletedAt();
         return builder;
     }
@@ -510,68 +784,25 @@ public class GetAddressResponse {
      * Class to build instances of {@link GetAddressResponse}.
      */
     public static class Builder {
-        private String id;
-        private String street;
-        private String number;
-        private String complement;
-        private String zipCode;
-        private String neighborhood;
-        private String city;
-        private String state;
-        private String country;
-        private String status;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private Map<String, String> metadata;
-        private String line1;
-        private String line2;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> street;
+        private OptionalNullable<String> number;
+        private OptionalNullable<String> complement;
+        private OptionalNullable<String> zipCode;
+        private OptionalNullable<String> neighborhood;
+        private OptionalNullable<String> city;
+        private OptionalNullable<String> state;
+        private OptionalNullable<String> country;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
         private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<String> line1;
+        private OptionalNullable<String> line2;
         private OptionalNullable<LocalDateTime> deletedAt;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  street  String value for street.
-         * @param  number  String value for number.
-         * @param  complement  String value for complement.
-         * @param  zipCode  String value for zipCode.
-         * @param  neighborhood  String value for neighborhood.
-         * @param  city  String value for city.
-         * @param  state  String value for state.
-         * @param  country  String value for country.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  line1  String value for line1.
-         * @param  line2  String value for line2.
-         */
-        public Builder(String id, String street, String number, String complement, String zipCode,
-                String neighborhood, String city, String state, String country, String status,
-                LocalDateTime createdAt, LocalDateTime updatedAt, Map<String, String> metadata,
-                String line1, String line2) {
-            this.id = id;
-            this.street = street;
-            this.number = number;
-            this.complement = complement;
-            this.zipCode = zipCode;
-            this.neighborhood = neighborhood;
-            this.city = city;
-            this.state = state;
-            this.country = country;
-            this.status = status;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.metadata = metadata;
-            this.line1 = line1;
-            this.line2 = line2;
-        }
 
         /**
          * Setter for id.
@@ -579,7 +810,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -589,7 +829,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder street(String street) {
-            this.street = street;
+            this.street = OptionalNullable.of(street);
+            return this;
+        }
+
+        /**
+         * UnSetter for street.
+         * @return Builder
+         */
+        public Builder unsetStreet() {
+            street = null;
             return this;
         }
 
@@ -599,7 +848,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder number(String number) {
-            this.number = number;
+            this.number = OptionalNullable.of(number);
+            return this;
+        }
+
+        /**
+         * UnSetter for number.
+         * @return Builder
+         */
+        public Builder unsetNumber() {
+            number = null;
             return this;
         }
 
@@ -609,7 +867,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder complement(String complement) {
-            this.complement = complement;
+            this.complement = OptionalNullable.of(complement);
+            return this;
+        }
+
+        /**
+         * UnSetter for complement.
+         * @return Builder
+         */
+        public Builder unsetComplement() {
+            complement = null;
             return this;
         }
 
@@ -619,7 +886,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder zipCode(String zipCode) {
-            this.zipCode = zipCode;
+            this.zipCode = OptionalNullable.of(zipCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for zipCode.
+         * @return Builder
+         */
+        public Builder unsetZipCode() {
+            zipCode = null;
             return this;
         }
 
@@ -629,7 +905,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder neighborhood(String neighborhood) {
-            this.neighborhood = neighborhood;
+            this.neighborhood = OptionalNullable.of(neighborhood);
+            return this;
+        }
+
+        /**
+         * UnSetter for neighborhood.
+         * @return Builder
+         */
+        public Builder unsetNeighborhood() {
+            neighborhood = null;
             return this;
         }
 
@@ -639,7 +924,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder city(String city) {
-            this.city = city;
+            this.city = OptionalNullable.of(city);
+            return this;
+        }
+
+        /**
+         * UnSetter for city.
+         * @return Builder
+         */
+        public Builder unsetCity() {
+            city = null;
             return this;
         }
 
@@ -649,7 +943,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder state(String state) {
-            this.state = state;
+            this.state = OptionalNullable.of(state);
+            return this;
+        }
+
+        /**
+         * UnSetter for state.
+         * @return Builder
+         */
+        public Builder unsetState() {
+            state = null;
             return this;
         }
 
@@ -659,7 +962,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder country(String country) {
-            this.country = country;
+            this.country = OptionalNullable.of(country);
+            return this;
+        }
+
+        /**
+         * UnSetter for country.
+         * @return Builder
+         */
+        public Builder unsetCountry() {
+            country = null;
             return this;
         }
 
@@ -669,7 +981,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -679,7 +1000,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -689,37 +1019,16 @@ public class GetAddressResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
             return this;
         }
 
         /**
-         * Setter for metadata.
-         * @param  metadata  Map of String, value for metadata.
+         * UnSetter for updatedAt.
          * @return Builder
          */
-        public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
-         * Setter for line1.
-         * @param  line1  String value for line1.
-         * @return Builder
-         */
-        public Builder line1(String line1) {
-            this.line1 = line1;
-            return this;
-        }
-
-        /**
-         * Setter for line2.
-         * @param  line2  String value for line2.
-         * @return Builder
-         */
-        public Builder line2(String line2) {
-            this.line2 = line2;
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -739,6 +1048,63 @@ public class GetAddressResponse {
          */
         public Builder unsetCustomer() {
             customer = null;
+            return this;
+        }
+
+        /**
+         * Setter for metadata.
+         * @param  metadata  Map of String, value for metadata.
+         * @return Builder
+         */
+        public Builder metadata(Map<String, String> metadata) {
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
+            return this;
+        }
+
+        /**
+         * Setter for line1.
+         * @param  line1  String value for line1.
+         * @return Builder
+         */
+        public Builder line1(String line1) {
+            this.line1 = OptionalNullable.of(line1);
+            return this;
+        }
+
+        /**
+         * UnSetter for line1.
+         * @return Builder
+         */
+        public Builder unsetLine1() {
+            line1 = null;
+            return this;
+        }
+
+        /**
+         * Setter for line2.
+         * @param  line2  String value for line2.
+         * @return Builder
+         */
+        public Builder line2(String line2) {
+            this.line2 = OptionalNullable.of(line2);
+            return this;
+        }
+
+        /**
+         * UnSetter for line2.
+         * @return Builder
+         */
+        public Builder unsetLine2() {
+            line2 = null;
             return this;
         }
 
@@ -767,8 +1133,8 @@ public class GetAddressResponse {
          */
         public GetAddressResponse build() {
             return new GetAddressResponse(id, street, number, complement, zipCode, neighborhood,
-                    city, state, country, status, createdAt, updatedAt, metadata, line1, line2,
-                    customer, deletedAt);
+                    city, state, country, status, createdAt, updatedAt, customer, metadata, line1,
+                    line2, deletedAt);
         }
     }
 }

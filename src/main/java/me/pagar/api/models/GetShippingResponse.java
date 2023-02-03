@@ -20,14 +20,14 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetShippingResponse type.
  */
 public class GetShippingResponse {
-    private Integer amount;
-    private String description;
-    private String recipientName;
-    private String recipientPhone;
-    private GetAddressResponse address;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> description;
+    private OptionalNullable<String> recipientName;
+    private OptionalNullable<String> recipientPhone;
+    private OptionalNullable<GetAddressResponse> address;
     private OptionalNullable<LocalDateTime> maxDeliveryDate;
     private OptionalNullable<LocalDateTime> estimatedDeliveryDate;
-    private String type;
+    private OptionalNullable<String> type;
 
     /**
      * Default constructor.
@@ -42,9 +42,9 @@ public class GetShippingResponse {
      * @param  recipientName  String value for recipientName.
      * @param  recipientPhone  String value for recipientPhone.
      * @param  address  GetAddressResponse value for address.
-     * @param  type  String value for type.
      * @param  maxDeliveryDate  LocalDateTime value for maxDeliveryDate.
      * @param  estimatedDeliveryDate  LocalDateTime value for estimatedDeliveryDate.
+     * @param  type  String value for type.
      */
     public GetShippingResponse(
             Integer amount,
@@ -52,26 +52,28 @@ public class GetShippingResponse {
             String recipientName,
             String recipientPhone,
             GetAddressResponse address,
-            String type,
             LocalDateTime maxDeliveryDate,
-            LocalDateTime estimatedDeliveryDate) {
-        this.amount = amount;
-        this.description = description;
-        this.recipientName = recipientName;
-        this.recipientPhone = recipientPhone;
-        this.address = address;
+            LocalDateTime estimatedDeliveryDate,
+            String type) {
+        this.amount = OptionalNullable.of(amount);
+        this.description = OptionalNullable.of(description);
+        this.recipientName = OptionalNullable.of(recipientName);
+        this.recipientPhone = OptionalNullable.of(recipientPhone);
+        this.address = OptionalNullable.of(address);
         this.maxDeliveryDate = OptionalNullable.of(maxDeliveryDate);
         this.estimatedDeliveryDate = OptionalNullable.of(estimatedDeliveryDate);
-        this.type = type;
+        this.type = OptionalNullable.of(type);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetShippingResponse(Integer amount, String description, String recipientName,
-            String recipientPhone, GetAddressResponse address, String type,
+    protected GetShippingResponse(OptionalNullable<Integer> amount,
+            OptionalNullable<String> description, OptionalNullable<String> recipientName,
+            OptionalNullable<String> recipientPhone, OptionalNullable<GetAddressResponse> address,
             OptionalNullable<LocalDateTime> maxDeliveryDate,
-            OptionalNullable<LocalDateTime> estimatedDeliveryDate) {
+            OptionalNullable<LocalDateTime> estimatedDeliveryDate,
+            OptionalNullable<String> type) {
         this.amount = amount;
         this.description = description;
         this.recipientName = recipientName;
@@ -83,12 +85,22 @@ public class GetShippingResponse {
     }
 
     /**
+     * Internal Getter for Amount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
+    }
+
+    /**
      * Getter for Amount.
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -97,16 +109,33 @@ public class GetShippingResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for Description.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("description")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetDescription() {
+        return this.description;
     }
 
     /**
      * Getter for Description.
      * @return Returns the String
      */
-    @JsonGetter("description")
     public String getDescription() {
-        return description;
+        return OptionalNullable.getFrom(description);
     }
 
     /**
@@ -115,16 +144,33 @@ public class GetShippingResponse {
      */
     @JsonSetter("description")
     public void setDescription(String description) {
-        this.description = description;
+        this.description = OptionalNullable.of(description);
+    }
+
+    /**
+     * UnSetter for Description.
+     */
+    public void unsetDescription() {
+        description = null;
+    }
+
+    /**
+     * Internal Getter for RecipientName.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("recipient_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetRecipientName() {
+        return this.recipientName;
     }
 
     /**
      * Getter for RecipientName.
      * @return Returns the String
      */
-    @JsonGetter("recipient_name")
     public String getRecipientName() {
-        return recipientName;
+        return OptionalNullable.getFrom(recipientName);
     }
 
     /**
@@ -133,16 +179,33 @@ public class GetShippingResponse {
      */
     @JsonSetter("recipient_name")
     public void setRecipientName(String recipientName) {
-        this.recipientName = recipientName;
+        this.recipientName = OptionalNullable.of(recipientName);
+    }
+
+    /**
+     * UnSetter for RecipientName.
+     */
+    public void unsetRecipientName() {
+        recipientName = null;
+    }
+
+    /**
+     * Internal Getter for RecipientPhone.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("recipient_phone")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetRecipientPhone() {
+        return this.recipientPhone;
     }
 
     /**
      * Getter for RecipientPhone.
      * @return Returns the String
      */
-    @JsonGetter("recipient_phone")
     public String getRecipientPhone() {
-        return recipientPhone;
+        return OptionalNullable.getFrom(recipientPhone);
     }
 
     /**
@@ -151,16 +214,33 @@ public class GetShippingResponse {
      */
     @JsonSetter("recipient_phone")
     public void setRecipientPhone(String recipientPhone) {
-        this.recipientPhone = recipientPhone;
+        this.recipientPhone = OptionalNullable.of(recipientPhone);
+    }
+
+    /**
+     * UnSetter for RecipientPhone.
+     */
+    public void unsetRecipientPhone() {
+        recipientPhone = null;
+    }
+
+    /**
+     * Internal Getter for Address.
+     * @return Returns the Internal GetAddressResponse
+     */
+    @JsonGetter("address")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetAddressResponse> internalGetAddress() {
+        return this.address;
     }
 
     /**
      * Getter for Address.
      * @return Returns the GetAddressResponse
      */
-    @JsonGetter("address")
     public GetAddressResponse getAddress() {
-        return address;
+        return OptionalNullable.getFrom(address);
     }
 
     /**
@@ -169,7 +249,14 @@ public class GetShippingResponse {
      */
     @JsonSetter("address")
     public void setAddress(GetAddressResponse address) {
-        this.address = address;
+        this.address = OptionalNullable.of(address);
+    }
+
+    /**
+     * UnSetter for Address.
+     */
+    public void unsetAddress() {
+        address = null;
     }
 
     /**
@@ -253,13 +340,24 @@ public class GetShippingResponse {
     }
 
     /**
+     * Internal Getter for Type.
+     * Shipping Type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
+    }
+
+    /**
      * Getter for Type.
      * Shipping Type
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -269,7 +367,15 @@ public class GetShippingResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     * Shipping Type
+     */
+    public void unsetType() {
+        type = null;
     }
 
     /**
@@ -280,8 +386,8 @@ public class GetShippingResponse {
     public String toString() {
         return "GetShippingResponse [" + "amount=" + amount + ", description=" + description
                 + ", recipientName=" + recipientName + ", recipientPhone=" + recipientPhone
-                + ", address=" + address + ", type=" + type + ", maxDeliveryDate=" + maxDeliveryDate
-                + ", estimatedDeliveryDate=" + estimatedDeliveryDate + "]";
+                + ", address=" + address + ", maxDeliveryDate=" + maxDeliveryDate
+                + ", estimatedDeliveryDate=" + estimatedDeliveryDate + ", type=" + type + "]";
     }
 
     /**
@@ -290,10 +396,15 @@ public class GetShippingResponse {
      * @return a new {@link GetShippingResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(amount, description, recipientName, recipientPhone, address,
-                type);
+        Builder builder = new Builder();
+        builder.amount = internalGetAmount();
+        builder.description = internalGetDescription();
+        builder.recipientName = internalGetRecipientName();
+        builder.recipientPhone = internalGetRecipientPhone();
+        builder.address = internalGetAddress();
         builder.maxDeliveryDate = internalGetMaxDeliveryDate();
         builder.estimatedDeliveryDate = internalGetEstimatedDeliveryDate();
+        builder.type = internalGetType();
         return builder;
     }
 
@@ -301,39 +412,16 @@ public class GetShippingResponse {
      * Class to build instances of {@link GetShippingResponse}.
      */
     public static class Builder {
-        private Integer amount;
-        private String description;
-        private String recipientName;
-        private String recipientPhone;
-        private GetAddressResponse address;
-        private String type;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> description;
+        private OptionalNullable<String> recipientName;
+        private OptionalNullable<String> recipientPhone;
+        private OptionalNullable<GetAddressResponse> address;
         private OptionalNullable<LocalDateTime> maxDeliveryDate;
         private OptionalNullable<LocalDateTime> estimatedDeliveryDate;
+        private OptionalNullable<String> type;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  amount  Integer value for amount.
-         * @param  description  String value for description.
-         * @param  recipientName  String value for recipientName.
-         * @param  recipientPhone  String value for recipientPhone.
-         * @param  address  GetAddressResponse value for address.
-         * @param  type  String value for type.
-         */
-        public Builder(Integer amount, String description, String recipientName,
-                String recipientPhone, GetAddressResponse address, String type) {
-            this.amount = amount;
-            this.description = description;
-            this.recipientName = recipientName;
-            this.recipientPhone = recipientPhone;
-            this.address = address;
-            this.type = type;
-        }
 
         /**
          * Setter for amount.
@@ -341,7 +429,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -351,7 +448,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder description(String description) {
-            this.description = description;
+            this.description = OptionalNullable.of(description);
+            return this;
+        }
+
+        /**
+         * UnSetter for description.
+         * @return Builder
+         */
+        public Builder unsetDescription() {
+            description = null;
             return this;
         }
 
@@ -361,7 +467,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder recipientName(String recipientName) {
-            this.recipientName = recipientName;
+            this.recipientName = OptionalNullable.of(recipientName);
+            return this;
+        }
+
+        /**
+         * UnSetter for recipientName.
+         * @return Builder
+         */
+        public Builder unsetRecipientName() {
+            recipientName = null;
             return this;
         }
 
@@ -371,7 +486,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder recipientPhone(String recipientPhone) {
-            this.recipientPhone = recipientPhone;
+            this.recipientPhone = OptionalNullable.of(recipientPhone);
+            return this;
+        }
+
+        /**
+         * UnSetter for recipientPhone.
+         * @return Builder
+         */
+        public Builder unsetRecipientPhone() {
+            recipientPhone = null;
             return this;
         }
 
@@ -381,17 +505,16 @@ public class GetShippingResponse {
          * @return Builder
          */
         public Builder address(GetAddressResponse address) {
-            this.address = address;
+            this.address = OptionalNullable.of(address);
             return this;
         }
 
         /**
-         * Setter for type.
-         * @param  type  String value for type.
+         * UnSetter for address.
          * @return Builder
          */
-        public Builder type(String type) {
-            this.type = type;
+        public Builder unsetAddress() {
+            address = null;
             return this;
         }
 
@@ -434,12 +557,31 @@ public class GetShippingResponse {
         }
 
         /**
+         * Setter for type.
+         * @param  type  String value for type.
+         * @return Builder
+         */
+        public Builder type(String type) {
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetShippingResponse} object using the set fields.
          * @return {@link GetShippingResponse}
          */
         public GetShippingResponse build() {
             return new GetShippingResponse(amount, description, recipientName, recipientPhone,
-                    address, type, maxDeliveryDate, estimatedDeliveryDate);
+                    address, maxDeliveryDate, estimatedDeliveryDate, type);
         }
     }
 }

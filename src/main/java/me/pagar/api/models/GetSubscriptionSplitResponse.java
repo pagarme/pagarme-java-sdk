@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for GetSubscriptionSplitResponse type.
  */
 public class GetSubscriptionSplitResponse {
-    private Boolean enabled;
-    private List<GetSplitResponse> rules;
+    private OptionalNullable<Boolean> enabled;
+    private OptionalNullable<List<GetSplitResponse>> rules;
 
     /**
      * Default constructor.
@@ -32,8 +35,29 @@ public class GetSubscriptionSplitResponse {
     public GetSubscriptionSplitResponse(
             Boolean enabled,
             List<GetSplitResponse> rules) {
+        this.enabled = OptionalNullable.of(enabled);
+        this.rules = OptionalNullable.of(rules);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetSubscriptionSplitResponse(OptionalNullable<Boolean> enabled,
+            OptionalNullable<List<GetSplitResponse>> rules) {
         this.enabled = enabled;
         this.rules = rules;
+    }
+
+    /**
+     * Internal Getter for Enabled.
+     * Defines if the split is enabled
+     * @return Returns the Internal Boolean
+     */
+    @JsonGetter("enabled")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Boolean> internalGetEnabled() {
+        return this.enabled;
     }
 
     /**
@@ -41,9 +65,8 @@ public class GetSubscriptionSplitResponse {
      * Defines if the split is enabled
      * @return Returns the Boolean
      */
-    @JsonGetter("enabled")
     public Boolean getEnabled() {
-        return enabled;
+        return OptionalNullable.getFrom(enabled);
     }
 
     /**
@@ -53,7 +76,27 @@ public class GetSubscriptionSplitResponse {
      */
     @JsonSetter("enabled")
     public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+        this.enabled = OptionalNullable.of(enabled);
+    }
+
+    /**
+     * UnSetter for Enabled.
+     * Defines if the split is enabled
+     */
+    public void unsetEnabled() {
+        enabled = null;
+    }
+
+    /**
+     * Internal Getter for Rules.
+     * Split
+     * @return Returns the Internal List of GetSplitResponse
+     */
+    @JsonGetter("rules")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetSplitResponse>> internalGetRules() {
+        return this.rules;
     }
 
     /**
@@ -61,9 +104,8 @@ public class GetSubscriptionSplitResponse {
      * Split
      * @return Returns the List of GetSplitResponse
      */
-    @JsonGetter("rules")
     public List<GetSplitResponse> getRules() {
-        return rules;
+        return OptionalNullable.getFrom(rules);
     }
 
     /**
@@ -73,7 +115,15 @@ public class GetSubscriptionSplitResponse {
      */
     @JsonSetter("rules")
     public void setRules(List<GetSplitResponse> rules) {
-        this.rules = rules;
+        this.rules = OptionalNullable.of(rules);
+    }
+
+    /**
+     * UnSetter for Rules.
+     * Split
+     */
+    public void unsetRules() {
+        rules = null;
     }
 
     /**
@@ -91,7 +141,9 @@ public class GetSubscriptionSplitResponse {
      * @return a new {@link GetSubscriptionSplitResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(enabled, rules);
+        Builder builder = new Builder();
+        builder.enabled = internalGetEnabled();
+        builder.rules = internalGetRules();
         return builder;
     }
 
@@ -99,24 +151,10 @@ public class GetSubscriptionSplitResponse {
      * Class to build instances of {@link GetSubscriptionSplitResponse}.
      */
     public static class Builder {
-        private Boolean enabled;
-        private List<GetSplitResponse> rules;
+        private OptionalNullable<Boolean> enabled;
+        private OptionalNullable<List<GetSplitResponse>> rules;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  enabled  Boolean value for enabled.
-         * @param  rules  List of GetSplitResponse value for rules.
-         */
-        public Builder(Boolean enabled, List<GetSplitResponse> rules) {
-            this.enabled = enabled;
-            this.rules = rules;
-        }
 
         /**
          * Setter for enabled.
@@ -124,7 +162,16 @@ public class GetSubscriptionSplitResponse {
          * @return Builder
          */
         public Builder enabled(Boolean enabled) {
-            this.enabled = enabled;
+            this.enabled = OptionalNullable.of(enabled);
+            return this;
+        }
+
+        /**
+         * UnSetter for enabled.
+         * @return Builder
+         */
+        public Builder unsetEnabled() {
+            enabled = null;
             return this;
         }
 
@@ -134,7 +181,16 @@ public class GetSubscriptionSplitResponse {
          * @return Builder
          */
         public Builder rules(List<GetSplitResponse> rules) {
-            this.rules = rules;
+            this.rules = OptionalNullable.of(rules);
+            return this;
+        }
+
+        /**
+         * UnSetter for rules.
+         * @return Builder
+         */
+        public Builder unsetRules() {
+            rules = null;
             return this;
         }
 

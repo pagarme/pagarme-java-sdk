@@ -7,10 +7,12 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -18,8 +20,8 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetCheckoutBoletoPaymentResponse type.
  */
 public class GetCheckoutBoletoPaymentResponse {
-    private LocalDateTime dueAt;
-    private String instructions;
+    private OptionalNullable<LocalDateTime> dueAt;
+    private OptionalNullable<String> instructions;
 
     /**
      * Default constructor.
@@ -35,8 +37,29 @@ public class GetCheckoutBoletoPaymentResponse {
     public GetCheckoutBoletoPaymentResponse(
             LocalDateTime dueAt,
             String instructions) {
+        this.dueAt = OptionalNullable.of(dueAt);
+        this.instructions = OptionalNullable.of(instructions);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCheckoutBoletoPaymentResponse(OptionalNullable<LocalDateTime> dueAt,
+            OptionalNullable<String> instructions) {
         this.dueAt = dueAt;
         this.instructions = instructions;
+    }
+
+    /**
+     * Internal Getter for DueAt.
+     * Data de vencimento do boleto
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDueAt() {
+        return this.dueAt;
     }
 
     /**
@@ -44,10 +67,8 @@ public class GetCheckoutBoletoPaymentResponse {
      * Data de vencimento do boleto
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("due_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
-        return dueAt;
+        return OptionalNullable.getFrom(dueAt);
     }
 
     /**
@@ -58,7 +79,27 @@ public class GetCheckoutBoletoPaymentResponse {
     @JsonSetter("due_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDueAt(LocalDateTime dueAt) {
-        this.dueAt = dueAt;
+        this.dueAt = OptionalNullable.of(dueAt);
+    }
+
+    /**
+     * UnSetter for DueAt.
+     * Data de vencimento do boleto
+     */
+    public void unsetDueAt() {
+        dueAt = null;
+    }
+
+    /**
+     * Internal Getter for Instructions.
+     * Instruções do boleto
+     * @return Returns the Internal String
+     */
+    @JsonGetter("instructions")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetInstructions() {
+        return this.instructions;
     }
 
     /**
@@ -66,9 +107,8 @@ public class GetCheckoutBoletoPaymentResponse {
      * Instruções do boleto
      * @return Returns the String
      */
-    @JsonGetter("instructions")
     public String getInstructions() {
-        return instructions;
+        return OptionalNullable.getFrom(instructions);
     }
 
     /**
@@ -78,7 +118,15 @@ public class GetCheckoutBoletoPaymentResponse {
      */
     @JsonSetter("instructions")
     public void setInstructions(String instructions) {
-        this.instructions = instructions;
+        this.instructions = OptionalNullable.of(instructions);
+    }
+
+    /**
+     * UnSetter for Instructions.
+     * Instruções do boleto
+     */
+    public void unsetInstructions() {
+        instructions = null;
     }
 
     /**
@@ -97,7 +145,9 @@ public class GetCheckoutBoletoPaymentResponse {
      * @return a new {@link GetCheckoutBoletoPaymentResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(dueAt, instructions);
+        Builder builder = new Builder();
+        builder.dueAt = internalGetDueAt();
+        builder.instructions = internalGetInstructions();
         return builder;
     }
 
@@ -105,24 +155,10 @@ public class GetCheckoutBoletoPaymentResponse {
      * Class to build instances of {@link GetCheckoutBoletoPaymentResponse}.
      */
     public static class Builder {
-        private LocalDateTime dueAt;
-        private String instructions;
+        private OptionalNullable<LocalDateTime> dueAt;
+        private OptionalNullable<String> instructions;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  dueAt  LocalDateTime value for dueAt.
-         * @param  instructions  String value for instructions.
-         */
-        public Builder(LocalDateTime dueAt, String instructions) {
-            this.dueAt = dueAt;
-            this.instructions = instructions;
-        }
 
         /**
          * Setter for dueAt.
@@ -130,7 +166,16 @@ public class GetCheckoutBoletoPaymentResponse {
          * @return Builder
          */
         public Builder dueAt(LocalDateTime dueAt) {
-            this.dueAt = dueAt;
+            this.dueAt = OptionalNullable.of(dueAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for dueAt.
+         * @return Builder
+         */
+        public Builder unsetDueAt() {
+            dueAt = null;
             return this;
         }
 
@@ -140,7 +185,16 @@ public class GetCheckoutBoletoPaymentResponse {
          * @return Builder
          */
         public Builder instructions(String instructions) {
-            this.instructions = instructions;
+            this.instructions = OptionalNullable.of(instructions);
+            return this;
+        }
+
+        /**
+         * UnSetter for instructions.
+         * @return Builder
+         */
+        public Builder unsetInstructions() {
+            instructions = null;
             return this;
         }
 

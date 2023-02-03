@@ -21,22 +21,22 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetBankAccountResponse type.
  */
 public class GetBankAccountResponse {
-    private String id;
-    private String holderName;
-    private String holderType;
-    private String bank;
-    private String branchNumber;
-    private String branchCheckDigit;
-    private String accountNumber;
-    private String accountCheckDigit;
-    private String type;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> holderName;
+    private OptionalNullable<String> holderType;
+    private OptionalNullable<String> bank;
+    private OptionalNullable<String> branchNumber;
+    private OptionalNullable<String> branchCheckDigit;
+    private OptionalNullable<String> accountNumber;
+    private OptionalNullable<String> accountCheckDigit;
+    private OptionalNullable<String> type;
+    private OptionalNullable<String> status;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<LocalDateTime> updatedAt;
+    private OptionalNullable<LocalDateTime> deletedAt;
     private OptionalNullable<GetRecipientResponse> recipient;
-    private Map<String, String> metadata;
-    private String pixKey;
+    private OptionalNullable<Map<String, String>> metadata;
+    private OptionalNullable<String> pixKey;
 
     /**
      * Default constructor.
@@ -59,9 +59,9 @@ public class GetBankAccountResponse {
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  updatedAt  LocalDateTime value for updatedAt.
      * @param  deletedAt  LocalDateTime value for deletedAt.
+     * @param  recipient  GetRecipientResponse value for recipient.
      * @param  metadata  Map of String, value for metadata.
      * @param  pixKey  String value for pixKey.
-     * @param  recipient  GetRecipientResponse value for recipient.
      */
     public GetBankAccountResponse(
             String id,
@@ -77,35 +77,39 @@ public class GetBankAccountResponse {
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
             LocalDateTime deletedAt,
+            GetRecipientResponse recipient,
             Map<String, String> metadata,
-            String pixKey,
-            GetRecipientResponse recipient) {
-        this.id = id;
-        this.holderName = holderName;
-        this.holderType = holderType;
-        this.bank = bank;
-        this.branchNumber = branchNumber;
-        this.branchCheckDigit = branchCheckDigit;
-        this.accountNumber = accountNumber;
-        this.accountCheckDigit = accountCheckDigit;
-        this.type = type;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
+            String pixKey) {
+        this.id = OptionalNullable.of(id);
+        this.holderName = OptionalNullable.of(holderName);
+        this.holderType = OptionalNullable.of(holderType);
+        this.bank = OptionalNullable.of(bank);
+        this.branchNumber = OptionalNullable.of(branchNumber);
+        this.branchCheckDigit = OptionalNullable.of(branchCheckDigit);
+        this.accountNumber = OptionalNullable.of(accountNumber);
+        this.accountCheckDigit = OptionalNullable.of(accountCheckDigit);
+        this.type = OptionalNullable.of(type);
+        this.status = OptionalNullable.of(status);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+        this.deletedAt = OptionalNullable.of(deletedAt);
         this.recipient = OptionalNullable.of(recipient);
-        this.metadata = metadata;
-        this.pixKey = pixKey;
+        this.metadata = OptionalNullable.of(metadata);
+        this.pixKey = OptionalNullable.of(pixKey);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetBankAccountResponse(String id, String holderName, String holderType, String bank,
-            String branchNumber, String branchCheckDigit, String accountNumber,
-            String accountCheckDigit, String type, String status, LocalDateTime createdAt,
-            LocalDateTime updatedAt, LocalDateTime deletedAt, Map<String, String> metadata,
-            String pixKey, OptionalNullable<GetRecipientResponse> recipient) {
+    protected GetBankAccountResponse(OptionalNullable<String> id,
+            OptionalNullable<String> holderName, OptionalNullable<String> holderType,
+            OptionalNullable<String> bank, OptionalNullable<String> branchNumber,
+            OptionalNullable<String> branchCheckDigit, OptionalNullable<String> accountNumber,
+            OptionalNullable<String> accountCheckDigit, OptionalNullable<String> type,
+            OptionalNullable<String> status, OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<LocalDateTime> updatedAt, OptionalNullable<LocalDateTime> deletedAt,
+            OptionalNullable<GetRecipientResponse> recipient,
+            OptionalNullable<Map<String, String>> metadata, OptionalNullable<String> pixKey) {
         this.id = id;
         this.holderName = holderName;
         this.holderType = holderType;
@@ -125,13 +129,24 @@ public class GetBankAccountResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * Id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * Id
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -141,7 +156,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     * Id
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for HolderName.
+     * Holder name
+     * @return Returns the Internal String
+     */
+    @JsonGetter("holder_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetHolderName() {
+        return this.holderName;
     }
 
     /**
@@ -149,9 +184,8 @@ public class GetBankAccountResponse {
      * Holder name
      * @return Returns the String
      */
-    @JsonGetter("holder_name")
     public String getHolderName() {
-        return holderName;
+        return OptionalNullable.getFrom(holderName);
     }
 
     /**
@@ -161,7 +195,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("holder_name")
     public void setHolderName(String holderName) {
-        this.holderName = holderName;
+        this.holderName = OptionalNullable.of(holderName);
+    }
+
+    /**
+     * UnSetter for HolderName.
+     * Holder name
+     */
+    public void unsetHolderName() {
+        holderName = null;
+    }
+
+    /**
+     * Internal Getter for HolderType.
+     * Holder type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("holder_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetHolderType() {
+        return this.holderType;
     }
 
     /**
@@ -169,9 +223,8 @@ public class GetBankAccountResponse {
      * Holder type
      * @return Returns the String
      */
-    @JsonGetter("holder_type")
     public String getHolderType() {
-        return holderType;
+        return OptionalNullable.getFrom(holderType);
     }
 
     /**
@@ -181,7 +234,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("holder_type")
     public void setHolderType(String holderType) {
-        this.holderType = holderType;
+        this.holderType = OptionalNullable.of(holderType);
+    }
+
+    /**
+     * UnSetter for HolderType.
+     * Holder type
+     */
+    public void unsetHolderType() {
+        holderType = null;
+    }
+
+    /**
+     * Internal Getter for Bank.
+     * Bank
+     * @return Returns the Internal String
+     */
+    @JsonGetter("bank")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBank() {
+        return this.bank;
     }
 
     /**
@@ -189,9 +262,8 @@ public class GetBankAccountResponse {
      * Bank
      * @return Returns the String
      */
-    @JsonGetter("bank")
     public String getBank() {
-        return bank;
+        return OptionalNullable.getFrom(bank);
     }
 
     /**
@@ -201,7 +273,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("bank")
     public void setBank(String bank) {
-        this.bank = bank;
+        this.bank = OptionalNullable.of(bank);
+    }
+
+    /**
+     * UnSetter for Bank.
+     * Bank
+     */
+    public void unsetBank() {
+        bank = null;
+    }
+
+    /**
+     * Internal Getter for BranchNumber.
+     * Branch number
+     * @return Returns the Internal String
+     */
+    @JsonGetter("branch_number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBranchNumber() {
+        return this.branchNumber;
     }
 
     /**
@@ -209,9 +301,8 @@ public class GetBankAccountResponse {
      * Branch number
      * @return Returns the String
      */
-    @JsonGetter("branch_number")
     public String getBranchNumber() {
-        return branchNumber;
+        return OptionalNullable.getFrom(branchNumber);
     }
 
     /**
@@ -221,7 +312,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("branch_number")
     public void setBranchNumber(String branchNumber) {
-        this.branchNumber = branchNumber;
+        this.branchNumber = OptionalNullable.of(branchNumber);
+    }
+
+    /**
+     * UnSetter for BranchNumber.
+     * Branch number
+     */
+    public void unsetBranchNumber() {
+        branchNumber = null;
+    }
+
+    /**
+     * Internal Getter for BranchCheckDigit.
+     * Branch check digit
+     * @return Returns the Internal String
+     */
+    @JsonGetter("branch_check_digit")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBranchCheckDigit() {
+        return this.branchCheckDigit;
     }
 
     /**
@@ -229,9 +340,8 @@ public class GetBankAccountResponse {
      * Branch check digit
      * @return Returns the String
      */
-    @JsonGetter("branch_check_digit")
     public String getBranchCheckDigit() {
-        return branchCheckDigit;
+        return OptionalNullable.getFrom(branchCheckDigit);
     }
 
     /**
@@ -241,7 +351,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("branch_check_digit")
     public void setBranchCheckDigit(String branchCheckDigit) {
-        this.branchCheckDigit = branchCheckDigit;
+        this.branchCheckDigit = OptionalNullable.of(branchCheckDigit);
+    }
+
+    /**
+     * UnSetter for BranchCheckDigit.
+     * Branch check digit
+     */
+    public void unsetBranchCheckDigit() {
+        branchCheckDigit = null;
+    }
+
+    /**
+     * Internal Getter for AccountNumber.
+     * Account number
+     * @return Returns the Internal String
+     */
+    @JsonGetter("account_number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAccountNumber() {
+        return this.accountNumber;
     }
 
     /**
@@ -249,9 +379,8 @@ public class GetBankAccountResponse {
      * Account number
      * @return Returns the String
      */
-    @JsonGetter("account_number")
     public String getAccountNumber() {
-        return accountNumber;
+        return OptionalNullable.getFrom(accountNumber);
     }
 
     /**
@@ -261,7 +390,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("account_number")
     public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+        this.accountNumber = OptionalNullable.of(accountNumber);
+    }
+
+    /**
+     * UnSetter for AccountNumber.
+     * Account number
+     */
+    public void unsetAccountNumber() {
+        accountNumber = null;
+    }
+
+    /**
+     * Internal Getter for AccountCheckDigit.
+     * Account check digit
+     * @return Returns the Internal String
+     */
+    @JsonGetter("account_check_digit")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetAccountCheckDigit() {
+        return this.accountCheckDigit;
     }
 
     /**
@@ -269,9 +418,8 @@ public class GetBankAccountResponse {
      * Account check digit
      * @return Returns the String
      */
-    @JsonGetter("account_check_digit")
     public String getAccountCheckDigit() {
-        return accountCheckDigit;
+        return OptionalNullable.getFrom(accountCheckDigit);
     }
 
     /**
@@ -281,7 +429,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("account_check_digit")
     public void setAccountCheckDigit(String accountCheckDigit) {
-        this.accountCheckDigit = accountCheckDigit;
+        this.accountCheckDigit = OptionalNullable.of(accountCheckDigit);
+    }
+
+    /**
+     * UnSetter for AccountCheckDigit.
+     * Account check digit
+     */
+    public void unsetAccountCheckDigit() {
+        accountCheckDigit = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * Bank account type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
@@ -289,9 +457,8 @@ public class GetBankAccountResponse {
      * Bank account type
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -301,7 +468,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     * Bank account type
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * Bank account status
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
@@ -309,9 +496,8 @@ public class GetBankAccountResponse {
      * Bank account status
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -321,7 +507,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     * Bank account status
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * Creation date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
@@ -329,10 +535,8 @@ public class GetBankAccountResponse {
      * Creation date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -343,7 +547,27 @@ public class GetBankAccountResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     * Creation date
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * Last update date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
@@ -351,10 +575,8 @@ public class GetBankAccountResponse {
      * Last update date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("updated_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -365,7 +587,27 @@ public class GetBankAccountResponse {
     @JsonSetter("updated_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     * Last update date
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
+    }
+
+    /**
+     * Internal Getter for DeletedAt.
+     * Deletion date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("deleted_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDeletedAt() {
+        return this.deletedAt;
     }
 
     /**
@@ -373,10 +615,8 @@ public class GetBankAccountResponse {
      * Deletion date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("deleted_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDeletedAt() {
-        return deletedAt;
+        return OptionalNullable.getFrom(deletedAt);
     }
 
     /**
@@ -387,7 +627,15 @@ public class GetBankAccountResponse {
     @JsonSetter("deleted_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        this.deletedAt = OptionalNullable.of(deletedAt);
+    }
+
+    /**
+     * UnSetter for DeletedAt.
+     * Deletion date
+     */
+    public void unsetDeletedAt() {
+        deletedAt = null;
     }
 
     /**
@@ -430,13 +678,24 @@ public class GetBankAccountResponse {
     }
 
     /**
+     * Internal Getter for Metadata.
+     * Metadata
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
+    }
+
+    /**
      * Getter for Metadata.
      * Metadata
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -446,7 +705,27 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     * Metadata
+     */
+    public void unsetMetadata() {
+        metadata = null;
+    }
+
+    /**
+     * Internal Getter for PixKey.
+     * Pix Key
+     * @return Returns the Internal String
+     */
+    @JsonGetter("pix_key")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPixKey() {
+        return this.pixKey;
     }
 
     /**
@@ -454,9 +733,8 @@ public class GetBankAccountResponse {
      * Pix Key
      * @return Returns the String
      */
-    @JsonGetter("pix_key")
     public String getPixKey() {
-        return pixKey;
+        return OptionalNullable.getFrom(pixKey);
     }
 
     /**
@@ -466,7 +744,15 @@ public class GetBankAccountResponse {
      */
     @JsonSetter("pix_key")
     public void setPixKey(String pixKey) {
-        this.pixKey = pixKey;
+        this.pixKey = OptionalNullable.of(pixKey);
+    }
+
+    /**
+     * UnSetter for PixKey.
+     * Pix Key
+     */
+    public void unsetPixKey() {
+        pixKey = null;
     }
 
     /**
@@ -480,8 +766,8 @@ public class GetBankAccountResponse {
                 + ", branchCheckDigit=" + branchCheckDigit + ", accountNumber=" + accountNumber
                 + ", accountCheckDigit=" + accountCheckDigit + ", type=" + type + ", status="
                 + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", deletedAt="
-                + deletedAt + ", metadata=" + metadata + ", pixKey=" + pixKey + ", recipient="
-                + recipient + "]";
+                + deletedAt + ", recipient=" + recipient + ", metadata=" + metadata + ", pixKey="
+                + pixKey + "]";
     }
 
     /**
@@ -490,10 +776,23 @@ public class GetBankAccountResponse {
      * @return a new {@link GetBankAccountResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, holderName, holderType, bank, branchNumber,
-                branchCheckDigit, accountNumber, accountCheckDigit, type, status, createdAt,
-                updatedAt, deletedAt, metadata, pixKey);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.holderName = internalGetHolderName();
+        builder.holderType = internalGetHolderType();
+        builder.bank = internalGetBank();
+        builder.branchNumber = internalGetBranchNumber();
+        builder.branchCheckDigit = internalGetBranchCheckDigit();
+        builder.accountNumber = internalGetAccountNumber();
+        builder.accountCheckDigit = internalGetAccountCheckDigit();
+        builder.type = internalGetType();
+        builder.status = internalGetStatus();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.deletedAt = internalGetDeletedAt();
         builder.recipient = internalGetRecipient();
+        builder.metadata = internalGetMetadata();
+        builder.pixKey = internalGetPixKey();
         return builder;
     }
 
@@ -501,68 +800,24 @@ public class GetBankAccountResponse {
      * Class to build instances of {@link GetBankAccountResponse}.
      */
     public static class Builder {
-        private String id;
-        private String holderName;
-        private String holderType;
-        private String bank;
-        private String branchNumber;
-        private String branchCheckDigit;
-        private String accountNumber;
-        private String accountCheckDigit;
-        private String type;
-        private String status;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private LocalDateTime deletedAt;
-        private Map<String, String> metadata;
-        private String pixKey;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> holderName;
+        private OptionalNullable<String> holderType;
+        private OptionalNullable<String> bank;
+        private OptionalNullable<String> branchNumber;
+        private OptionalNullable<String> branchCheckDigit;
+        private OptionalNullable<String> accountNumber;
+        private OptionalNullable<String> accountCheckDigit;
+        private OptionalNullable<String> type;
+        private OptionalNullable<String> status;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<LocalDateTime> updatedAt;
+        private OptionalNullable<LocalDateTime> deletedAt;
         private OptionalNullable<GetRecipientResponse> recipient;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<String> pixKey;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  holderName  String value for holderName.
-         * @param  holderType  String value for holderType.
-         * @param  bank  String value for bank.
-         * @param  branchNumber  String value for branchNumber.
-         * @param  branchCheckDigit  String value for branchCheckDigit.
-         * @param  accountNumber  String value for accountNumber.
-         * @param  accountCheckDigit  String value for accountCheckDigit.
-         * @param  type  String value for type.
-         * @param  status  String value for status.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  updatedAt  LocalDateTime value for updatedAt.
-         * @param  deletedAt  LocalDateTime value for deletedAt.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  pixKey  String value for pixKey.
-         */
-        public Builder(String id, String holderName, String holderType, String bank,
-                String branchNumber, String branchCheckDigit, String accountNumber,
-                String accountCheckDigit, String type, String status, LocalDateTime createdAt,
-                LocalDateTime updatedAt, LocalDateTime deletedAt, Map<String, String> metadata,
-                String pixKey) {
-            this.id = id;
-            this.holderName = holderName;
-            this.holderType = holderType;
-            this.bank = bank;
-            this.branchNumber = branchNumber;
-            this.branchCheckDigit = branchCheckDigit;
-            this.accountNumber = accountNumber;
-            this.accountCheckDigit = accountCheckDigit;
-            this.type = type;
-            this.status = status;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.deletedAt = deletedAt;
-            this.metadata = metadata;
-            this.pixKey = pixKey;
-        }
 
         /**
          * Setter for id.
@@ -570,7 +825,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -580,7 +844,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder holderName(String holderName) {
-            this.holderName = holderName;
+            this.holderName = OptionalNullable.of(holderName);
+            return this;
+        }
+
+        /**
+         * UnSetter for holderName.
+         * @return Builder
+         */
+        public Builder unsetHolderName() {
+            holderName = null;
             return this;
         }
 
@@ -590,7 +863,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder holderType(String holderType) {
-            this.holderType = holderType;
+            this.holderType = OptionalNullable.of(holderType);
+            return this;
+        }
+
+        /**
+         * UnSetter for holderType.
+         * @return Builder
+         */
+        public Builder unsetHolderType() {
+            holderType = null;
             return this;
         }
 
@@ -600,7 +882,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder bank(String bank) {
-            this.bank = bank;
+            this.bank = OptionalNullable.of(bank);
+            return this;
+        }
+
+        /**
+         * UnSetter for bank.
+         * @return Builder
+         */
+        public Builder unsetBank() {
+            bank = null;
             return this;
         }
 
@@ -610,7 +901,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder branchNumber(String branchNumber) {
-            this.branchNumber = branchNumber;
+            this.branchNumber = OptionalNullable.of(branchNumber);
+            return this;
+        }
+
+        /**
+         * UnSetter for branchNumber.
+         * @return Builder
+         */
+        public Builder unsetBranchNumber() {
+            branchNumber = null;
             return this;
         }
 
@@ -620,7 +920,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder branchCheckDigit(String branchCheckDigit) {
-            this.branchCheckDigit = branchCheckDigit;
+            this.branchCheckDigit = OptionalNullable.of(branchCheckDigit);
+            return this;
+        }
+
+        /**
+         * UnSetter for branchCheckDigit.
+         * @return Builder
+         */
+        public Builder unsetBranchCheckDigit() {
+            branchCheckDigit = null;
             return this;
         }
 
@@ -630,7 +939,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder accountNumber(String accountNumber) {
-            this.accountNumber = accountNumber;
+            this.accountNumber = OptionalNullable.of(accountNumber);
+            return this;
+        }
+
+        /**
+         * UnSetter for accountNumber.
+         * @return Builder
+         */
+        public Builder unsetAccountNumber() {
+            accountNumber = null;
             return this;
         }
 
@@ -640,7 +958,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder accountCheckDigit(String accountCheckDigit) {
-            this.accountCheckDigit = accountCheckDigit;
+            this.accountCheckDigit = OptionalNullable.of(accountCheckDigit);
+            return this;
+        }
+
+        /**
+         * UnSetter for accountCheckDigit.
+         * @return Builder
+         */
+        public Builder unsetAccountCheckDigit() {
+            accountCheckDigit = null;
             return this;
         }
 
@@ -650,7 +977,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -660,7 +996,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -670,7 +1015,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -680,7 +1034,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -690,27 +1053,16 @@ public class GetBankAccountResponse {
          * @return Builder
          */
         public Builder deletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
+            this.deletedAt = OptionalNullable.of(deletedAt);
             return this;
         }
 
         /**
-         * Setter for metadata.
-         * @param  metadata  Map of String, value for metadata.
+         * UnSetter for deletedAt.
          * @return Builder
          */
-        public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
-         * Setter for pixKey.
-         * @param  pixKey  String value for pixKey.
-         * @return Builder
-         */
-        public Builder pixKey(String pixKey) {
-            this.pixKey = pixKey;
+        public Builder unsetDeletedAt() {
+            deletedAt = null;
             return this;
         }
 
@@ -734,13 +1086,51 @@ public class GetBankAccountResponse {
         }
 
         /**
+         * Setter for metadata.
+         * @param  metadata  Map of String, value for metadata.
+         * @return Builder
+         */
+        public Builder metadata(Map<String, String> metadata) {
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
+            return this;
+        }
+
+        /**
+         * Setter for pixKey.
+         * @param  pixKey  String value for pixKey.
+         * @return Builder
+         */
+        public Builder pixKey(String pixKey) {
+            this.pixKey = OptionalNullable.of(pixKey);
+            return this;
+        }
+
+        /**
+         * UnSetter for pixKey.
+         * @return Builder
+         */
+        public Builder unsetPixKey() {
+            pixKey = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetBankAccountResponse} object using the set fields.
          * @return {@link GetBankAccountResponse}
          */
         public GetBankAccountResponse build() {
             return new GetBankAccountResponse(id, holderName, holderType, bank, branchNumber,
                     branchCheckDigit, accountNumber, accountCheckDigit, type, status, createdAt,
-                    updatedAt, deletedAt, metadata, pixKey, recipient);
+                    updatedAt, deletedAt, recipient, metadata, pixKey);
         }
     }
 }

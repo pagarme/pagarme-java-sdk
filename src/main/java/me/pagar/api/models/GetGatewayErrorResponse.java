@@ -7,14 +7,17 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetGatewayErrorResponse type.
  */
 public class GetGatewayErrorResponse {
-    private String message;
+    private OptionalNullable<String> message;
 
     /**
      * Default constructor.
@@ -28,7 +31,26 @@ public class GetGatewayErrorResponse {
      */
     public GetGatewayErrorResponse(
             String message) {
+        this.message = OptionalNullable.of(message);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetGatewayErrorResponse(OptionalNullable<String> message) {
         this.message = message;
+    }
+
+    /**
+     * Internal Getter for Message.
+     * The message error
+     * @return Returns the Internal String
+     */
+    @JsonGetter("message")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetMessage() {
+        return this.message;
     }
 
     /**
@@ -36,9 +58,8 @@ public class GetGatewayErrorResponse {
      * The message error
      * @return Returns the String
      */
-    @JsonGetter("message")
     public String getMessage() {
-        return message;
+        return OptionalNullable.getFrom(message);
     }
 
     /**
@@ -48,7 +69,15 @@ public class GetGatewayErrorResponse {
      */
     @JsonSetter("message")
     public void setMessage(String message) {
-        this.message = message;
+        this.message = OptionalNullable.of(message);
+    }
+
+    /**
+     * UnSetter for Message.
+     * The message error
+     */
+    public void unsetMessage() {
+        message = null;
     }
 
     /**
@@ -66,7 +95,8 @@ public class GetGatewayErrorResponse {
      * @return a new {@link GetGatewayErrorResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(message);
+        Builder builder = new Builder();
+        builder.message = internalGetMessage();
         return builder;
     }
 
@@ -74,21 +104,9 @@ public class GetGatewayErrorResponse {
      * Class to build instances of {@link GetGatewayErrorResponse}.
      */
     public static class Builder {
-        private String message;
+        private OptionalNullable<String> message;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  message  String value for message.
-         */
-        public Builder(String message) {
-            this.message = message;
-        }
 
         /**
          * Setter for message.
@@ -96,7 +114,16 @@ public class GetGatewayErrorResponse {
          * @return Builder
          */
         public Builder message(String message) {
-            this.message = message;
+            this.message = OptionalNullable.of(message);
+            return this;
+        }
+
+        /**
+         * UnSetter for message.
+         * @return Builder
+         */
+        public Builder unsetMessage() {
+            message = null;
             return this;
         }
 

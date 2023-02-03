@@ -9,13 +9,13 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Total` | `Integer` | Required | - | Integer getTotal() | setTotal(Integer total) |
+| `Total` | `Integer` | Optional | - | Integer getTotal() | setTotal(Integer total) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "total": 10
+  "total": null
 }
 ```
 

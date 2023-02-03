@@ -9,15 +9,15 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `TargetId` | `String` | Required | - | String getTargetId() | setTargetId(String targetId) |
-| `Type` | `String` | Required | - | String getType() | setType(String type) |
+| `TargetId` | `String` | Optional | - | String getTargetId() | setTargetId(String targetId) |
+| `Type` | `String` | Optional | - | String getType() | setType(String type) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "target_id": "target_id0",
-  "type": "type0"
+  "target_id": null,
+  "type": null
 }
 ```
 

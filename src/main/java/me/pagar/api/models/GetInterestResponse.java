@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetInterestResponse type.
  */
 public class GetInterestResponse {
-    private Integer days;
-    private String type;
-    private Integer amount;
+    private OptionalNullable<Integer> days;
+    private OptionalNullable<String> type;
+    private OptionalNullable<Integer> amount;
 
     /**
      * Default constructor.
@@ -34,9 +37,31 @@ public class GetInterestResponse {
             Integer days,
             String type,
             Integer amount) {
+        this.days = OptionalNullable.of(days);
+        this.type = OptionalNullable.of(type);
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetInterestResponse(OptionalNullable<Integer> days, OptionalNullable<String> type,
+            OptionalNullable<Integer> amount) {
         this.days = days;
         this.type = type;
         this.amount = amount;
+    }
+
+    /**
+     * Internal Getter for Days.
+     * Days
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("days")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetDays() {
+        return this.days;
     }
 
     /**
@@ -44,9 +69,8 @@ public class GetInterestResponse {
      * Days
      * @return Returns the Integer
      */
-    @JsonGetter("days")
     public Integer getDays() {
-        return days;
+        return OptionalNullable.getFrom(days);
     }
 
     /**
@@ -56,7 +80,27 @@ public class GetInterestResponse {
      */
     @JsonSetter("days")
     public void setDays(Integer days) {
-        this.days = days;
+        this.days = OptionalNullable.of(days);
+    }
+
+    /**
+     * UnSetter for Days.
+     * Days
+     */
+    public void unsetDays() {
+        days = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * Type
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
@@ -64,9 +108,8 @@ public class GetInterestResponse {
      * Type
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -76,7 +119,27 @@ public class GetInterestResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     * Type
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * Amount
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
@@ -84,9 +147,8 @@ public class GetInterestResponse {
      * Amount
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -96,7 +158,15 @@ public class GetInterestResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     * Amount
+     */
+    public void unsetAmount() {
+        amount = null;
     }
 
     /**
@@ -115,7 +185,10 @@ public class GetInterestResponse {
      * @return a new {@link GetInterestResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(days, type, amount);
+        Builder builder = new Builder();
+        builder.days = internalGetDays();
+        builder.type = internalGetType();
+        builder.amount = internalGetAmount();
         return builder;
     }
 
@@ -123,27 +196,11 @@ public class GetInterestResponse {
      * Class to build instances of {@link GetInterestResponse}.
      */
     public static class Builder {
-        private Integer days;
-        private String type;
-        private Integer amount;
+        private OptionalNullable<Integer> days;
+        private OptionalNullable<String> type;
+        private OptionalNullable<Integer> amount;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  days  Integer value for days.
-         * @param  type  String value for type.
-         * @param  amount  Integer value for amount.
-         */
-        public Builder(Integer days, String type, Integer amount) {
-            this.days = days;
-            this.type = type;
-            this.amount = amount;
-        }
 
         /**
          * Setter for days.
@@ -151,7 +208,16 @@ public class GetInterestResponse {
          * @return Builder
          */
         public Builder days(Integer days) {
-            this.days = days;
+            this.days = OptionalNullable.of(days);
+            return this;
+        }
+
+        /**
+         * UnSetter for days.
+         * @return Builder
+         */
+        public Builder unsetDays() {
+            days = null;
             return this;
         }
 
@@ -161,7 +227,16 @@ public class GetInterestResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -171,7 +246,16 @@ public class GetInterestResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 

@@ -9,17 +9,17 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Url` | `String` | Required | - | String getUrl() | setUrl(String url) |
-| `UsageReportUrl` | `String` | Required | - | String getUsageReportUrl() | setUsageReportUrl(String usageReportUrl) |
-| `GroupedReportUrl` | `String` | Required | - | String getGroupedReportUrl() | setGroupedReportUrl(String groupedReportUrl) |
+| `Url` | `String` | Optional | - | String getUrl() | setUrl(String url) |
+| `UsageReportUrl` | `String` | Optional | - | String getUsageReportUrl() | setUsageReportUrl(String usageReportUrl) |
+| `GroupedReportUrl` | `String` | Optional | - | String getGroupedReportUrl() | setGroupedReportUrl(String groupedReportUrl) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "url": "url4",
-  "usage_report_url": "usage_report_url2",
-  "grouped_report_url": "grouped_report_url2"
+  "url": null,
+  "usage_report_url": null,
+  "grouped_report_url": null
 }
 ```
 

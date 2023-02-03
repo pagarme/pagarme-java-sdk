@@ -7,10 +7,12 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.List;
 import me.pagar.api.DateTimeHelper;
@@ -19,8 +21,8 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetCheckoutPixPaymentResponse type.
  */
 public class GetCheckoutPixPaymentResponse {
-    private LocalDateTime expiresAt;
-    private List<PixAdditionalInformation> additionalInformation;
+    private OptionalNullable<LocalDateTime> expiresAt;
+    private OptionalNullable<List<PixAdditionalInformation>> additionalInformation;
 
     /**
      * Default constructor.
@@ -37,8 +39,29 @@ public class GetCheckoutPixPaymentResponse {
     public GetCheckoutPixPaymentResponse(
             LocalDateTime expiresAt,
             List<PixAdditionalInformation> additionalInformation) {
+        this.expiresAt = OptionalNullable.of(expiresAt);
+        this.additionalInformation = OptionalNullable.of(additionalInformation);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetCheckoutPixPaymentResponse(OptionalNullable<LocalDateTime> expiresAt,
+            OptionalNullable<List<PixAdditionalInformation>> additionalInformation) {
         this.expiresAt = expiresAt;
         this.additionalInformation = additionalInformation;
+    }
+
+    /**
+     * Internal Getter for ExpiresAt.
+     * Expires at
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("expires_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetExpiresAt() {
+        return this.expiresAt;
     }
 
     /**
@@ -46,10 +69,8 @@ public class GetCheckoutPixPaymentResponse {
      * Expires at
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("expires_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getExpiresAt() {
-        return expiresAt;
+        return OptionalNullable.getFrom(expiresAt);
     }
 
     /**
@@ -60,7 +81,27 @@ public class GetCheckoutPixPaymentResponse {
     @JsonSetter("expires_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setExpiresAt(LocalDateTime expiresAt) {
-        this.expiresAt = expiresAt;
+        this.expiresAt = OptionalNullable.of(expiresAt);
+    }
+
+    /**
+     * UnSetter for ExpiresAt.
+     * Expires at
+     */
+    public void unsetExpiresAt() {
+        expiresAt = null;
+    }
+
+    /**
+     * Internal Getter for AdditionalInformation.
+     * Additional information
+     * @return Returns the Internal List of PixAdditionalInformation
+     */
+    @JsonGetter("additional_information")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<PixAdditionalInformation>> internalGetAdditionalInformation() {
+        return this.additionalInformation;
     }
 
     /**
@@ -68,9 +109,8 @@ public class GetCheckoutPixPaymentResponse {
      * Additional information
      * @return Returns the List of PixAdditionalInformation
      */
-    @JsonGetter("additional_information")
     public List<PixAdditionalInformation> getAdditionalInformation() {
-        return additionalInformation;
+        return OptionalNullable.getFrom(additionalInformation);
     }
 
     /**
@@ -80,7 +120,15 @@ public class GetCheckoutPixPaymentResponse {
      */
     @JsonSetter("additional_information")
     public void setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) {
-        this.additionalInformation = additionalInformation;
+        this.additionalInformation = OptionalNullable.of(additionalInformation);
+    }
+
+    /**
+     * UnSetter for AdditionalInformation.
+     * Additional information
+     */
+    public void unsetAdditionalInformation() {
+        additionalInformation = null;
     }
 
     /**
@@ -99,7 +147,9 @@ public class GetCheckoutPixPaymentResponse {
      * @return a new {@link GetCheckoutPixPaymentResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(expiresAt, additionalInformation);
+        Builder builder = new Builder();
+        builder.expiresAt = internalGetExpiresAt();
+        builder.additionalInformation = internalGetAdditionalInformation();
         return builder;
     }
 
@@ -107,26 +157,10 @@ public class GetCheckoutPixPaymentResponse {
      * Class to build instances of {@link GetCheckoutPixPaymentResponse}.
      */
     public static class Builder {
-        private LocalDateTime expiresAt;
-        private List<PixAdditionalInformation> additionalInformation;
+        private OptionalNullable<LocalDateTime> expiresAt;
+        private OptionalNullable<List<PixAdditionalInformation>> additionalInformation;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  expiresAt  LocalDateTime value for expiresAt.
-         * @param  additionalInformation  List of PixAdditionalInformation value for
-         *         additionalInformation.
-         */
-        public Builder(LocalDateTime expiresAt,
-                List<PixAdditionalInformation> additionalInformation) {
-            this.expiresAt = expiresAt;
-            this.additionalInformation = additionalInformation;
-        }
 
         /**
          * Setter for expiresAt.
@@ -134,7 +168,16 @@ public class GetCheckoutPixPaymentResponse {
          * @return Builder
          */
         public Builder expiresAt(LocalDateTime expiresAt) {
-            this.expiresAt = expiresAt;
+            this.expiresAt = OptionalNullable.of(expiresAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for expiresAt.
+         * @return Builder
+         */
+        public Builder unsetExpiresAt() {
+            expiresAt = null;
             return this;
         }
 
@@ -146,7 +189,16 @@ public class GetCheckoutPixPaymentResponse {
          */
         public Builder additionalInformation(
                 List<PixAdditionalInformation> additionalInformation) {
-            this.additionalInformation = additionalInformation;
+            this.additionalInformation = OptionalNullable.of(additionalInformation);
+            return this;
+        }
+
+        /**
+         * UnSetter for additionalInformation.
+         * @return Builder
+         */
+        public Builder unsetAdditionalInformation() {
+            additionalInformation = null;
             return this;
         }
 

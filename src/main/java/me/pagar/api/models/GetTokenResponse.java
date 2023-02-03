@@ -7,10 +7,12 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -18,11 +20,11 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetTokenResponse type.
  */
 public class GetTokenResponse {
-    private String id;
-    private String type;
-    private LocalDateTime createdAt;
-    private String expiresAt;
-    private GetCardTokenResponse card;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> type;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<String> expiresAt;
+    private OptionalNullable<GetCardTokenResponse> card;
 
     /**
      * Default constructor.
@@ -44,6 +46,19 @@ public class GetTokenResponse {
             LocalDateTime createdAt,
             String expiresAt,
             GetCardTokenResponse card) {
+        this.id = OptionalNullable.of(id);
+        this.type = OptionalNullable.of(type);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.expiresAt = OptionalNullable.of(expiresAt);
+        this.card = OptionalNullable.of(card);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetTokenResponse(OptionalNullable<String> id, OptionalNullable<String> type,
+            OptionalNullable<LocalDateTime> createdAt, OptionalNullable<String> expiresAt,
+            OptionalNullable<GetCardTokenResponse> card) {
         this.id = id;
         this.type = type;
         this.createdAt = createdAt;
@@ -52,12 +67,22 @@ public class GetTokenResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -66,16 +91,33 @@ public class GetTokenResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
     }
 
     /**
      * Getter for Type.
      * @return Returns the String
      */
-    @JsonGetter("type")
     public String getType() {
-        return type;
+        return OptionalNullable.getFrom(type);
     }
 
     /**
@@ -84,17 +126,33 @@ public class GetTokenResponse {
      */
     @JsonSetter("type")
     public void setType(String type) {
-        this.type = type;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -104,16 +162,33 @@ public class GetTokenResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for ExpiresAt.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("expires_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetExpiresAt() {
+        return this.expiresAt;
     }
 
     /**
      * Getter for ExpiresAt.
      * @return Returns the String
      */
-    @JsonGetter("expires_at")
     public String getExpiresAt() {
-        return expiresAt;
+        return OptionalNullable.getFrom(expiresAt);
     }
 
     /**
@@ -122,16 +197,33 @@ public class GetTokenResponse {
      */
     @JsonSetter("expires_at")
     public void setExpiresAt(String expiresAt) {
-        this.expiresAt = expiresAt;
+        this.expiresAt = OptionalNullable.of(expiresAt);
+    }
+
+    /**
+     * UnSetter for ExpiresAt.
+     */
+    public void unsetExpiresAt() {
+        expiresAt = null;
+    }
+
+    /**
+     * Internal Getter for Card.
+     * @return Returns the Internal GetCardTokenResponse
+     */
+    @JsonGetter("card")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetCardTokenResponse> internalGetCard() {
+        return this.card;
     }
 
     /**
      * Getter for Card.
      * @return Returns the GetCardTokenResponse
      */
-    @JsonGetter("card")
     public GetCardTokenResponse getCard() {
-        return card;
+        return OptionalNullable.getFrom(card);
     }
 
     /**
@@ -140,7 +232,14 @@ public class GetTokenResponse {
      */
     @JsonSetter("card")
     public void setCard(GetCardTokenResponse card) {
-        this.card = card;
+        this.card = OptionalNullable.of(card);
+    }
+
+    /**
+     * UnSetter for Card.
+     */
+    public void unsetCard() {
+        card = null;
     }
 
     /**
@@ -159,7 +258,12 @@ public class GetTokenResponse {
      * @return a new {@link GetTokenResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, type, createdAt, expiresAt, card);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.type = internalGetType();
+        builder.createdAt = internalGetCreatedAt();
+        builder.expiresAt = internalGetExpiresAt();
+        builder.card = internalGetCard();
         return builder;
     }
 
@@ -167,34 +271,13 @@ public class GetTokenResponse {
      * Class to build instances of {@link GetTokenResponse}.
      */
     public static class Builder {
-        private String id;
-        private String type;
-        private LocalDateTime createdAt;
-        private String expiresAt;
-        private GetCardTokenResponse card;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> type;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<String> expiresAt;
+        private OptionalNullable<GetCardTokenResponse> card;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  type  String value for type.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  expiresAt  String value for expiresAt.
-         * @param  card  GetCardTokenResponse value for card.
-         */
-        public Builder(String id, String type, LocalDateTime createdAt, String expiresAt,
-                GetCardTokenResponse card) {
-            this.id = id;
-            this.type = type;
-            this.createdAt = createdAt;
-            this.expiresAt = expiresAt;
-            this.card = card;
-        }
 
         /**
          * Setter for id.
@@ -202,7 +285,16 @@ public class GetTokenResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -212,7 +304,16 @@ public class GetTokenResponse {
          * @return Builder
          */
         public Builder type(String type) {
-            this.type = type;
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
             return this;
         }
 
@@ -222,7 +323,16 @@ public class GetTokenResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -232,7 +342,16 @@ public class GetTokenResponse {
          * @return Builder
          */
         public Builder expiresAt(String expiresAt) {
-            this.expiresAt = expiresAt;
+            this.expiresAt = OptionalNullable.of(expiresAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for expiresAt.
+         * @return Builder
+         */
+        public Builder unsetExpiresAt() {
+            expiresAt = null;
             return this;
         }
 
@@ -242,7 +361,16 @@ public class GetTokenResponse {
          * @return Builder
          */
         public Builder card(GetCardTokenResponse card) {
-            this.card = card;
+            this.card = OptionalNullable.of(card);
+            return this;
+        }
+
+        /**
+         * UnSetter for card.
+         * @return Builder
+         */
+        public Builder unsetCard() {
+            card = null;
             return this;
         }
 

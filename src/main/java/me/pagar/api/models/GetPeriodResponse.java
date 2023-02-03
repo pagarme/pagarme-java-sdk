@@ -7,10 +7,12 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -18,16 +20,16 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetPeriodResponse type.
  */
 public class GetPeriodResponse {
-    private LocalDateTime startAt;
-    private LocalDateTime endAt;
-    private String id;
-    private LocalDateTime billingAt;
-    private GetSubscriptionResponse subscription;
-    private String status;
-    private Integer duration;
-    private String createdAt;
-    private String updatedAt;
-    private Integer cycle;
+    private OptionalNullable<LocalDateTime> startAt;
+    private OptionalNullable<LocalDateTime> endAt;
+    private OptionalNullable<String> id;
+    private OptionalNullable<LocalDateTime> billingAt;
+    private OptionalNullable<GetSubscriptionResponse> subscription;
+    private OptionalNullable<String> status;
+    private OptionalNullable<Integer> duration;
+    private OptionalNullable<String> createdAt;
+    private OptionalNullable<String> updatedAt;
+    private OptionalNullable<Integer> cycle;
 
     /**
      * Default constructor.
@@ -59,6 +61,27 @@ public class GetPeriodResponse {
             String createdAt,
             String updatedAt,
             Integer cycle) {
+        this.startAt = OptionalNullable.of(startAt);
+        this.endAt = OptionalNullable.of(endAt);
+        this.id = OptionalNullable.of(id);
+        this.billingAt = OptionalNullable.of(billingAt);
+        this.subscription = OptionalNullable.of(subscription);
+        this.status = OptionalNullable.of(status);
+        this.duration = OptionalNullable.of(duration);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.updatedAt = OptionalNullable.of(updatedAt);
+        this.cycle = OptionalNullable.of(cycle);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetPeriodResponse(OptionalNullable<LocalDateTime> startAt,
+            OptionalNullable<LocalDateTime> endAt, OptionalNullable<String> id,
+            OptionalNullable<LocalDateTime> billingAt,
+            OptionalNullable<GetSubscriptionResponse> subscription, OptionalNullable<String> status,
+            OptionalNullable<Integer> duration, OptionalNullable<String> createdAt,
+            OptionalNullable<String> updatedAt, OptionalNullable<Integer> cycle) {
         this.startAt = startAt;
         this.endAt = endAt;
         this.id = id;
@@ -72,13 +95,22 @@ public class GetPeriodResponse {
     }
 
     /**
+     * Internal Getter for StartAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("start_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetStartAt() {
+        return this.startAt;
+    }
+
+    /**
      * Getter for StartAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("start_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getStartAt() {
-        return startAt;
+        return OptionalNullable.getFrom(startAt);
     }
 
     /**
@@ -88,17 +120,33 @@ public class GetPeriodResponse {
     @JsonSetter("start_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
+        this.startAt = OptionalNullable.of(startAt);
+    }
+
+    /**
+     * UnSetter for StartAt.
+     */
+    public void unsetStartAt() {
+        startAt = null;
+    }
+
+    /**
+     * Internal Getter for EndAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("end_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetEndAt() {
+        return this.endAt;
     }
 
     /**
      * Getter for EndAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("end_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getEndAt() {
-        return endAt;
+        return OptionalNullable.getFrom(endAt);
     }
 
     /**
@@ -108,16 +156,33 @@ public class GetPeriodResponse {
     @JsonSetter("end_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setEndAt(LocalDateTime endAt) {
-        this.endAt = endAt;
+        this.endAt = OptionalNullable.of(endAt);
+    }
+
+    /**
+     * UnSetter for EndAt.
+     */
+    public void unsetEndAt() {
+        endAt = null;
+    }
+
+    /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
     }
 
     /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -126,17 +191,33 @@ public class GetPeriodResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for BillingAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("billing_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetBillingAt() {
+        return this.billingAt;
     }
 
     /**
      * Getter for BillingAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("billing_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getBillingAt() {
-        return billingAt;
+        return OptionalNullable.getFrom(billingAt);
     }
 
     /**
@@ -146,16 +227,33 @@ public class GetPeriodResponse {
     @JsonSetter("billing_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setBillingAt(LocalDateTime billingAt) {
-        this.billingAt = billingAt;
+        this.billingAt = OptionalNullable.of(billingAt);
+    }
+
+    /**
+     * UnSetter for BillingAt.
+     */
+    public void unsetBillingAt() {
+        billingAt = null;
+    }
+
+    /**
+     * Internal Getter for Subscription.
+     * @return Returns the Internal GetSubscriptionResponse
+     */
+    @JsonGetter("subscription")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSubscriptionResponse> internalGetSubscription() {
+        return this.subscription;
     }
 
     /**
      * Getter for Subscription.
      * @return Returns the GetSubscriptionResponse
      */
-    @JsonGetter("subscription")
     public GetSubscriptionResponse getSubscription() {
-        return subscription;
+        return OptionalNullable.getFrom(subscription);
     }
 
     /**
@@ -164,16 +262,33 @@ public class GetPeriodResponse {
      */
     @JsonSetter("subscription")
     public void setSubscription(GetSubscriptionResponse subscription) {
-        this.subscription = subscription;
+        this.subscription = OptionalNullable.of(subscription);
+    }
+
+    /**
+     * UnSetter for Subscription.
+     */
+    public void unsetSubscription() {
+        subscription = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -182,16 +297,33 @@ public class GetPeriodResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for Duration.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("duration")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetDuration() {
+        return this.duration;
     }
 
     /**
      * Getter for Duration.
      * @return Returns the Integer
      */
-    @JsonGetter("duration")
     public Integer getDuration() {
-        return duration;
+        return OptionalNullable.getFrom(duration);
     }
 
     /**
@@ -200,16 +332,33 @@ public class GetPeriodResponse {
      */
     @JsonSetter("duration")
     public void setDuration(Integer duration) {
-        this.duration = duration;
+        this.duration = OptionalNullable.of(duration);
+    }
+
+    /**
+     * UnSetter for Duration.
+     */
+    public void unsetDuration() {
+        duration = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the String
      */
-    @JsonGetter("created_at")
     public String getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -218,16 +367,33 @@ public class GetPeriodResponse {
      */
     @JsonSetter("created_at")
     public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for UpdatedAt.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("updated_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUpdatedAt() {
+        return this.updatedAt;
     }
 
     /**
      * Getter for UpdatedAt.
      * @return Returns the String
      */
-    @JsonGetter("updated_at")
     public String getUpdatedAt() {
-        return updatedAt;
+        return OptionalNullable.getFrom(updatedAt);
     }
 
     /**
@@ -236,16 +402,33 @@ public class GetPeriodResponse {
      */
     @JsonSetter("updated_at")
     public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = OptionalNullable.of(updatedAt);
+    }
+
+    /**
+     * UnSetter for UpdatedAt.
+     */
+    public void unsetUpdatedAt() {
+        updatedAt = null;
+    }
+
+    /**
+     * Internal Getter for Cycle.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("cycle")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetCycle() {
+        return this.cycle;
     }
 
     /**
      * Getter for Cycle.
      * @return Returns the Integer
      */
-    @JsonGetter("cycle")
     public Integer getCycle() {
-        return cycle;
+        return OptionalNullable.getFrom(cycle);
     }
 
     /**
@@ -254,7 +437,14 @@ public class GetPeriodResponse {
      */
     @JsonSetter("cycle")
     public void setCycle(Integer cycle) {
-        this.cycle = cycle;
+        this.cycle = OptionalNullable.of(cycle);
+    }
+
+    /**
+     * UnSetter for Cycle.
+     */
+    public void unsetCycle() {
+        cycle = null;
     }
 
     /**
@@ -275,8 +465,17 @@ public class GetPeriodResponse {
      * @return a new {@link GetPeriodResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(startAt, endAt, id, billingAt, subscription, status, duration,
-                createdAt, updatedAt, cycle);
+        Builder builder = new Builder();
+        builder.startAt = internalGetStartAt();
+        builder.endAt = internalGetEndAt();
+        builder.id = internalGetId();
+        builder.billingAt = internalGetBillingAt();
+        builder.subscription = internalGetSubscription();
+        builder.status = internalGetStatus();
+        builder.duration = internalGetDuration();
+        builder.createdAt = internalGetCreatedAt();
+        builder.updatedAt = internalGetUpdatedAt();
+        builder.cycle = internalGetCycle();
         return builder;
     }
 
@@ -284,50 +483,18 @@ public class GetPeriodResponse {
      * Class to build instances of {@link GetPeriodResponse}.
      */
     public static class Builder {
-        private LocalDateTime startAt;
-        private LocalDateTime endAt;
-        private String id;
-        private LocalDateTime billingAt;
-        private GetSubscriptionResponse subscription;
-        private String status;
-        private Integer duration;
-        private String createdAt;
-        private String updatedAt;
-        private Integer cycle;
+        private OptionalNullable<LocalDateTime> startAt;
+        private OptionalNullable<LocalDateTime> endAt;
+        private OptionalNullable<String> id;
+        private OptionalNullable<LocalDateTime> billingAt;
+        private OptionalNullable<GetSubscriptionResponse> subscription;
+        private OptionalNullable<String> status;
+        private OptionalNullable<Integer> duration;
+        private OptionalNullable<String> createdAt;
+        private OptionalNullable<String> updatedAt;
+        private OptionalNullable<Integer> cycle;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  startAt  LocalDateTime value for startAt.
-         * @param  endAt  LocalDateTime value for endAt.
-         * @param  id  String value for id.
-         * @param  billingAt  LocalDateTime value for billingAt.
-         * @param  subscription  GetSubscriptionResponse value for subscription.
-         * @param  status  String value for status.
-         * @param  duration  Integer value for duration.
-         * @param  createdAt  String value for createdAt.
-         * @param  updatedAt  String value for updatedAt.
-         * @param  cycle  Integer value for cycle.
-         */
-        public Builder(LocalDateTime startAt, LocalDateTime endAt, String id,
-                LocalDateTime billingAt, GetSubscriptionResponse subscription, String status,
-                Integer duration, String createdAt, String updatedAt, Integer cycle) {
-            this.startAt = startAt;
-            this.endAt = endAt;
-            this.id = id;
-            this.billingAt = billingAt;
-            this.subscription = subscription;
-            this.status = status;
-            this.duration = duration;
-            this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
-            this.cycle = cycle;
-        }
 
         /**
          * Setter for startAt.
@@ -335,7 +502,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder startAt(LocalDateTime startAt) {
-            this.startAt = startAt;
+            this.startAt = OptionalNullable.of(startAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for startAt.
+         * @return Builder
+         */
+        public Builder unsetStartAt() {
+            startAt = null;
             return this;
         }
 
@@ -345,7 +521,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder endAt(LocalDateTime endAt) {
-            this.endAt = endAt;
+            this.endAt = OptionalNullable.of(endAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for endAt.
+         * @return Builder
+         */
+        public Builder unsetEndAt() {
+            endAt = null;
             return this;
         }
 
@@ -355,7 +540,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -365,7 +559,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder billingAt(LocalDateTime billingAt) {
-            this.billingAt = billingAt;
+            this.billingAt = OptionalNullable.of(billingAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingAt.
+         * @return Builder
+         */
+        public Builder unsetBillingAt() {
+            billingAt = null;
             return this;
         }
 
@@ -375,7 +578,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder subscription(GetSubscriptionResponse subscription) {
-            this.subscription = subscription;
+            this.subscription = OptionalNullable.of(subscription);
+            return this;
+        }
+
+        /**
+         * UnSetter for subscription.
+         * @return Builder
+         */
+        public Builder unsetSubscription() {
+            subscription = null;
             return this;
         }
 
@@ -385,7 +597,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -395,7 +616,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder duration(Integer duration) {
-            this.duration = duration;
+            this.duration = OptionalNullable.of(duration);
+            return this;
+        }
+
+        /**
+         * UnSetter for duration.
+         * @return Builder
+         */
+        public Builder unsetDuration() {
+            duration = null;
             return this;
         }
 
@@ -405,7 +635,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder createdAt(String createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -415,7 +654,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder updatedAt(String updatedAt) {
-            this.updatedAt = updatedAt;
+            this.updatedAt = OptionalNullable.of(updatedAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for updatedAt.
+         * @return Builder
+         */
+        public Builder unsetUpdatedAt() {
+            updatedAt = null;
             return this;
         }
 
@@ -425,7 +673,16 @@ public class GetPeriodResponse {
          * @return Builder
          */
         public Builder cycle(Integer cycle) {
-            this.cycle = cycle;
+            this.cycle = OptionalNullable.of(cycle);
+            return this;
+        }
+
+        /**
+         * UnSetter for cycle.
+         * @return Builder
+         */
+        public Builder unsetCycle() {
+            cycle = null;
             return this;
         }
 

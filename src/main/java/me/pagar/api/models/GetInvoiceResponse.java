@@ -22,29 +22,29 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetInvoiceResponse type.
  */
 public class GetInvoiceResponse {
-    private String id;
-    private String code;
-    private String url;
-    private Integer amount;
-    private String status;
-    private String paymentMethod;
-    private LocalDateTime createdAt;
-    private List<GetInvoiceItemResponse> items;
+    private OptionalNullable<String> id;
+    private OptionalNullable<String> code;
+    private OptionalNullable<String> url;
+    private OptionalNullable<Integer> amount;
+    private OptionalNullable<String> status;
+    private OptionalNullable<String> paymentMethod;
+    private OptionalNullable<LocalDateTime> createdAt;
+    private OptionalNullable<List<GetInvoiceItemResponse>> items;
     private OptionalNullable<GetCustomerResponse> customer;
-    private GetChargeResponse charge;
-    private Integer installments;
-    private GetBillingAddressResponse billingAddress;
-    private GetSubscriptionResponse subscription;
+    private OptionalNullable<GetChargeResponse> charge;
+    private OptionalNullable<Integer> installments;
+    private OptionalNullable<GetBillingAddressResponse> billingAddress;
+    private OptionalNullable<GetSubscriptionResponse> subscription;
     private OptionalNullable<GetPeriodResponse> cycle;
-    private GetShippingResponse shipping;
-    private Map<String, String> metadata;
+    private OptionalNullable<GetShippingResponse> shipping;
+    private OptionalNullable<Map<String, String>> metadata;
     private OptionalNullable<LocalDateTime> dueAt;
     private OptionalNullable<LocalDateTime> canceledAt;
     private OptionalNullable<LocalDateTime> billingAt;
     private OptionalNullable<LocalDateTime> seenAt;
     private OptionalNullable<Integer> totalDiscount;
     private OptionalNullable<Integer> totalIncrement;
-    private String subscriptionId;
+    private OptionalNullable<String> subscriptionId;
 
     /**
      * Default constructor.
@@ -62,21 +62,21 @@ public class GetInvoiceResponse {
      * @param  paymentMethod  String value for paymentMethod.
      * @param  createdAt  LocalDateTime value for createdAt.
      * @param  items  List of GetInvoiceItemResponse value for items.
+     * @param  customer  GetCustomerResponse value for customer.
      * @param  charge  GetChargeResponse value for charge.
      * @param  installments  Integer value for installments.
      * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
      * @param  subscription  GetSubscriptionResponse value for subscription.
+     * @param  cycle  GetPeriodResponse value for cycle.
      * @param  shipping  GetShippingResponse value for shipping.
      * @param  metadata  Map of String, value for metadata.
-     * @param  subscriptionId  String value for subscriptionId.
-     * @param  customer  GetCustomerResponse value for customer.
-     * @param  cycle  GetPeriodResponse value for cycle.
      * @param  dueAt  LocalDateTime value for dueAt.
      * @param  canceledAt  LocalDateTime value for canceledAt.
      * @param  billingAt  LocalDateTime value for billingAt.
      * @param  seenAt  LocalDateTime value for seenAt.
      * @param  totalDiscount  Integer value for totalDiscount.
      * @param  totalIncrement  Integer value for totalIncrement.
+     * @param  subscriptionId  String value for subscriptionId.
      */
     public GetInvoiceResponse(
             String id,
@@ -87,59 +87,64 @@ public class GetInvoiceResponse {
             String paymentMethod,
             LocalDateTime createdAt,
             List<GetInvoiceItemResponse> items,
+            GetCustomerResponse customer,
             GetChargeResponse charge,
             Integer installments,
             GetBillingAddressResponse billingAddress,
             GetSubscriptionResponse subscription,
+            GetPeriodResponse cycle,
             GetShippingResponse shipping,
             Map<String, String> metadata,
-            String subscriptionId,
-            GetCustomerResponse customer,
-            GetPeriodResponse cycle,
             LocalDateTime dueAt,
             LocalDateTime canceledAt,
             LocalDateTime billingAt,
             LocalDateTime seenAt,
             Integer totalDiscount,
-            Integer totalIncrement) {
-        this.id = id;
-        this.code = code;
-        this.url = url;
-        this.amount = amount;
-        this.status = status;
-        this.paymentMethod = paymentMethod;
-        this.createdAt = createdAt;
-        this.items = items;
+            Integer totalIncrement,
+            String subscriptionId) {
+        this.id = OptionalNullable.of(id);
+        this.code = OptionalNullable.of(code);
+        this.url = OptionalNullable.of(url);
+        this.amount = OptionalNullable.of(amount);
+        this.status = OptionalNullable.of(status);
+        this.paymentMethod = OptionalNullable.of(paymentMethod);
+        this.createdAt = OptionalNullable.of(createdAt);
+        this.items = OptionalNullable.of(items);
         this.customer = OptionalNullable.of(customer);
-        this.charge = charge;
-        this.installments = installments;
-        this.billingAddress = billingAddress;
-        this.subscription = subscription;
+        this.charge = OptionalNullable.of(charge);
+        this.installments = OptionalNullable.of(installments);
+        this.billingAddress = OptionalNullable.of(billingAddress);
+        this.subscription = OptionalNullable.of(subscription);
         this.cycle = OptionalNullable.of(cycle);
-        this.shipping = shipping;
-        this.metadata = metadata;
+        this.shipping = OptionalNullable.of(shipping);
+        this.metadata = OptionalNullable.of(metadata);
         this.dueAt = OptionalNullable.of(dueAt);
         this.canceledAt = OptionalNullable.of(canceledAt);
         this.billingAt = OptionalNullable.of(billingAt);
         this.seenAt = OptionalNullable.of(seenAt);
         this.totalDiscount = OptionalNullable.of(totalDiscount);
         this.totalIncrement = OptionalNullable.of(totalIncrement);
-        this.subscriptionId = subscriptionId;
+        this.subscriptionId = OptionalNullable.of(subscriptionId);
     }
 
     /**
      * Internal initialization constructor.
      */
-    protected GetInvoiceResponse(String id, String code, String url, Integer amount, String status,
-            String paymentMethod, LocalDateTime createdAt, List<GetInvoiceItemResponse> items,
-            GetChargeResponse charge, Integer installments,
-            GetBillingAddressResponse billingAddress, GetSubscriptionResponse subscription,
-            GetShippingResponse shipping, Map<String, String> metadata, String subscriptionId,
+    protected GetInvoiceResponse(OptionalNullable<String> id, OptionalNullable<String> code,
+            OptionalNullable<String> url, OptionalNullable<Integer> amount,
+            OptionalNullable<String> status, OptionalNullable<String> paymentMethod,
+            OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<List<GetInvoiceItemResponse>> items,
             OptionalNullable<GetCustomerResponse> customer,
-            OptionalNullable<GetPeriodResponse> cycle, OptionalNullable<LocalDateTime> dueAt,
+            OptionalNullable<GetChargeResponse> charge, OptionalNullable<Integer> installments,
+            OptionalNullable<GetBillingAddressResponse> billingAddress,
+            OptionalNullable<GetSubscriptionResponse> subscription,
+            OptionalNullable<GetPeriodResponse> cycle,
+            OptionalNullable<GetShippingResponse> shipping,
+            OptionalNullable<Map<String, String>> metadata, OptionalNullable<LocalDateTime> dueAt,
             OptionalNullable<LocalDateTime> canceledAt, OptionalNullable<LocalDateTime> billingAt,
             OptionalNullable<LocalDateTime> seenAt, OptionalNullable<Integer> totalDiscount,
-            OptionalNullable<Integer> totalIncrement) {
+            OptionalNullable<Integer> totalIncrement, OptionalNullable<String> subscriptionId) {
         this.id = id;
         this.code = code;
         this.url = url;
@@ -166,12 +171,22 @@ public class GetInvoiceResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -180,16 +195,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
+    }
+
+    /**
+     * Internal Getter for Code.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
     }
 
     /**
      * Getter for Code.
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -198,16 +230,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     */
+    public void unsetCode() {
+        code = null;
+    }
+
+    /**
+     * Internal Getter for Url.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("url")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetUrl() {
+        return this.url;
     }
 
     /**
      * Getter for Url.
      * @return Returns the String
      */
-    @JsonGetter("url")
     public String getUrl() {
-        return url;
+        return OptionalNullable.getFrom(url);
     }
 
     /**
@@ -216,16 +265,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("url")
     public void setUrl(String url) {
-        this.url = url;
+        this.url = OptionalNullable.of(url);
+    }
+
+    /**
+     * UnSetter for Url.
+     */
+    public void unsetUrl() {
+        url = null;
+    }
+
+    /**
+     * Internal Getter for Amount.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("amount")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetAmount() {
+        return this.amount;
     }
 
     /**
      * Getter for Amount.
      * @return Returns the Integer
      */
-    @JsonGetter("amount")
     public Integer getAmount() {
-        return amount;
+        return OptionalNullable.getFrom(amount);
     }
 
     /**
@@ -234,16 +300,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("amount")
     public void setAmount(Integer amount) {
-        this.amount = amount;
+        this.amount = OptionalNullable.of(amount);
+    }
+
+    /**
+     * UnSetter for Amount.
+     */
+    public void unsetAmount() {
+        amount = null;
+    }
+
+    /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
     }
 
     /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -252,16 +335,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for PaymentMethod.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("payment_method")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPaymentMethod() {
+        return this.paymentMethod;
     }
 
     /**
      * Getter for PaymentMethod.
      * @return Returns the String
      */
-    @JsonGetter("payment_method")
     public String getPaymentMethod() {
-        return paymentMethod;
+        return OptionalNullable.getFrom(paymentMethod);
     }
 
     /**
@@ -270,17 +370,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("payment_method")
     public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+        this.paymentMethod = OptionalNullable.of(paymentMethod);
+    }
+
+    /**
+     * UnSetter for PaymentMethod.
+     */
+    public void unsetPaymentMethod() {
+        paymentMethod = null;
+    }
+
+    /**
+     * Internal Getter for CreatedAt.
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("created_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
+        return this.createdAt;
     }
 
     /**
      * Getter for CreatedAt.
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("created_at")
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return createdAt;
+        return OptionalNullable.getFrom(createdAt);
     }
 
     /**
@@ -290,16 +406,33 @@ public class GetInvoiceResponse {
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = OptionalNullable.of(createdAt);
+    }
+
+    /**
+     * UnSetter for CreatedAt.
+     */
+    public void unsetCreatedAt() {
+        createdAt = null;
+    }
+
+    /**
+     * Internal Getter for Items.
+     * @return Returns the Internal List of GetInvoiceItemResponse
+     */
+    @JsonGetter("items")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetInvoiceItemResponse>> internalGetItems() {
+        return this.items;
     }
 
     /**
      * Getter for Items.
      * @return Returns the List of GetInvoiceItemResponse
      */
-    @JsonGetter("items")
     public List<GetInvoiceItemResponse> getItems() {
-        return items;
+        return OptionalNullable.getFrom(items);
     }
 
     /**
@@ -308,7 +441,14 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("items")
     public void setItems(List<GetInvoiceItemResponse> items) {
-        this.items = items;
+        this.items = OptionalNullable.of(items);
+    }
+
+    /**
+     * UnSetter for Items.
+     */
+    public void unsetItems() {
+        items = null;
     }
 
     /**
@@ -347,12 +487,22 @@ public class GetInvoiceResponse {
     }
 
     /**
+     * Internal Getter for Charge.
+     * @return Returns the Internal GetChargeResponse
+     */
+    @JsonGetter("charge")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetChargeResponse> internalGetCharge() {
+        return this.charge;
+    }
+
+    /**
      * Getter for Charge.
      * @return Returns the GetChargeResponse
      */
-    @JsonGetter("charge")
     public GetChargeResponse getCharge() {
-        return charge;
+        return OptionalNullable.getFrom(charge);
     }
 
     /**
@@ -361,16 +511,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("charge")
     public void setCharge(GetChargeResponse charge) {
-        this.charge = charge;
+        this.charge = OptionalNullable.of(charge);
+    }
+
+    /**
+     * UnSetter for Charge.
+     */
+    public void unsetCharge() {
+        charge = null;
+    }
+
+    /**
+     * Internal Getter for Installments.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("installments")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetInstallments() {
+        return this.installments;
     }
 
     /**
      * Getter for Installments.
      * @return Returns the Integer
      */
-    @JsonGetter("installments")
     public Integer getInstallments() {
-        return installments;
+        return OptionalNullable.getFrom(installments);
     }
 
     /**
@@ -379,16 +546,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("installments")
     public void setInstallments(Integer installments) {
-        this.installments = installments;
+        this.installments = OptionalNullable.of(installments);
+    }
+
+    /**
+     * UnSetter for Installments.
+     */
+    public void unsetInstallments() {
+        installments = null;
+    }
+
+    /**
+     * Internal Getter for BillingAddress.
+     * @return Returns the Internal GetBillingAddressResponse
+     */
+    @JsonGetter("billing_address")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetBillingAddressResponse> internalGetBillingAddress() {
+        return this.billingAddress;
     }
 
     /**
      * Getter for BillingAddress.
      * @return Returns the GetBillingAddressResponse
      */
-    @JsonGetter("billing_address")
     public GetBillingAddressResponse getBillingAddress() {
-        return billingAddress;
+        return OptionalNullable.getFrom(billingAddress);
     }
 
     /**
@@ -397,16 +581,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("billing_address")
     public void setBillingAddress(GetBillingAddressResponse billingAddress) {
-        this.billingAddress = billingAddress;
+        this.billingAddress = OptionalNullable.of(billingAddress);
+    }
+
+    /**
+     * UnSetter for BillingAddress.
+     */
+    public void unsetBillingAddress() {
+        billingAddress = null;
+    }
+
+    /**
+     * Internal Getter for Subscription.
+     * @return Returns the Internal GetSubscriptionResponse
+     */
+    @JsonGetter("subscription")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetSubscriptionResponse> internalGetSubscription() {
+        return this.subscription;
     }
 
     /**
      * Getter for Subscription.
      * @return Returns the GetSubscriptionResponse
      */
-    @JsonGetter("subscription")
     public GetSubscriptionResponse getSubscription() {
-        return subscription;
+        return OptionalNullable.getFrom(subscription);
     }
 
     /**
@@ -415,7 +616,14 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("subscription")
     public void setSubscription(GetSubscriptionResponse subscription) {
-        this.subscription = subscription;
+        this.subscription = OptionalNullable.of(subscription);
+    }
+
+    /**
+     * UnSetter for Subscription.
+     */
+    public void unsetSubscription() {
+        subscription = null;
     }
 
     /**
@@ -454,12 +662,22 @@ public class GetInvoiceResponse {
     }
 
     /**
+     * Internal Getter for Shipping.
+     * @return Returns the Internal GetShippingResponse
+     */
+    @JsonGetter("shipping")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetShippingResponse> internalGetShipping() {
+        return this.shipping;
+    }
+
+    /**
      * Getter for Shipping.
      * @return Returns the GetShippingResponse
      */
-    @JsonGetter("shipping")
     public GetShippingResponse getShipping() {
-        return shipping;
+        return OptionalNullable.getFrom(shipping);
     }
 
     /**
@@ -468,16 +686,33 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("shipping")
     public void setShipping(GetShippingResponse shipping) {
-        this.shipping = shipping;
+        this.shipping = OptionalNullable.of(shipping);
+    }
+
+    /**
+     * UnSetter for Shipping.
+     */
+    public void unsetShipping() {
+        shipping = null;
+    }
+
+    /**
+     * Internal Getter for Metadata.
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
     }
 
     /**
      * Getter for Metadata.
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -486,7 +721,14 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     */
+    public void unsetMetadata() {
+        metadata = null;
     }
 
     /**
@@ -712,13 +954,24 @@ public class GetInvoiceResponse {
     }
 
     /**
+     * Internal Getter for SubscriptionId.
+     * Subscription Id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("subscription_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetSubscriptionId() {
+        return this.subscriptionId;
+    }
+
+    /**
      * Getter for SubscriptionId.
      * Subscription Id
      * @return Returns the String
      */
-    @JsonGetter("subscription_id")
     public String getSubscriptionId() {
-        return subscriptionId;
+        return OptionalNullable.getFrom(subscriptionId);
     }
 
     /**
@@ -728,7 +981,15 @@ public class GetInvoiceResponse {
      */
     @JsonSetter("subscription_id")
     public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+        this.subscriptionId = OptionalNullable.of(subscriptionId);
+    }
+
+    /**
+     * UnSetter for SubscriptionId.
+     * Subscription Id
+     */
+    public void unsetSubscriptionId() {
+        subscriptionId = null;
     }
 
     /**
@@ -739,13 +1000,13 @@ public class GetInvoiceResponse {
     public String toString() {
         return "GetInvoiceResponse [" + "id=" + id + ", code=" + code + ", url=" + url + ", amount="
                 + amount + ", status=" + status + ", paymentMethod=" + paymentMethod
-                + ", createdAt=" + createdAt + ", items=" + items + ", charge=" + charge
-                + ", installments=" + installments + ", billingAddress=" + billingAddress
-                + ", subscription=" + subscription + ", shipping=" + shipping + ", metadata="
-                + metadata + ", subscriptionId=" + subscriptionId + ", customer=" + customer
-                + ", cycle=" + cycle + ", dueAt=" + dueAt + ", canceledAt=" + canceledAt
-                + ", billingAt=" + billingAt + ", seenAt=" + seenAt + ", totalDiscount="
-                + totalDiscount + ", totalIncrement=" + totalIncrement + "]";
+                + ", createdAt=" + createdAt + ", items=" + items + ", customer=" + customer
+                + ", charge=" + charge + ", installments=" + installments + ", billingAddress="
+                + billingAddress + ", subscription=" + subscription + ", cycle=" + cycle
+                + ", shipping=" + shipping + ", metadata=" + metadata + ", dueAt=" + dueAt
+                + ", canceledAt=" + canceledAt + ", billingAt=" + billingAt + ", seenAt=" + seenAt
+                + ", totalDiscount=" + totalDiscount + ", totalIncrement=" + totalIncrement
+                + ", subscriptionId=" + subscriptionId + "]";
     }
 
     /**
@@ -754,17 +1015,30 @@ public class GetInvoiceResponse {
      * @return a new {@link GetInvoiceResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id, code, url, amount, status, paymentMethod, createdAt,
-                items, charge, installments, billingAddress, subscription, shipping, metadata,
-                subscriptionId);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
+        builder.code = internalGetCode();
+        builder.url = internalGetUrl();
+        builder.amount = internalGetAmount();
+        builder.status = internalGetStatus();
+        builder.paymentMethod = internalGetPaymentMethod();
+        builder.createdAt = internalGetCreatedAt();
+        builder.items = internalGetItems();
         builder.customer = internalGetCustomer();
+        builder.charge = internalGetCharge();
+        builder.installments = internalGetInstallments();
+        builder.billingAddress = internalGetBillingAddress();
+        builder.subscription = internalGetSubscription();
         builder.cycle = internalGetCycle();
+        builder.shipping = internalGetShipping();
+        builder.metadata = internalGetMetadata();
         builder.dueAt = internalGetDueAt();
         builder.canceledAt = internalGetCanceledAt();
         builder.billingAt = internalGetBillingAt();
         builder.seenAt = internalGetSeenAt();
         builder.totalDiscount = internalGetTotalDiscount();
         builder.totalIncrement = internalGetTotalIncrement();
+        builder.subscriptionId = internalGetSubscriptionId();
         return builder;
     }
 
@@ -772,75 +1046,31 @@ public class GetInvoiceResponse {
      * Class to build instances of {@link GetInvoiceResponse}.
      */
     public static class Builder {
-        private String id;
-        private String code;
-        private String url;
-        private Integer amount;
-        private String status;
-        private String paymentMethod;
-        private LocalDateTime createdAt;
-        private List<GetInvoiceItemResponse> items;
-        private GetChargeResponse charge;
-        private Integer installments;
-        private GetBillingAddressResponse billingAddress;
-        private GetSubscriptionResponse subscription;
-        private GetShippingResponse shipping;
-        private Map<String, String> metadata;
-        private String subscriptionId;
+        private OptionalNullable<String> id;
+        private OptionalNullable<String> code;
+        private OptionalNullable<String> url;
+        private OptionalNullable<Integer> amount;
+        private OptionalNullable<String> status;
+        private OptionalNullable<String> paymentMethod;
+        private OptionalNullable<LocalDateTime> createdAt;
+        private OptionalNullable<List<GetInvoiceItemResponse>> items;
         private OptionalNullable<GetCustomerResponse> customer;
+        private OptionalNullable<GetChargeResponse> charge;
+        private OptionalNullable<Integer> installments;
+        private OptionalNullable<GetBillingAddressResponse> billingAddress;
+        private OptionalNullable<GetSubscriptionResponse> subscription;
         private OptionalNullable<GetPeriodResponse> cycle;
+        private OptionalNullable<GetShippingResponse> shipping;
+        private OptionalNullable<Map<String, String>> metadata;
         private OptionalNullable<LocalDateTime> dueAt;
         private OptionalNullable<LocalDateTime> canceledAt;
         private OptionalNullable<LocalDateTime> billingAt;
         private OptionalNullable<LocalDateTime> seenAt;
         private OptionalNullable<Integer> totalDiscount;
         private OptionalNullable<Integer> totalIncrement;
+        private OptionalNullable<String> subscriptionId;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         * @param  code  String value for code.
-         * @param  url  String value for url.
-         * @param  amount  Integer value for amount.
-         * @param  status  String value for status.
-         * @param  paymentMethod  String value for paymentMethod.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @param  items  List of GetInvoiceItemResponse value for items.
-         * @param  charge  GetChargeResponse value for charge.
-         * @param  installments  Integer value for installments.
-         * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
-         * @param  subscription  GetSubscriptionResponse value for subscription.
-         * @param  shipping  GetShippingResponse value for shipping.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  subscriptionId  String value for subscriptionId.
-         */
-        public Builder(String id, String code, String url, Integer amount, String status,
-                String paymentMethod, LocalDateTime createdAt, List<GetInvoiceItemResponse> items,
-                GetChargeResponse charge, Integer installments,
-                GetBillingAddressResponse billingAddress, GetSubscriptionResponse subscription,
-                GetShippingResponse shipping, Map<String, String> metadata, String subscriptionId) {
-            this.id = id;
-            this.code = code;
-            this.url = url;
-            this.amount = amount;
-            this.status = status;
-            this.paymentMethod = paymentMethod;
-            this.createdAt = createdAt;
-            this.items = items;
-            this.charge = charge;
-            this.installments = installments;
-            this.billingAddress = billingAddress;
-            this.subscription = subscription;
-            this.shipping = shipping;
-            this.metadata = metadata;
-            this.subscriptionId = subscriptionId;
-        }
 
         /**
          * Setter for id.
@@ -848,7 +1078,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 
@@ -858,7 +1097,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder code(String code) {
-            this.code = code;
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
             return this;
         }
 
@@ -868,7 +1116,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder url(String url) {
-            this.url = url;
+            this.url = OptionalNullable.of(url);
+            return this;
+        }
+
+        /**
+         * UnSetter for url.
+         * @return Builder
+         */
+        public Builder unsetUrl() {
+            url = null;
             return this;
         }
 
@@ -878,7 +1135,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder amount(Integer amount) {
-            this.amount = amount;
+            this.amount = OptionalNullable.of(amount);
+            return this;
+        }
+
+        /**
+         * UnSetter for amount.
+         * @return Builder
+         */
+        public Builder unsetAmount() {
+            amount = null;
             return this;
         }
 
@@ -888,7 +1154,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -898,7 +1173,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder paymentMethod(String paymentMethod) {
-            this.paymentMethod = paymentMethod;
+            this.paymentMethod = OptionalNullable.of(paymentMethod);
+            return this;
+        }
+
+        /**
+         * UnSetter for paymentMethod.
+         * @return Builder
+         */
+        public Builder unsetPaymentMethod() {
+            paymentMethod = null;
             return this;
         }
 
@@ -908,7 +1192,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
+            this.createdAt = OptionalNullable.of(createdAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for createdAt.
+         * @return Builder
+         */
+        public Builder unsetCreatedAt() {
+            createdAt = null;
             return this;
         }
 
@@ -918,77 +1211,16 @@ public class GetInvoiceResponse {
          * @return Builder
          */
         public Builder items(List<GetInvoiceItemResponse> items) {
-            this.items = items;
+            this.items = OptionalNullable.of(items);
             return this;
         }
 
         /**
-         * Setter for charge.
-         * @param  charge  GetChargeResponse value for charge.
+         * UnSetter for items.
          * @return Builder
          */
-        public Builder charge(GetChargeResponse charge) {
-            this.charge = charge;
-            return this;
-        }
-
-        /**
-         * Setter for installments.
-         * @param  installments  Integer value for installments.
-         * @return Builder
-         */
-        public Builder installments(Integer installments) {
-            this.installments = installments;
-            return this;
-        }
-
-        /**
-         * Setter for billingAddress.
-         * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
-         * @return Builder
-         */
-        public Builder billingAddress(GetBillingAddressResponse billingAddress) {
-            this.billingAddress = billingAddress;
-            return this;
-        }
-
-        /**
-         * Setter for subscription.
-         * @param  subscription  GetSubscriptionResponse value for subscription.
-         * @return Builder
-         */
-        public Builder subscription(GetSubscriptionResponse subscription) {
-            this.subscription = subscription;
-            return this;
-        }
-
-        /**
-         * Setter for shipping.
-         * @param  shipping  GetShippingResponse value for shipping.
-         * @return Builder
-         */
-        public Builder shipping(GetShippingResponse shipping) {
-            this.shipping = shipping;
-            return this;
-        }
-
-        /**
-         * Setter for metadata.
-         * @param  metadata  Map of String, value for metadata.
-         * @return Builder
-         */
-        public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
-         * Setter for subscriptionId.
-         * @param  subscriptionId  String value for subscriptionId.
-         * @return Builder
-         */
-        public Builder subscriptionId(String subscriptionId) {
-            this.subscriptionId = subscriptionId;
+        public Builder unsetItems() {
+            items = null;
             return this;
         }
 
@@ -1012,6 +1244,82 @@ public class GetInvoiceResponse {
         }
 
         /**
+         * Setter for charge.
+         * @param  charge  GetChargeResponse value for charge.
+         * @return Builder
+         */
+        public Builder charge(GetChargeResponse charge) {
+            this.charge = OptionalNullable.of(charge);
+            return this;
+        }
+
+        /**
+         * UnSetter for charge.
+         * @return Builder
+         */
+        public Builder unsetCharge() {
+            charge = null;
+            return this;
+        }
+
+        /**
+         * Setter for installments.
+         * @param  installments  Integer value for installments.
+         * @return Builder
+         */
+        public Builder installments(Integer installments) {
+            this.installments = OptionalNullable.of(installments);
+            return this;
+        }
+
+        /**
+         * UnSetter for installments.
+         * @return Builder
+         */
+        public Builder unsetInstallments() {
+            installments = null;
+            return this;
+        }
+
+        /**
+         * Setter for billingAddress.
+         * @param  billingAddress  GetBillingAddressResponse value for billingAddress.
+         * @return Builder
+         */
+        public Builder billingAddress(GetBillingAddressResponse billingAddress) {
+            this.billingAddress = OptionalNullable.of(billingAddress);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingAddress.
+         * @return Builder
+         */
+        public Builder unsetBillingAddress() {
+            billingAddress = null;
+            return this;
+        }
+
+        /**
+         * Setter for subscription.
+         * @param  subscription  GetSubscriptionResponse value for subscription.
+         * @return Builder
+         */
+        public Builder subscription(GetSubscriptionResponse subscription) {
+            this.subscription = OptionalNullable.of(subscription);
+            return this;
+        }
+
+        /**
+         * UnSetter for subscription.
+         * @return Builder
+         */
+        public Builder unsetSubscription() {
+            subscription = null;
+            return this;
+        }
+
+        /**
          * Setter for cycle.
          * @param  cycle  GetPeriodResponse value for cycle.
          * @return Builder
@@ -1027,6 +1335,44 @@ public class GetInvoiceResponse {
          */
         public Builder unsetCycle() {
             cycle = null;
+            return this;
+        }
+
+        /**
+         * Setter for shipping.
+         * @param  shipping  GetShippingResponse value for shipping.
+         * @return Builder
+         */
+        public Builder shipping(GetShippingResponse shipping) {
+            this.shipping = OptionalNullable.of(shipping);
+            return this;
+        }
+
+        /**
+         * UnSetter for shipping.
+         * @return Builder
+         */
+        public Builder unsetShipping() {
+            shipping = null;
+            return this;
+        }
+
+        /**
+         * Setter for metadata.
+         * @param  metadata  Map of String, value for metadata.
+         * @return Builder
+         */
+        public Builder metadata(Map<String, String> metadata) {
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
             return this;
         }
 
@@ -1145,14 +1491,33 @@ public class GetInvoiceResponse {
         }
 
         /**
+         * Setter for subscriptionId.
+         * @param  subscriptionId  String value for subscriptionId.
+         * @return Builder
+         */
+        public Builder subscriptionId(String subscriptionId) {
+            this.subscriptionId = OptionalNullable.of(subscriptionId);
+            return this;
+        }
+
+        /**
+         * UnSetter for subscriptionId.
+         * @return Builder
+         */
+        public Builder unsetSubscriptionId() {
+            subscriptionId = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetInvoiceResponse} object using the set fields.
          * @return {@link GetInvoiceResponse}
          */
         public GetInvoiceResponse build() {
             return new GetInvoiceResponse(id, code, url, amount, status, paymentMethod, createdAt,
-                    items, charge, installments, billingAddress, subscription, shipping, metadata,
-                    subscriptionId, customer, cycle, dueAt, canceledAt, billingAt, seenAt,
-                    totalDiscount, totalIncrement);
+                    items, customer, charge, installments, billingAddress, subscription, cycle,
+                    shipping, metadata, dueAt, canceledAt, billingAt, seenAt, totalDiscount,
+                    totalIncrement, subscriptionId);
         }
     }
 }

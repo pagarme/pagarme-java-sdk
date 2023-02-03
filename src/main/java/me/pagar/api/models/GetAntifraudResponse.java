@@ -7,18 +7,21 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for GetAntifraudResponse type.
  */
 public class GetAntifraudResponse {
-    private String status;
-    private String returnCode;
-    private String returnMessage;
-    private String providerName;
-    private String score;
+    private OptionalNullable<String> status;
+    private OptionalNullable<String> returnCode;
+    private OptionalNullable<String> returnMessage;
+    private OptionalNullable<String> providerName;
+    private OptionalNullable<String> score;
 
     /**
      * Default constructor.
@@ -40,6 +43,19 @@ public class GetAntifraudResponse {
             String returnMessage,
             String providerName,
             String score) {
+        this.status = OptionalNullable.of(status);
+        this.returnCode = OptionalNullable.of(returnCode);
+        this.returnMessage = OptionalNullable.of(returnMessage);
+        this.providerName = OptionalNullable.of(providerName);
+        this.score = OptionalNullable.of(score);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected GetAntifraudResponse(OptionalNullable<String> status,
+            OptionalNullable<String> returnCode, OptionalNullable<String> returnMessage,
+            OptionalNullable<String> providerName, OptionalNullable<String> score) {
         this.status = status;
         this.returnCode = returnCode;
         this.returnMessage = returnMessage;
@@ -48,12 +64,22 @@ public class GetAntifraudResponse {
     }
 
     /**
+     * Internal Getter for Status.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("status")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetStatus() {
+        return this.status;
+    }
+
+    /**
      * Getter for Status.
      * @return Returns the String
      */
-    @JsonGetter("status")
     public String getStatus() {
-        return status;
+        return OptionalNullable.getFrom(status);
     }
 
     /**
@@ -62,16 +88,33 @@ public class GetAntifraudResponse {
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OptionalNullable.of(status);
+    }
+
+    /**
+     * UnSetter for Status.
+     */
+    public void unsetStatus() {
+        status = null;
+    }
+
+    /**
+     * Internal Getter for ReturnCode.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("return_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetReturnCode() {
+        return this.returnCode;
     }
 
     /**
      * Getter for ReturnCode.
      * @return Returns the String
      */
-    @JsonGetter("return_code")
     public String getReturnCode() {
-        return returnCode;
+        return OptionalNullable.getFrom(returnCode);
     }
 
     /**
@@ -80,16 +123,33 @@ public class GetAntifraudResponse {
      */
     @JsonSetter("return_code")
     public void setReturnCode(String returnCode) {
-        this.returnCode = returnCode;
+        this.returnCode = OptionalNullable.of(returnCode);
+    }
+
+    /**
+     * UnSetter for ReturnCode.
+     */
+    public void unsetReturnCode() {
+        returnCode = null;
+    }
+
+    /**
+     * Internal Getter for ReturnMessage.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("return_message")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetReturnMessage() {
+        return this.returnMessage;
     }
 
     /**
      * Getter for ReturnMessage.
      * @return Returns the String
      */
-    @JsonGetter("return_message")
     public String getReturnMessage() {
-        return returnMessage;
+        return OptionalNullable.getFrom(returnMessage);
     }
 
     /**
@@ -98,16 +158,33 @@ public class GetAntifraudResponse {
      */
     @JsonSetter("return_message")
     public void setReturnMessage(String returnMessage) {
-        this.returnMessage = returnMessage;
+        this.returnMessage = OptionalNullable.of(returnMessage);
+    }
+
+    /**
+     * UnSetter for ReturnMessage.
+     */
+    public void unsetReturnMessage() {
+        returnMessage = null;
+    }
+
+    /**
+     * Internal Getter for ProviderName.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("provider_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetProviderName() {
+        return this.providerName;
     }
 
     /**
      * Getter for ProviderName.
      * @return Returns the String
      */
-    @JsonGetter("provider_name")
     public String getProviderName() {
-        return providerName;
+        return OptionalNullable.getFrom(providerName);
     }
 
     /**
@@ -116,16 +193,33 @@ public class GetAntifraudResponse {
      */
     @JsonSetter("provider_name")
     public void setProviderName(String providerName) {
-        this.providerName = providerName;
+        this.providerName = OptionalNullable.of(providerName);
+    }
+
+    /**
+     * UnSetter for ProviderName.
+     */
+    public void unsetProviderName() {
+        providerName = null;
+    }
+
+    /**
+     * Internal Getter for Score.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("score")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetScore() {
+        return this.score;
     }
 
     /**
      * Getter for Score.
      * @return Returns the String
      */
-    @JsonGetter("score")
     public String getScore() {
-        return score;
+        return OptionalNullable.getFrom(score);
     }
 
     /**
@@ -134,7 +228,14 @@ public class GetAntifraudResponse {
      */
     @JsonSetter("score")
     public void setScore(String score) {
-        this.score = score;
+        this.score = OptionalNullable.of(score);
+    }
+
+    /**
+     * UnSetter for Score.
+     */
+    public void unsetScore() {
+        score = null;
     }
 
     /**
@@ -154,7 +255,12 @@ public class GetAntifraudResponse {
      * @return a new {@link GetAntifraudResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(status, returnCode, returnMessage, providerName, score);
+        Builder builder = new Builder();
+        builder.status = internalGetStatus();
+        builder.returnCode = internalGetReturnCode();
+        builder.returnMessage = internalGetReturnMessage();
+        builder.providerName = internalGetProviderName();
+        builder.score = internalGetScore();
         return builder;
     }
 
@@ -162,34 +268,13 @@ public class GetAntifraudResponse {
      * Class to build instances of {@link GetAntifraudResponse}.
      */
     public static class Builder {
-        private String status;
-        private String returnCode;
-        private String returnMessage;
-        private String providerName;
-        private String score;
+        private OptionalNullable<String> status;
+        private OptionalNullable<String> returnCode;
+        private OptionalNullable<String> returnMessage;
+        private OptionalNullable<String> providerName;
+        private OptionalNullable<String> score;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  status  String value for status.
-         * @param  returnCode  String value for returnCode.
-         * @param  returnMessage  String value for returnMessage.
-         * @param  providerName  String value for providerName.
-         * @param  score  String value for score.
-         */
-        public Builder(String status, String returnCode, String returnMessage, String providerName,
-                String score) {
-            this.status = status;
-            this.returnCode = returnCode;
-            this.returnMessage = returnMessage;
-            this.providerName = providerName;
-            this.score = score;
-        }
 
         /**
          * Setter for status.
@@ -197,7 +282,16 @@ public class GetAntifraudResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = status;
+            this.status = OptionalNullable.of(status);
+            return this;
+        }
+
+        /**
+         * UnSetter for status.
+         * @return Builder
+         */
+        public Builder unsetStatus() {
+            status = null;
             return this;
         }
 
@@ -207,7 +301,16 @@ public class GetAntifraudResponse {
          * @return Builder
          */
         public Builder returnCode(String returnCode) {
-            this.returnCode = returnCode;
+            this.returnCode = OptionalNullable.of(returnCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for returnCode.
+         * @return Builder
+         */
+        public Builder unsetReturnCode() {
+            returnCode = null;
             return this;
         }
 
@@ -217,7 +320,16 @@ public class GetAntifraudResponse {
          * @return Builder
          */
         public Builder returnMessage(String returnMessage) {
-            this.returnMessage = returnMessage;
+            this.returnMessage = OptionalNullable.of(returnMessage);
+            return this;
+        }
+
+        /**
+         * UnSetter for returnMessage.
+         * @return Builder
+         */
+        public Builder unsetReturnMessage() {
+            returnMessage = null;
             return this;
         }
 
@@ -227,7 +339,16 @@ public class GetAntifraudResponse {
          * @return Builder
          */
         public Builder providerName(String providerName) {
-            this.providerName = providerName;
+            this.providerName = OptionalNullable.of(providerName);
+            return this;
+        }
+
+        /**
+         * UnSetter for providerName.
+         * @return Builder
+         */
+        public Builder unsetProviderName() {
+            providerName = null;
             return this;
         }
 
@@ -237,7 +358,16 @@ public class GetAntifraudResponse {
          * @return Builder
          */
         public Builder score(String score) {
-            this.score = score;
+            this.score = OptionalNullable.of(score);
+            return this;
+        }
+
+        /**
+         * UnSetter for score.
+         * @return Builder
+         */
+        public Builder unsetScore() {
+            score = null;
             return this;
         }
 

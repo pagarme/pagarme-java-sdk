@@ -14,21 +14,21 @@ RecipientsController recipientsController = client.getRecipientsController();
 * [Create Anticipation](../../doc/controllers/recipients.md#create-anticipation)
 * [Get Anticipation Limits](../../doc/controllers/recipients.md#get-anticipation-limits)
 * [Get Recipients](../../doc/controllers/recipients.md#get-recipients)
-* [Get Withdraw by Id](../../doc/controllers/recipients.md#get-withdraw-by-id)
-* [Update Recipient Default Bank Account](../../doc/controllers/recipients.md#update-recipient-default-bank-account)
 * [Update Recipient Metadata](../../doc/controllers/recipients.md#update-recipient-metadata)
-* [Get Transfers](../../doc/controllers/recipients.md#get-transfers)
 * [Get Transfer](../../doc/controllers/recipients.md#get-transfer)
-* [Create Withdraw](../../doc/controllers/recipients.md#create-withdraw)
-* [Update Automatic Anticipation Settings](../../doc/controllers/recipients.md#update-automatic-anticipation-settings)
 * [Get Anticipation](../../doc/controllers/recipients.md#get-anticipation)
 * [Update Recipient Transfer Settings](../../doc/controllers/recipients.md#update-recipient-transfer-settings)
 * [Get Anticipations](../../doc/controllers/recipients.md#get-anticipations)
-* [Get Recipient](../../doc/controllers/recipients.md#get-recipient)
+* [Update Recipient Default Bank Account](../../doc/controllers/recipients.md#update-recipient-default-bank-account)
+* [Create Withdraw](../../doc/controllers/recipients.md#create-withdraw)
 * [Get Balance](../../doc/controllers/recipients.md#get-balance)
-* [Get Withdrawals](../../doc/controllers/recipients.md#get-withdrawals)
 * [Create Transfer](../../doc/controllers/recipients.md#create-transfer)
 * [Create Recipient](../../doc/controllers/recipients.md#create-recipient)
+* [Update Automatic Anticipation Settings](../../doc/controllers/recipients.md#update-automatic-anticipation-settings)
+* [Get Recipient](../../doc/controllers/recipients.md#get-recipient)
+* [Get Withdrawals](../../doc/controllers/recipients.md#get-withdrawals)
+* [Get Withdraw by Id](../../doc/controllers/recipients.md#get-withdraw-by-id)
+* [Get Transfers](../../doc/controllers/recipients.md#get-transfers)
 * [Get Recipient by Code](../../doc/controllers/recipients.md#get-recipient-by-code)
 * [Get Default Recipient](../../doc/controllers/recipients.md#get-default-recipient)
 
@@ -199,100 +199,6 @@ try {
 ```
 
 
-# Get Withdraw by Id
-
-```java
-GetWithdrawResponse getWithdrawById(
-    final String recipientId,
-    final String withdrawalId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | - |
-| `withdrawalId` | `String` | Template, Required | - |
-
-## Response Type
-
-[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-String withdrawalId = "withdrawal_id2";
-
-try {
-    GetWithdrawResponse response = recipientsController.getWithdrawById(recipientId, withdrawalId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Recipient Default Bank Account
-
-Updates the default bank account from a recipient
-
-```java
-GetRecipientResponse updateRecipientDefaultBankAccount(
-    final String recipientId,
-    final UpdateRecipientBankAccountRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateRecipientBankAccountRequest`](../../doc/models/update-recipient-bank-account-request.md) | Body, Required | Bank account data |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-UpdateRecipientBankAccountRequest request = new UpdateRecipientBankAccountRequest();
-CreateBankAccountRequest bankAccount = new CreateBankAccountRequest();
-bankAccount.setHolderName("holder_name6");
-bankAccount.setHolderType("holder_type2");
-bankAccount.setHolderDocument("holder_document4");
-bankAccount.setBank("bank8");
-bankAccount.setBranchNumber("branch_number6");
-bankAccount.setBranchCheckDigit("branch_check_digit6");
-bankAccount.setAccountNumber("account_number0");
-bankAccount.setAccountCheckDigit("account_check_digit6");
-bankAccount.setType("type0");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata9");
-metadata.put("key1", "metadata8");
-
-bankAccount.setMetadata(metadata);
-bankAccount.setPixKey("pix_key4");
-
-request.setBankAccount(bankAccount);
-request.setPaymentMode("bank_transfer");
-
-
-try {
-    GetRecipientResponse response = recipientsController.updateRecipientDefaultBankAccount(recipientId, request, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
 # Update Recipient Metadata
 
 Updates recipient metadata
@@ -337,50 +243,6 @@ try {
 ```
 
 
-# Get Transfers
-
-Gets a paginated list of transfers for the recipient
-
-```java
-ListTransferResponse getTransfers(
-    final String recipientId,
-    final Integer page,
-    final Integer size,
-    final String status,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-| `status` | `String` | Query, Optional | Filter for transfer status |
-| `createdSince` | `LocalDateTime` | Query, Optional | Filter for start range of transfer creation date |
-| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for end range of transfer creation date |
-
-## Response Type
-
-[`ListTransferResponse`](../../doc/models/list-transfer-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    ListTransferResponse response = recipientsController.getTransfers(recipientId, null, null, null, null, null);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
 # Get Transfer
 
 Gets a transfer
@@ -410,82 +272,6 @@ String transferId = "transfer_id6";
 
 try {
     GetTransferResponse response = recipientsController.getTransfer(recipientId, transferId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Withdraw
-
-```java
-GetWithdrawResponse createWithdraw(
-    final String recipientId,
-    final CreateWithdrawRequest request)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | - |
-| `request` | [`CreateWithdrawRequest`](../../doc/models/create-withdraw-request.md) | Body, Required | - |
-
-## Response Type
-
-[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-CreateWithdrawRequest request = new CreateWithdrawRequest();
-request.setAmount(242);
-
-try {
-    GetWithdrawResponse response = recipientsController.createWithdraw(recipientId, request);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Automatic Anticipation Settings
-
-Updates recipient metadata
-
-```java
-GetRecipientResponse updateAutomaticAnticipationSettings(
-    final String recipientId,
-    final UpdateAutomaticAnticipationSettingsRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateAutomaticAnticipationSettingsRequest`](../../doc/models/update-automatic-anticipation-settings-request.md) | Body, Required | Metadata |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-UpdateAutomaticAnticipationSettingsRequest request = new UpdateAutomaticAnticipationSettingsRequest();
-
-
-try {
-    GetRecipientResponse response = recipientsController.updateAutomaticAnticipationSettings(recipientId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -622,20 +408,24 @@ try {
 ```
 
 
-# Get Recipient
+# Update Recipient Default Bank Account
 
-Retrieves recipient information
+Updates the default bank account from a recipient
 
 ```java
-GetRecipientResponse getRecipient(
-    final String recipientId)
+GetRecipientResponse updateRecipientDefaultBankAccount(
+    final String recipientId,
+    final UpdateRecipientBankAccountRequest request,
+    final String idempotencyKey)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipiend id |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `request` | [`UpdateRecipientBankAccountRequest`](../../doc/models/update-recipient-bank-account-request.md) | Body, Required | Bank account data |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
@@ -645,9 +435,66 @@ GetRecipientResponse getRecipient(
 
 ```java
 String recipientId = "recipient_id0";
+UpdateRecipientBankAccountRequest request = new UpdateRecipientBankAccountRequest();
+CreateBankAccountRequest bankAccount = new CreateBankAccountRequest();
+bankAccount.setHolderName("holder_name6");
+bankAccount.setHolderType("holder_type2");
+bankAccount.setHolderDocument("holder_document4");
+bankAccount.setBank("bank8");
+bankAccount.setBranchNumber("branch_number6");
+bankAccount.setBranchCheckDigit("branch_check_digit6");
+bankAccount.setAccountNumber("account_number0");
+bankAccount.setAccountCheckDigit("account_check_digit6");
+bankAccount.setType("type0");
+Map<String, String> metadata = new LinkedHashMap<>();
+metadata.put("key0", "metadata9");
+metadata.put("key1", "metadata8");
+
+bankAccount.setMetadata(metadata);
+bankAccount.setPixKey("pix_key4");
+
+request.setBankAccount(bankAccount);
+request.setPaymentMode("bank_transfer");
+
 
 try {
-    GetRecipientResponse response = recipientsController.getRecipient(recipientId);
+    GetRecipientResponse response = recipientsController.updateRecipientDefaultBankAccount(recipientId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Create Withdraw
+
+```java
+GetWithdrawResponse createWithdraw(
+    final String recipientId,
+    final CreateWithdrawRequest request)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | - |
+| `request` | [`CreateWithdrawRequest`](../../doc/models/create-withdraw-request.md) | Body, Required | - |
+
+## Response Type
+
+[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+CreateWithdrawRequest request = new CreateWithdrawRequest();
+request.setAmount(242);
+
+try {
+    GetWithdrawResponse response = recipientsController.createWithdraw(recipientId, request);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -682,50 +529,6 @@ String recipientId = "recipient_id0";
 
 try {
     GetBalanceResponse response = recipientsController.getBalance(recipientId);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Withdrawals
-
-Gets a paginated list of transfers for the recipient
-
-```java
-ListWithdrawals getWithdrawals(
-    final String recipientId,
-    final Integer page,
-    final Integer size,
-    final String status,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | - |
-| `page` | `Integer` | Query, Optional | - |
-| `size` | `Integer` | Query, Optional | - |
-| `status` | `String` | Query, Optional | - |
-| `createdSince` | `LocalDateTime` | Query, Optional | - |
-| `createdUntil` | `LocalDateTime` | Query, Optional | - |
-
-## Response Type
-
-[`ListWithdrawals`](../../doc/models/list-withdrawals.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    ListWithdrawals response = recipientsController.getWithdrawals(recipientId, null, null, null, null, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -836,6 +639,203 @@ request.setPaymentMode("bank_transfer");
 
 try {
     GetRecipientResponse response = recipientsController.createRecipient(request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Update Automatic Anticipation Settings
+
+Updates recipient metadata
+
+```java
+GetRecipientResponse updateAutomaticAnticipationSettings(
+    final String recipientId,
+    final UpdateAutomaticAnticipationSettingsRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `request` | [`UpdateAutomaticAnticipationSettingsRequest`](../../doc/models/update-automatic-anticipation-settings-request.md) | Body, Required | Metadata |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+UpdateAutomaticAnticipationSettingsRequest request = new UpdateAutomaticAnticipationSettingsRequest();
+
+
+try {
+    GetRecipientResponse response = recipientsController.updateAutomaticAnticipationSettings(recipientId, request, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Recipient
+
+Retrieves recipient information
+
+```java
+GetRecipientResponse getRecipient(
+    final String recipientId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipiend id |
+
+## Response Type
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+try {
+    GetRecipientResponse response = recipientsController.getRecipient(recipientId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Withdrawals
+
+Gets a paginated list of transfers for the recipient
+
+```java
+ListWithdrawals getWithdrawals(
+    final String recipientId,
+    final Integer page,
+    final Integer size,
+    final String status,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | - |
+| `page` | `Integer` | Query, Optional | - |
+| `size` | `Integer` | Query, Optional | - |
+| `status` | `String` | Query, Optional | - |
+| `createdSince` | `LocalDateTime` | Query, Optional | - |
+| `createdUntil` | `LocalDateTime` | Query, Optional | - |
+
+## Response Type
+
+[`ListWithdrawals`](../../doc/models/list-withdrawals.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+try {
+    ListWithdrawals response = recipientsController.getWithdrawals(recipientId, null, null, null, null, null);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Withdraw by Id
+
+```java
+GetWithdrawResponse getWithdrawById(
+    final String recipientId,
+    final String withdrawalId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | - |
+| `withdrawalId` | `String` | Template, Required | - |
+
+## Response Type
+
+[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+String withdrawalId = "withdrawal_id2";
+
+try {
+    GetWithdrawResponse response = recipientsController.getWithdrawById(recipientId, withdrawalId);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Transfers
+
+Gets a paginated list of transfers for the recipient
+
+```java
+ListTransferResponse getTransfers(
+    final String recipientId,
+    final Integer page,
+    final Integer size,
+    final String status,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+| `status` | `String` | Query, Optional | Filter for transfer status |
+| `createdSince` | `LocalDateTime` | Query, Optional | Filter for start range of transfer creation date |
+| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for end range of transfer creation date |
+
+## Response Type
+
+[`ListTransferResponse`](../../doc/models/list-transfer-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+try {
+    ListTransferResponse response = recipientsController.getTransfers(recipientId, null, null, null, null, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

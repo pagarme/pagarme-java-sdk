@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for ListTransactionsFilesResponse type.
  */
 public class ListTransactionsFilesResponse {
-    private List<GetTransactionReportFileResponse> data;
-    private PagingResponse paging;
+    private OptionalNullable<List<GetTransactionReportFileResponse>> data;
+    private OptionalNullable<PagingResponse> paging;
 
     /**
      * Default constructor.
@@ -32,17 +35,37 @@ public class ListTransactionsFilesResponse {
     public ListTransactionsFilesResponse(
             List<GetTransactionReportFileResponse> data,
             PagingResponse paging) {
+        this.data = OptionalNullable.of(data);
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected ListTransactionsFilesResponse(
+            OptionalNullable<List<GetTransactionReportFileResponse>> data,
+            OptionalNullable<PagingResponse> paging) {
         this.data = data;
         this.paging = paging;
+    }
+
+    /**
+     * Internal Getter for Data.
+     * @return Returns the Internal List of GetTransactionReportFileResponse
+     */
+    @JsonGetter("data")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetTransactionReportFileResponse>> internalGetData() {
+        return this.data;
     }
 
     /**
      * Getter for Data.
      * @return Returns the List of GetTransactionReportFileResponse
      */
-    @JsonGetter("data")
     public List<GetTransactionReportFileResponse> getData() {
-        return data;
+        return OptionalNullable.getFrom(data);
     }
 
     /**
@@ -51,7 +74,26 @@ public class ListTransactionsFilesResponse {
      */
     @JsonSetter("data")
     public void setData(List<GetTransactionReportFileResponse> data) {
-        this.data = data;
+        this.data = OptionalNullable.of(data);
+    }
+
+    /**
+     * UnSetter for Data.
+     */
+    public void unsetData() {
+        data = null;
+    }
+
+    /**
+     * Internal Getter for Paging.
+     * Paging object
+     * @return Returns the Internal PagingResponse
+     */
+    @JsonGetter("paging")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<PagingResponse> internalGetPaging() {
+        return this.paging;
     }
 
     /**
@@ -59,9 +101,8 @@ public class ListTransactionsFilesResponse {
      * Paging object
      * @return Returns the PagingResponse
      */
-    @JsonGetter("paging")
     public PagingResponse getPaging() {
-        return paging;
+        return OptionalNullable.getFrom(paging);
     }
 
     /**
@@ -71,7 +112,15 @@ public class ListTransactionsFilesResponse {
      */
     @JsonSetter("paging")
     public void setPaging(PagingResponse paging) {
-        this.paging = paging;
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * UnSetter for Paging.
+     * Paging object
+     */
+    public void unsetPaging() {
+        paging = null;
     }
 
     /**
@@ -89,7 +138,9 @@ public class ListTransactionsFilesResponse {
      * @return a new {@link ListTransactionsFilesResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(data, paging);
+        Builder builder = new Builder();
+        builder.data = internalGetData();
+        builder.paging = internalGetPaging();
         return builder;
     }
 
@@ -97,24 +148,10 @@ public class ListTransactionsFilesResponse {
      * Class to build instances of {@link ListTransactionsFilesResponse}.
      */
     public static class Builder {
-        private List<GetTransactionReportFileResponse> data;
-        private PagingResponse paging;
+        private OptionalNullable<List<GetTransactionReportFileResponse>> data;
+        private OptionalNullable<PagingResponse> paging;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  data  List of GetTransactionReportFileResponse value for data.
-         * @param  paging  PagingResponse value for paging.
-         */
-        public Builder(List<GetTransactionReportFileResponse> data, PagingResponse paging) {
-            this.data = data;
-            this.paging = paging;
-        }
 
         /**
          * Setter for data.
@@ -122,7 +159,16 @@ public class ListTransactionsFilesResponse {
          * @return Builder
          */
         public Builder data(List<GetTransactionReportFileResponse> data) {
-            this.data = data;
+            this.data = OptionalNullable.of(data);
+            return this;
+        }
+
+        /**
+         * UnSetter for data.
+         * @return Builder
+         */
+        public Builder unsetData() {
+            data = null;
             return this;
         }
 
@@ -132,7 +178,16 @@ public class ListTransactionsFilesResponse {
          * @return Builder
          */
         public Builder paging(PagingResponse paging) {
-            this.paging = paging;
+            this.paging = OptionalNullable.of(paging);
+            return this;
+        }
+
+        /**
+         * UnSetter for paging.
+         * @return Builder
+         */
+        public Builder unsetPaging() {
+            paging = null;
             return this;
         }
 

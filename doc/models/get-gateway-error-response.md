@@ -11,13 +11,13 @@ Gateway Response
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Message` | `String` | Required | The message error | String getMessage() | setMessage(String message) |
+| `Message` | `String` | Optional | The message error | String getMessage() | setMessage(String message) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "message": "message0"
+  "message": null
 }
 ```
 

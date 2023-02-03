@@ -7,16 +7,19 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 
 /**
  * This is a model class for ListIncrementsResponse type.
  */
 public class ListIncrementsResponse {
-    private List<GetIncrementResponse> data;
-    private PagingResponse paging;
+    private OptionalNullable<List<GetIncrementResponse>> data;
+    private OptionalNullable<PagingResponse> paging;
 
     /**
      * Default constructor.
@@ -32,8 +35,29 @@ public class ListIncrementsResponse {
     public ListIncrementsResponse(
             List<GetIncrementResponse> data,
             PagingResponse paging) {
+        this.data = OptionalNullable.of(data);
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected ListIncrementsResponse(OptionalNullable<List<GetIncrementResponse>> data,
+            OptionalNullable<PagingResponse> paging) {
         this.data = data;
         this.paging = paging;
+    }
+
+    /**
+     * Internal Getter for Data.
+     * The Increments response
+     * @return Returns the Internal List of GetIncrementResponse
+     */
+    @JsonGetter("data")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<List<GetIncrementResponse>> internalGetData() {
+        return this.data;
     }
 
     /**
@@ -41,9 +65,8 @@ public class ListIncrementsResponse {
      * The Increments response
      * @return Returns the List of GetIncrementResponse
      */
-    @JsonGetter("data")
     public List<GetIncrementResponse> getData() {
-        return data;
+        return OptionalNullable.getFrom(data);
     }
 
     /**
@@ -53,7 +76,27 @@ public class ListIncrementsResponse {
      */
     @JsonSetter("data")
     public void setData(List<GetIncrementResponse> data) {
-        this.data = data;
+        this.data = OptionalNullable.of(data);
+    }
+
+    /**
+     * UnSetter for Data.
+     * The Increments response
+     */
+    public void unsetData() {
+        data = null;
+    }
+
+    /**
+     * Internal Getter for Paging.
+     * Paging object
+     * @return Returns the Internal PagingResponse
+     */
+    @JsonGetter("paging")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<PagingResponse> internalGetPaging() {
+        return this.paging;
     }
 
     /**
@@ -61,9 +104,8 @@ public class ListIncrementsResponse {
      * Paging object
      * @return Returns the PagingResponse
      */
-    @JsonGetter("paging")
     public PagingResponse getPaging() {
-        return paging;
+        return OptionalNullable.getFrom(paging);
     }
 
     /**
@@ -73,7 +115,15 @@ public class ListIncrementsResponse {
      */
     @JsonSetter("paging")
     public void setPaging(PagingResponse paging) {
-        this.paging = paging;
+        this.paging = OptionalNullable.of(paging);
+    }
+
+    /**
+     * UnSetter for Paging.
+     * Paging object
+     */
+    public void unsetPaging() {
+        paging = null;
     }
 
     /**
@@ -91,7 +141,9 @@ public class ListIncrementsResponse {
      * @return a new {@link ListIncrementsResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(data, paging);
+        Builder builder = new Builder();
+        builder.data = internalGetData();
+        builder.paging = internalGetPaging();
         return builder;
     }
 
@@ -99,24 +151,10 @@ public class ListIncrementsResponse {
      * Class to build instances of {@link ListIncrementsResponse}.
      */
     public static class Builder {
-        private List<GetIncrementResponse> data;
-        private PagingResponse paging;
+        private OptionalNullable<List<GetIncrementResponse>> data;
+        private OptionalNullable<PagingResponse> paging;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  data  List of GetIncrementResponse value for data.
-         * @param  paging  PagingResponse value for paging.
-         */
-        public Builder(List<GetIncrementResponse> data, PagingResponse paging) {
-            this.data = data;
-            this.paging = paging;
-        }
 
         /**
          * Setter for data.
@@ -124,7 +162,16 @@ public class ListIncrementsResponse {
          * @return Builder
          */
         public Builder data(List<GetIncrementResponse> data) {
-            this.data = data;
+            this.data = OptionalNullable.of(data);
+            return this;
+        }
+
+        /**
+         * UnSetter for data.
+         * @return Builder
+         */
+        public Builder unsetData() {
+            data = null;
             return this;
         }
 
@@ -134,7 +181,16 @@ public class ListIncrementsResponse {
          * @return Builder
          */
         public Builder paging(PagingResponse paging) {
-            this.paging = paging;
+            this.paging = OptionalNullable.of(paging);
+            return this;
+        }
+
+        /**
+         * UnSetter for paging.
+         * @return Builder
+         */
+        public Builder unsetPaging() {
+            paging = null;
             return this;
         }
 

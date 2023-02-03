@@ -11,15 +11,15 @@ Anticipation limit
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Amount` | `Integer` | Required | Amount | Integer getAmount() | setAmount(Integer amount) |
-| `AnticipationFee` | `Integer` | Required | Anticipation fee | Integer getAnticipationFee() | setAnticipationFee(Integer anticipationFee) |
+| `Amount` | `Integer` | Optional | Amount | Integer getAmount() | setAmount(Integer amount) |
+| `AnticipationFee` | `Integer` | Optional | Anticipation fee | Integer getAnticipationFee() | setAnticipationFee(Integer anticipationFee) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "amount": 46,
-  "anticipation_fee": 140
+  "amount": null,
+  "anticipation_fee": null
 }
 ```
 
