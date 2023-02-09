@@ -9,7 +9,9 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public class CreateOrderRequest {
     private CreateCustomerRequest customer;
     private List<CreatePaymentRequest> payments;
     private String code;
-    private String customerId;
+    private OptionalNullable<String> customerId;
     private CreateShippingRequest shipping;
     private Map<String, String> metadata;
     private Boolean antifraudEnabled;
@@ -47,9 +49,9 @@ public class CreateOrderRequest {
      * @param  customer  CreateCustomerRequest value for customer.
      * @param  payments  List of CreatePaymentRequest value for payments.
      * @param  code  String value for code.
-     * @param  customerId  String value for customerId.
      * @param  metadata  Map of String, value for metadata.
      * @param  closed  boolean value for closed.
+     * @param  customerId  String value for customerId.
      * @param  shipping  CreateShippingRequest value for shipping.
      * @param  antifraudEnabled  Boolean value for antifraudEnabled.
      * @param  ip  String value for ip.
@@ -65,9 +67,9 @@ public class CreateOrderRequest {
             CreateCustomerRequest customer,
             List<CreatePaymentRequest> payments,
             String code,
-            String customerId,
             Map<String, String> metadata,
             boolean closed,
+            String customerId,
             CreateShippingRequest shipping,
             Boolean antifraudEnabled,
             String ip,
@@ -76,6 +78,33 @@ public class CreateOrderRequest {
             CreateDeviceRequest device,
             String currency,
             CreateAntifraudRequest antifraud,
+            CreateSubMerchantRequest submerchant) {
+        this.items = items;
+        this.customer = customer;
+        this.payments = payments;
+        this.code = code;
+        this.customerId = OptionalNullable.of(customerId);
+        this.shipping = shipping;
+        this.metadata = metadata;
+        this.antifraudEnabled = antifraudEnabled;
+        this.ip = ip;
+        this.sessionId = sessionId;
+        this.location = location;
+        this.device = device;
+        this.closed = closed;
+        this.currency = currency;
+        this.antifraud = antifraud;
+        this.submerchant = submerchant;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected CreateOrderRequest(List<CreateOrderItemRequest> items, CreateCustomerRequest customer,
+            List<CreatePaymentRequest> payments, String code, Map<String, String> metadata,
+            boolean closed, OptionalNullable<String> customerId, CreateShippingRequest shipping,
+            Boolean antifraudEnabled, String ip, String sessionId, CreateLocationRequest location,
+            CreateDeviceRequest device, String currency, CreateAntifraudRequest antifraud,
             CreateSubMerchantRequest submerchant) {
         this.items = items;
         this.customer = customer;
@@ -176,13 +205,24 @@ public class CreateOrderRequest {
     }
 
     /**
+     * Internal Getter for CustomerId.
+     * The customer id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("customer_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCustomerId() {
+        return this.customerId;
+    }
+
+    /**
      * Getter for CustomerId.
      * The customer id
      * @return Returns the String
      */
-    @JsonGetter("customer_id")
     public String getCustomerId() {
-        return customerId;
+        return OptionalNullable.getFrom(customerId);
     }
 
     /**
@@ -192,7 +232,15 @@ public class CreateOrderRequest {
      */
     @JsonSetter("customer_id")
     public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+        this.customerId = OptionalNullable.of(customerId);
+    }
+
+    /**
+     * UnSetter for CustomerId.
+     * The customer id
+     */
+    public void unsetCustomerId() {
+        customerId = null;
     }
 
     /**
@@ -427,8 +475,8 @@ public class CreateOrderRequest {
     @Override
     public String toString() {
         return "CreateOrderRequest [" + "items=" + items + ", customer=" + customer + ", payments="
-                + payments + ", code=" + code + ", customerId=" + customerId + ", metadata="
-                + metadata + ", closed=" + closed + ", shipping=" + shipping + ", antifraudEnabled="
+                + payments + ", code=" + code + ", metadata=" + metadata + ", closed=" + closed
+                + ", customerId=" + customerId + ", shipping=" + shipping + ", antifraudEnabled="
                 + antifraudEnabled + ", ip=" + ip + ", sessionId=" + sessionId + ", location="
                 + location + ", device=" + device + ", currency=" + currency + ", antifraud="
                 + antifraud + ", submerchant=" + submerchant + "]";
@@ -440,7 +488,7 @@ public class CreateOrderRequest {
      * @return a new {@link CreateOrderRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(items, customer, payments, code, customerId, metadata, closed)
+        Builder builder = new Builder(items, customer, payments, code, metadata, closed)
                 .shipping(getShipping())
                 .antifraudEnabled(getAntifraudEnabled())
                 .ip(getIp())
@@ -450,6 +498,7 @@ public class CreateOrderRequest {
                 .currency(getCurrency())
                 .antifraud(getAntifraud())
                 .submerchant(getSubmerchant());
+        builder.customerId = internalGetCustomerId();
         return builder;
     }
 
@@ -461,9 +510,9 @@ public class CreateOrderRequest {
         private CreateCustomerRequest customer;
         private List<CreatePaymentRequest> payments;
         private String code;
-        private String customerId;
         private Map<String, String> metadata;
         private boolean closed = true;
+        private OptionalNullable<String> customerId;
         private CreateShippingRequest shipping;
         private Boolean antifraudEnabled;
         private String ip;
@@ -486,18 +535,16 @@ public class CreateOrderRequest {
          * @param  customer  CreateCustomerRequest value for customer.
          * @param  payments  List of CreatePaymentRequest value for payments.
          * @param  code  String value for code.
-         * @param  customerId  String value for customerId.
          * @param  metadata  Map of String, value for metadata.
          * @param  closed  boolean value for closed.
          */
         public Builder(List<CreateOrderItemRequest> items, CreateCustomerRequest customer,
-                List<CreatePaymentRequest> payments, String code, String customerId,
-                Map<String, String> metadata, boolean closed) {
+                List<CreatePaymentRequest> payments, String code, Map<String, String> metadata,
+                boolean closed) {
             this.items = items;
             this.customer = customer;
             this.payments = payments;
             this.code = code;
-            this.customerId = customerId;
             this.metadata = metadata;
             this.closed = closed;
         }
@@ -543,16 +590,6 @@ public class CreateOrderRequest {
         }
 
         /**
-         * Setter for customerId.
-         * @param  customerId  String value for customerId.
-         * @return Builder
-         */
-        public Builder customerId(String customerId) {
-            this.customerId = customerId;
-            return this;
-        }
-
-        /**
          * Setter for metadata.
          * @param  metadata  Map of String, value for metadata.
          * @return Builder
@@ -569,6 +606,25 @@ public class CreateOrderRequest {
          */
         public Builder closed(boolean closed) {
             this.closed = closed;
+            return this;
+        }
+
+        /**
+         * Setter for customerId.
+         * @param  customerId  String value for customerId.
+         * @return Builder
+         */
+        public Builder customerId(String customerId) {
+            this.customerId = OptionalNullable.of(customerId);
+            return this;
+        }
+
+        /**
+         * UnSetter for customerId.
+         * @return Builder
+         */
+        public Builder unsetCustomerId() {
+            customerId = null;
             return this;
         }
 
@@ -667,9 +723,9 @@ public class CreateOrderRequest {
          * @return {@link CreateOrderRequest}
          */
         public CreateOrderRequest build() {
-            return new CreateOrderRequest(items, customer, payments, code, customerId, metadata,
-                    closed, shipping, antifraudEnabled, ip, sessionId, location, device, currency,
-                    antifraud, submerchant);
+            return new CreateOrderRequest(items, customer, payments, code, metadata, closed,
+                    customerId, shipping, antifraudEnabled, ip, sessionId, location, device,
+                    currency, antifraud, submerchant);
         }
     }
 }

@@ -15,7 +15,7 @@ Request for creating an order
 | `Customer` | [`CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Required | Customer | CreateCustomerRequest getCustomer() | setCustomer(CreateCustomerRequest customer) |
 | `Payments` | [`List<CreatePaymentRequest>`](../../doc/models/create-payment-request.md) | Required | Payment data | List<CreatePaymentRequest> getPayments() | setPayments(List<CreatePaymentRequest> payments) |
 | `Code` | `String` | Required | The order code | String getCode() | setCode(String code) |
-| `CustomerId` | `String` | Required | The customer id | String getCustomerId() | setCustomerId(String customerId) |
+| `CustomerId` | `String` | Optional | The customer id | String getCustomerId() | setCustomerId(String customerId) |
 | `Shipping` | [`CreateShippingRequest`](../../doc/models/create-shipping-request.md) | Optional | Shipping data | CreateShippingRequest getShipping() | setShipping(CreateShippingRequest shipping) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `AntifraudEnabled` | `Boolean` | Optional | Defines whether the order will go through anti-fraud | Boolean getAntifraudEnabled() | setAntifraudEnabled(Boolean antifraudEnabled) |
@@ -45,7 +45,6 @@ Request for creating an order
   },
   "payments": null,
   "code": null,
-  "customer_id": null,
   "metadata": null,
   "closed": true
 }

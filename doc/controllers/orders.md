@@ -269,7 +269,6 @@ payments.add(payments1);
 
 body.setPayments(payments);
 body.setCode("code4");
-body.setCustomerId("customer_id4");
 Map<String, String> metadata = new LinkedHashMap<>();
 metadata.put("key0", "metadata7");
 metadata.put("key1", "metadata8");
