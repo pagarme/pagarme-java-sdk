@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import me.pagar.api.DateTimeHelper;
 
@@ -22,15 +23,15 @@ public class CreateBoletoPaymentRequest {
     private int retries;
     private String bank;
     private String instructions;
-    private LocalDateTime dueAt;
+    private OptionalNullable<LocalDateTime> dueAt;
     private CreateAddressRequest billingAddress;
-    private String billingAddressId;
-    private String nossoNumero;
+    private OptionalNullable<String> billingAddressId;
+    private OptionalNullable<String> nossoNumero;
     private String documentNumber;
     private String statementDescriptor;
-    private CreateInterestRequest interest;
-    private CreateFineRequest fine;
-    private Integer maxDaysToPayPastDue;
+    private OptionalNullable<CreateInterestRequest> interest;
+    private OptionalNullable<CreateFineRequest> fine;
+    private OptionalNullable<Integer> maxDaysToPayPastDue;
 
     /**
      * Default constructor.
@@ -44,10 +45,10 @@ public class CreateBoletoPaymentRequest {
      * @param  bank  String value for bank.
      * @param  instructions  String value for instructions.
      * @param  billingAddress  CreateAddressRequest value for billingAddress.
-     * @param  billingAddressId  String value for billingAddressId.
      * @param  documentNumber  String value for documentNumber.
      * @param  statementDescriptor  String value for statementDescriptor.
      * @param  dueAt  LocalDateTime value for dueAt.
+     * @param  billingAddressId  String value for billingAddressId.
      * @param  nossoNumero  String value for nossoNumero.
      * @param  interest  CreateInterestRequest value for interest.
      * @param  fine  CreateFineRequest value for fine.
@@ -58,14 +59,37 @@ public class CreateBoletoPaymentRequest {
             String bank,
             String instructions,
             CreateAddressRequest billingAddress,
-            String billingAddressId,
             String documentNumber,
             String statementDescriptor,
             LocalDateTime dueAt,
+            String billingAddressId,
             String nossoNumero,
             CreateInterestRequest interest,
             CreateFineRequest fine,
             Integer maxDaysToPayPastDue) {
+        this.retries = retries;
+        this.bank = bank;
+        this.instructions = instructions;
+        this.dueAt = OptionalNullable.of(dueAt);
+        this.billingAddress = billingAddress;
+        this.billingAddressId = OptionalNullable.of(billingAddressId);
+        this.nossoNumero = OptionalNullable.of(nossoNumero);
+        this.documentNumber = documentNumber;
+        this.statementDescriptor = statementDescriptor;
+        this.interest = OptionalNullable.of(interest);
+        this.fine = OptionalNullable.of(fine);
+        this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected CreateBoletoPaymentRequest(int retries, String bank, String instructions,
+            CreateAddressRequest billingAddress, String documentNumber, String statementDescriptor,
+            OptionalNullable<LocalDateTime> dueAt, OptionalNullable<String> billingAddressId,
+            OptionalNullable<String> nossoNumero, OptionalNullable<CreateInterestRequest> interest,
+            OptionalNullable<CreateFineRequest> fine,
+            OptionalNullable<Integer> maxDaysToPayPastDue) {
         this.retries = retries;
         this.bank = bank;
         this.instructions = instructions;
@@ -141,15 +165,24 @@ public class CreateBoletoPaymentRequest {
     }
 
     /**
+     * Internal Getter for DueAt.
+     * Boleto due date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDueAt() {
+        return this.dueAt;
+    }
+
+    /**
      * Getter for DueAt.
      * Boleto due date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("due_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
-        return dueAt;
+        return OptionalNullable.getFrom(dueAt);
     }
 
     /**
@@ -160,7 +193,15 @@ public class CreateBoletoPaymentRequest {
     @JsonSetter("due_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDueAt(LocalDateTime dueAt) {
-        this.dueAt = dueAt;
+        this.dueAt = OptionalNullable.of(dueAt);
+    }
+
+    /**
+     * UnSetter for DueAt.
+     * Boleto due date
+     */
+    public void unsetDueAt() {
+        dueAt = null;
     }
 
     /**
@@ -184,13 +225,24 @@ public class CreateBoletoPaymentRequest {
     }
 
     /**
+     * Internal Getter for BillingAddressId.
+     * The address id for the billing address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("billing_address_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBillingAddressId() {
+        return this.billingAddressId;
+    }
+
+    /**
      * Getter for BillingAddressId.
      * The address id for the billing address
      * @return Returns the String
      */
-    @JsonGetter("billing_address_id")
     public String getBillingAddressId() {
-        return billingAddressId;
+        return OptionalNullable.getFrom(billingAddressId);
     }
 
     /**
@@ -200,7 +252,27 @@ public class CreateBoletoPaymentRequest {
      */
     @JsonSetter("billing_address_id")
     public void setBillingAddressId(String billingAddressId) {
-        this.billingAddressId = billingAddressId;
+        this.billingAddressId = OptionalNullable.of(billingAddressId);
+    }
+
+    /**
+     * UnSetter for BillingAddressId.
+     * The address id for the billing address
+     */
+    public void unsetBillingAddressId() {
+        billingAddressId = null;
+    }
+
+    /**
+     * Internal Getter for NossoNumero.
+     * Customer identification number with the bank
+     * @return Returns the Internal String
+     */
+    @JsonGetter("nosso_numero")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetNossoNumero() {
+        return this.nossoNumero;
     }
 
     /**
@@ -208,10 +280,8 @@ public class CreateBoletoPaymentRequest {
      * Customer identification number with the bank
      * @return Returns the String
      */
-    @JsonGetter("nosso_numero")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getNossoNumero() {
-        return nossoNumero;
+        return OptionalNullable.getFrom(nossoNumero);
     }
 
     /**
@@ -221,7 +291,15 @@ public class CreateBoletoPaymentRequest {
      */
     @JsonSetter("nosso_numero")
     public void setNossoNumero(String nossoNumero) {
-        this.nossoNumero = nossoNumero;
+        this.nossoNumero = OptionalNullable.of(nossoNumero);
+    }
+
+    /**
+     * UnSetter for NossoNumero.
+     * Customer identification number with the bank
+     */
+    public void unsetNossoNumero() {
+        nossoNumero = null;
     }
 
     /**
@@ -265,13 +343,22 @@ public class CreateBoletoPaymentRequest {
     }
 
     /**
-     * Getter for Interest.
-     * @return Returns the CreateInterestRequest
+     * Internal Getter for Interest.
+     * @return Returns the Internal CreateInterestRequest
      */
     @JsonGetter("interest")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<CreateInterestRequest> internalGetInterest() {
+        return this.interest;
+    }
+
+    /**
+     * Getter for Interest.
+     * @return Returns the CreateInterestRequest
+     */
     public CreateInterestRequest getInterest() {
-        return interest;
+        return OptionalNullable.getFrom(interest);
     }
 
     /**
@@ -280,17 +367,33 @@ public class CreateBoletoPaymentRequest {
      */
     @JsonSetter("interest")
     public void setInterest(CreateInterestRequest interest) {
-        this.interest = interest;
+        this.interest = OptionalNullable.of(interest);
+    }
+
+    /**
+     * UnSetter for Interest.
+     */
+    public void unsetInterest() {
+        interest = null;
+    }
+
+    /**
+     * Internal Getter for Fine.
+     * @return Returns the Internal CreateFineRequest
+     */
+    @JsonGetter("fine")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<CreateFineRequest> internalGetFine() {
+        return this.fine;
     }
 
     /**
      * Getter for Fine.
      * @return Returns the CreateFineRequest
      */
-    @JsonGetter("fine")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateFineRequest getFine() {
-        return fine;
+        return OptionalNullable.getFrom(fine);
     }
 
     /**
@@ -299,17 +402,33 @@ public class CreateBoletoPaymentRequest {
      */
     @JsonSetter("fine")
     public void setFine(CreateFineRequest fine) {
-        this.fine = fine;
+        this.fine = OptionalNullable.of(fine);
+    }
+
+    /**
+     * UnSetter for Fine.
+     */
+    public void unsetFine() {
+        fine = null;
+    }
+
+    /**
+     * Internal Getter for MaxDaysToPayPastDue.
+     * @return Returns the Internal Integer
+     */
+    @JsonGetter("max_days_to_pay_past_due")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Integer> internalGetMaxDaysToPayPastDue() {
+        return this.maxDaysToPayPastDue;
     }
 
     /**
      * Getter for MaxDaysToPayPastDue.
      * @return Returns the Integer
      */
-    @JsonGetter("max_days_to_pay_past_due")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Integer getMaxDaysToPayPastDue() {
-        return maxDaysToPayPastDue;
+        return OptionalNullable.getFrom(maxDaysToPayPastDue);
     }
 
     /**
@@ -318,7 +437,14 @@ public class CreateBoletoPaymentRequest {
      */
     @JsonSetter("max_days_to_pay_past_due")
     public void setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-        this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+        this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+    }
+
+    /**
+     * UnSetter for MaxDaysToPayPastDue.
+     */
+    public void unsetMaxDaysToPayPastDue() {
+        maxDaysToPayPastDue = null;
     }
 
     /**
@@ -329,10 +455,10 @@ public class CreateBoletoPaymentRequest {
     public String toString() {
         return "CreateBoletoPaymentRequest [" + "retries=" + retries + ", bank=" + bank
                 + ", instructions=" + instructions + ", billingAddress=" + billingAddress
-                + ", billingAddressId=" + billingAddressId + ", documentNumber=" + documentNumber
-                + ", statementDescriptor=" + statementDescriptor + ", dueAt=" + dueAt
-                + ", nossoNumero=" + nossoNumero + ", interest=" + interest + ", fine=" + fine
-                + ", maxDaysToPayPastDue=" + maxDaysToPayPastDue + "]";
+                + ", documentNumber=" + documentNumber + ", statementDescriptor="
+                + statementDescriptor + ", dueAt=" + dueAt + ", billingAddressId="
+                + billingAddressId + ", nossoNumero=" + nossoNumero + ", interest=" + interest
+                + ", fine=" + fine + ", maxDaysToPayPastDue=" + maxDaysToPayPastDue + "]";
     }
 
     /**
@@ -341,13 +467,14 @@ public class CreateBoletoPaymentRequest {
      * @return a new {@link CreateBoletoPaymentRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(retries, bank, instructions, billingAddress, billingAddressId,
-                documentNumber, statementDescriptor)
-                .dueAt(getDueAt())
-                .nossoNumero(getNossoNumero())
-                .interest(getInterest())
-                .fine(getFine())
-                .maxDaysToPayPastDue(getMaxDaysToPayPastDue());
+        Builder builder = new Builder(retries, bank, instructions, billingAddress, documentNumber,
+                statementDescriptor);
+        builder.dueAt = internalGetDueAt();
+        builder.billingAddressId = internalGetBillingAddressId();
+        builder.nossoNumero = internalGetNossoNumero();
+        builder.interest = internalGetInterest();
+        builder.fine = internalGetFine();
+        builder.maxDaysToPayPastDue = internalGetMaxDaysToPayPastDue();
         return builder;
     }
 
@@ -359,14 +486,14 @@ public class CreateBoletoPaymentRequest {
         private String bank;
         private String instructions;
         private CreateAddressRequest billingAddress;
-        private String billingAddressId;
         private String documentNumber;
         private String statementDescriptor;
-        private LocalDateTime dueAt;
-        private String nossoNumero;
-        private CreateInterestRequest interest;
-        private CreateFineRequest fine;
-        private Integer maxDaysToPayPastDue;
+        private OptionalNullable<LocalDateTime> dueAt;
+        private OptionalNullable<String> billingAddressId;
+        private OptionalNullable<String> nossoNumero;
+        private OptionalNullable<CreateInterestRequest> interest;
+        private OptionalNullable<CreateFineRequest> fine;
+        private OptionalNullable<Integer> maxDaysToPayPastDue;
 
         /**
          * Initialization constructor.
@@ -380,18 +507,16 @@ public class CreateBoletoPaymentRequest {
          * @param  bank  String value for bank.
          * @param  instructions  String value for instructions.
          * @param  billingAddress  CreateAddressRequest value for billingAddress.
-         * @param  billingAddressId  String value for billingAddressId.
          * @param  documentNumber  String value for documentNumber.
          * @param  statementDescriptor  String value for statementDescriptor.
          */
         public Builder(int retries, String bank, String instructions,
-                CreateAddressRequest billingAddress, String billingAddressId, String documentNumber,
+                CreateAddressRequest billingAddress, String documentNumber,
                 String statementDescriptor) {
             this.retries = retries;
             this.bank = bank;
             this.instructions = instructions;
             this.billingAddress = billingAddress;
-            this.billingAddressId = billingAddressId;
             this.documentNumber = documentNumber;
             this.statementDescriptor = statementDescriptor;
         }
@@ -437,16 +562,6 @@ public class CreateBoletoPaymentRequest {
         }
 
         /**
-         * Setter for billingAddressId.
-         * @param  billingAddressId  String value for billingAddressId.
-         * @return Builder
-         */
-        public Builder billingAddressId(String billingAddressId) {
-            this.billingAddressId = billingAddressId;
-            return this;
-        }
-
-        /**
          * Setter for documentNumber.
          * @param  documentNumber  String value for documentNumber.
          * @return Builder
@@ -472,7 +587,35 @@ public class CreateBoletoPaymentRequest {
          * @return Builder
          */
         public Builder dueAt(LocalDateTime dueAt) {
-            this.dueAt = dueAt;
+            this.dueAt = OptionalNullable.of(dueAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for dueAt.
+         * @return Builder
+         */
+        public Builder unsetDueAt() {
+            dueAt = null;
+            return this;
+        }
+
+        /**
+         * Setter for billingAddressId.
+         * @param  billingAddressId  String value for billingAddressId.
+         * @return Builder
+         */
+        public Builder billingAddressId(String billingAddressId) {
+            this.billingAddressId = OptionalNullable.of(billingAddressId);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingAddressId.
+         * @return Builder
+         */
+        public Builder unsetBillingAddressId() {
+            billingAddressId = null;
             return this;
         }
 
@@ -482,7 +625,16 @@ public class CreateBoletoPaymentRequest {
          * @return Builder
          */
         public Builder nossoNumero(String nossoNumero) {
-            this.nossoNumero = nossoNumero;
+            this.nossoNumero = OptionalNullable.of(nossoNumero);
+            return this;
+        }
+
+        /**
+         * UnSetter for nossoNumero.
+         * @return Builder
+         */
+        public Builder unsetNossoNumero() {
+            nossoNumero = null;
             return this;
         }
 
@@ -492,7 +644,16 @@ public class CreateBoletoPaymentRequest {
          * @return Builder
          */
         public Builder interest(CreateInterestRequest interest) {
-            this.interest = interest;
+            this.interest = OptionalNullable.of(interest);
+            return this;
+        }
+
+        /**
+         * UnSetter for interest.
+         * @return Builder
+         */
+        public Builder unsetInterest() {
+            interest = null;
             return this;
         }
 
@@ -502,7 +663,16 @@ public class CreateBoletoPaymentRequest {
          * @return Builder
          */
         public Builder fine(CreateFineRequest fine) {
-            this.fine = fine;
+            this.fine = OptionalNullable.of(fine);
+            return this;
+        }
+
+        /**
+         * UnSetter for fine.
+         * @return Builder
+         */
+        public Builder unsetFine() {
+            fine = null;
             return this;
         }
 
@@ -512,7 +682,16 @@ public class CreateBoletoPaymentRequest {
          * @return Builder
          */
         public Builder maxDaysToPayPastDue(Integer maxDaysToPayPastDue) {
-            this.maxDaysToPayPastDue = maxDaysToPayPastDue;
+            this.maxDaysToPayPastDue = OptionalNullable.of(maxDaysToPayPastDue);
+            return this;
+        }
+
+        /**
+         * UnSetter for maxDaysToPayPastDue.
+         * @return Builder
+         */
+        public Builder unsetMaxDaysToPayPastDue() {
+            maxDaysToPayPastDue = null;
             return this;
         }
 
@@ -522,7 +701,7 @@ public class CreateBoletoPaymentRequest {
          */
         public CreateBoletoPaymentRequest build() {
             return new CreateBoletoPaymentRequest(retries, bank, instructions, billingAddress,
-                    billingAddressId, documentNumber, statementDescriptor, dueAt, nossoNumero,
+                    documentNumber, statementDescriptor, dueAt, billingAddressId, nossoNumero,
                     interest, fine, maxDaysToPayPastDue);
         }
     }

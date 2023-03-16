@@ -126,7 +126,6 @@ billingAddress.setLine1("line_18");
 billingAddress.setLine2("line_26");
 
 boleto.setBillingAddress(billingAddress);
-boleto.setBillingAddressId("billing_address_id2");
 boleto.setDocumentNumber("document_number0");
 boleto.setStatementDescriptor("statement_descriptor6");
 

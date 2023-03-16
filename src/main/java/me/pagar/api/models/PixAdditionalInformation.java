@@ -7,15 +7,18 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for PixAdditionalInformation type.
  */
 public class PixAdditionalInformation {
-    private String name;
-    private String value;
+    private OptionalNullable<String> name;
+    private OptionalNullable<String> value;
 
     /**
      * Default constructor.
@@ -31,17 +34,36 @@ public class PixAdditionalInformation {
     public PixAdditionalInformation(
             String name,
             String value) {
+        this.name = OptionalNullable.of(name);
+        this.value = OptionalNullable.of(value);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected PixAdditionalInformation(OptionalNullable<String> name,
+            OptionalNullable<String> value) {
         this.name = name;
         this.value = value;
+    }
+
+    /**
+     * Internal Getter for Name.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("Name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetName() {
+        return this.name;
     }
 
     /**
      * Getter for Name.
      * @return Returns the String
      */
-    @JsonGetter("Name")
     public String getName() {
-        return name;
+        return OptionalNullable.getFrom(name);
     }
 
     /**
@@ -50,16 +72,33 @@ public class PixAdditionalInformation {
      */
     @JsonSetter("Name")
     public void setName(String name) {
-        this.name = name;
+        this.name = OptionalNullable.of(name);
+    }
+
+    /**
+     * UnSetter for Name.
+     */
+    public void unsetName() {
+        name = null;
+    }
+
+    /**
+     * Internal Getter for Value.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("Value")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetValue() {
+        return this.value;
     }
 
     /**
      * Getter for Value.
      * @return Returns the String
      */
-    @JsonGetter("Value")
     public String getValue() {
-        return value;
+        return OptionalNullable.getFrom(value);
     }
 
     /**
@@ -68,7 +107,14 @@ public class PixAdditionalInformation {
      */
     @JsonSetter("Value")
     public void setValue(String value) {
-        this.value = value;
+        this.value = OptionalNullable.of(value);
+    }
+
+    /**
+     * UnSetter for Value.
+     */
+    public void unsetValue() {
+        value = null;
     }
 
     /**
@@ -86,7 +132,9 @@ public class PixAdditionalInformation {
      * @return a new {@link PixAdditionalInformation.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(name, value);
+        Builder builder = new Builder();
+        builder.name = internalGetName();
+        builder.value = internalGetValue();
         return builder;
     }
 
@@ -94,24 +142,10 @@ public class PixAdditionalInformation {
      * Class to build instances of {@link PixAdditionalInformation}.
      */
     public static class Builder {
-        private String name;
-        private String value;
+        private OptionalNullable<String> name;
+        private OptionalNullable<String> value;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  name  String value for name.
-         * @param  value  String value for value.
-         */
-        public Builder(String name, String value) {
-            this.name = name;
-            this.value = value;
-        }
 
         /**
          * Setter for name.
@@ -119,7 +153,16 @@ public class PixAdditionalInformation {
          * @return Builder
          */
         public Builder name(String name) {
-            this.name = name;
+            this.name = OptionalNullable.of(name);
+            return this;
+        }
+
+        /**
+         * UnSetter for name.
+         * @return Builder
+         */
+        public Builder unsetName() {
+            name = null;
             return this;
         }
 
@@ -129,7 +172,16 @@ public class PixAdditionalInformation {
          * @return Builder
          */
         public Builder value(String value) {
-            this.value = value;
+            this.value = OptionalNullable.of(value);
+            return this;
+        }
+
+        /**
+         * UnSetter for value.
+         * @return Builder
+         */
+        public Builder unsetValue() {
+            value = null;
             return this;
         }
 

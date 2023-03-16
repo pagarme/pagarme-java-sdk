@@ -11,15 +11,15 @@ Pix Additional Information
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Name` | `String` | Required | - | String getName() | setName(String name) |
-| `Value` | `String` | Required | - | String getValue() | setValue(String value) |
+| `Name` | `String` | Optional | - | String getName() | setName(String name) |
+| `Value` | `String` | Optional | - | String getValue() | setValue(String value) |
 
 ## Example (as JSON)
 
 ```json
 {
-  "Name": "Name0",
-  "Value": "Value2"
+  "Name": null,
+  "Value": null
 }
 ```
 
