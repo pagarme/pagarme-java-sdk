@@ -20,8 +20,8 @@ public class GetCardTokenResponse {
     private OptionalNullable<String> lastFourDigits;
     private OptionalNullable<String> holderName;
     private OptionalNullable<String> holderDocument;
-    private OptionalNullable<String> expMonth;
-    private OptionalNullable<String> expYear;
+    private OptionalNullable<Integer> expMonth;
+    private OptionalNullable<Integer> expYear;
     private OptionalNullable<String> brand;
     private OptionalNullable<String> type;
     private OptionalNullable<String> label;
@@ -37,8 +37,8 @@ public class GetCardTokenResponse {
      * @param  lastFourDigits  String value for lastFourDigits.
      * @param  holderName  String value for holderName.
      * @param  holderDocument  String value for holderDocument.
-     * @param  expMonth  String value for expMonth.
-     * @param  expYear  String value for expYear.
+     * @param  expMonth  Integer value for expMonth.
+     * @param  expYear  Integer value for expYear.
      * @param  brand  String value for brand.
      * @param  type  String value for type.
      * @param  label  String value for label.
@@ -47,8 +47,8 @@ public class GetCardTokenResponse {
             String lastFourDigits,
             String holderName,
             String holderDocument,
-            String expMonth,
-            String expYear,
+            Integer expMonth,
+            Integer expYear,
             String brand,
             String type,
             String label) {
@@ -67,7 +67,7 @@ public class GetCardTokenResponse {
      */
     protected GetCardTokenResponse(OptionalNullable<String> lastFourDigits,
             OptionalNullable<String> holderName, OptionalNullable<String> holderDocument,
-            OptionalNullable<String> expMonth, OptionalNullable<String> expYear,
+            OptionalNullable<Integer> expMonth, OptionalNullable<Integer> expYear,
             OptionalNullable<String> brand, OptionalNullable<String> type,
             OptionalNullable<String> label) {
         this.lastFourDigits = lastFourDigits;
@@ -187,29 +187,29 @@ public class GetCardTokenResponse {
 
     /**
      * Internal Getter for ExpMonth.
-     * @return Returns the Internal String
+     * @return Returns the Internal Integer
      */
     @JsonGetter("exp_month")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetExpMonth() {
+    protected OptionalNullable<Integer> internalGetExpMonth() {
         return this.expMonth;
     }
 
     /**
      * Getter for ExpMonth.
-     * @return Returns the String
+     * @return Returns the Integer
      */
-    public String getExpMonth() {
+    public Integer getExpMonth() {
         return OptionalNullable.getFrom(expMonth);
     }
 
     /**
      * Setter for ExpMonth.
-     * @param expMonth Value for String
+     * @param expMonth Value for Integer
      */
     @JsonSetter("exp_month")
-    public void setExpMonth(String expMonth) {
+    public void setExpMonth(Integer expMonth) {
         this.expMonth = OptionalNullable.of(expMonth);
     }
 
@@ -222,29 +222,29 @@ public class GetCardTokenResponse {
 
     /**
      * Internal Getter for ExpYear.
-     * @return Returns the Internal String
+     * @return Returns the Internal Integer
      */
     @JsonGetter("exp_year")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetExpYear() {
+    protected OptionalNullable<Integer> internalGetExpYear() {
         return this.expYear;
     }
 
     /**
      * Getter for ExpYear.
-     * @return Returns the String
+     * @return Returns the Integer
      */
-    public String getExpYear() {
+    public Integer getExpYear() {
         return OptionalNullable.getFrom(expYear);
     }
 
     /**
      * Setter for ExpYear.
-     * @param expYear Value for String
+     * @param expYear Value for Integer
      */
     @JsonSetter("exp_year")
-    public void setExpYear(String expYear) {
+    public void setExpYear(Integer expYear) {
         this.expYear = OptionalNullable.of(expYear);
     }
 
@@ -397,8 +397,8 @@ public class GetCardTokenResponse {
         private OptionalNullable<String> lastFourDigits;
         private OptionalNullable<String> holderName;
         private OptionalNullable<String> holderDocument;
-        private OptionalNullable<String> expMonth;
-        private OptionalNullable<String> expYear;
+        private OptionalNullable<Integer> expMonth;
+        private OptionalNullable<Integer> expYear;
         private OptionalNullable<String> brand;
         private OptionalNullable<String> type;
         private OptionalNullable<String> label;
@@ -464,10 +464,10 @@ public class GetCardTokenResponse {
 
         /**
          * Setter for expMonth.
-         * @param  expMonth  String value for expMonth.
+         * @param  expMonth  Integer value for expMonth.
          * @return Builder
          */
-        public Builder expMonth(String expMonth) {
+        public Builder expMonth(Integer expMonth) {
             this.expMonth = OptionalNullable.of(expMonth);
             return this;
         }
@@ -483,10 +483,10 @@ public class GetCardTokenResponse {
 
         /**
          * Setter for expYear.
-         * @param  expYear  String value for expYear.
+         * @param  expYear  Integer value for expYear.
          * @return Builder
          */
-        public Builder expYear(String expYear) {
+        public Builder expYear(Integer expYear) {
             this.expYear = OptionalNullable.of(expYear);
             return this;
         }

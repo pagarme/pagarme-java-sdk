@@ -14,8 +14,8 @@ Card token data
 | `LastFourDigits` | `String` | Optional | - | String getLastFourDigits() | setLastFourDigits(String lastFourDigits) |
 | `HolderName` | `String` | Optional | - | String getHolderName() | setHolderName(String holderName) |
 | `HolderDocument` | `String` | Optional | - | String getHolderDocument() | setHolderDocument(String holderDocument) |
-| `ExpMonth` | `String` | Optional | - | String getExpMonth() | setExpMonth(String expMonth) |
-| `ExpYear` | `String` | Optional | - | String getExpYear() | setExpYear(String expYear) |
+| `ExpMonth` | `Integer` | Optional | - | Integer getExpMonth() | setExpMonth(Integer expMonth) |
+| `ExpYear` | `Integer` | Optional | - | Integer getExpYear() | setExpYear(Integer expYear) |
 | `Brand` | `String` | Optional | - | String getBrand() | setBrand(String brand) |
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 | `Label` | `String` | Optional | - | String getLabel() | setLabel(String label) |

@@ -27,6 +27,7 @@ Response object for getting a credit card transaction
 | `AcquirerReturnCode` | `String` | Optional | Acquirer Return Code | String getAcquirerReturnCode() | setAcquirerReturnCode(String acquirerReturnCode) |
 | `Installments` | `Integer` | Optional | Number of installments | Integer getInstallments() | setInstallments(Integer installments) |
 | `ThreedAuthenticationUrl` | `String` | Optional | 3D-S authentication Url | String getThreedAuthenticationUrl() | setThreedAuthenticationUrl(String threedAuthenticationUrl) |
+| `FundingSource` | `String` | Optional | Identify when a card is prepaid, credit or debit. | String getFundingSource() | setFundingSource(String fundingSource) |
 
 ## Example (as JSON)
 
@@ -62,7 +63,8 @@ Response object for getting a credit card transaction
   "acquirer_message": null,
   "acquirer_return_code": null,
   "installments": null,
-  "threed_authentication_url": null
+  "threed_authentication_url": null,
+  "funding_source": null
 }
 ```
 

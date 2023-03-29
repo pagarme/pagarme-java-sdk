@@ -44,6 +44,7 @@ public class GetCreditCardTransactionResponse
     private OptionalNullable<String> acquirerReturnCode;
     private OptionalNullable<Integer> installments;
     private OptionalNullable<String> threedAuthenticationUrl;
+    private OptionalNullable<String> fundingSource;
 
     /**
      * Default constructor.
@@ -86,6 +87,7 @@ public class GetCreditCardTransactionResponse
      * @param  acquirerReturnCode  String value for acquirerReturnCode.
      * @param  installments  Integer value for installments.
      * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
+     * @param  fundingSource  String value for fundingSource.
      */
     public GetCreditCardTransactionResponse(
             String gatewayId,
@@ -118,7 +120,8 @@ public class GetCreditCardTransactionResponse
             String acquirerMessage,
             String acquirerReturnCode,
             Integer installments,
-            String threedAuthenticationUrl) {
+            String threedAuthenticationUrl,
+            String fundingSource) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -134,6 +137,7 @@ public class GetCreditCardTransactionResponse
         this.acquirerReturnCode = OptionalNullable.of(acquirerReturnCode);
         this.installments = OptionalNullable.of(installments);
         this.threedAuthenticationUrl = OptionalNullable.of(threedAuthenticationUrl);
+        this.fundingSource = OptionalNullable.of(fundingSource);
     }
 
     /**
@@ -158,7 +162,8 @@ public class GetCreditCardTransactionResponse
             OptionalNullable<String> operationType, OptionalNullable<GetCardResponse> card,
             OptionalNullable<String> acquirerMessage, OptionalNullable<String> acquirerReturnCode,
             OptionalNullable<Integer> installments,
-            OptionalNullable<String> threedAuthenticationUrl) {
+            OptionalNullable<String> threedAuthenticationUrl,
+            OptionalNullable<String> fundingSource) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -174,6 +179,7 @@ public class GetCreditCardTransactionResponse
         this.acquirerReturnCode = acquirerReturnCode;
         this.installments = installments;
         this.threedAuthenticationUrl = threedAuthenticationUrl;
+        this.fundingSource = fundingSource;
     }
 
     /**
@@ -591,6 +597,45 @@ public class GetCreditCardTransactionResponse
     }
 
     /**
+     * Internal Getter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("funding_source")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetFundingSource() {
+        return this.fundingSource;
+    }
+
+    /**
+     * Getter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     * @return Returns the String
+     */
+    public String getFundingSource() {
+        return OptionalNullable.getFrom(fundingSource);
+    }
+
+    /**
+     * Setter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     * @param fundingSource Value for String
+     */
+    @JsonSetter("funding_source")
+    public void setFundingSource(String fundingSource) {
+        this.fundingSource = OptionalNullable.of(fundingSource);
+    }
+
+    /**
+     * UnSetter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     */
+    public void unsetFundingSource() {
+        fundingSource = null;
+    }
+
+    /**
      * Converts this GetCreditCardTransactionResponse into string format.
      * @return String representation of this class
      */
@@ -602,15 +647,16 @@ public class GetCreditCardTransactionResponse
                 + acquirerNsu + ", acquirerAuthCode=" + acquirerAuthCode + ", operationType="
                 + operationType + ", card=" + card + ", acquirerMessage=" + acquirerMessage
                 + ", acquirerReturnCode=" + acquirerReturnCode + ", installments=" + installments
-                + ", threedAuthenticationUrl=" + threedAuthenticationUrl + ", gatewayId="
-                + getGatewayId() + ", amount=" + getAmount() + ", status=" + getStatus()
-                + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt="
-                + getUpdatedAt() + ", attemptCount=" + getAttemptCount() + ", maxAttempts="
-                + getMaxAttempts() + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
-                + ", transactionType=" + getTransactionType() + ", id=" + getId()
-                + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
-                + getAntifraudResponse() + ", metadata=" + getMetadata() + ", split=" + getSplit()
-                + ", interest=" + getInterest() + ", fine=" + getFine() + ", maxDaysToPayPastDue="
+                + ", threedAuthenticationUrl=" + threedAuthenticationUrl + ", fundingSource="
+                + fundingSource + ", gatewayId=" + getGatewayId() + ", amount=" + getAmount()
+                + ", status=" + getStatus() + ", success=" + getSuccess() + ", createdAt="
+                + getCreatedAt() + ", updatedAt=" + getUpdatedAt() + ", attemptCount="
+                + getAttemptCount() + ", maxAttempts=" + getMaxAttempts() + ", splits="
+                + getSplits() + ", nextAttempt=" + getNextAttempt() + ", transactionType="
+                + getTransactionType() + ", id=" + getId() + ", gatewayResponse="
+                + getGatewayResponse() + ", antifraudResponse=" + getAntifraudResponse()
+                + ", metadata=" + getMetadata() + ", split=" + getSplit() + ", interest="
+                + getInterest() + ", fine=" + getFine() + ", maxDaysToPayPastDue="
                 + getMaxDaysToPayPastDue() + "]";
     }
 
@@ -634,6 +680,7 @@ public class GetCreditCardTransactionResponse
         builder.acquirerReturnCode = internalGetAcquirerReturnCode();
         builder.installments = internalGetInstallments();
         builder.threedAuthenticationUrl = internalGetThreedAuthenticationUrl();
+        builder.fundingSource = internalGetFundingSource();
         builder.gatewayId = internalGetGatewayId();
         builder.amount = internalGetAmount();
         builder.status = internalGetStatus();
@@ -690,6 +737,7 @@ public class GetCreditCardTransactionResponse
         private OptionalNullable<String> acquirerReturnCode;
         private OptionalNullable<Integer> installments;
         private OptionalNullable<String> threedAuthenticationUrl;
+        private OptionalNullable<String> fundingSource;
 
 
 
@@ -1247,6 +1295,25 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for fundingSource.
+         * @param  fundingSource  String value for fundingSource.
+         * @return Builder
+         */
+        public Builder fundingSource(String fundingSource) {
+            this.fundingSource = OptionalNullable.of(fundingSource);
+            return this;
+        }
+
+        /**
+         * UnSetter for fundingSource.
+         * @return Builder
+         */
+        public Builder unsetFundingSource() {
+            fundingSource = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetCreditCardTransactionResponse} object using the set fields.
          * @return {@link GetCreditCardTransactionResponse}
          */
@@ -1257,7 +1324,7 @@ public class GetCreditCardTransactionResponse
                     interest, fine, maxDaysToPayPastDue, statementDescriptor, acquirerName,
                     acquirerAffiliationCode, acquirerTid, acquirerNsu, acquirerAuthCode,
                     operationType, card, acquirerMessage, acquirerReturnCode, installments,
-                    threedAuthenticationUrl);
+                    threedAuthenticationUrl, fundingSource);
         }
     }
 }

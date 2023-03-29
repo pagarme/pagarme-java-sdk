@@ -18,8 +18,8 @@ import java.util.Map;
 public class CreateCardRequest {
     private String number;
     private String holderName;
-    private int expMonth;
-    private int expYear;
+    private Integer expMonth;
+    private Integer expYear;
     private String cvv;
     private CreateAddressRequest billingAddress;
     private String brand;
@@ -28,7 +28,7 @@ public class CreateCardRequest {
     private String type;
     private CreateCardOptionsRequest options;
     private String holderDocument;
-    private boolean privateLabel;
+    private Boolean privateLabel;
     private String label;
     private String id;
     private String token;
@@ -44,8 +44,8 @@ public class CreateCardRequest {
      * Initialization constructor.
      * @param  number  String value for number.
      * @param  holderName  String value for holderName.
-     * @param  expMonth  int value for expMonth.
-     * @param  expYear  int value for expYear.
+     * @param  expMonth  Integer value for expMonth.
+     * @param  expYear  Integer value for expYear.
      * @param  cvv  String value for cvv.
      * @param  billingAddress  CreateAddressRequest value for billingAddress.
      * @param  brand  String value for brand.
@@ -53,17 +53,17 @@ public class CreateCardRequest {
      * @param  metadata  Map of String, value for metadata.
      * @param  type  String value for type.
      * @param  options  CreateCardOptionsRequest value for options.
-     * @param  privateLabel  boolean value for privateLabel.
-     * @param  label  String value for label.
      * @param  holderDocument  String value for holderDocument.
+     * @param  privateLabel  Boolean value for privateLabel.
+     * @param  label  String value for label.
      * @param  id  String value for id.
      * @param  token  String value for token.
      */
     public CreateCardRequest(
             String number,
             String holderName,
-            int expMonth,
-            int expYear,
+            Integer expMonth,
+            Integer expYear,
             String cvv,
             CreateAddressRequest billingAddress,
             String brand,
@@ -71,9 +71,9 @@ public class CreateCardRequest {
             Map<String, String> metadata,
             String type,
             CreateCardOptionsRequest options,
-            boolean privateLabel,
-            String label,
             String holderDocument,
+            Boolean privateLabel,
+            String label,
             String id,
             String token) {
         this.number = number;
@@ -100,6 +100,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("number")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getNumber() {
         return number;
     }
@@ -120,6 +121,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("holder_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getHolderName() {
         return holderName;
     }
@@ -137,40 +139,42 @@ public class CreateCardRequest {
     /**
      * Getter for ExpMonth.
      * The expiration month
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("exp_month")
-    public int getExpMonth() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Integer getExpMonth() {
         return expMonth;
     }
 
     /**
      * Setter for ExpMonth.
      * The expiration month
-     * @param expMonth Value for int
+     * @param expMonth Value for Integer
      */
     @JsonSetter("exp_month")
-    public void setExpMonth(int expMonth) {
+    public void setExpMonth(Integer expMonth) {
         this.expMonth = expMonth;
     }
 
     /**
      * Getter for ExpYear.
      * The expiration year, that can be informed with 2 or 4 digits
-     * @return Returns the int
+     * @return Returns the Integer
      */
     @JsonGetter("exp_year")
-    public int getExpYear() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Integer getExpYear() {
         return expYear;
     }
 
     /**
      * Setter for ExpYear.
      * The expiration year, that can be informed with 2 or 4 digits
-     * @param expYear Value for int
+     * @param expYear Value for Integer
      */
     @JsonSetter("exp_year")
-    public void setExpYear(int expYear) {
+    public void setExpYear(Integer expYear) {
         this.expYear = expYear;
     }
 
@@ -180,6 +184,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("cvv")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCvv() {
         return cvv;
     }
@@ -200,6 +205,7 @@ public class CreateCardRequest {
      * @return Returns the CreateAddressRequest
      */
     @JsonGetter("billing_address")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateAddressRequest getBillingAddress() {
         return billingAddress;
     }
@@ -220,6 +226,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("brand")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getBrand() {
         return brand;
     }
@@ -240,6 +247,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("billing_address_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getBillingAddressId() {
         return billingAddressId;
     }
@@ -260,6 +268,7 @@ public class CreateCardRequest {
      * @return Returns the Map of String, String
      */
     @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Map<String, String> getMetadata() {
         return metadata;
     }
@@ -280,6 +289,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getType() {
         return type;
     }
@@ -300,6 +310,7 @@ public class CreateCardRequest {
      * @return Returns the CreateCardOptionsRequest
      */
     @JsonGetter("options")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public CreateCardOptionsRequest getOptions() {
         return options;
     }
@@ -338,20 +349,21 @@ public class CreateCardRequest {
     /**
      * Getter for PrivateLabel.
      * Indicates whether it is a private label card
-     * @return Returns the boolean
+     * @return Returns the Boolean
      */
     @JsonGetter("private_label")
-    public boolean getPrivateLabel() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Boolean getPrivateLabel() {
         return privateLabel;
     }
 
     /**
      * Setter for PrivateLabel.
      * Indicates whether it is a private label card
-     * @param privateLabel Value for boolean
+     * @param privateLabel Value for Boolean
      */
     @JsonSetter("private_label")
-    public void setPrivateLabel(boolean privateLabel) {
+    public void setPrivateLabel(Boolean privateLabel) {
         this.privateLabel = privateLabel;
     }
 
@@ -360,6 +372,7 @@ public class CreateCardRequest {
      * @return Returns the String
      */
     @JsonGetter("label")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getLabel() {
         return label;
     }
@@ -425,8 +438,8 @@ public class CreateCardRequest {
                 + ", expMonth=" + expMonth + ", expYear=" + expYear + ", cvv=" + cvv
                 + ", billingAddress=" + billingAddress + ", brand=" + brand + ", billingAddressId="
                 + billingAddressId + ", metadata=" + metadata + ", type=" + type + ", options="
-                + options + ", privateLabel=" + privateLabel + ", label=" + label
-                + ", holderDocument=" + holderDocument + ", id=" + id + ", token=" + token + "]";
+                + options + ", holderDocument=" + holderDocument + ", privateLabel=" + privateLabel
+                + ", label=" + label + ", id=" + id + ", token=" + token + "]";
     }
 
     /**
@@ -435,9 +448,21 @@ public class CreateCardRequest {
      * @return a new {@link CreateCardRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(number, holderName, expMonth, expYear, cvv, billingAddress,
-                brand, billingAddressId, metadata, type, options, privateLabel, label)
+        Builder builder = new Builder()
+                .number(getNumber())
+                .holderName(getHolderName())
+                .expMonth(getExpMonth())
+                .expYear(getExpYear())
+                .cvv(getCvv())
+                .billingAddress(getBillingAddress())
+                .brand(getBrand())
+                .billingAddressId(getBillingAddressId())
+                .metadata(getMetadata())
+                .type(getType())
+                .options(getOptions())
                 .holderDocument(getHolderDocument())
+                .privateLabel(getPrivateLabel())
+                .label(getLabel())
                 .id(getId())
                 .token(getToken());
         return builder;
@@ -449,8 +474,8 @@ public class CreateCardRequest {
     public static class Builder {
         private String number;
         private String holderName;
-        private int expMonth;
-        private int expYear;
+        private Integer expMonth;
+        private Integer expYear;
         private String cvv;
         private CreateAddressRequest billingAddress;
         private String brand;
@@ -458,52 +483,13 @@ public class CreateCardRequest {
         private Map<String, String> metadata;
         private String type = "credit";
         private CreateCardOptionsRequest options;
-        private boolean privateLabel;
-        private String label;
         private String holderDocument;
+        private Boolean privateLabel;
+        private String label;
         private String id;
         private String token;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  number  String value for number.
-         * @param  holderName  String value for holderName.
-         * @param  expMonth  int value for expMonth.
-         * @param  expYear  int value for expYear.
-         * @param  cvv  String value for cvv.
-         * @param  billingAddress  CreateAddressRequest value for billingAddress.
-         * @param  brand  String value for brand.
-         * @param  billingAddressId  String value for billingAddressId.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  type  String value for type.
-         * @param  options  CreateCardOptionsRequest value for options.
-         * @param  privateLabel  boolean value for privateLabel.
-         * @param  label  String value for label.
-         */
-        public Builder(String number, String holderName, int expMonth, int expYear, String cvv,
-                CreateAddressRequest billingAddress, String brand, String billingAddressId,
-                Map<String, String> metadata, String type, CreateCardOptionsRequest options,
-                boolean privateLabel, String label) {
-            this.number = number;
-            this.holderName = holderName;
-            this.expMonth = expMonth;
-            this.expYear = expYear;
-            this.cvv = cvv;
-            this.billingAddress = billingAddress;
-            this.brand = brand;
-            this.billingAddressId = billingAddressId;
-            this.metadata = metadata;
-            this.type = type;
-            this.options = options;
-            this.privateLabel = privateLabel;
-            this.label = label;
-        }
 
         /**
          * Setter for number.
@@ -527,20 +513,20 @@ public class CreateCardRequest {
 
         /**
          * Setter for expMonth.
-         * @param  expMonth  int value for expMonth.
+         * @param  expMonth  Integer value for expMonth.
          * @return Builder
          */
-        public Builder expMonth(int expMonth) {
+        public Builder expMonth(Integer expMonth) {
             this.expMonth = expMonth;
             return this;
         }
 
         /**
          * Setter for expYear.
-         * @param  expYear  int value for expYear.
+         * @param  expYear  Integer value for expYear.
          * @return Builder
          */
-        public Builder expYear(int expYear) {
+        public Builder expYear(Integer expYear) {
             this.expYear = expYear;
             return this;
         }
@@ -616,11 +602,21 @@ public class CreateCardRequest {
         }
 
         /**
-         * Setter for privateLabel.
-         * @param  privateLabel  boolean value for privateLabel.
+         * Setter for holderDocument.
+         * @param  holderDocument  String value for holderDocument.
          * @return Builder
          */
-        public Builder privateLabel(boolean privateLabel) {
+        public Builder holderDocument(String holderDocument) {
+            this.holderDocument = holderDocument;
+            return this;
+        }
+
+        /**
+         * Setter for privateLabel.
+         * @param  privateLabel  Boolean value for privateLabel.
+         * @return Builder
+         */
+        public Builder privateLabel(Boolean privateLabel) {
             this.privateLabel = privateLabel;
             return this;
         }
@@ -632,16 +628,6 @@ public class CreateCardRequest {
          */
         public Builder label(String label) {
             this.label = label;
-            return this;
-        }
-
-        /**
-         * Setter for holderDocument.
-         * @param  holderDocument  String value for holderDocument.
-         * @return Builder
-         */
-        public Builder holderDocument(String holderDocument) {
-            this.holderDocument = holderDocument;
             return this;
         }
 
@@ -671,8 +657,8 @@ public class CreateCardRequest {
          */
         public CreateCardRequest build() {
             return new CreateCardRequest(number, holderName, expMonth, expYear, cvv, billingAddress,
-                    brand, billingAddressId, metadata, type, options, privateLabel, label,
-                    holderDocument, id, token);
+                    brand, billingAddressId, metadata, type, options, holderDocument, privateLabel,
+                    label, id, token);
         }
     }
 }

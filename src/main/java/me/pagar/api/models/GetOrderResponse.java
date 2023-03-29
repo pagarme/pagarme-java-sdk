@@ -22,7 +22,7 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetOrderResponse type.
  */
 public class GetOrderResponse {
-    private String id;
+    private OptionalNullable<String> id;
     private OptionalNullable<String> code;
     private OptionalNullable<String> currency;
     private OptionalNullable<List<GetOrderItemResponse>> items;
@@ -87,7 +87,7 @@ public class GetOrderResponse {
             GetLocationResponse location,
             GetDeviceResponse device,
             Boolean closed) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
         this.code = OptionalNullable.of(code);
         this.currency = OptionalNullable.of(currency);
         this.items = OptionalNullable.of(items);
@@ -110,7 +110,7 @@ public class GetOrderResponse {
     /**
      * Internal initialization constructor.
      */
-    protected GetOrderResponse(String id, OptionalNullable<String> code,
+    protected GetOrderResponse(OptionalNullable<String> id, OptionalNullable<String> code,
             OptionalNullable<String> currency, OptionalNullable<List<GetOrderItemResponse>> items,
             OptionalNullable<GetCustomerResponse> customer, OptionalNullable<String> status,
             OptionalNullable<LocalDateTime> createdAt, OptionalNullable<LocalDateTime> updatedAt,
@@ -142,12 +142,22 @@ public class GetOrderResponse {
     }
 
     /**
+     * Internal Getter for Id.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetId() {
+        return this.id;
+    }
+
+    /**
      * Getter for Id.
      * @return Returns the String
      */
-    @JsonGetter("id")
     public String getId() {
-        return id;
+        return OptionalNullable.getFrom(id);
     }
 
     /**
@@ -156,7 +166,14 @@ public class GetOrderResponse {
      */
     @JsonSetter("id")
     public void setId(String id) {
-        this.id = id;
+        this.id = OptionalNullable.of(id);
+    }
+
+    /**
+     * UnSetter for Id.
+     */
+    public void unsetId() {
+        id = null;
     }
 
     /**
@@ -800,7 +817,8 @@ public class GetOrderResponse {
      * @return a new {@link GetOrderResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(id);
+        Builder builder = new Builder();
+        builder.id = internalGetId();
         builder.code = internalGetCode();
         builder.currency = internalGetCurrency();
         builder.items = internalGetItems();
@@ -825,7 +843,7 @@ public class GetOrderResponse {
      * Class to build instances of {@link GetOrderResponse}.
      */
     public static class Builder {
-        private String id;
+        private OptionalNullable<String> id;
         private OptionalNullable<String> code;
         private OptionalNullable<String> currency;
         private OptionalNullable<List<GetOrderItemResponse>> items;
@@ -844,19 +862,7 @@ public class GetOrderResponse {
         private OptionalNullable<GetDeviceResponse> device;
         private OptionalNullable<Boolean> closed;
 
-        /**
-         * Initialization constructor.
-         */
-        public Builder() {
-        }
 
-        /**
-         * Initialization constructor.
-         * @param  id  String value for id.
-         */
-        public Builder(String id) {
-            this.id = id;
-        }
 
         /**
          * Setter for id.
@@ -864,7 +870,16 @@ public class GetOrderResponse {
          * @return Builder
          */
         public Builder id(String id) {
-            this.id = id;
+            this.id = OptionalNullable.of(id);
+            return this;
+        }
+
+        /**
+         * UnSetter for id.
+         * @return Builder
+         */
+        public Builder unsetId() {
+            id = null;
             return this;
         }
 

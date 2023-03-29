@@ -18,14 +18,6 @@ import me.pagar.api.models.ListTransfers;
  */
 public interface TransfersController {
     /**
-     * Gets all transfers.
-     * @return    Returns the ListTransfers response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    ListTransfers getTransfers() throws ApiException, IOException;
-
-    /**
      * @param  transferId  Required parameter: Example:
      * @return    Returns the GetTransfer response from the API call
      * @throws    ApiException    Represents error response from the server.
@@ -42,5 +34,13 @@ public interface TransfersController {
      */
     GetTransfer createTransfer(
             final CreateTransfer request) throws ApiException, IOException;
+
+    /**
+     * Gets all transfers.
+     * @return    Returns the ListTransfers response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListTransfers getTransfers() throws ApiException, IOException;
 
 }

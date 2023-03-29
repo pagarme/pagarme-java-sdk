@@ -46,6 +46,7 @@ public class GetDebitCardTransactionResponse
     private OptionalNullable<String> eci;
     private OptionalNullable<String> authenticationType;
     private OptionalNullable<String> threedAuthenticationUrl;
+    private OptionalNullable<String> fundingSource;
 
     /**
      * Default constructor.
@@ -90,6 +91,7 @@ public class GetDebitCardTransactionResponse
      * @param  eci  String value for eci.
      * @param  authenticationType  String value for authenticationType.
      * @param  threedAuthenticationUrl  String value for threedAuthenticationUrl.
+     * @param  fundingSource  String value for fundingSource.
      */
     public GetDebitCardTransactionResponse(
             String gatewayId,
@@ -124,7 +126,8 @@ public class GetDebitCardTransactionResponse
             String mpi,
             String eci,
             String authenticationType,
-            String threedAuthenticationUrl) {
+            String threedAuthenticationUrl,
+            String fundingSource) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -142,6 +145,7 @@ public class GetDebitCardTransactionResponse
         this.eci = OptionalNullable.of(eci);
         this.authenticationType = OptionalNullable.of(authenticationType);
         this.threedAuthenticationUrl = OptionalNullable.of(threedAuthenticationUrl);
+        this.fundingSource = OptionalNullable.of(fundingSource);
     }
 
     /**
@@ -167,7 +171,8 @@ public class GetDebitCardTransactionResponse
             OptionalNullable<String> acquirerMessage, OptionalNullable<String> acquirerReturnCode,
             OptionalNullable<String> mpi, OptionalNullable<String> eci,
             OptionalNullable<String> authenticationType,
-            OptionalNullable<String> threedAuthenticationUrl) {
+            OptionalNullable<String> threedAuthenticationUrl,
+            OptionalNullable<String> fundingSource) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -185,6 +190,7 @@ public class GetDebitCardTransactionResponse
         this.eci = eci;
         this.authenticationType = authenticationType;
         this.threedAuthenticationUrl = threedAuthenticationUrl;
+        this.fundingSource = fundingSource;
     }
 
     /**
@@ -734,6 +740,45 @@ public class GetDebitCardTransactionResponse
     }
 
     /**
+     * Internal Getter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("funding_source")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetFundingSource() {
+        return this.fundingSource;
+    }
+
+    /**
+     * Getter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     * @return Returns the String
+     */
+    public String getFundingSource() {
+        return OptionalNullable.getFrom(fundingSource);
+    }
+
+    /**
+     * Setter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     * @param fundingSource Value for String
+     */
+    @JsonSetter("funding_source")
+    public void setFundingSource(String fundingSource) {
+        this.fundingSource = OptionalNullable.of(fundingSource);
+    }
+
+    /**
+     * UnSetter for FundingSource.
+     * Identify when a card is prepaid, credit or debit.
+     */
+    public void unsetFundingSource() {
+        fundingSource = null;
+    }
+
+    /**
      * Converts this GetDebitCardTransactionResponse into string format.
      * @return String representation of this class
      */
@@ -746,11 +791,11 @@ public class GetDebitCardTransactionResponse
                 + operationType + ", card=" + card + ", acquirerMessage=" + acquirerMessage
                 + ", acquirerReturnCode=" + acquirerReturnCode + ", mpi=" + mpi + ", eci=" + eci
                 + ", authenticationType=" + authenticationType + ", threedAuthenticationUrl="
-                + threedAuthenticationUrl + ", gatewayId=" + getGatewayId() + ", amount="
-                + getAmount() + ", status=" + getStatus() + ", success=" + getSuccess()
-                + ", createdAt=" + getCreatedAt() + ", updatedAt=" + getUpdatedAt()
-                + ", attemptCount=" + getAttemptCount() + ", maxAttempts=" + getMaxAttempts()
-                + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
+                + threedAuthenticationUrl + ", fundingSource=" + fundingSource + ", gatewayId="
+                + getGatewayId() + ", amount=" + getAmount() + ", status=" + getStatus()
+                + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt="
+                + getUpdatedAt() + ", attemptCount=" + getAttemptCount() + ", maxAttempts="
+                + getMaxAttempts() + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
                 + ", transactionType=" + getTransactionType() + ", id=" + getId()
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", metadata=" + getMetadata() + ", split=" + getSplit()
@@ -780,6 +825,7 @@ public class GetDebitCardTransactionResponse
         builder.eci = internalGetEci();
         builder.authenticationType = internalGetAuthenticationType();
         builder.threedAuthenticationUrl = internalGetThreedAuthenticationUrl();
+        builder.fundingSource = internalGetFundingSource();
         builder.gatewayId = internalGetGatewayId();
         builder.amount = internalGetAmount();
         builder.status = internalGetStatus();
@@ -838,6 +884,7 @@ public class GetDebitCardTransactionResponse
         private OptionalNullable<String> eci;
         private OptionalNullable<String> authenticationType;
         private OptionalNullable<String> threedAuthenticationUrl;
+        private OptionalNullable<String> fundingSource;
 
 
 
@@ -1460,6 +1507,25 @@ public class GetDebitCardTransactionResponse
         }
 
         /**
+         * Setter for fundingSource.
+         * @param  fundingSource  String value for fundingSource.
+         * @return Builder
+         */
+        public Builder fundingSource(String fundingSource) {
+            this.fundingSource = OptionalNullable.of(fundingSource);
+            return this;
+        }
+
+        /**
+         * UnSetter for fundingSource.
+         * @return Builder
+         */
+        public Builder unsetFundingSource() {
+            fundingSource = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetDebitCardTransactionResponse} object using the set fields.
          * @return {@link GetDebitCardTransactionResponse}
          */
@@ -1470,7 +1536,7 @@ public class GetDebitCardTransactionResponse
                     interest, fine, maxDaysToPayPastDue, statementDescriptor, acquirerName,
                     acquirerAffiliationCode, acquirerTid, acquirerNsu, acquirerAuthCode,
                     operationType, card, acquirerMessage, acquirerReturnCode, mpi, eci,
-                    authenticationType, threedAuthenticationUrl);
+                    authenticationType, threedAuthenticationUrl, fundingSource);
         }
     }
 }

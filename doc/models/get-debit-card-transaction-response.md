@@ -29,6 +29,7 @@ Response object for getting a debit card transaction
 | `Eci` | `String` | Optional | Electronic Commerce Indicator (ECI) | String getEci() | setEci(String eci) |
 | `AuthenticationType` | `String` | Optional | Authentication type | String getAuthenticationType() | setAuthenticationType(String authenticationType) |
 | `ThreedAuthenticationUrl` | `String` | Optional | 3D-S Authentication Url | String getThreedAuthenticationUrl() | setThreedAuthenticationUrl(String threedAuthenticationUrl) |
+| `FundingSource` | `String` | Optional | Identify when a card is prepaid, credit or debit. | String getFundingSource() | setFundingSource(String fundingSource) |
 
 ## Example (as JSON)
 
@@ -66,7 +67,8 @@ Response object for getting a debit card transaction
   "mpi": null,
   "eci": null,
   "authentication_type": null,
-  "threed_authentication_url": null
+  "threed_authentication_url": null,
+  "funding_source": null
 }
 ```
 

@@ -11,7 +11,7 @@ Response object for getting an Order
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `Id` | `String` | Required | - | String getId() | setId(String id) |
+| `Id` | `String` | Optional | - | String getId() | setId(String id) |
 | `Code` | `String` | Optional | - | String getCode() | setCode(String code) |
 | `Currency` | `String` | Optional | - | String getCurrency() | setCurrency(String currency) |
 | `Items` | [`List<GetOrderItemResponse>`](../../doc/models/get-order-item-response.md) | Optional | - | List<GetOrderItemResponse> getItems() | setItems(List<GetOrderItemResponse> items) |
@@ -34,7 +34,7 @@ Response object for getting an Order
 
 ```json
 {
-  "id": "id0",
+  "id": null,
   "code": null,
   "currency": null,
   "items": null,
