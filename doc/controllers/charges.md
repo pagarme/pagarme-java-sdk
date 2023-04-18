@@ -52,15 +52,17 @@ GetChargeResponse updateChargeMetadata(
 
 ```java
 String chargeId = "charge_id8";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetChargeResponse response = chargesController.updateChargeMetadata(chargeId, request, null);
+    GetChargeResponse result = chargesController.updateChargeMetadata(chargeId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -96,60 +98,65 @@ GetChargeResponse updateChargePaymentMethod(
 
 ```java
 String chargeId = "charge_id8";
-UpdateChargePaymentMethodRequest request = new UpdateChargePaymentMethodRequest();
-request.setUpdateSubscription(false);
-request.setPaymentMethod("payment_method4");
-CreateCreditCardPaymentRequest creditCard = new CreateCreditCardPaymentRequest();
-
-request.setCreditCard(creditCard);
-CreateDebitCardPaymentRequest debitCard = new CreateDebitCardPaymentRequest();
-
-request.setDebitCard(debitCard);
-CreateBoletoPaymentRequest boleto = new CreateBoletoPaymentRequest();
-boleto.setRetries(10);
-boleto.setBank("bank4");
-boleto.setInstructions("instructions4");
-CreateAddressRequest billingAddress = new CreateAddressRequest();
-billingAddress.setStreet("street8");
-billingAddress.setNumber("number4");
-billingAddress.setZipCode("zip_code2");
-billingAddress.setNeighborhood("neighborhood4");
-billingAddress.setCity("city2");
-billingAddress.setState("state6");
-billingAddress.setCountry("country2");
-billingAddress.setComplement("complement6");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata5");
-
-billingAddress.setMetadata(metadata);
-billingAddress.setLine1("line_18");
-billingAddress.setLine2("line_26");
-
-boleto.setBillingAddress(billingAddress);
-boleto.setDocumentNumber("document_number0");
-boleto.setStatementDescriptor("statement_descriptor6");
-
-request.setBoleto(boleto);
-CreateVoucherPaymentRequest voucher = new CreateVoucherPaymentRequest();
-
-request.setVoucher(voucher);
-CreateCashPaymentRequest cash = new CreateCashPaymentRequest();
-cash.setDescription("description6");
-cash.setConfirm(false);
-
-request.setCash(cash);
-CreateBankTransferPaymentRequest bankTransfer = new CreateBankTransferPaymentRequest();
-bankTransfer.setBank("bank4");
-bankTransfer.setRetries(204);
-
-request.setBankTransfer(bankTransfer);
-CreatePrivateLabelPaymentRequest privateLabel = new CreatePrivateLabelPaymentRequest();
-
-request.setPrivateLabel(privateLabel);
+UpdateChargePaymentMethodRequest request = new UpdateChargePaymentMethodRequest.Builder(
+    false,
+    "payment_method4",
+    new CreateCreditCardPaymentRequest.Builder()
+        .installments(1)
+        .capture(true)
+        .recurrencyCycle("\"first\" or \"subsequent\"")
+        .build(),
+    new CreateDebitCardPaymentRequest.Builder()
+        .build(),
+    new CreateBoletoPaymentRequest.Builder(
+        10,
+        "bank4",
+        "instructions4",
+        new CreateAddressRequest.Builder(
+            "street8",
+            "number4",
+            "zip_code2",
+            "neighborhood4",
+            "city2",
+            "state6",
+            "country2",
+            "complement6",
+            new LinkedHashMap<String, String>() {{
+                put("key0", "metadata5");
+            }},
+            "line_18",
+            "line_26"
+        )
+        .build(),
+        "document_number0",
+        "statement_descriptor6"
+    )
+    .build(),
+    new CreateVoucherPaymentRequest.Builder()
+        .recurrencyCycle("\"first\" or \"subsequent\"")
+        .build(),
+    new CreateCashPaymentRequest.Builder(
+        "description6",
+        false
+    )
+    .build(),
+    new CreateBankTransferPaymentRequest.Builder(
+        "bank4",
+        204
+    )
+    .build(),
+    new CreatePrivateLabelPaymentRequest.Builder()
+        .installments(1)
+        .capture(true)
+        .recurrencyCycle("\"first\" or \"subsequent\"")
+        .build()
+)
+.build();
 
 
 try {
-    GetChargeResponse response = chargesController.updateChargePaymentMethod(chargeId, request, null);
+    GetChargeResponse result = chargesController.updateChargePaymentMethod(chargeId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -185,7 +192,8 @@ ListChargeTransactionsResponse getChargeTransactions(
 String chargeId = "charge_id8";
 
 try {
-    ListChargeTransactionsResponse response = chargesController.getChargeTransactions(chargeId, null, null);
+    ListChargeTransactionsResponse result = chargesController.getChargeTransactions(chargeId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -221,11 +229,13 @@ GetChargeResponse updateChargeDueDate(
 
 ```java
 String chargeId = "charge_id8";
-UpdateChargeDueDateRequest request = new UpdateChargeDueDateRequest();
+UpdateChargeDueDateRequest request = new UpdateChargeDueDateRequest.Builder()
+    .build();
 
 
 try {
-    GetChargeResponse response = chargesController.updateChargeDueDate(chargeId, request, null);
+    GetChargeResponse result = chargesController.updateChargeDueDate(chargeId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -273,7 +283,8 @@ ListChargesResponse getCharges(
 
 ```java
 try {
-    ListChargesResponse response = chargesController.getCharges(null, null, null, null, null, null, null, null, null);
+    ListChargesResponse result = chargesController.getCharges(null, null, null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -311,7 +322,8 @@ GetChargeResponse captureCharge(
 String chargeId = "charge_id8";
 
 try {
-    GetChargeResponse response = chargesController.captureCharge(chargeId, null, null);
+    GetChargeResponse result = chargesController.captureCharge(chargeId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -347,17 +359,20 @@ GetChargeResponse updateChargeCard(
 
 ```java
 String chargeId = "charge_id8";
-UpdateChargeCardRequest request = new UpdateChargeCardRequest();
-request.setUpdateSubscription(false);
-request.setCardId("card_id2");
-CreateCardRequest card = new CreateCardRequest();
-
-request.setCard(card);
-request.setRecurrence(false);
+UpdateChargeCardRequest request = new UpdateChargeCardRequest.Builder(
+    false,
+    "card_id2",
+    new CreateCardRequest.Builder()
+        .type("credit")
+        .build(),
+    false
+)
+.build();
 
 
 try {
-    GetChargeResponse response = chargesController.updateChargeCard(chargeId, request, null);
+    GetChargeResponse result = chargesController.updateChargeCard(chargeId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -391,7 +406,8 @@ GetChargeResponse getCharge(
 String chargeId = "charge_id8";
 
 try {
-    GetChargeResponse response = chargesController.getCharge(chargeId);
+    GetChargeResponse result = chargesController.getCharge(chargeId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -427,7 +443,8 @@ GetChargesSummaryResponse getChargesSummary(
 String status = "status8";
 
 try {
-    GetChargesSummaryResponse response = chargesController.getChargesSummary(status, null, null);
+    GetChargesSummaryResponse result = chargesController.getChargesSummary(status, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -463,7 +480,8 @@ GetChargeResponse retryCharge(
 String chargeId = "charge_id8";
 
 try {
-    GetChargeResponse response = chargesController.retryCharge(chargeId, null);
+    GetChargeResponse result = chargesController.retryCharge(chargeId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -501,7 +519,8 @@ GetChargeResponse cancelCharge(
 String chargeId = "charge_id8";
 
 try {
-    GetChargeResponse response = chargesController.cancelCharge(chargeId, null, null);
+    GetChargeResponse result = chargesController.cancelCharge(chargeId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -534,66 +553,65 @@ GetChargeResponse createCharge(
 ## Example Usage
 
 ```java
-CreateChargeRequest request = new CreateChargeRequest();
-request.setCode("code4");
-request.setAmount(242);
-request.setCustomerId("customer_id4");
-CreateCustomerRequest customer = new CreateCustomerRequest();
-customer.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
-customer.setEmail("email0");
-customer.setDocument("document0");
-customer.setType("type4");
-CreateAddressRequest address = new CreateAddressRequest();
-address.setStreet("street2");
-address.setNumber("number0");
-address.setZipCode("zip_code6");
-address.setNeighborhood("neighborhood8");
-address.setCity("city2");
-address.setState("state8");
-address.setCountry("country6");
-address.setComplement("complement8");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-metadata.put("key1", "metadata6");
-
-address.setMetadata(metadata);
-address.setLine1("line_16");
-address.setLine2("line_20");
-
-customer.setAddress(address);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-metadata.put("key1", "metadata2");
-metadata.put("key2", "metadata1");
-
-customer.setMetadata(metadata);
-CreatePhonesRequest phones = new CreatePhonesRequest();
-
-customer.setPhones(phones);
-customer.setCode("code4");
-
-request.setCustomer(customer);
-CreatePaymentRequest payment = new CreatePaymentRequest();
-payment.setPaymentMethod("payment_method2");
-
-request.setPayment(payment);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
-CreateAntifraudRequest antifraud = new CreateAntifraudRequest();
-antifraud.setType("type0");
-CreateClearSaleRequest clearsale = new CreateClearSaleRequest();
-clearsale.setCustomSla(52);
-
-antifraud.setClearsale(clearsale);
-
-request.setAntifraud(antifraud);
-request.setOrderId("order_id0");
+CreateChargeRequest request = new CreateChargeRequest.Builder(
+    "code4",
+    242,
+    "customer_id4",
+    new CreateCustomerRequest.Builder(
+        "{\\n    \"name\": \"Tony Stark\"\\n}",
+        "email0",
+        "document0",
+        "type4",
+        new CreateAddressRequest.Builder(
+            "street2",
+            "number0",
+            "zip_code6",
+            "neighborhood8",
+            "city2",
+            "state8",
+            "country6",
+            "complement8",
+            new LinkedHashMap<String, String>() {{
+                put("key0", "metadata7");
+                put("key1", "metadata6");
+            }},
+            "line_16",
+            "line_20"
+        )
+        .build(),
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata3");
+            put("key1", "metadata2");
+            put("key2", "metadata1");
+        }},
+        new CreatePhonesRequest.Builder()
+            .build(),
+        "code4"
+    )
+    .build(),
+    new CreatePaymentRequest.Builder(
+        "payment_method2"
+    )
+    .build(),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }},
+    new CreateAntifraudRequest.Builder(
+        "type0",
+        new CreateClearSaleRequest.Builder(
+            52
+        )
+        .build()
+    )
+    .build(),
+    "order_id0"
+)
+.build();
 
 
 try {
-    GetChargeResponse response = chargesController.createCharge(request, null);
+    GetChargeResponse result = chargesController.createCharge(request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -629,7 +647,8 @@ GetChargeResponse confirmPayment(
 String chargeId = "charge_id8";
 
 try {
-    GetChargeResponse response = chargesController.confirmPayment(chargeId, null, null);
+    GetChargeResponse result = chargesController.confirmPayment(chargeId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

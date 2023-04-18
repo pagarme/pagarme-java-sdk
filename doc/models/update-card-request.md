@@ -14,7 +14,7 @@ Request for updating a card
 | `HolderName` | `String` | Required | Holder name | String getHolderName() | setHolderName(String holderName) |
 | `ExpMonth` | `int` | Required | Expiration month | int getExpMonth() | setExpMonth(int expMonth) |
 | `ExpYear` | `int` | Required | Expiration year | int getExpYear() | setExpYear(int expYear) |
-| `BillingAddressId` | `String` | Required | Id of the address to be used as billing address | String getBillingAddressId() | setBillingAddressId(String billingAddressId) |
+| `BillingAddressId` | `String` | Optional | Id of the address to be used as billing address | String getBillingAddressId() | setBillingAddressId(String billingAddressId) |
 | `BillingAddress` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Required | Billing address | CreateAddressRequest getBillingAddress() | setBillingAddress(CreateAddressRequest billingAddress) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `Label` | `String` | Required | - | String getLabel() | setLabel(String label) |

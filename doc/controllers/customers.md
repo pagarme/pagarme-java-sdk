@@ -63,38 +63,38 @@ GetCardResponse updateCard(
 ```java
 String customerId = "customer_id8";
 String cardId = "card_id4";
-UpdateCardRequest request = new UpdateCardRequest();
-request.setHolderName("holder_name2");
-request.setExpMonth(10);
-request.setExpYear(30);
-request.setBillingAddressId("billing_address_id2");
-CreateAddressRequest billingAddress = new CreateAddressRequest();
-billingAddress.setStreet("street8");
-billingAddress.setNumber("number4");
-billingAddress.setZipCode("zip_code2");
-billingAddress.setNeighborhood("neighborhood4");
-billingAddress.setCity("city8");
-billingAddress.setState("state4");
-billingAddress.setCountry("country2");
-billingAddress.setComplement("complement6");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata5");
-metadata.put("key1", "metadata6");
-
-billingAddress.setMetadata(metadata);
-billingAddress.setLine1("line_18");
-billingAddress.setLine2("line_26");
-
-request.setBillingAddress(billingAddress);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
-request.setLabel("label6");
+UpdateCardRequest request = new UpdateCardRequest.Builder(
+    "holder_name2",
+    10,
+    30,
+    new CreateAddressRequest.Builder(
+        "street8",
+        "number4",
+        "zip_code2",
+        "neighborhood4",
+        "city8",
+        "state4",
+        "country2",
+        "complement6",
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata5");
+            put("key1", "metadata6");
+        }},
+        "line_18",
+        "line_26"
+    )
+    .build(),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }},
+    "label6"
+)
+.build();
 
 
 try {
-    GetCardResponse response = customersController.updateCard(customerId, cardId, request, null);
+    GetCardResponse result = customersController.updateCard(customerId, cardId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -133,18 +133,20 @@ GetAddressResponse updateAddress(
 ```java
 String customerId = "customer_id8";
 String addressId = "address_id0";
-UpdateAddressRequest request = new UpdateAddressRequest();
-request.setNumber("number4");
-request.setComplement("complement2");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
-request.setLine2("line_24");
+UpdateAddressRequest request = new UpdateAddressRequest.Builder(
+    "number4",
+    "complement2",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }},
+    "line_24"
+)
+.build();
 
 
 try {
-    GetAddressResponse response = customersController.updateAddress(customerId, addressId, request, null);
+    GetAddressResponse result = customersController.updateAddress(customerId, addressId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -183,7 +185,8 @@ String customerId = "customer_id8";
 String tokenId = "token_id6";
 
 try {
-    GetAccessTokenResponse response = customersController.deleteAccessToken(customerId, tokenId, null);
+    GetAccessTokenResponse result = customersController.deleteAccessToken(customerId, tokenId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -216,40 +219,40 @@ GetCustomerResponse createCustomer(
 ## Example Usage
 
 ```java
-CreateCustomerRequest request = new CreateCustomerRequest();
-request.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
-request.setEmail("email0");
-request.setDocument("document0");
-request.setType("type4");
-CreateAddressRequest address = new CreateAddressRequest();
-address.setStreet("street2");
-address.setNumber("number0");
-address.setZipCode("zip_code6");
-address.setNeighborhood("neighborhood8");
-address.setCity("city2");
-address.setState("state8");
-address.setCountry("country6");
-address.setComplement("complement8");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-
-address.setMetadata(metadata);
-address.setLine1("line_16");
-address.setLine2("line_20");
-
-request.setAddress(address);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
-CreatePhonesRequest phones = new CreatePhonesRequest();
-
-request.setPhones(phones);
-request.setCode("code4");
+CreateCustomerRequest request = new CreateCustomerRequest.Builder(
+    "{\\n    \"name\": \"Tony Stark\"\\n}",
+    "email0",
+    "document0",
+    "type4",
+    new CreateAddressRequest.Builder(
+        "street2",
+        "number0",
+        "zip_code6",
+        "neighborhood8",
+        "city2",
+        "state8",
+        "country6",
+        "complement8",
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata7");
+        }},
+        "line_16",
+        "line_20"
+    )
+    .build(),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }},
+    new CreatePhonesRequest.Builder()
+        .build(),
+    "code4"
+)
+.build();
 
 
 try {
-    GetCustomerResponse response = customersController.createCustomer(request, null);
+    GetCustomerResponse result = customersController.createCustomer(request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -285,25 +288,27 @@ GetAddressResponse createAddress(
 
 ```java
 String customerId = "customer_id8";
-CreateAddressRequest request = new CreateAddressRequest();
-request.setStreet("street6");
-request.setNumber("number4");
-request.setZipCode("zip_code0");
-request.setNeighborhood("neighborhood2");
-request.setCity("city6");
-request.setState("state2");
-request.setCountry("country0");
-request.setComplement("complement2");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
-request.setLine1("line_10");
-request.setLine2("line_24");
+CreateAddressRequest request = new CreateAddressRequest.Builder(
+    "street6",
+    "number4",
+    "zip_code0",
+    "neighborhood2",
+    "city6",
+    "state2",
+    "country0",
+    "complement2",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }},
+    "line_10",
+    "line_24"
+)
+.build();
 
 
 try {
-    GetAddressResponse response = customersController.createAddress(customerId, request, null);
+    GetAddressResponse result = customersController.createAddress(customerId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -337,7 +342,8 @@ ListAccessTokensResponse deleteAccessTokens(
 String customerId = "customer_id8";
 
 try {
-    ListAccessTokensResponse response = customersController.deleteAccessTokens(customerId);
+    ListAccessTokensResponse result = customersController.deleteAccessTokens(customerId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -374,7 +380,8 @@ String customerId = "customer_id8";
 String addressId = "address_id0";
 
 try {
-    GetAddressResponse response = customersController.getAddress(customerId, addressId);
+    GetAddressResponse result = customersController.getAddress(customerId, addressId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -413,7 +420,8 @@ String customerId = "customer_id8";
 String addressId = "address_id0";
 
 try {
-    GetAddressResponse response = customersController.deleteAddress(customerId, addressId, null);
+    GetAddressResponse result = customersController.deleteAddress(customerId, addressId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -449,11 +457,14 @@ GetCardResponse createCard(
 
 ```java
 String customerId = "customer_id8";
-CreateCardRequest request = new CreateCardRequest();
+CreateCardRequest request = new CreateCardRequest.Builder()
+    .type("credit")
+    .build();
 
 
 try {
-    GetCardResponse response = customersController.createCard(customerId, request, null);
+    GetCardResponse result = customersController.createCard(customerId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -498,7 +509,8 @@ Integer page = 1;
 Integer size = 10;
 
 try {
-    ListCustomersResponse response = customersController.getCustomers(null, null, page, size, null, null);
+    ListCustomersResponse result = customersController.getCustomers(null, null, page, size, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -534,11 +546,13 @@ GetCustomerResponse updateCustomer(
 
 ```java
 String customerId = "customer_id8";
-UpdateCustomerRequest request = new UpdateCustomerRequest();
+UpdateCustomerRequest request = new UpdateCustomerRequest.Builder()
+    .build();
 
 
 try {
-    GetCustomerResponse response = customersController.updateCustomer(customerId, request, null);
+    GetCustomerResponse result = customersController.updateCustomer(customerId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -574,11 +588,13 @@ GetAccessTokenResponse createAccessToken(
 
 ```java
 String customerId = "customer_id8";
-CreateAccessTokenRequest request = new CreateAccessTokenRequest();
+CreateAccessTokenRequest request = new CreateAccessTokenRequest.Builder()
+    .build();
 
 
 try {
-    GetAccessTokenResponse response = customersController.createAccessToken(customerId, request, null);
+    GetAccessTokenResponse result = customersController.createAccessToken(customerId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -616,7 +632,8 @@ ListAccessTokensResponse getAccessTokens(
 String customerId = "customer_id8";
 
 try {
-    ListAccessTokensResponse response = customersController.getAccessTokens(customerId, null, null);
+    ListAccessTokensResponse result = customersController.getAccessTokens(customerId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -654,7 +671,8 @@ ListCardsResponse getCards(
 String customerId = "customer_id8";
 
 try {
-    ListCardsResponse response = customersController.getCards(customerId, null, null);
+    ListCardsResponse result = customersController.getCards(customerId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -693,7 +711,8 @@ String customerId = "customer_id8";
 String cardId = "card_id4";
 
 try {
-    GetCardResponse response = customersController.renewCard(customerId, cardId, null);
+    GetCardResponse result = customersController.renewCard(customerId, cardId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -730,7 +749,8 @@ String customerId = "customer_id8";
 String tokenId = "token_id6";
 
 try {
-    GetAccessTokenResponse response = customersController.getAccessToken(customerId, tokenId);
+    GetAccessTokenResponse result = customersController.getAccessToken(customerId, tokenId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -766,15 +786,17 @@ GetCustomerResponse updateCustomerMetadata(
 
 ```java
 String customerId = "customer_id8";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetCustomerResponse response = customersController.updateCustomerMetadata(customerId, request, null);
+    GetCustomerResponse result = customersController.updateCustomerMetadata(customerId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -813,7 +835,8 @@ String customerId = "customer_id8";
 String cardId = "card_id4";
 
 try {
-    GetCardResponse response = customersController.deleteCard(customerId, cardId, null);
+    GetCardResponse result = customersController.deleteCard(customerId, cardId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -851,7 +874,8 @@ ListAddressesResponse getAddresses(
 String customerId = "customer_id8";
 
 try {
-    ListAddressesResponse response = customersController.getAddresses(customerId, null, null);
+    ListAddressesResponse result = customersController.getAddresses(customerId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -885,7 +909,8 @@ GetCustomerResponse getCustomer(
 String customerId = "customer_id8";
 
 try {
-    GetCustomerResponse response = customersController.getCustomer(customerId);
+    GetCustomerResponse result = customersController.getCustomer(customerId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -922,7 +947,8 @@ String customerId = "customer_id8";
 String cardId = "card_id4";
 
 try {
-    GetCardResponse response = customersController.getCard(customerId, cardId);
+    GetCardResponse result = customersController.getCard(customerId, cardId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

@@ -57,7 +57,8 @@ ListOrderResponse getOrders(
 
 ```java
 try {
-    ListOrderResponse response = ordersController.getOrders(null, null, null, null, null, null, null);
+    ListOrderResponse result = ordersController.getOrders(null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -94,15 +95,18 @@ GetOrderItemResponse updateOrderItem(
 ```java
 String orderId = "orderId2";
 String itemId = "itemId8";
-UpdateOrderItemRequest request = new UpdateOrderItemRequest();
-request.setAmount(242);
-request.setDescription("description6");
-request.setQuantity(100);
-request.setCategory("category4");
+UpdateOrderItemRequest request = new UpdateOrderItemRequest.Builder(
+    242,
+    "description6",
+    100,
+    "category4"
+)
+.build();
 
 
 try {
-    GetOrderItemResponse response = ordersController.updateOrderItem(orderId, itemId, request, null);
+    GetOrderItemResponse result = ordersController.updateOrderItem(orderId, itemId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -136,7 +140,8 @@ GetOrderResponse deleteAllOrderItems(
 String orderId = "orderId2";
 
 try {
-    GetOrderResponse response = ordersController.deleteAllOrderItems(orderId, null);
+    GetOrderResponse result = ordersController.deleteAllOrderItems(orderId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -173,7 +178,8 @@ String orderId = "orderId2";
 String itemId = "itemId8";
 
 try {
-    GetOrderItemResponse response = ordersController.deleteOrderItem(orderId, itemId, null);
+    GetOrderItemResponse result = ordersController.deleteOrderItem(orderId, itemId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -207,12 +213,15 @@ GetOrderResponse closeOrder(
 
 ```java
 String id = "id0";
-UpdateOrderStatusRequest request = new UpdateOrderStatusRequest();
-request.setStatus("status8");
+UpdateOrderStatusRequest request = new UpdateOrderStatusRequest.Builder(
+    "status8"
+)
+.build();
 
 
 try {
-    GetOrderResponse response = ordersController.closeOrder(id, request, null);
+    GetOrderResponse result = ordersController.closeOrder(id, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -245,87 +254,84 @@ GetOrderResponse createOrder(
 ## Example Usage
 
 ```java
-CreateOrderRequest body = new CreateOrderRequest();
-List<CreateOrderItemRequest> items = new LinkedList<>();
-CreateOrderItemRequest items0 = new CreateOrderItemRequest();
-items0.setAmount(101);
-items0.setDescription("description3");
-items0.setQuantity(215);
-items0.setCategory("category1");
-
-items.add(items0);
-CreateOrderItemRequest items1 = new CreateOrderItemRequest();
-items1.setAmount(102);
-items1.setDescription("description4");
-items1.setQuantity(216);
-items1.setCategory("category2");
-
-items.add(items1);
-CreateOrderItemRequest items2 = new CreateOrderItemRequest();
-items2.setAmount(103);
-items2.setDescription("description5");
-items2.setQuantity(217);
-items2.setCategory("category3");
-
-items.add(items2);
-
-body.setItems(items);
-CreateCustomerRequest customer = new CreateCustomerRequest();
-customer.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
-customer.setEmail("email2");
-customer.setDocument("document2");
-customer.setType("type6");
-CreateAddressRequest address = new CreateAddressRequest();
-address.setStreet("street0");
-address.setNumber("number8");
-address.setZipCode("zip_code4");
-address.setNeighborhood("neighborhood6");
-address.setCity("city0");
-address.setState("state6");
-address.setCountry("country4");
-address.setComplement("complement6");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-metadata.put("key1", "metadata6");
-
-address.setMetadata(metadata);
-address.setLine1("line_16");
-address.setLine2("line_28");
-
-customer.setAddress(address);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata9");
-metadata.put("key1", "metadata0");
-
-customer.setMetadata(metadata);
-CreatePhonesRequest phones = new CreatePhonesRequest();
-
-customer.setPhones(phones);
-customer.setCode("code2");
-
-body.setCustomer(customer);
-List<CreatePaymentRequest> payments = new LinkedList<>();
-CreatePaymentRequest payments0 = new CreatePaymentRequest();
-payments0.setPaymentMethod("payment_method0");
-
-payments.add(payments0);
-CreatePaymentRequest payments1 = new CreatePaymentRequest();
-payments1.setPaymentMethod("payment_method9");
-
-payments.add(payments1);
-
-body.setPayments(payments);
-body.setCode("code4");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-metadata.put("key1", "metadata8");
-
-body.setMetadata(metadata);
-body.setClosed(true);
+CreateOrderRequest body = new CreateOrderRequest.Builder(
+    Arrays.asList(
+        new CreateOrderItemRequest.Builder(
+            101,
+            "description3",
+            215,
+            "category1"
+        )
+        .build(),
+        new CreateOrderItemRequest.Builder(
+            102,
+            "description4",
+            216,
+            "category2"
+        )
+        .build(),
+        new CreateOrderItemRequest.Builder(
+            103,
+            "description5",
+            217,
+            "category3"
+        )
+        .build()
+    ),
+    new CreateCustomerRequest.Builder(
+        "{\\n    \"name\": \"Tony Stark\"\\n}",
+        "email2",
+        "document2",
+        "type6",
+        new CreateAddressRequest.Builder(
+            "street0",
+            "number8",
+            "zip_code4",
+            "neighborhood6",
+            "city0",
+            "state6",
+            "country4",
+            "complement6",
+            new LinkedHashMap<String, String>() {{
+                put("key0", "metadata7");
+                put("key1", "metadata6");
+            }},
+            "line_16",
+            "line_28"
+        )
+        .build(),
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata9");
+            put("key1", "metadata0");
+        }},
+        new CreatePhonesRequest.Builder()
+            .build(),
+        "code2"
+    )
+    .build(),
+    Arrays.asList(
+        new CreatePaymentRequest.Builder(
+            "payment_method0"
+        )
+        .build(),
+        new CreatePaymentRequest.Builder(
+            "payment_method9"
+        )
+        .build()
+    ),
+    "code4",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata7");
+        put("key1", "metadata8");
+    }},
+    true
+)
+.build();
 
 
 try {
-    GetOrderResponse response = ordersController.createOrder(body, null);
+    GetOrderResponse result = ordersController.createOrder(body, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -359,15 +365,18 @@ GetOrderItemResponse createOrderItem(
 
 ```java
 String orderId = "orderId2";
-CreateOrderItemRequest request = new CreateOrderItemRequest();
-request.setAmount(242);
-request.setDescription("description6");
-request.setQuantity(100);
-request.setCategory("category4");
+CreateOrderItemRequest request = new CreateOrderItemRequest.Builder(
+    242,
+    "description6",
+    100,
+    "category4"
+)
+.build();
 
 
 try {
-    GetOrderItemResponse response = ordersController.createOrderItem(orderId, request, null);
+    GetOrderItemResponse result = ordersController.createOrderItem(orderId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -402,7 +411,8 @@ String orderId = "orderId2";
 String itemId = "itemId8";
 
 try {
-    GetOrderItemResponse response = ordersController.getOrderItem(orderId, itemId);
+    GetOrderItemResponse result = ordersController.getOrderItem(orderId, itemId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -438,15 +448,17 @@ GetOrderResponse updateOrderMetadata(
 
 ```java
 String orderId = "order_id6";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetOrderResponse response = ordersController.updateOrderMetadata(orderId, request, null);
+    GetOrderResponse result = ordersController.updateOrderMetadata(orderId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -480,7 +492,8 @@ GetOrderResponse getOrder(
 String orderId = "order_id6";
 
 try {
-    GetOrderResponse response = ordersController.getOrder(orderId);
+    GetOrderResponse result = ordersController.getOrder(orderId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

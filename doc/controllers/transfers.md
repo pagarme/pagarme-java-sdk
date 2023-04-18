@@ -38,7 +38,8 @@ GetTransfer getTransferById(
 String transferId = "transfer_id6";
 
 try {
-    GetTransfer response = transfersController.getTransferById(transferId);
+    GetTransfer result = transfersController.getTransferById(transferId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -67,13 +68,16 @@ GetTransfer createTransfer(
 ## Example Usage
 
 ```java
-CreateTransfer request = new CreateTransfer();
-request.setAmount(242);
-request.setSourceId("source_id0");
-request.setTargetId("target_id6");
+CreateTransfer request = new CreateTransfer.Builder(
+    242,
+    "source_id0",
+    "target_id6"
+)
+.build();
 
 try {
-    GetTransfer response = transfersController.createTransfer(request);
+    GetTransfer result = transfersController.createTransfer(request);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -98,7 +102,8 @@ ListTransfers getTransfers()
 
 ```java
 try {
-    ListTransfers response = transfersController.getTransfers();
+    ListTransfers result = transfersController.getTransfers();
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

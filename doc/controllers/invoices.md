@@ -46,15 +46,17 @@ GetInvoiceResponse updateInvoiceMetadata(
 
 ```java
 String invoiceId = "invoice_id0";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetInvoiceResponse response = invoicesController.updateInvoiceMetadata(invoiceId, request, null);
+    GetInvoiceResponse result = invoicesController.updateInvoiceMetadata(invoiceId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -86,7 +88,8 @@ GetInvoiceResponse getPartialInvoice(
 String subscriptionId = "subscription_id0";
 
 try {
-    GetInvoiceResponse response = invoicesController.getPartialInvoice(subscriptionId);
+    GetInvoiceResponse result = invoicesController.getPartialInvoice(subscriptionId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -122,7 +125,8 @@ GetInvoiceResponse cancelInvoice(
 String invoiceId = "invoice_id0";
 
 try {
-    GetInvoiceResponse response = invoicesController.cancelInvoice(invoiceId, null);
+    GetInvoiceResponse result = invoicesController.cancelInvoice(invoiceId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -163,7 +167,8 @@ String subscriptionId = "subscription_id0";
 String cycleId = "cycle_id6";
 
 try {
-    GetInvoiceResponse response = invoicesController.createInvoice(subscriptionId, cycleId, null, null);
+    GetInvoiceResponse result = invoicesController.createInvoice(subscriptionId, cycleId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -215,7 +220,8 @@ ListInvoicesResponse getInvoices(
 
 ```java
 try {
-    ListInvoicesResponse response = invoicesController.getInvoices(null, null, null, null, null, null, null, null, null, null, null);
+    ListInvoicesResponse result = invoicesController.getInvoices(null, null, null, null, null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -249,7 +255,8 @@ GetInvoiceResponse getInvoice(
 String invoiceId = "invoice_id0";
 
 try {
-    GetInvoiceResponse response = invoicesController.getInvoice(invoiceId);
+    GetInvoiceResponse result = invoicesController.getInvoice(invoiceId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -285,12 +292,15 @@ GetInvoiceResponse updateInvoiceStatus(
 
 ```java
 String invoiceId = "invoice_id0";
-UpdateInvoiceStatusRequest request = new UpdateInvoiceStatusRequest();
-request.setStatus("status8");
+UpdateInvoiceStatusRequest request = new UpdateInvoiceStatusRequest.Builder(
+    "status8"
+)
+.build();
 
 
 try {
-    GetInvoiceResponse response = invoicesController.updateInvoiceStatus(invoiceId, request, null);
+    GetInvoiceResponse result = invoicesController.updateInvoiceStatus(invoiceId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

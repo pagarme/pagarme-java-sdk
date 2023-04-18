@@ -32,7 +32,8 @@ GetTransactionResponse getTransaction(
 String transactionId = "transaction_id8";
 
 try {
-    GetTransactionResponse response = transactionsController.getTransaction(transactionId);
+    GetTransactionResponse result = transactionsController.getTransaction(transactionId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

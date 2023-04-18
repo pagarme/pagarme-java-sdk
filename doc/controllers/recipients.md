@@ -60,20 +60,22 @@ GetRecipientResponse updateRecipient(
 
 ```java
 String recipientId = "recipient_id0";
-UpdateRecipientRequest request = new UpdateRecipientRequest();
-request.setName("name6");
-request.setEmail("email0");
-request.setDescription("description6");
-request.setType("type4");
-request.setStatus("status8");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateRecipientRequest request = new UpdateRecipientRequest.Builder(
+    "name6",
+    "email0",
+    "description6",
+    "type4",
+    "status8",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetRecipientResponse response = recipientsController.updateRecipient(recipientId, request, null);
+    GetRecipientResponse result = recipientsController.updateRecipient(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -109,14 +111,17 @@ GetAnticipationResponse createAnticipation(
 
 ```java
 String recipientId = "recipient_id0";
-CreateAnticipationRequest request = new CreateAnticipationRequest();
-request.setAmount(242);
-request.setTimeframe("timeframe8");
-request.setPaymentDate(LocalDateTime.parse("2016-03-13T12:52:32.123Z", DateTimeFormatter.ISO_DATE_TIME));
+CreateAnticipationRequest request = new CreateAnticipationRequest.Builder(
+    242,
+    "timeframe8",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 
 
 try {
-    GetAnticipationResponse response = recipientsController.createAnticipation(recipientId, request, null);
+    GetAnticipationResponse result = recipientsController.createAnticipation(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -153,10 +158,11 @@ GetAnticipationLimitResponse getAnticipationLimits(
 ```java
 String recipientId = "recipient_id0";
 String timeframe = "timeframe2";
-LocalDateTime paymentDate = LocalDateTime.parse("2016-03-13T12:52:32.123Z", DateTimeFormatter.ISO_DATE_TIME);
+LocalDateTime paymentDate = DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z");
 
 try {
-    GetAnticipationLimitResponse response = recipientsController.getAnticipationLimits(recipientId, timeframe, paymentDate);
+    GetAnticipationLimitResponse result = recipientsController.getAnticipationLimits(recipientId, timeframe, paymentDate);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -190,7 +196,8 @@ ListRecipientResponse getRecipients(
 
 ```java
 try {
-    ListRecipientResponse response = recipientsController.getRecipients(null, null);
+    ListRecipientResponse result = recipientsController.getRecipients(null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -225,7 +232,8 @@ String recipientId = "recipient_id0";
 String withdrawalId = "withdrawal_id2";
 
 try {
-    GetWithdrawResponse response = recipientsController.getWithdrawById(recipientId, withdrawalId);
+    GetWithdrawResponse result = recipientsController.getWithdrawById(recipientId, withdrawalId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -261,30 +269,30 @@ GetRecipientResponse updateRecipientDefaultBankAccount(
 
 ```java
 String recipientId = "recipient_id0";
-UpdateRecipientBankAccountRequest request = new UpdateRecipientBankAccountRequest();
-CreateBankAccountRequest bankAccount = new CreateBankAccountRequest();
-bankAccount.setHolderName("holder_name6");
-bankAccount.setHolderType("holder_type2");
-bankAccount.setHolderDocument("holder_document4");
-bankAccount.setBank("bank8");
-bankAccount.setBranchNumber("branch_number6");
-bankAccount.setBranchCheckDigit("branch_check_digit6");
-bankAccount.setAccountNumber("account_number0");
-bankAccount.setAccountCheckDigit("account_check_digit6");
-bankAccount.setType("type0");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata9");
-metadata.put("key1", "metadata8");
-
-bankAccount.setMetadata(metadata);
-bankAccount.setPixKey("pix_key4");
-
-request.setBankAccount(bankAccount);
-request.setPaymentMode("bank_transfer");
+UpdateRecipientBankAccountRequest request = new UpdateRecipientBankAccountRequest.Builder(
+    new CreateBankAccountRequest.Builder(
+        "holder_name6",
+        "holder_type2",
+        "holder_document4",
+        "bank8",
+        "branch_number6",
+        "account_number0",
+        "account_check_digit6",
+        "type0",
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata9");
+            put("key1", "metadata8");
+        }}
+    )
+    .build(),
+    "bank_transfer"
+)
+.build();
 
 
 try {
-    GetRecipientResponse response = recipientsController.updateRecipientDefaultBankAccount(recipientId, request, null);
+    GetRecipientResponse result = recipientsController.updateRecipientDefaultBankAccount(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -320,15 +328,17 @@ GetRecipientResponse updateRecipientMetadata(
 
 ```java
 String recipientId = "recipient_id0";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetRecipientResponse response = recipientsController.updateRecipientMetadata(recipientId, request, null);
+    GetRecipientResponse result = recipientsController.updateRecipientMetadata(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -372,7 +382,8 @@ ListTransferResponse getTransfers(
 String recipientId = "recipient_id0";
 
 try {
-    ListTransferResponse response = recipientsController.getTransfers(recipientId, null, null, null, null, null);
+    ListTransferResponse result = recipientsController.getTransfers(recipientId, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -409,7 +420,8 @@ String recipientId = "recipient_id0";
 String transferId = "transfer_id6";
 
 try {
-    GetTransferResponse response = recipientsController.getTransfer(recipientId, transferId);
+    GetTransferResponse result = recipientsController.getTransfer(recipientId, transferId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -441,11 +453,14 @@ GetWithdrawResponse createWithdraw(
 
 ```java
 String recipientId = "recipient_id0";
-CreateWithdrawRequest request = new CreateWithdrawRequest();
-request.setAmount(242);
+CreateWithdrawRequest request = new CreateWithdrawRequest.Builder(
+    242
+)
+.build();
 
 try {
-    GetWithdrawResponse response = recipientsController.createWithdraw(recipientId, request);
+    GetWithdrawResponse result = recipientsController.createWithdraw(recipientId, request);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -481,11 +496,13 @@ GetRecipientResponse updateAutomaticAnticipationSettings(
 
 ```java
 String recipientId = "recipient_id0";
-UpdateAutomaticAnticipationSettingsRequest request = new UpdateAutomaticAnticipationSettingsRequest();
+UpdateAutomaticAnticipationSettingsRequest request = new UpdateAutomaticAnticipationSettingsRequest.Builder()
+    .build();
 
 
 try {
-    GetRecipientResponse response = recipientsController.updateAutomaticAnticipationSettings(recipientId, request, null);
+    GetRecipientResponse result = recipientsController.updateAutomaticAnticipationSettings(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -522,7 +539,8 @@ String recipientId = "recipient_id0";
 String anticipationId = "anticipation_id0";
 
 try {
-    GetAnticipationResponse response = recipientsController.getAnticipation(recipientId, anticipationId);
+    GetAnticipationResponse result = recipientsController.getAnticipation(recipientId, anticipationId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -556,14 +574,17 @@ GetRecipientResponse updateRecipientTransferSettings(
 
 ```java
 String recipientId = "recipient_id0";
-UpdateTransferSettingsRequest request = new UpdateTransferSettingsRequest();
-request.setTransferEnabled("transfer_enabled2");
-request.setTransferInterval("transfer_interval6");
-request.setTransferDay("transfer_day6");
+UpdateTransferSettingsRequest request = new UpdateTransferSettingsRequest.Builder(
+    "transfer_enabled2",
+    "transfer_interval6",
+    "transfer_day6"
+)
+.build();
 
 
 try {
-    GetRecipientResponse response = recipientsController.updateRecipientTransferSettings(recipientId, request, null);
+    GetRecipientResponse result = recipientsController.updateRecipientTransferSettings(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -613,7 +634,8 @@ ListAnticipationResponse getAnticipations(
 String recipientId = "recipient_id0";
 
 try {
-    ListAnticipationResponse response = recipientsController.getAnticipations(recipientId, null, null, null, null, null, null, null, null);
+    ListAnticipationResponse result = recipientsController.getAnticipations(recipientId, null, null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -647,7 +669,8 @@ GetRecipientResponse getRecipient(
 String recipientId = "recipient_id0";
 
 try {
-    GetRecipientResponse response = recipientsController.getRecipient(recipientId);
+    GetRecipientResponse result = recipientsController.getRecipient(recipientId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -681,7 +704,8 @@ GetBalanceResponse getBalance(
 String recipientId = "recipient_id0";
 
 try {
-    GetBalanceResponse response = recipientsController.getBalance(recipientId);
+    GetBalanceResponse result = recipientsController.getBalance(recipientId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -725,7 +749,8 @@ ListWithdrawals getWithdrawals(
 String recipientId = "recipient_id0";
 
 try {
-    ListWithdrawals response = recipientsController.getWithdrawals(recipientId, null, null, null, null, null);
+    ListWithdrawals result = recipientsController.getWithdrawals(recipientId, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -761,16 +786,18 @@ GetTransferResponse createTransfer(
 
 ```java
 String recipientId = "recipient_id0";
-CreateTransferRequest request = new CreateTransferRequest();
-request.setAmount(242);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+CreateTransferRequest request = new CreateTransferRequest.Builder(
+    242,
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetTransferResponse response = recipientsController.createTransfer(recipientId, request, null);
+    GetTransferResponse result = recipientsController.createTransfer(recipientId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -803,39 +830,38 @@ GetRecipientResponse createRecipient(
 ## Example Usage
 
 ```java
-CreateRecipientRequest request = new CreateRecipientRequest();
-request.setName("name6");
-request.setEmail("email0");
-request.setDescription("description6");
-request.setDocument("document0");
-request.setType("type4");
-CreateBankAccountRequest defaultBankAccount = new CreateBankAccountRequest();
-defaultBankAccount.setHolderName("holder_name0");
-defaultBankAccount.setHolderType("holder_type6");
-defaultBankAccount.setHolderDocument("holder_document8");
-defaultBankAccount.setBank("bank2");
-defaultBankAccount.setBranchNumber("branch_number0");
-defaultBankAccount.setBranchCheckDigit("branch_check_digit0");
-defaultBankAccount.setAccountNumber("account_number4");
-defaultBankAccount.setAccountCheckDigit("account_check_digit0");
-defaultBankAccount.setType("type4");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata5");
-
-defaultBankAccount.setMetadata(metadata);
-defaultBankAccount.setPixKey("pix_key8");
-
-request.setDefaultBankAccount(defaultBankAccount);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
-request.setCode("code4");
-request.setPaymentMode("bank_transfer");
+CreateRecipientRequest request = new CreateRecipientRequest.Builder(
+    "name6",
+    "email0",
+    "description6",
+    "document0",
+    "type4",
+    new CreateBankAccountRequest.Builder(
+        "holder_name0",
+        "holder_type6",
+        "holder_document8",
+        "bank2",
+        "branch_number0",
+        "account_number4",
+        "account_check_digit0",
+        "type4",
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata5");
+        }}
+    )
+    .build(),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }},
+    "code4",
+    "bank_transfer"
+)
+.build();
 
 
 try {
-    GetRecipientResponse response = recipientsController.createRecipient(request, null);
+    GetRecipientResponse result = recipientsController.createRecipient(request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -869,7 +895,8 @@ GetRecipientResponse getRecipientByCode(
 String code = "code8";
 
 try {
-    GetRecipientResponse response = recipientsController.getRecipientByCode(code);
+    GetRecipientResponse result = recipientsController.getRecipientByCode(code);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -892,7 +919,8 @@ GetRecipientResponse getDefaultRecipient()
 
 ```java
 try {
-    GetRecipientResponse response = recipientsController.getDefaultRecipient();
+    GetRecipientResponse result = recipientsController.getDefaultRecipient();
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

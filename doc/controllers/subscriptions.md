@@ -73,7 +73,8 @@ GetPeriodResponse renewSubscription(
 String subscriptionId = "subscription_id0";
 
 try {
-    GetPeriodResponse response = subscriptionsController.renewSubscription(subscriptionId, null);
+    GetPeriodResponse result = subscriptionsController.renewSubscription(subscriptionId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -109,15 +110,18 @@ GetSubscriptionResponse updateSubscriptionCard(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionCardRequest request = new UpdateSubscriptionCardRequest();
-CreateCardRequest card = new CreateCardRequest();
-
-request.setCard(card);
-request.setCardId("card_id2");
+UpdateSubscriptionCardRequest request = new UpdateSubscriptionCardRequest.Builder(
+    new CreateCardRequest.Builder()
+        .type("credit")
+        .build(),
+    "card_id2"
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionCard(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionCard(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -159,7 +163,8 @@ String itemId = "item_id0";
 String usageId = "usage_id0";
 
 try {
-    GetUsageResponse response = subscriptionsController.deleteUsage(subscriptionId, itemId, usageId, null);
+    GetUsageResponse result = subscriptionsController.deleteUsage(subscriptionId, itemId, usageId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -195,14 +200,17 @@ GetDiscountResponse createDiscount(
 
 ```java
 String subscriptionId = "subscription_id0";
-CreateDiscountRequest request = new CreateDiscountRequest();
-request.setValue(185.28);
-request.setDiscountType("discount_type4");
-request.setItemId("item_id6");
+CreateDiscountRequest request = new CreateDiscountRequest.Builder(
+    185.28,
+    "discount_type4",
+    "item_id6"
+)
+.build();
 
 
 try {
-    GetDiscountResponse response = subscriptionsController.createDiscount(subscriptionId, request, null);
+    GetDiscountResponse result = subscriptionsController.createDiscount(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -241,7 +249,8 @@ String subscriptionId = "subscription_id0";
 String itemId = "item_id0";
 
 try {
-    GetUsageResponse response = subscriptionsController.createAnUsage(subscriptionId, itemId, null);
+    GetUsageResponse result = subscriptionsController.createAnUsage(subscriptionId, itemId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -275,12 +284,14 @@ Void updateCurrentCycleStatus(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateCurrentCycleStatusRequest request = new UpdateCurrentCycleStatusRequest();
-request.setStatus("status8");
+UpdateCurrentCycleStatusRequest request = new UpdateCurrentCycleStatusRequest.Builder(
+    "status8"
+)
+.build();
 
 
 try {
-    Void response = subscriptionsController.updateCurrentCycleStatus(subscriptionId, request, null);
+    subscriptionsController.updateCurrentCycleStatus(subscriptionId, request, null);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -319,7 +330,8 @@ String subscriptionId = "subscription_id0";
 String discountId = "discount_id8";
 
 try {
-    GetDiscountResponse response = subscriptionsController.deleteDiscount(subscriptionId, discountId, null);
+    GetDiscountResponse result = subscriptionsController.deleteDiscount(subscriptionId, discountId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -369,7 +381,8 @@ ListSubscriptionItemsResponse getSubscriptionItems(
 String subscriptionId = "subscription_id0";
 
 try {
-    ListSubscriptionItemsResponse response = subscriptionsController.getSubscriptionItems(subscriptionId, null, null, null, null, null, null, null, null);
+    ListSubscriptionItemsResponse result = subscriptionsController.getSubscriptionItems(subscriptionId, null, null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -405,16 +418,19 @@ GetSubscriptionResponse updateSubscriptionPaymentMethod(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionPaymentMethodRequest request = new UpdateSubscriptionPaymentMethodRequest();
-request.setPaymentMethod("payment_method4");
-request.setCardId("card_id2");
-CreateCardRequest card = new CreateCardRequest();
-
-request.setCard(card);
+UpdateSubscriptionPaymentMethodRequest request = new UpdateSubscriptionPaymentMethodRequest.Builder(
+    "payment_method4",
+    "card_id2",
+    new CreateCardRequest.Builder()
+        .type("credit")
+        .build()
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionPaymentMethod(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionPaymentMethod(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -451,7 +467,8 @@ String subscriptionId = "subscription_id0";
 String itemId = "item_id0";
 
 try {
-    GetSubscriptionItemResponse response = subscriptionsController.getSubscriptionItem(subscriptionId, itemId);
+    GetSubscriptionItemResponse result = subscriptionsController.getSubscriptionItem(subscriptionId, itemId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -505,7 +522,8 @@ ListSubscriptionsResponse getSubscriptions(
 
 ```java
 try {
-    ListSubscriptionsResponse response = subscriptionsController.getSubscriptions(null, null, null, null, null, null, null, null, null, null, null, null);
+    ListSubscriptionsResponse result = subscriptionsController.getSubscriptions(null, null, null, null, null, null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -541,12 +559,15 @@ GetSubscriptionResponse cancelSubscription(
 
 ```java
 String subscriptionId = "subscription_id0";
-CreateCancelSubscriptionRequest request = new CreateCancelSubscriptionRequest();
-request.setCancelPendingInvoices(true);
+CreateCancelSubscriptionRequest request = new CreateCancelSubscriptionRequest.Builder(
+    true
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.cancelSubscription(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.cancelSubscription(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -582,14 +603,17 @@ GetIncrementResponse createIncrement(
 
 ```java
 String subscriptionId = "subscription_id0";
-CreateIncrementRequest request = new CreateIncrementRequest();
-request.setValue(185.28);
-request.setIncrementType("increment_type8");
-request.setItemId("item_id6");
+CreateIncrementRequest request = new CreateIncrementRequest.Builder(
+    185.28,
+    "increment_type8",
+    "item_id6"
+)
+.build();
 
 
 try {
-    GetIncrementResponse response = subscriptionsController.createIncrement(subscriptionId, request, null);
+    GetIncrementResponse result = subscriptionsController.createIncrement(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -628,14 +652,17 @@ GetUsageResponse createUsage(
 ```java
 String subscriptionId = "subscription_id0";
 String itemId = "item_id0";
-CreateUsageRequest body = new CreateUsageRequest();
-body.setQuantity(156);
-body.setDescription("description4");
-body.setUsedAt(LocalDateTime.parse("2016-03-13T12:52:32.123Z", DateTimeFormatter.ISO_DATE_TIME));
+CreateUsageRequest body = new CreateUsageRequest.Builder(
+    156,
+    "description4",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 
 
 try {
-    GetUsageResponse response = subscriptionsController.createUsage(subscriptionId, itemId, body, null);
+    GetUsageResponse result = subscriptionsController.createUsage(subscriptionId, itemId, body, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -670,7 +697,8 @@ String subscriptionId = "subscription_id0";
 String discountId = "discountId0";
 
 try {
-    GetDiscountResponse response = subscriptionsController.getDiscountById(subscriptionId, discountId);
+    GetDiscountResponse result = subscriptionsController.getDiscountById(subscriptionId, discountId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -703,203 +731,195 @@ GetSubscriptionResponse createSubscription(
 ## Example Usage
 
 ```java
-CreateSubscriptionRequest body = new CreateSubscriptionRequest();
-CreateCustomerRequest customer = new CreateCustomerRequest();
-customer.setName("{\\n    \"name\": \"Tony Stark\"\\n}");
-customer.setEmail("email2");
-customer.setDocument("document2");
-customer.setType("type6");
-CreateAddressRequest address = new CreateAddressRequest();
-address.setStreet("street0");
-address.setNumber("number8");
-address.setZipCode("zip_code4");
-address.setNeighborhood("neighborhood6");
-address.setCity("city0");
-address.setState("state6");
-address.setCountry("country4");
-address.setComplement("complement6");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-metadata.put("key1", "metadata6");
-
-address.setMetadata(metadata);
-address.setLine1("line_16");
-address.setLine2("line_28");
-
-customer.setAddress(address);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata9");
-metadata.put("key1", "metadata0");
-
-customer.setMetadata(metadata);
-CreatePhonesRequest phones = new CreatePhonesRequest();
-
-customer.setPhones(phones);
-customer.setCode("code2");
-
-body.setCustomer(customer);
-CreateCardRequest card = new CreateCardRequest();
-
-body.setCard(card);
-body.setCode("code4");
-body.setPaymentMethod("payment_method4");
-body.setBillingType("billing_type0");
-body.setStatementDescriptor("statement_descriptor6");
-body.setDescription("description4");
-body.setCurrency("currency6");
-body.setInterval("interval6");
-body.setIntervalCount(170);
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type2");
-
-body.setPricingScheme(pricingScheme);
-List<CreateSubscriptionItemRequest> items = new LinkedList<>();
-CreateSubscriptionItemRequest items0 = new CreateSubscriptionItemRequest();
-items0.setDescription("description3");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type5");
-
-items0.setPricingScheme(pricingScheme);
-items0.setId("id3");
-items0.setPlanItemId("plan_item_id3");
-List<CreateDiscountRequest> discounts = new LinkedList<>();
-CreateDiscountRequest discounts0 = new CreateDiscountRequest();
-discounts0.setValue(65.46);
-discounts0.setDiscountType("discount_type2");
-discounts0.setItemId("item_id4");
-
-discounts.add(discounts0);
-
-items0.setDiscounts(discounts);
-items0.setName("name3");
-
-items.add(items0);
-CreateSubscriptionItemRequest items1 = new CreateSubscriptionItemRequest();
-items1.setDescription("description4");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type4");
-
-items1.setPricingScheme(pricingScheme);
-items1.setId("id4");
-items1.setPlanItemId("plan_item_id4");
-List<CreateDiscountRequest> discounts = new LinkedList<>();
-CreateDiscountRequest discounts0 = new CreateDiscountRequest();
-discounts0.setValue(65.47);
-discounts0.setDiscountType("discount_type3");
-discounts0.setItemId("item_id5");
-
-discounts.add(discounts0);
-CreateDiscountRequest discounts1 = new CreateDiscountRequest();
-discounts1.setValue(65.48);
-discounts1.setDiscountType("discount_type4");
-discounts1.setItemId("item_id6");
-
-discounts.add(discounts1);
-
-items1.setDiscounts(discounts);
-items1.setName("name4");
-
-items.add(items1);
-CreateSubscriptionItemRequest items2 = new CreateSubscriptionItemRequest();
-items2.setDescription("description5");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type3");
-
-items2.setPricingScheme(pricingScheme);
-items2.setId("id5");
-items2.setPlanItemId("plan_item_id5");
-List<CreateDiscountRequest> discounts = new LinkedList<>();
-CreateDiscountRequest discounts0 = new CreateDiscountRequest();
-discounts0.setValue(65.48);
-discounts0.setDiscountType("discount_type4");
-discounts0.setItemId("item_id6");
-
-discounts.add(discounts0);
-CreateDiscountRequest discounts1 = new CreateDiscountRequest();
-discounts1.setValue(65.49);
-discounts1.setDiscountType("discount_type5");
-discounts1.setItemId("item_id7");
-
-discounts.add(discounts1);
-CreateDiscountRequest discounts2 = new CreateDiscountRequest();
-discounts2.setValue(65.5);
-discounts2.setDiscountType("discount_type6");
-discounts2.setItemId("item_id8");
-
-discounts.add(discounts2);
-
-items2.setDiscounts(discounts);
-items2.setName("name5");
-
-items.add(items2);
-
-body.setItems(items);
-CreateShippingRequest shipping = new CreateShippingRequest();
-shipping.setAmount(140);
-shipping.setDescription("description0");
-shipping.setRecipientName("recipient_name8");
-shipping.setRecipientPhone("recipient_phone2");
-shipping.setAddressId("address_id0");
-CreateAddressRequest address = new CreateAddressRequest();
-address.setStreet("street6");
-address.setNumber("number4");
-address.setZipCode("zip_code0");
-address.setNeighborhood("neighborhood2");
-address.setCity("city6");
-address.setState("state2");
-address.setCountry("country0");
-address.setComplement("complement2");
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-metadata.put("key1", "metadata2");
-
-address.setMetadata(metadata);
-address.setLine1("line_10");
-address.setLine2("line_24");
-
-shipping.setAddress(address);
-shipping.setType("type0");
-
-body.setShipping(shipping);
-List<CreateDiscountRequest> discounts = new LinkedList<>();
-CreateDiscountRequest discounts0 = new CreateDiscountRequest();
-discounts0.setValue(95.59);
-discounts0.setDiscountType("discount_type5");
-discounts0.setItemId("item_id7");
-
-discounts.add(discounts0);
-
-body.setDiscounts(discounts);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-metadata.put("key1", "metadata8");
-
-body.setMetadata(metadata);
-List<CreateIncrementRequest> increments = new LinkedList<>();
-CreateIncrementRequest increments0 = new CreateIncrementRequest();
-increments0.setValue(38.83);
-increments0.setIncrementType("increment_type3");
-increments0.setItemId("item_id9");
-
-increments.add(increments0);
-CreateIncrementRequest increments1 = new CreateIncrementRequest();
-increments1.setValue(38.84);
-increments1.setIncrementType("increment_type4");
-increments1.setItemId("item_id8");
-
-increments.add(increments1);
-CreateIncrementRequest increments2 = new CreateIncrementRequest();
-increments2.setValue(38.85);
-increments2.setIncrementType("increment_type5");
-increments2.setItemId("item_id7");
-
-increments.add(increments2);
-
-body.setIncrements(increments);
+CreateSubscriptionRequest body = new CreateSubscriptionRequest.Builder(
+    new CreateCustomerRequest.Builder(
+        "{\\n    \"name\": \"Tony Stark\"\\n}",
+        "email2",
+        "document2",
+        "type6",
+        new CreateAddressRequest.Builder(
+            "street0",
+            "number8",
+            "zip_code4",
+            "neighborhood6",
+            "city0",
+            "state6",
+            "country4",
+            "complement6",
+            new LinkedHashMap<String, String>() {{
+                put("key0", "metadata7");
+                put("key1", "metadata6");
+            }},
+            "line_16",
+            "line_28"
+        )
+        .build(),
+        new LinkedHashMap<String, String>() {{
+            put("key0", "metadata9");
+            put("key1", "metadata0");
+        }},
+        new CreatePhonesRequest.Builder()
+            .build(),
+        "code2"
+    )
+    .build(),
+    new CreateCardRequest.Builder()
+        .type("credit")
+        .build(),
+    "code4",
+    "payment_method4",
+    "billing_type0",
+    "statement_descriptor6",
+    "description4",
+    "currency6",
+    "interval6",
+    170,
+    new CreatePricingSchemeRequest.Builder(
+        "scheme_type2"
+    )
+    .build(),
+    Arrays.asList(
+        new CreateSubscriptionItemRequest.Builder(
+            "description3",
+            new CreatePricingSchemeRequest.Builder(
+                "scheme_type5"
+            )
+            .build(),
+            "id3",
+            "plan_item_id3",
+            Arrays.asList(
+                new CreateDiscountRequest.Builder(
+                    65.46,
+                    "discount_type2",
+                    "item_id4"
+                )
+                .build()
+            ),
+            "name3"
+        )
+        .build(),
+        new CreateSubscriptionItemRequest.Builder(
+            "description4",
+            new CreatePricingSchemeRequest.Builder(
+                "scheme_type4"
+            )
+            .build(),
+            "id4",
+            "plan_item_id4",
+            Arrays.asList(
+                new CreateDiscountRequest.Builder(
+                    65.47,
+                    "discount_type3",
+                    "item_id5"
+                )
+                .build(),
+                new CreateDiscountRequest.Builder(
+                    65.48,
+                    "discount_type4",
+                    "item_id6"
+                )
+                .build()
+            ),
+            "name4"
+        )
+        .build(),
+        new CreateSubscriptionItemRequest.Builder(
+            "description5",
+            new CreatePricingSchemeRequest.Builder(
+                "scheme_type3"
+            )
+            .build(),
+            "id5",
+            "plan_item_id5",
+            Arrays.asList(
+                new CreateDiscountRequest.Builder(
+                    65.48,
+                    "discount_type4",
+                    "item_id6"
+                )
+                .build(),
+                new CreateDiscountRequest.Builder(
+                    65.49,
+                    "discount_type5",
+                    "item_id7"
+                )
+                .build(),
+                new CreateDiscountRequest.Builder(
+                    65.5,
+                    "discount_type6",
+                    "item_id8"
+                )
+                .build()
+            ),
+            "name5"
+        )
+        .build()
+    ),
+    new CreateShippingRequest.Builder(
+        140,
+        "description0",
+        "recipient_name8",
+        "recipient_phone2",
+        "address_id0",
+        new CreateAddressRequest.Builder(
+            "street6",
+            "number4",
+            "zip_code0",
+            "neighborhood2",
+            "city6",
+            "state2",
+            "country0",
+            "complement2",
+            new LinkedHashMap<String, String>() {{
+                put("key0", "metadata3");
+                put("key1", "metadata2");
+            }},
+            "line_10",
+            "line_24"
+        )
+        .build(),
+        "type0"
+    )
+    .build(),
+    Arrays.asList(
+        new CreateDiscountRequest.Builder(
+            95.59,
+            "discount_type5",
+            "item_id7"
+        )
+        .build()
+    ),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata7");
+        put("key1", "metadata8");
+    }},
+    Arrays.asList(
+        new CreateIncrementRequest.Builder(
+            38.83,
+            "increment_type3",
+            "item_id9"
+        )
+        .build(),
+        new CreateIncrementRequest.Builder(
+            38.84,
+            "increment_type4",
+            "item_id8"
+        )
+        .build(),
+        new CreateIncrementRequest.Builder(
+            38.85,
+            "increment_type5",
+            "item_id7"
+        )
+        .build()
+    )
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.createSubscription(body, null);
+    GetSubscriptionResponse result = subscriptionsController.createSubscription(body, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -934,7 +954,8 @@ String subscriptionId = "subscription_id0";
 String incrementId = "increment_id8";
 
 try {
-    GetIncrementResponse response = subscriptionsController.getIncrementById(subscriptionId, incrementId);
+    GetIncrementResponse result = subscriptionsController.getIncrementById(subscriptionId, incrementId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -968,12 +989,15 @@ GetSubscriptionResponse updateSubscriptionAffiliationId(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionAffiliationIdRequest request = new UpdateSubscriptionAffiliationIdRequest();
-request.setGatewayAffiliationId("gateway_affiliation_id2");
+UpdateSubscriptionAffiliationIdRequest request = new UpdateSubscriptionAffiliationIdRequest.Builder(
+    "gateway_affiliation_id2"
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionAffiliationId(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionAffiliationId(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1009,15 +1033,17 @@ GetSubscriptionResponse updateSubscriptionMetadata(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionMetadata(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionMetadata(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1056,7 +1082,8 @@ String subscriptionId = "subscription_id0";
 String incrementId = "increment_id8";
 
 try {
-    GetIncrementResponse response = subscriptionsController.deleteIncrement(subscriptionId, incrementId, null);
+    GetIncrementResponse result = subscriptionsController.deleteIncrement(subscriptionId, incrementId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1094,7 +1121,8 @@ String page = "page8";
 String size = "size0";
 
 try {
-    ListCyclesResponse response = subscriptionsController.getSubscriptionCycles(subscriptionId, page, size);
+    ListCyclesResponse result = subscriptionsController.getSubscriptionCycles(subscriptionId, page, size);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1132,7 +1160,8 @@ int page = 30;
 int size = 18;
 
 try {
-    ListDiscountsResponse response = subscriptionsController.getDiscounts(subscriptionId, page, size);
+    ListDiscountsResponse result = subscriptionsController.getDiscounts(subscriptionId, page, size);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1168,12 +1197,15 @@ GetSubscriptionResponse updateSubscriptionBillingDate(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionBillingDateRequest request = new UpdateSubscriptionBillingDateRequest();
-request.setNextBillingAt(LocalDateTime.parse("2016-03-13T12:52:32.123Z", DateTimeFormatter.ISO_DATE_TIME));
+UpdateSubscriptionBillingDateRequest request = new UpdateSubscriptionBillingDateRequest.Builder(
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionBillingDate(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionBillingDate(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1212,7 +1244,8 @@ String subscriptionId = "subscription_id0";
 String subscriptionItemId = "subscription_item_id4";
 
 try {
-    GetSubscriptionItemResponse response = subscriptionsController.deleteSubscriptionItem(subscriptionId, subscriptionItemId, null);
+    GetSubscriptionItemResponse result = subscriptionsController.deleteSubscriptionItem(subscriptionId, subscriptionItemId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1248,7 +1281,8 @@ ListIncrementsResponse getIncrements(
 String subscriptionId = "subscription_id0";
 
 try {
-    ListIncrementsResponse response = subscriptionsController.getIncrements(subscriptionId, null, null);
+    ListIncrementsResponse result = subscriptionsController.getIncrements(subscriptionId, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1284,12 +1318,15 @@ GetSubscriptionResponse updateSubscriptionDueDays(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionDueDaysRequest request = new UpdateSubscriptionDueDaysRequest();
-request.setBoletoDueDays(226);
+UpdateSubscriptionDueDaysRequest request = new UpdateSubscriptionDueDaysRequest.Builder(
+    226
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionDueDays(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionDueDays(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1325,12 +1362,15 @@ GetSubscriptionResponse updateSubscriptionStartAt(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionStartAtRequest request = new UpdateSubscriptionStartAtRequest();
-request.setStartAt(LocalDateTime.parse("2016-03-13T12:52:32.123Z", DateTimeFormatter.ISO_DATE_TIME));
+UpdateSubscriptionStartAtRequest request = new UpdateSubscriptionStartAtRequest.Builder(
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionStartAt(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionStartAt(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1369,31 +1409,33 @@ GetSubscriptionItemResponse updateSubscriptionItem(
 ```java
 String subscriptionId = "subscription_id0";
 String itemId = "item_id0";
-UpdateSubscriptionItemRequest body = new UpdateSubscriptionItemRequest();
-body.setDescription("description4");
-body.setStatus("status2");
-UpdatePricingSchemeRequest pricingScheme = new UpdatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type2");
-List<UpdatePriceBracketRequest> priceBrackets = new LinkedList<>();
-UpdatePriceBracketRequest priceBrackets0 = new UpdatePriceBracketRequest();
-priceBrackets0.setStartQuantity(31);
-priceBrackets0.setPrice(225);
-
-priceBrackets.add(priceBrackets0);
-UpdatePriceBracketRequest priceBrackets1 = new UpdatePriceBracketRequest();
-priceBrackets1.setStartQuantity(32);
-priceBrackets1.setPrice(226);
-
-priceBrackets.add(priceBrackets1);
-
-pricingScheme.setPriceBrackets(priceBrackets);
-
-body.setPricingScheme(pricingScheme);
-body.setName("name6");
+UpdateSubscriptionItemRequest body = new UpdateSubscriptionItemRequest.Builder(
+    "description4",
+    "status2",
+    new UpdatePricingSchemeRequest.Builder(
+        "scheme_type2",
+        Arrays.asList(
+            new UpdatePriceBracketRequest.Builder(
+                31,
+                225
+            )
+            .build(),
+            new UpdatePriceBracketRequest.Builder(
+                32,
+                226
+            )
+            .build()
+        )
+    )
+    .build(),
+    "name6"
+)
+.build();
 
 
 try {
-    GetSubscriptionItemResponse response = subscriptionsController.updateSubscriptionItem(subscriptionId, itemId, body, null);
+    GetSubscriptionItemResponse result = subscriptionsController.updateSubscriptionItem(subscriptionId, itemId, body, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1429,34 +1471,36 @@ GetSubscriptionItemResponse createSubscriptionItem(
 
 ```java
 String subscriptionId = "subscription_id0";
-CreateSubscriptionItemRequest request = new CreateSubscriptionItemRequest();
-request.setDescription("description6");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type2");
-
-request.setPricingScheme(pricingScheme);
-request.setId("id6");
-request.setPlanItemId("plan_item_id6");
-List<CreateDiscountRequest> discounts = new LinkedList<>();
-CreateDiscountRequest discounts0 = new CreateDiscountRequest();
-discounts0.setValue(199.99);
-discounts0.setDiscountType("discount_type5");
-discounts0.setItemId("item_id7");
-
-discounts.add(discounts0);
-CreateDiscountRequest discounts1 = new CreateDiscountRequest();
-discounts1.setValue(200);
-discounts1.setDiscountType("discount_type6");
-discounts1.setItemId("item_id8");
-
-discounts.add(discounts1);
-
-request.setDiscounts(discounts);
-request.setName("name6");
+CreateSubscriptionItemRequest request = new CreateSubscriptionItemRequest.Builder(
+    "description6",
+    new CreatePricingSchemeRequest.Builder(
+        "scheme_type2"
+    )
+    .build(),
+    "id6",
+    "plan_item_id6",
+    Arrays.asList(
+        new CreateDiscountRequest.Builder(
+            199.99,
+            "discount_type5",
+            "item_id7"
+        )
+        .build(),
+        new CreateDiscountRequest.Builder(
+            200,
+            "discount_type6",
+            "item_id8"
+        )
+        .build()
+    ),
+    "name6"
+)
+.build();
 
 
 try {
-    GetSubscriptionItemResponse response = subscriptionsController.createSubscriptionItem(subscriptionId, request, null);
+    GetSubscriptionItemResponse result = subscriptionsController.createSubscriptionItem(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1490,7 +1534,8 @@ GetSubscriptionResponse getSubscription(
 String subscriptionId = "subscription_id0";
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.getSubscription(subscriptionId);
+    GetSubscriptionResponse result = subscriptionsController.getSubscription(subscriptionId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1539,7 +1584,8 @@ String subscriptionId = "subscription_id0";
 String itemId = "item_id0";
 
 try {
-    ListUsagesResponse response = subscriptionsController.getUsages(subscriptionId, itemId, null, null, null, null, null, null);
+    ListUsagesResponse result = subscriptionsController.getUsages(subscriptionId, itemId, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1573,11 +1619,13 @@ GetSubscriptionResponse updateLatestPeriodEndAt(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateCurrentCycleEndDateRequest request = new UpdateCurrentCycleEndDateRequest();
+UpdateCurrentCycleEndDateRequest request = new UpdateCurrentCycleEndDateRequest.Builder()
+    .build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateLatestPeriodEndAt(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateLatestPeriodEndAt(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1613,11 +1661,13 @@ GetSubscriptionResponse updateSubscriptionMiniumPrice(
 
 ```java
 String subscriptionId = "subscription_id0";
-UpdateSubscriptionMinimumPriceRequest request = new UpdateSubscriptionMinimumPriceRequest();
+UpdateSubscriptionMinimumPriceRequest request = new UpdateSubscriptionMinimumPriceRequest.Builder()
+    .build();
 
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSubscriptionMiniumPrice(subscriptionId, request, null);
+    GetSubscriptionResponse result = subscriptionsController.updateSubscriptionMiniumPrice(subscriptionId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1652,7 +1702,8 @@ String subscriptionId = "subscription_id0";
 String cycleId = "cycleId0";
 
 try {
-    GetPeriodResponse response = subscriptionsController.getSubscriptionCycleById(subscriptionId, cycleId);
+    GetPeriodResponse result = subscriptionsController.getSubscriptionCycleById(subscriptionId, cycleId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1687,7 +1738,8 @@ String subscriptionId = "subscription_id0";
 String periodId = "period_id0";
 
 try {
-    GetUsageReportResponse response = subscriptionsController.getUsageReport(subscriptionId, periodId);
+    GetUsageReportResponse result = subscriptionsController.getUsageReport(subscriptionId, periodId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -1719,32 +1771,34 @@ GetSubscriptionResponse updateSplitSubscription(
 
 ```java
 String id = "id0";
-UpdateSubscriptionSplitRequest request = new UpdateSubscriptionSplitRequest();
-request.setEnabled(false);
-List<CreateSplitRequest> rules = new LinkedList<>();
-CreateSplitRequest rules0 = new CreateSplitRequest();
-rules0.setType("type6");
-rules0.setAmount(222);
-rules0.setRecipientId("recipient_id6");
-
-rules.add(rules0);
-CreateSplitRequest rules1 = new CreateSplitRequest();
-rules1.setType("type5");
-rules1.setAmount(223);
-rules1.setRecipientId("recipient_id5");
-
-rules.add(rules1);
-CreateSplitRequest rules2 = new CreateSplitRequest();
-rules2.setType("type4");
-rules2.setAmount(224);
-rules2.setRecipientId("recipient_id4");
-
-rules.add(rules2);
-
-request.setRules(rules);
+UpdateSubscriptionSplitRequest request = new UpdateSubscriptionSplitRequest.Builder(
+    false,
+    Arrays.asList(
+        new CreateSplitRequest.Builder(
+            "type6",
+            222,
+            "recipient_id6"
+        )
+        .build(),
+        new CreateSplitRequest.Builder(
+            "type5",
+            223,
+            "recipient_id5"
+        )
+        .build(),
+        new CreateSplitRequest.Builder(
+            "type4",
+            224,
+            "recipient_id4"
+        )
+        .build()
+    )
+)
+.build();
 
 try {
-    GetSubscriptionResponse response = subscriptionsController.updateSplitSubscription(id, request);
+    GetSubscriptionResponse result = subscriptionsController.updateSplitSubscription(id, request);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

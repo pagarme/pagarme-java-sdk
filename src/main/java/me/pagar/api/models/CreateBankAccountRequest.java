@@ -7,8 +7,11 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.Map;
 
 /**
@@ -20,12 +23,12 @@ public class CreateBankAccountRequest {
     private String holderDocument;
     private String bank;
     private String branchNumber;
-    private String branchCheckDigit;
+    private OptionalNullable<String> branchCheckDigit;
     private String accountNumber;
     private String accountCheckDigit;
     private String type;
     private Map<String, String> metadata;
-    private String pixKey;
+    private OptionalNullable<String> pixKey;
 
     /**
      * Default constructor.
@@ -40,11 +43,11 @@ public class CreateBankAccountRequest {
      * @param  holderDocument  String value for holderDocument.
      * @param  bank  String value for bank.
      * @param  branchNumber  String value for branchNumber.
-     * @param  branchCheckDigit  String value for branchCheckDigit.
      * @param  accountNumber  String value for accountNumber.
      * @param  accountCheckDigit  String value for accountCheckDigit.
      * @param  type  String value for type.
      * @param  metadata  Map of String, value for metadata.
+     * @param  branchCheckDigit  String value for branchCheckDigit.
      * @param  pixKey  String value for pixKey.
      */
     public CreateBankAccountRequest(
@@ -53,12 +56,32 @@ public class CreateBankAccountRequest {
             String holderDocument,
             String bank,
             String branchNumber,
-            String branchCheckDigit,
             String accountNumber,
             String accountCheckDigit,
             String type,
             Map<String, String> metadata,
+            String branchCheckDigit,
             String pixKey) {
+        this.holderName = holderName;
+        this.holderType = holderType;
+        this.holderDocument = holderDocument;
+        this.bank = bank;
+        this.branchNumber = branchNumber;
+        this.branchCheckDigit = OptionalNullable.of(branchCheckDigit);
+        this.accountNumber = accountNumber;
+        this.accountCheckDigit = accountCheckDigit;
+        this.type = type;
+        this.metadata = metadata;
+        this.pixKey = OptionalNullable.of(pixKey);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected CreateBankAccountRequest(String holderName, String holderType, String holderDocument,
+            String bank, String branchNumber, String accountNumber, String accountCheckDigit,
+            String type, Map<String, String> metadata, OptionalNullable<String> branchCheckDigit,
+            OptionalNullable<String> pixKey) {
         this.holderName = holderName;
         this.holderType = holderType;
         this.holderDocument = holderDocument;
@@ -173,13 +196,24 @@ public class CreateBankAccountRequest {
     }
 
     /**
+     * Internal Getter for BranchCheckDigit.
+     * Branch check digit
+     * @return Returns the Internal String
+     */
+    @JsonGetter("branch_check_digit")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBranchCheckDigit() {
+        return this.branchCheckDigit;
+    }
+
+    /**
      * Getter for BranchCheckDigit.
      * Branch check digit
      * @return Returns the String
      */
-    @JsonGetter("branch_check_digit")
     public String getBranchCheckDigit() {
-        return branchCheckDigit;
+        return OptionalNullable.getFrom(branchCheckDigit);
     }
 
     /**
@@ -189,7 +223,15 @@ public class CreateBankAccountRequest {
      */
     @JsonSetter("branch_check_digit")
     public void setBranchCheckDigit(String branchCheckDigit) {
-        this.branchCheckDigit = branchCheckDigit;
+        this.branchCheckDigit = OptionalNullable.of(branchCheckDigit);
+    }
+
+    /**
+     * UnSetter for BranchCheckDigit.
+     * Branch check digit
+     */
+    public void unsetBranchCheckDigit() {
+        branchCheckDigit = null;
     }
 
     /**
@@ -273,13 +315,24 @@ public class CreateBankAccountRequest {
     }
 
     /**
+     * Internal Getter for PixKey.
+     * Pix key
+     * @return Returns the Internal String
+     */
+    @JsonGetter("pix_key")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetPixKey() {
+        return this.pixKey;
+    }
+
+    /**
      * Getter for PixKey.
      * Pix key
      * @return Returns the String
      */
-    @JsonGetter("pix_key")
     public String getPixKey() {
-        return pixKey;
+        return OptionalNullable.getFrom(pixKey);
     }
 
     /**
@@ -289,7 +342,15 @@ public class CreateBankAccountRequest {
      */
     @JsonSetter("pix_key")
     public void setPixKey(String pixKey) {
-        this.pixKey = pixKey;
+        this.pixKey = OptionalNullable.of(pixKey);
+    }
+
+    /**
+     * UnSetter for PixKey.
+     * Pix key
+     */
+    public void unsetPixKey() {
+        pixKey = null;
     }
 
     /**
@@ -300,9 +361,9 @@ public class CreateBankAccountRequest {
     public String toString() {
         return "CreateBankAccountRequest [" + "holderName=" + holderName + ", holderType="
                 + holderType + ", holderDocument=" + holderDocument + ", bank=" + bank
-                + ", branchNumber=" + branchNumber + ", branchCheckDigit=" + branchCheckDigit
-                + ", accountNumber=" + accountNumber + ", accountCheckDigit=" + accountCheckDigit
-                + ", type=" + type + ", metadata=" + metadata + ", pixKey=" + pixKey + "]";
+                + ", branchNumber=" + branchNumber + ", accountNumber=" + accountNumber
+                + ", accountCheckDigit=" + accountCheckDigit + ", type=" + type + ", metadata="
+                + metadata + ", branchCheckDigit=" + branchCheckDigit + ", pixKey=" + pixKey + "]";
     }
 
     /**
@@ -312,7 +373,9 @@ public class CreateBankAccountRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(holderName, holderType, holderDocument, bank, branchNumber,
-                branchCheckDigit, accountNumber, accountCheckDigit, type, metadata, pixKey);
+                accountNumber, accountCheckDigit, type, metadata);
+        builder.branchCheckDigit = internalGetBranchCheckDigit();
+        builder.pixKey = internalGetPixKey();
         return builder;
     }
 
@@ -325,12 +388,12 @@ public class CreateBankAccountRequest {
         private String holderDocument;
         private String bank;
         private String branchNumber;
-        private String branchCheckDigit;
         private String accountNumber;
         private String accountCheckDigit;
         private String type;
         private Map<String, String> metadata;
-        private String pixKey;
+        private OptionalNullable<String> branchCheckDigit;
+        private OptionalNullable<String> pixKey;
 
         /**
          * Initialization constructor.
@@ -345,28 +408,23 @@ public class CreateBankAccountRequest {
          * @param  holderDocument  String value for holderDocument.
          * @param  bank  String value for bank.
          * @param  branchNumber  String value for branchNumber.
-         * @param  branchCheckDigit  String value for branchCheckDigit.
          * @param  accountNumber  String value for accountNumber.
          * @param  accountCheckDigit  String value for accountCheckDigit.
          * @param  type  String value for type.
          * @param  metadata  Map of String, value for metadata.
-         * @param  pixKey  String value for pixKey.
          */
         public Builder(String holderName, String holderType, String holderDocument, String bank,
-                String branchNumber, String branchCheckDigit, String accountNumber,
-                String accountCheckDigit, String type, Map<String, String> metadata,
-                String pixKey) {
+                String branchNumber, String accountNumber, String accountCheckDigit, String type,
+                Map<String, String> metadata) {
             this.holderName = holderName;
             this.holderType = holderType;
             this.holderDocument = holderDocument;
             this.bank = bank;
             this.branchNumber = branchNumber;
-            this.branchCheckDigit = branchCheckDigit;
             this.accountNumber = accountNumber;
             this.accountCheckDigit = accountCheckDigit;
             this.type = type;
             this.metadata = metadata;
-            this.pixKey = pixKey;
         }
 
         /**
@@ -420,16 +478,6 @@ public class CreateBankAccountRequest {
         }
 
         /**
-         * Setter for branchCheckDigit.
-         * @param  branchCheckDigit  String value for branchCheckDigit.
-         * @return Builder
-         */
-        public Builder branchCheckDigit(String branchCheckDigit) {
-            this.branchCheckDigit = branchCheckDigit;
-            return this;
-        }
-
-        /**
          * Setter for accountNumber.
          * @param  accountNumber  String value for accountNumber.
          * @return Builder
@@ -470,12 +518,40 @@ public class CreateBankAccountRequest {
         }
 
         /**
+         * Setter for branchCheckDigit.
+         * @param  branchCheckDigit  String value for branchCheckDigit.
+         * @return Builder
+         */
+        public Builder branchCheckDigit(String branchCheckDigit) {
+            this.branchCheckDigit = OptionalNullable.of(branchCheckDigit);
+            return this;
+        }
+
+        /**
+         * UnSetter for branchCheckDigit.
+         * @return Builder
+         */
+        public Builder unsetBranchCheckDigit() {
+            branchCheckDigit = null;
+            return this;
+        }
+
+        /**
          * Setter for pixKey.
          * @param  pixKey  String value for pixKey.
          * @return Builder
          */
         public Builder pixKey(String pixKey) {
-            this.pixKey = pixKey;
+            this.pixKey = OptionalNullable.of(pixKey);
+            return this;
+        }
+
+        /**
+         * UnSetter for pixKey.
+         * @return Builder
+         */
+        public Builder unsetPixKey() {
+            pixKey = null;
             return this;
         }
 
@@ -485,8 +561,8 @@ public class CreateBankAccountRequest {
          */
         public CreateBankAccountRequest build() {
             return new CreateBankAccountRequest(holderName, holderType, holderDocument, bank,
-                    branchNumber, branchCheckDigit, accountNumber, accountCheckDigit, type,
-                    metadata, pixKey);
+                    branchNumber, accountNumber, accountCheckDigit, type, metadata,
+                    branchCheckDigit, pixKey);
         }
     }
 }

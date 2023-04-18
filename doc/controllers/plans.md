@@ -47,7 +47,8 @@ GetPlanResponse getPlan(
 String planId = "plan_id8";
 
 try {
-    GetPlanResponse response = plansController.getPlan(planId);
+    GetPlanResponse result = plansController.getPlan(planId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -83,7 +84,8 @@ GetPlanResponse deletePlan(
 String planId = "plan_id8";
 
 try {
-    GetPlanResponse response = plansController.deletePlan(planId, null);
+    GetPlanResponse result = plansController.deletePlan(planId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -119,15 +121,17 @@ GetPlanResponse updatePlanMetadata(
 
 ```java
 String planId = "plan_id8";
-UpdateMetadataRequest request = new UpdateMetadataRequest();
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetPlanResponse response = plansController.updatePlanMetadata(planId, request, null);
+    GetPlanResponse result = plansController.updatePlanMetadata(planId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -166,31 +170,33 @@ GetPlanItemResponse updatePlanItem(
 ```java
 String planId = "plan_id8";
 String planItemId = "plan_item_id0";
-UpdatePlanItemRequest body = new UpdatePlanItemRequest();
-body.setName("name6");
-body.setDescription("description4");
-body.setStatus("status2");
-UpdatePricingSchemeRequest pricingScheme = new UpdatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type2");
-List<UpdatePriceBracketRequest> priceBrackets = new LinkedList<>();
-UpdatePriceBracketRequest priceBrackets0 = new UpdatePriceBracketRequest();
-priceBrackets0.setStartQuantity(31);
-priceBrackets0.setPrice(225);
-
-priceBrackets.add(priceBrackets0);
-UpdatePriceBracketRequest priceBrackets1 = new UpdatePriceBracketRequest();
-priceBrackets1.setStartQuantity(32);
-priceBrackets1.setPrice(226);
-
-priceBrackets.add(priceBrackets1);
-
-pricingScheme.setPriceBrackets(priceBrackets);
-
-body.setPricingScheme(pricingScheme);
+UpdatePlanItemRequest body = new UpdatePlanItemRequest.Builder(
+    "name6",
+    "description4",
+    "status2",
+    new UpdatePricingSchemeRequest.Builder(
+        "scheme_type2",
+        Arrays.asList(
+            new UpdatePriceBracketRequest.Builder(
+                31,
+                225
+            )
+            .build(),
+            new UpdatePriceBracketRequest.Builder(
+                32,
+                226
+            )
+            .build()
+        )
+    )
+    .build()
+)
+.build();
 
 
 try {
-    GetPlanItemResponse response = plansController.updatePlanItem(planId, planItemId, body, null);
+    GetPlanItemResponse result = plansController.updatePlanItem(planId, planItemId, body, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -226,18 +232,21 @@ GetPlanItemResponse createPlanItem(
 
 ```java
 String planId = "plan_id8";
-CreatePlanItemRequest request = new CreatePlanItemRequest();
-request.setName("name6");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type2");
-
-request.setPricingScheme(pricingScheme);
-request.setId("id6");
-request.setDescription("description6");
+CreatePlanItemRequest request = new CreatePlanItemRequest.Builder(
+    "name6",
+    new CreatePricingSchemeRequest.Builder(
+        "scheme_type2"
+    )
+    .build(),
+    "id6",
+    "description6"
+)
+.build();
 
 
 try {
-    GetPlanItemResponse response = plansController.createPlanItem(planId, request, null);
+    GetPlanItemResponse result = plansController.createPlanItem(planId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -274,7 +283,8 @@ String planId = "plan_id8";
 String planItemId = "plan_item_id0";
 
 try {
-    GetPlanItemResponse response = plansController.getPlanItem(planId, planItemId);
+    GetPlanItemResponse result = plansController.getPlanItem(planId, planItemId);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -307,74 +317,72 @@ GetPlanResponse createPlan(
 ## Example Usage
 
 ```java
-CreatePlanRequest body = new CreatePlanRequest();
-body.setName("name6");
-body.setDescription("description4");
-body.setStatementDescriptor("statement_descriptor6");
-List<CreatePlanItemRequest> items = new LinkedList<>();
-CreatePlanItemRequest items0 = new CreatePlanItemRequest();
-items0.setName("name3");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type5");
-
-items0.setPricingScheme(pricingScheme);
-items0.setId("id3");
-items0.setDescription("description3");
-
-items.add(items0);
-CreatePlanItemRequest items1 = new CreatePlanItemRequest();
-items1.setName("name4");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type4");
-
-items1.setPricingScheme(pricingScheme);
-items1.setId("id4");
-items1.setDescription("description4");
-
-items.add(items1);
-CreatePlanItemRequest items2 = new CreatePlanItemRequest();
-items2.setName("name5");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type3");
-
-items2.setPricingScheme(pricingScheme);
-items2.setId("id5");
-items2.setDescription("description5");
-
-items.add(items2);
-
-body.setItems(items);
-body.setShippable(false);
-List<String> paymentMethods = new LinkedList<>();
-paymentMethods.add("payment_methods9");
-
-body.setPaymentMethods(paymentMethods);
-List<Integer> installments = new LinkedList<>();
-installments.add(207);
-
-body.setInstallments(installments);
-body.setCurrency("currency6");
-body.setInterval("interval6");
-body.setIntervalCount(170);
-List<Integer> billingDays = new LinkedList<>();
-billingDays.add(201);
-billingDays.add(200);
-
-body.setBillingDays(billingDays);
-body.setBillingType("billing_type0");
-CreatePricingSchemeRequest pricingScheme = new CreatePricingSchemeRequest();
-pricingScheme.setSchemeType("scheme_type2");
-
-body.setPricingScheme(pricingScheme);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata7");
-metadata.put("key1", "metadata8");
-
-body.setMetadata(metadata);
+CreatePlanRequest body = new CreatePlanRequest.Builder(
+    "name6",
+    "description4",
+    "statement_descriptor6",
+    Arrays.asList(
+        new CreatePlanItemRequest.Builder(
+            "name3",
+            new CreatePricingSchemeRequest.Builder(
+                "scheme_type5"
+            )
+            .build(),
+            "id3",
+            "description3"
+        )
+        .build(),
+        new CreatePlanItemRequest.Builder(
+            "name4",
+            new CreatePricingSchemeRequest.Builder(
+                "scheme_type4"
+            )
+            .build(),
+            "id4",
+            "description4"
+        )
+        .build(),
+        new CreatePlanItemRequest.Builder(
+            "name5",
+            new CreatePricingSchemeRequest.Builder(
+                "scheme_type3"
+            )
+            .build(),
+            "id5",
+            "description5"
+        )
+        .build()
+    ),
+    false,
+    Arrays.asList(
+        "payment_methods9"
+    ),
+    Arrays.asList(
+        207
+    ),
+    "currency6",
+    "interval6",
+    170,
+    Arrays.asList(
+        201,
+        200
+    ),
+    "billing_type0",
+    new CreatePricingSchemeRequest.Builder(
+        "scheme_type2"
+    )
+    .build(),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata7");
+        put("key1", "metadata8");
+    }}
+)
+.build();
 
 
 try {
-    GetPlanResponse response = plansController.createPlan(body, null);
+    GetPlanResponse result = plansController.createPlan(body, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -413,7 +421,8 @@ String planId = "plan_id8";
 String planItemId = "plan_item_id0";
 
 try {
-    GetPlanItemResponse response = plansController.deletePlanItem(planId, planItemId, null);
+    GetPlanItemResponse result = plansController.deletePlanItem(planId, planItemId, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -457,7 +466,8 @@ ListPlansResponse getPlans(
 
 ```java
 try {
-    ListPlansResponse response = plansController.getPlans(null, null, null, null, null, null, null);
+    ListPlansResponse result = plansController.getPlans(null, null, null, null, null, null, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -493,39 +503,38 @@ GetPlanResponse updatePlan(
 
 ```java
 String planId = "plan_id8";
-UpdatePlanRequest request = new UpdatePlanRequest();
-request.setName("name6");
-request.setDescription("description6");
-List<Integer> installments = new LinkedList<>();
-installments.add(151);
-installments.add(152);
-
-request.setInstallments(installments);
-request.setStatementDescriptor("statement_descriptor6");
-request.setCurrency("currency6");
-request.setInterval("interval4");
-request.setIntervalCount(114);
-List<String> paymentMethods = new LinkedList<>();
-paymentMethods.add("payment_methods1");
-paymentMethods.add("payment_methods0");
-paymentMethods.add("payment_methods9");
-
-request.setPaymentMethods(paymentMethods);
-request.setBillingType("billing_type0");
-request.setStatus("status8");
-request.setShippable(false);
-List<Integer> billingDays = new LinkedList<>();
-billingDays.add(115);
-
-request.setBillingDays(billingDays);
-Map<String, String> metadata = new LinkedHashMap<>();
-metadata.put("key0", "metadata3");
-
-request.setMetadata(metadata);
+UpdatePlanRequest request = new UpdatePlanRequest.Builder(
+    "name6",
+    "description6",
+    Arrays.asList(
+        151,
+        152
+    ),
+    "statement_descriptor6",
+    "currency6",
+    "interval4",
+    114,
+    Arrays.asList(
+        "payment_methods1",
+        "payment_methods0",
+        "payment_methods9"
+    ),
+    "billing_type0",
+    "status8",
+    false,
+    Arrays.asList(
+        115
+    ),
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
 
 
 try {
-    GetPlanResponse response = plansController.updatePlan(planId, request, null);
+    GetPlanResponse result = plansController.updatePlan(planId, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

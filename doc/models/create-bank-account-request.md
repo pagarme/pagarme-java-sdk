@@ -16,12 +16,12 @@ Request for creating a bank account
 | `HolderDocument` | `String` | Required | Bank account holder document | String getHolderDocument() | setHolderDocument(String holderDocument) |
 | `Bank` | `String` | Required | Bank | String getBank() | setBank(String bank) |
 | `BranchNumber` | `String` | Required | Branch number | String getBranchNumber() | setBranchNumber(String branchNumber) |
-| `BranchCheckDigit` | `String` | Required | Branch check digit | String getBranchCheckDigit() | setBranchCheckDigit(String branchCheckDigit) |
+| `BranchCheckDigit` | `String` | Optional | Branch check digit | String getBranchCheckDigit() | setBranchCheckDigit(String branchCheckDigit) |
 | `AccountNumber` | `String` | Required | Account number | String getAccountNumber() | setAccountNumber(String accountNumber) |
 | `AccountCheckDigit` | `String` | Required | Account check digit | String getAccountCheckDigit() | setAccountCheckDigit(String accountCheckDigit) |
 | `Type` | `String` | Required | Bank account type | String getType() | setType(String type) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `PixKey` | `String` | Required | Pix key | String getPixKey() | setPixKey(String pixKey) |
+| `PixKey` | `String` | Optional | Pix key | String getPixKey() | setPixKey(String pixKey) |
 
 ## Example (as JSON)
 

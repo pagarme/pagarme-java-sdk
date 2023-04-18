@@ -41,22 +41,25 @@ GetTokenResponse createToken(
 
 ```java
 String publicKey = "public_key6";
-CreateTokenRequest request = new CreateTokenRequest();
-request.setType("card");
-CreateCardTokenRequest card = new CreateCardTokenRequest();
-card.setNumber("number2");
-card.setHolderName("holder_name6");
-card.setExpMonth(80);
-card.setExpYear(216);
-card.setCvv("cvv8");
-card.setBrand("brand4");
-card.setLabel("label0");
-
-request.setCard(card);
+CreateTokenRequest request = new CreateTokenRequest.Builder(
+    "card",
+    new CreateCardTokenRequest.Builder(
+        "number2",
+        "holder_name6",
+        80,
+        216,
+        "cvv8",
+        "brand4",
+        "label0"
+    )
+    .build()
+)
+.build();
 
 
 try {
-    GetTokenResponse response = tokensController.createToken(publicKey, request, null);
+    GetTokenResponse result = tokensController.createToken(publicKey, request, null);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {
@@ -95,7 +98,8 @@ String id = "id0";
 String publicKey = "public_key6";
 
 try {
-    GetTokenResponse response = tokensController.getToken(id, publicKey);
+    GetTokenResponse result = tokensController.getToken(id, publicKey);
+    System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
 } catch (IOException e) {

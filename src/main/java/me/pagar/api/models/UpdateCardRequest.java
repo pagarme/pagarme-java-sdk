@@ -7,8 +7,11 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.Map;
 
 /**
@@ -18,7 +21,7 @@ public class UpdateCardRequest {
     private String holderName;
     private int expMonth;
     private int expYear;
-    private String billingAddressId;
+    private OptionalNullable<String> billingAddressId;
     private CreateAddressRequest billingAddress;
     private Map<String, String> metadata;
     private String label;
@@ -34,19 +37,34 @@ public class UpdateCardRequest {
      * @param  holderName  String value for holderName.
      * @param  expMonth  int value for expMonth.
      * @param  expYear  int value for expYear.
-     * @param  billingAddressId  String value for billingAddressId.
      * @param  billingAddress  CreateAddressRequest value for billingAddress.
      * @param  metadata  Map of String, value for metadata.
      * @param  label  String value for label.
+     * @param  billingAddressId  String value for billingAddressId.
      */
     public UpdateCardRequest(
             String holderName,
             int expMonth,
             int expYear,
-            String billingAddressId,
             CreateAddressRequest billingAddress,
             Map<String, String> metadata,
-            String label) {
+            String label,
+            String billingAddressId) {
+        this.holderName = holderName;
+        this.expMonth = expMonth;
+        this.expYear = expYear;
+        this.billingAddressId = OptionalNullable.of(billingAddressId);
+        this.billingAddress = billingAddress;
+        this.metadata = metadata;
+        this.label = label;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected UpdateCardRequest(String holderName, int expMonth, int expYear,
+            CreateAddressRequest billingAddress, Map<String, String> metadata, String label,
+            OptionalNullable<String> billingAddressId) {
         this.holderName = holderName;
         this.expMonth = expMonth;
         this.expYear = expYear;
@@ -117,13 +135,24 @@ public class UpdateCardRequest {
     }
 
     /**
+     * Internal Getter for BillingAddressId.
+     * Id of the address to be used as billing address
+     * @return Returns the Internal String
+     */
+    @JsonGetter("billing_address_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBillingAddressId() {
+        return this.billingAddressId;
+    }
+
+    /**
      * Getter for BillingAddressId.
      * Id of the address to be used as billing address
      * @return Returns the String
      */
-    @JsonGetter("billing_address_id")
     public String getBillingAddressId() {
-        return billingAddressId;
+        return OptionalNullable.getFrom(billingAddressId);
     }
 
     /**
@@ -133,7 +162,15 @@ public class UpdateCardRequest {
      */
     @JsonSetter("billing_address_id")
     public void setBillingAddressId(String billingAddressId) {
-        this.billingAddressId = billingAddressId;
+        this.billingAddressId = OptionalNullable.of(billingAddressId);
+    }
+
+    /**
+     * UnSetter for BillingAddressId.
+     * Id of the address to be used as billing address
+     */
+    public void unsetBillingAddressId() {
+        billingAddressId = null;
     }
 
     /**
@@ -201,9 +238,8 @@ public class UpdateCardRequest {
     @Override
     public String toString() {
         return "UpdateCardRequest [" + "holderName=" + holderName + ", expMonth=" + expMonth
-                + ", expYear=" + expYear + ", billingAddressId=" + billingAddressId
-                + ", billingAddress=" + billingAddress + ", metadata=" + metadata + ", label="
-                + label + "]";
+                + ", expYear=" + expYear + ", billingAddress=" + billingAddress + ", metadata="
+                + metadata + ", label=" + label + ", billingAddressId=" + billingAddressId + "]";
     }
 
     /**
@@ -212,8 +248,9 @@ public class UpdateCardRequest {
      * @return a new {@link UpdateCardRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(holderName, expMonth, expYear, billingAddressId,
-                billingAddress, metadata, label);
+        Builder builder = new Builder(holderName, expMonth, expYear, billingAddress, metadata,
+                label);
+        builder.billingAddressId = internalGetBillingAddressId();
         return builder;
     }
 
@@ -224,10 +261,10 @@ public class UpdateCardRequest {
         private String holderName;
         private int expMonth;
         private int expYear;
-        private String billingAddressId;
         private CreateAddressRequest billingAddress;
         private Map<String, String> metadata;
         private String label;
+        private OptionalNullable<String> billingAddressId;
 
         /**
          * Initialization constructor.
@@ -240,17 +277,15 @@ public class UpdateCardRequest {
          * @param  holderName  String value for holderName.
          * @param  expMonth  int value for expMonth.
          * @param  expYear  int value for expYear.
-         * @param  billingAddressId  String value for billingAddressId.
          * @param  billingAddress  CreateAddressRequest value for billingAddress.
          * @param  metadata  Map of String, value for metadata.
          * @param  label  String value for label.
          */
-        public Builder(String holderName, int expMonth, int expYear, String billingAddressId,
+        public Builder(String holderName, int expMonth, int expYear,
                 CreateAddressRequest billingAddress, Map<String, String> metadata, String label) {
             this.holderName = holderName;
             this.expMonth = expMonth;
             this.expYear = expYear;
-            this.billingAddressId = billingAddressId;
             this.billingAddress = billingAddress;
             this.metadata = metadata;
             this.label = label;
@@ -287,16 +322,6 @@ public class UpdateCardRequest {
         }
 
         /**
-         * Setter for billingAddressId.
-         * @param  billingAddressId  String value for billingAddressId.
-         * @return Builder
-         */
-        public Builder billingAddressId(String billingAddressId) {
-            this.billingAddressId = billingAddressId;
-            return this;
-        }
-
-        /**
          * Setter for billingAddress.
          * @param  billingAddress  CreateAddressRequest value for billingAddress.
          * @return Builder
@@ -327,12 +352,31 @@ public class UpdateCardRequest {
         }
 
         /**
+         * Setter for billingAddressId.
+         * @param  billingAddressId  String value for billingAddressId.
+         * @return Builder
+         */
+        public Builder billingAddressId(String billingAddressId) {
+            this.billingAddressId = OptionalNullable.of(billingAddressId);
+            return this;
+        }
+
+        /**
+         * UnSetter for billingAddressId.
+         * @return Builder
+         */
+        public Builder unsetBillingAddressId() {
+            billingAddressId = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateCardRequest} object using the set fields.
          * @return {@link UpdateCardRequest}
          */
         public UpdateCardRequest build() {
-            return new UpdateCardRequest(holderName, expMonth, expYear, billingAddressId,
-                    billingAddress, metadata, label);
+            return new UpdateCardRequest(holderName, expMonth, expYear, billingAddress, metadata,
+                    label, billingAddressId);
         }
     }
 }
