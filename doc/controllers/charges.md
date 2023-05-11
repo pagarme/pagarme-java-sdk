@@ -554,54 +554,9 @@ GetChargeResponse createCharge(
 
 ```java
 CreateChargeRequest request = new CreateChargeRequest.Builder(
-    "code4",
     242,
-    "customer_id4",
-    new CreateCustomerRequest.Builder(
-        "{\\n    \"name\": \"Tony Stark\"\\n}",
-        "email0",
-        "document0",
-        "type4",
-        new CreateAddressRequest.Builder(
-            "street2",
-            "number0",
-            "zip_code6",
-            "neighborhood8",
-            "city2",
-            "state8",
-            "country6",
-            "complement8",
-            new LinkedHashMap<String, String>() {{
-                put("key0", "metadata7");
-                put("key1", "metadata6");
-            }},
-            "line_16",
-            "line_20"
-        )
-        .build(),
-        new LinkedHashMap<String, String>() {{
-            put("key0", "metadata3");
-            put("key1", "metadata2");
-            put("key2", "metadata1");
-        }},
-        new CreatePhonesRequest.Builder()
-            .build(),
-        "code4"
-    )
-    .build(),
     new CreatePaymentRequest.Builder(
         "payment_method2"
-    )
-    .build(),
-    new LinkedHashMap<String, String>() {{
-        put("key0", "metadata3");
-    }},
-    new CreateAntifraudRequest.Builder(
-        "type0",
-        new CreateClearSaleRequest.Builder(
-            52
-        )
-        .build()
     )
     .build(),
     "order_id0"

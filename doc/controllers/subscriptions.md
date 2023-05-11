@@ -797,62 +797,6 @@ CreateSubscriptionRequest body = new CreateSubscriptionRequest.Builder(
             ),
             "name3"
         )
-        .build(),
-        new CreateSubscriptionItemRequest.Builder(
-            "description4",
-            new CreatePricingSchemeRequest.Builder(
-                "scheme_type4"
-            )
-            .build(),
-            "id4",
-            "plan_item_id4",
-            Arrays.asList(
-                new CreateDiscountRequest.Builder(
-                    65.47,
-                    "discount_type3",
-                    "item_id5"
-                )
-                .build(),
-                new CreateDiscountRequest.Builder(
-                    65.48,
-                    "discount_type4",
-                    "item_id6"
-                )
-                .build()
-            ),
-            "name4"
-        )
-        .build(),
-        new CreateSubscriptionItemRequest.Builder(
-            "description5",
-            new CreatePricingSchemeRequest.Builder(
-                "scheme_type3"
-            )
-            .build(),
-            "id5",
-            "plan_item_id5",
-            Arrays.asList(
-                new CreateDiscountRequest.Builder(
-                    65.48,
-                    "discount_type4",
-                    "item_id6"
-                )
-                .build(),
-                new CreateDiscountRequest.Builder(
-                    65.49,
-                    "discount_type5",
-                    "item_id7"
-                )
-                .build(),
-                new CreateDiscountRequest.Builder(
-                    65.5,
-                    "discount_type6",
-                    "item_id8"
-                )
-                .build()
-            ),
-            "name5"
-        )
         .build()
     ),
     new CreateShippingRequest.Builder(
@@ -898,18 +842,6 @@ CreateSubscriptionRequest body = new CreateSubscriptionRequest.Builder(
             38.83,
             "increment_type3",
             "item_id9"
-        )
-        .build(),
-        new CreateIncrementRequest.Builder(
-            38.84,
-            "increment_type4",
-            "item_id8"
-        )
-        .build(),
-        new CreateIncrementRequest.Builder(
-            38.85,
-            "increment_type5",
-            "item_id7"
         )
         .build()
     )
@@ -1419,11 +1351,6 @@ UpdateSubscriptionItemRequest body = new UpdateSubscriptionItemRequest.Builder(
                 31,
                 225
             )
-            .build(),
-            new UpdatePriceBracketRequest.Builder(
-                32,
-                226
-            )
             .build()
         )
     )
@@ -1484,12 +1411,6 @@ CreateSubscriptionItemRequest request = new CreateSubscriptionItemRequest.Builde
             199.99,
             "discount_type5",
             "item_id7"
-        )
-        .build(),
-        new CreateDiscountRequest.Builder(
-            200,
-            "discount_type6",
-            "item_id8"
         )
         .build()
     ),
@@ -1778,18 +1699,6 @@ UpdateSubscriptionSplitRequest request = new UpdateSubscriptionSplitRequest.Buil
             "type6",
             222,
             "recipient_id6"
-        )
-        .build(),
-        new CreateSplitRequest.Builder(
-            "type5",
-            223,
-            "recipient_id5"
-        )
-        .build(),
-        new CreateSplitRequest.Builder(
-            "type4",
-            224,
-            "recipient_id4"
         )
         .build()
     )

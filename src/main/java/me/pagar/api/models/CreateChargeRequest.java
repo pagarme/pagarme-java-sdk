@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.apimatic.core.types.BaseModel;
+import io.apimatic.core.types.OptionalNullable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import me.pagar.api.DateTimeHelper;
@@ -20,14 +20,14 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for CreateChargeRequest type.
  */
 public class CreateChargeRequest {
-    private String code;
+    private OptionalNullable<String> code;
     private int amount;
-    private String customerId;
-    private CreateCustomerRequest customer;
+    private OptionalNullable<String> customerId;
+    private OptionalNullable<CreateCustomerRequest> customer;
     private CreatePaymentRequest payment;
-    private Map<String, String> metadata;
-    private LocalDateTime dueAt;
-    private CreateAntifraudRequest antifraud;
+    private OptionalNullable<Map<String, String>> metadata;
+    private OptionalNullable<LocalDateTime> dueAt;
+    private OptionalNullable<CreateAntifraudRequest> antifraud;
     private String orderId;
 
     /**
@@ -38,26 +38,45 @@ public class CreateChargeRequest {
 
     /**
      * Initialization constructor.
-     * @param  code  String value for code.
      * @param  amount  int value for amount.
+     * @param  payment  CreatePaymentRequest value for payment.
+     * @param  orderId  String value for orderId.
+     * @param  code  String value for code.
      * @param  customerId  String value for customerId.
      * @param  customer  CreateCustomerRequest value for customer.
-     * @param  payment  CreatePaymentRequest value for payment.
      * @param  metadata  Map of String, value for metadata.
-     * @param  antifraud  CreateAntifraudRequest value for antifraud.
-     * @param  orderId  String value for orderId.
      * @param  dueAt  LocalDateTime value for dueAt.
+     * @param  antifraud  CreateAntifraudRequest value for antifraud.
      */
     public CreateChargeRequest(
-            String code,
             int amount,
+            CreatePaymentRequest payment,
+            String orderId,
+            String code,
             String customerId,
             CreateCustomerRequest customer,
-            CreatePaymentRequest payment,
             Map<String, String> metadata,
-            CreateAntifraudRequest antifraud,
-            String orderId,
-            LocalDateTime dueAt) {
+            LocalDateTime dueAt,
+            CreateAntifraudRequest antifraud) {
+        this.code = OptionalNullable.of(code);
+        this.amount = amount;
+        this.customerId = OptionalNullable.of(customerId);
+        this.customer = OptionalNullable.of(customer);
+        this.payment = payment;
+        this.metadata = OptionalNullable.of(metadata);
+        this.dueAt = OptionalNullable.of(dueAt);
+        this.antifraud = OptionalNullable.of(antifraud);
+        this.orderId = orderId;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected CreateChargeRequest(int amount, CreatePaymentRequest payment, String orderId,
+            OptionalNullable<String> code, OptionalNullable<String> customerId,
+            OptionalNullable<CreateCustomerRequest> customer,
+            OptionalNullable<Map<String, String>> metadata, OptionalNullable<LocalDateTime> dueAt,
+            OptionalNullable<CreateAntifraudRequest> antifraud) {
         this.code = code;
         this.amount = amount;
         this.customerId = customerId;
@@ -70,13 +89,24 @@ public class CreateChargeRequest {
     }
 
     /**
+     * Internal Getter for Code.
+     * Code
+     * @return Returns the Internal String
+     */
+    @JsonGetter("code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCode() {
+        return this.code;
+    }
+
+    /**
      * Getter for Code.
      * Code
      * @return Returns the String
      */
-    @JsonGetter("code")
     public String getCode() {
-        return code;
+        return OptionalNullable.getFrom(code);
     }
 
     /**
@@ -86,7 +116,15 @@ public class CreateChargeRequest {
      */
     @JsonSetter("code")
     public void setCode(String code) {
-        this.code = code;
+        this.code = OptionalNullable.of(code);
+    }
+
+    /**
+     * UnSetter for Code.
+     * Code
+     */
+    public void unsetCode() {
+        code = null;
     }
 
     /**
@@ -110,13 +148,24 @@ public class CreateChargeRequest {
     }
 
     /**
+     * Internal Getter for CustomerId.
+     * The customer's id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("customer_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetCustomerId() {
+        return this.customerId;
+    }
+
+    /**
      * Getter for CustomerId.
      * The customer's id
      * @return Returns the String
      */
-    @JsonGetter("customer_id")
     public String getCustomerId() {
-        return customerId;
+        return OptionalNullable.getFrom(customerId);
     }
 
     /**
@@ -126,7 +175,27 @@ public class CreateChargeRequest {
      */
     @JsonSetter("customer_id")
     public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+        this.customerId = OptionalNullable.of(customerId);
+    }
+
+    /**
+     * UnSetter for CustomerId.
+     * The customer's id
+     */
+    public void unsetCustomerId() {
+        customerId = null;
+    }
+
+    /**
+     * Internal Getter for Customer.
+     * Customer data
+     * @return Returns the Internal CreateCustomerRequest
+     */
+    @JsonGetter("customer")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<CreateCustomerRequest> internalGetCustomer() {
+        return this.customer;
     }
 
     /**
@@ -134,9 +203,8 @@ public class CreateChargeRequest {
      * Customer data
      * @return Returns the CreateCustomerRequest
      */
-    @JsonGetter("customer")
     public CreateCustomerRequest getCustomer() {
-        return customer;
+        return OptionalNullable.getFrom(customer);
     }
 
     /**
@@ -146,7 +214,15 @@ public class CreateChargeRequest {
      */
     @JsonSetter("customer")
     public void setCustomer(CreateCustomerRequest customer) {
-        this.customer = customer;
+        this.customer = OptionalNullable.of(customer);
+    }
+
+    /**
+     * UnSetter for Customer.
+     * Customer data
+     */
+    public void unsetCustomer() {
+        customer = null;
     }
 
     /**
@@ -170,13 +246,24 @@ public class CreateChargeRequest {
     }
 
     /**
+     * Internal Getter for Metadata.
+     * Metadata
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
+    }
+
+    /**
      * Getter for Metadata.
      * Metadata
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -186,7 +273,27 @@ public class CreateChargeRequest {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     * Metadata
+     */
+    public void unsetMetadata() {
+        metadata = null;
+    }
+
+    /**
+     * Internal Getter for DueAt.
+     * The charge due date
+     * @return Returns the Internal LocalDateTime
+     */
+    @JsonGetter("due_at")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
+    protected OptionalNullable<LocalDateTime> internalGetDueAt() {
+        return this.dueAt;
     }
 
     /**
@@ -194,11 +301,8 @@ public class CreateChargeRequest {
      * The charge due date
      * @return Returns the LocalDateTime
      */
-    @JsonGetter("due_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getDueAt() {
-        return dueAt;
+        return OptionalNullable.getFrom(dueAt);
     }
 
     /**
@@ -209,16 +313,34 @@ public class CreateChargeRequest {
     @JsonSetter("due_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setDueAt(LocalDateTime dueAt) {
-        this.dueAt = dueAt;
+        this.dueAt = OptionalNullable.of(dueAt);
+    }
+
+    /**
+     * UnSetter for DueAt.
+     * The charge due date
+     */
+    public void unsetDueAt() {
+        dueAt = null;
+    }
+
+    /**
+     * Internal Getter for Antifraud.
+     * @return Returns the Internal CreateAntifraudRequest
+     */
+    @JsonGetter("antifraud")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<CreateAntifraudRequest> internalGetAntifraud() {
+        return this.antifraud;
     }
 
     /**
      * Getter for Antifraud.
      * @return Returns the CreateAntifraudRequest
      */
-    @JsonGetter("antifraud")
     public CreateAntifraudRequest getAntifraud() {
-        return antifraud;
+        return OptionalNullable.getFrom(antifraud);
     }
 
     /**
@@ -227,7 +349,14 @@ public class CreateChargeRequest {
      */
     @JsonSetter("antifraud")
     public void setAntifraud(CreateAntifraudRequest antifraud) {
-        this.antifraud = antifraud;
+        this.antifraud = OptionalNullable.of(antifraud);
+    }
+
+    /**
+     * UnSetter for Antifraud.
+     */
+    public void unsetAntifraud() {
+        antifraud = null;
     }
 
     /**
@@ -256,10 +385,10 @@ public class CreateChargeRequest {
      */
     @Override
     public String toString() {
-        return "CreateChargeRequest [" + "code=" + code + ", amount=" + amount + ", customerId="
-                + customerId + ", customer=" + customer + ", payment=" + payment + ", metadata="
-                + metadata + ", antifraud=" + antifraud + ", orderId=" + orderId + ", dueAt="
-                + dueAt + "]";
+        return "CreateChargeRequest [" + "amount=" + amount + ", payment=" + payment + ", orderId="
+                + orderId + ", code=" + code + ", customerId=" + customerId + ", customer="
+                + customer + ", metadata=" + metadata + ", dueAt=" + dueAt + ", antifraud="
+                + antifraud + "]";
     }
 
     /**
@@ -268,9 +397,13 @@ public class CreateChargeRequest {
      * @return a new {@link CreateChargeRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(code, amount, customerId, customer, payment, metadata,
-                antifraud, orderId)
-                .dueAt(getDueAt());
+        Builder builder = new Builder(amount, payment, orderId);
+        builder.code = internalGetCode();
+        builder.customerId = internalGetCustomerId();
+        builder.customer = internalGetCustomer();
+        builder.metadata = internalGetMetadata();
+        builder.dueAt = internalGetDueAt();
+        builder.antifraud = internalGetAntifraud();
         return builder;
     }
 
@@ -278,15 +411,15 @@ public class CreateChargeRequest {
      * Class to build instances of {@link CreateChargeRequest}.
      */
     public static class Builder {
-        private String code;
         private int amount;
-        private String customerId;
-        private CreateCustomerRequest customer;
         private CreatePaymentRequest payment;
-        private Map<String, String> metadata;
-        private CreateAntifraudRequest antifraud;
         private String orderId;
-        private LocalDateTime dueAt;
+        private OptionalNullable<String> code;
+        private OptionalNullable<String> customerId;
+        private OptionalNullable<CreateCustomerRequest> customer;
+        private OptionalNullable<Map<String, String>> metadata;
+        private OptionalNullable<LocalDateTime> dueAt;
+        private OptionalNullable<CreateAntifraudRequest> antifraud;
 
         /**
          * Initialization constructor.
@@ -296,36 +429,14 @@ public class CreateChargeRequest {
 
         /**
          * Initialization constructor.
-         * @param  code  String value for code.
          * @param  amount  int value for amount.
-         * @param  customerId  String value for customerId.
-         * @param  customer  CreateCustomerRequest value for customer.
          * @param  payment  CreatePaymentRequest value for payment.
-         * @param  metadata  Map of String, value for metadata.
-         * @param  antifraud  CreateAntifraudRequest value for antifraud.
          * @param  orderId  String value for orderId.
          */
-        public Builder(String code, int amount, String customerId, CreateCustomerRequest customer,
-                CreatePaymentRequest payment, Map<String, String> metadata,
-                CreateAntifraudRequest antifraud, String orderId) {
-            this.code = code;
+        public Builder(int amount, CreatePaymentRequest payment, String orderId) {
             this.amount = amount;
-            this.customerId = customerId;
-            this.customer = customer;
             this.payment = payment;
-            this.metadata = metadata;
-            this.antifraud = antifraud;
             this.orderId = orderId;
-        }
-
-        /**
-         * Setter for code.
-         * @param  code  String value for code.
-         * @return Builder
-         */
-        public Builder code(String code) {
-            this.code = code;
-            return this;
         }
 
         /**
@@ -335,26 +446,6 @@ public class CreateChargeRequest {
          */
         public Builder amount(int amount) {
             this.amount = amount;
-            return this;
-        }
-
-        /**
-         * Setter for customerId.
-         * @param  customerId  String value for customerId.
-         * @return Builder
-         */
-        public Builder customerId(String customerId) {
-            this.customerId = customerId;
-            return this;
-        }
-
-        /**
-         * Setter for customer.
-         * @param  customer  CreateCustomerRequest value for customer.
-         * @return Builder
-         */
-        public Builder customer(CreateCustomerRequest customer) {
-            this.customer = customer;
             return this;
         }
 
@@ -369,26 +460,6 @@ public class CreateChargeRequest {
         }
 
         /**
-         * Setter for metadata.
-         * @param  metadata  Map of String, value for metadata.
-         * @return Builder
-         */
-        public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
-         * Setter for antifraud.
-         * @param  antifraud  CreateAntifraudRequest value for antifraud.
-         * @return Builder
-         */
-        public Builder antifraud(CreateAntifraudRequest antifraud) {
-            this.antifraud = antifraud;
-            return this;
-        }
-
-        /**
          * Setter for orderId.
          * @param  orderId  String value for orderId.
          * @return Builder
@@ -399,12 +470,116 @@ public class CreateChargeRequest {
         }
 
         /**
+         * Setter for code.
+         * @param  code  String value for code.
+         * @return Builder
+         */
+        public Builder code(String code) {
+            this.code = OptionalNullable.of(code);
+            return this;
+        }
+
+        /**
+         * UnSetter for code.
+         * @return Builder
+         */
+        public Builder unsetCode() {
+            code = null;
+            return this;
+        }
+
+        /**
+         * Setter for customerId.
+         * @param  customerId  String value for customerId.
+         * @return Builder
+         */
+        public Builder customerId(String customerId) {
+            this.customerId = OptionalNullable.of(customerId);
+            return this;
+        }
+
+        /**
+         * UnSetter for customerId.
+         * @return Builder
+         */
+        public Builder unsetCustomerId() {
+            customerId = null;
+            return this;
+        }
+
+        /**
+         * Setter for customer.
+         * @param  customer  CreateCustomerRequest value for customer.
+         * @return Builder
+         */
+        public Builder customer(CreateCustomerRequest customer) {
+            this.customer = OptionalNullable.of(customer);
+            return this;
+        }
+
+        /**
+         * UnSetter for customer.
+         * @return Builder
+         */
+        public Builder unsetCustomer() {
+            customer = null;
+            return this;
+        }
+
+        /**
+         * Setter for metadata.
+         * @param  metadata  Map of String, value for metadata.
+         * @return Builder
+         */
+        public Builder metadata(Map<String, String> metadata) {
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
+            return this;
+        }
+
+        /**
          * Setter for dueAt.
          * @param  dueAt  LocalDateTime value for dueAt.
          * @return Builder
          */
         public Builder dueAt(LocalDateTime dueAt) {
-            this.dueAt = dueAt;
+            this.dueAt = OptionalNullable.of(dueAt);
+            return this;
+        }
+
+        /**
+         * UnSetter for dueAt.
+         * @return Builder
+         */
+        public Builder unsetDueAt() {
+            dueAt = null;
+            return this;
+        }
+
+        /**
+         * Setter for antifraud.
+         * @param  antifraud  CreateAntifraudRequest value for antifraud.
+         * @return Builder
+         */
+        public Builder antifraud(CreateAntifraudRequest antifraud) {
+            this.antifraud = OptionalNullable.of(antifraud);
+            return this;
+        }
+
+        /**
+         * UnSetter for antifraud.
+         * @return Builder
+         */
+        public Builder unsetAntifraud() {
+            antifraud = null;
             return this;
         }
 
@@ -413,8 +588,8 @@ public class CreateChargeRequest {
          * @return {@link CreateChargeRequest}
          */
         public CreateChargeRequest build() {
-            return new CreateChargeRequest(code, amount, customerId, customer, payment, metadata,
-                    antifraud, orderId, dueAt);
+            return new CreateChargeRequest(amount, payment, orderId, code, customerId, customer,
+                    metadata, dueAt, antifraud);
         }
     }
 }

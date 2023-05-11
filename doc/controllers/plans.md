@@ -181,11 +181,6 @@ UpdatePlanItemRequest body = new UpdatePlanItemRequest.Builder(
                 31,
                 225
             )
-            .build(),
-            new UpdatePriceBracketRequest.Builder(
-                32,
-                226
-            )
             .build()
         )
     )
@@ -330,26 +325,6 @@ CreatePlanRequest body = new CreatePlanRequest.Builder(
             .build(),
             "id3",
             "description3"
-        )
-        .build(),
-        new CreatePlanItemRequest.Builder(
-            "name4",
-            new CreatePricingSchemeRequest.Builder(
-                "scheme_type4"
-            )
-            .build(),
-            "id4",
-            "description4"
-        )
-        .build(),
-        new CreatePlanItemRequest.Builder(
-            "name5",
-            new CreatePricingSchemeRequest.Builder(
-                "scheme_type3"
-            )
-            .build(),
-            "id5",
-            "description5"
         )
         .build()
     ),

@@ -262,20 +262,6 @@ CreateOrderRequest body = new CreateOrderRequest.Builder(
             215,
             "category1"
         )
-        .build(),
-        new CreateOrderItemRequest.Builder(
-            102,
-            "description4",
-            216,
-            "category2"
-        )
-        .build(),
-        new CreateOrderItemRequest.Builder(
-            103,
-            "description5",
-            217,
-            "category3"
-        )
         .build()
     ),
     new CreateCustomerRequest.Builder(
@@ -312,10 +298,6 @@ CreateOrderRequest body = new CreateOrderRequest.Builder(
     Arrays.asList(
         new CreatePaymentRequest.Builder(
             "payment_method0"
-        )
-        .build(),
-        new CreatePaymentRequest.Builder(
-            "payment_method9"
         )
         .build()
     ),
