@@ -37,6 +37,7 @@ public class GetPixTransactionResponse
     private OptionalNullable<List<PixAdditionalInformation>> additionalInformation;
     private OptionalNullable<String> endToEndId;
     private OptionalNullable<GetPixPayerResponse> payer;
+    private OptionalNullable<String> providerTransactionId;
 
     /**
      * Default constructor.
@@ -74,6 +75,7 @@ public class GetPixTransactionResponse
      *         additionalInformation.
      * @param  endToEndId  String value for endToEndId.
      * @param  payer  GetPixPayerResponse value for payer.
+     * @param  providerTransactionId  String value for providerTransactionId.
      */
     public GetPixTransactionResponse(
             String gatewayId,
@@ -100,7 +102,8 @@ public class GetPixTransactionResponse
             LocalDateTime expiresAt,
             List<PixAdditionalInformation> additionalInformation,
             String endToEndId,
-            GetPixPayerResponse payer) {
+            GetPixPayerResponse payer,
+            String providerTransactionId) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -110,6 +113,7 @@ public class GetPixTransactionResponse
         this.additionalInformation = OptionalNullable.of(additionalInformation);
         this.endToEndId = OptionalNullable.of(endToEndId);
         this.payer = OptionalNullable.of(payer);
+        this.providerTransactionId = OptionalNullable.of(providerTransactionId);
     }
 
     /**
@@ -130,7 +134,8 @@ public class GetPixTransactionResponse
             OptionalNullable<Integer> maxDaysToPayPastDue, OptionalNullable<String> qrCode,
             OptionalNullable<String> qrCodeUrl, OptionalNullable<LocalDateTime> expiresAt,
             OptionalNullable<List<PixAdditionalInformation>> additionalInformation,
-            OptionalNullable<String> endToEndId, OptionalNullable<GetPixPayerResponse> payer) {
+            OptionalNullable<String> endToEndId, OptionalNullable<GetPixPayerResponse> payer,
+            OptionalNullable<String> providerTransactionId) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -140,6 +145,7 @@ public class GetPixTransactionResponse
         this.additionalInformation = additionalInformation;
         this.endToEndId = endToEndId;
         this.payer = payer;
+        this.providerTransactionId = providerTransactionId;
     }
 
     /**
@@ -354,6 +360,45 @@ public class GetPixTransactionResponse
     }
 
     /**
+     * Internal Getter for ProviderTransactionId.
+     * Provider transaction id
+     * @return Returns the Internal String
+     */
+    @JsonGetter("provider_transaction_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetProviderTransactionId() {
+        return this.providerTransactionId;
+    }
+
+    /**
+     * Getter for ProviderTransactionId.
+     * Provider transaction id
+     * @return Returns the String
+     */
+    public String getProviderTransactionId() {
+        return OptionalNullable.getFrom(providerTransactionId);
+    }
+
+    /**
+     * Setter for ProviderTransactionId.
+     * Provider transaction id
+     * @param providerTransactionId Value for String
+     */
+    @JsonSetter("provider_transaction_id")
+    public void setProviderTransactionId(String providerTransactionId) {
+        this.providerTransactionId = OptionalNullable.of(providerTransactionId);
+    }
+
+    /**
+     * UnSetter for ProviderTransactionId.
+     * Provider transaction id
+     */
+    public void unsetProviderTransactionId() {
+        providerTransactionId = null;
+    }
+
+    /**
      * Converts this GetPixTransactionResponse into string format.
      * @return String representation of this class
      */
@@ -361,11 +406,12 @@ public class GetPixTransactionResponse
     public String toString() {
         return "GetPixTransactionResponse [" + "qrCode=" + qrCode + ", qrCodeUrl=" + qrCodeUrl
                 + ", expiresAt=" + expiresAt + ", additionalInformation=" + additionalInformation
-                + ", endToEndId=" + endToEndId + ", payer=" + payer + ", gatewayId="
-                + getGatewayId() + ", amount=" + getAmount() + ", status=" + getStatus()
-                + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt="
-                + getUpdatedAt() + ", attemptCount=" + getAttemptCount() + ", maxAttempts="
-                + getMaxAttempts() + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
+                + ", endToEndId=" + endToEndId + ", payer=" + payer + ", providerTransactionId="
+                + providerTransactionId + ", gatewayId=" + getGatewayId() + ", amount="
+                + getAmount() + ", status=" + getStatus() + ", success=" + getSuccess()
+                + ", createdAt=" + getCreatedAt() + ", updatedAt=" + getUpdatedAt()
+                + ", attemptCount=" + getAttemptCount() + ", maxAttempts=" + getMaxAttempts()
+                + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
                 + ", transactionType=" + getTransactionType() + ", id=" + getId()
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", metadata=" + getMetadata() + ", split=" + getSplit()
@@ -387,6 +433,7 @@ public class GetPixTransactionResponse
         builder.additionalInformation = internalGetAdditionalInformation();
         builder.endToEndId = internalGetEndToEndId();
         builder.payer = internalGetPayer();
+        builder.providerTransactionId = internalGetProviderTransactionId();
         builder.gatewayId = internalGetGatewayId();
         builder.amount = internalGetAmount();
         builder.status = internalGetStatus();
@@ -437,6 +484,7 @@ public class GetPixTransactionResponse
         private OptionalNullable<List<PixAdditionalInformation>> additionalInformation;
         private OptionalNullable<String> endToEndId;
         private OptionalNullable<GetPixPayerResponse> payer;
+        private OptionalNullable<String> providerTransactionId;
 
 
 
@@ -909,6 +957,25 @@ public class GetPixTransactionResponse
         }
 
         /**
+         * Setter for providerTransactionId.
+         * @param  providerTransactionId  String value for providerTransactionId.
+         * @return Builder
+         */
+        public Builder providerTransactionId(String providerTransactionId) {
+            this.providerTransactionId = OptionalNullable.of(providerTransactionId);
+            return this;
+        }
+
+        /**
+         * UnSetter for providerTransactionId.
+         * @return Builder
+         */
+        public Builder unsetProviderTransactionId() {
+            providerTransactionId = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetPixTransactionResponse} object using the set fields.
          * @return {@link GetPixTransactionResponse}
          */
@@ -917,7 +984,7 @@ public class GetPixTransactionResponse
                     updatedAt, attemptCount, maxAttempts, splits, nextAttempt, transactionType, id,
                     gatewayResponse, antifraudResponse, metadata, split, interest, fine,
                     maxDaysToPayPastDue, qrCode, qrCodeUrl, expiresAt, additionalInformation,
-                    endToEndId, payer);
+                    endToEndId, payer, providerTransactionId);
         }
     }
 }
