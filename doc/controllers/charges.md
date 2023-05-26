@@ -12,17 +12,17 @@ ChargesController chargesController = client.getChargesController();
 
 * [Update Charge Metadata](../../doc/controllers/charges.md#update-charge-metadata)
 * [Update Charge Payment Method](../../doc/controllers/charges.md#update-charge-payment-method)
-* [Get Charge Transactions](../../doc/controllers/charges.md#get-charge-transactions)
-* [Update Charge Due Date](../../doc/controllers/charges.md#update-charge-due-date)
-* [Get Charges](../../doc/controllers/charges.md#get-charges)
-* [Capture Charge](../../doc/controllers/charges.md#capture-charge)
 * [Update Charge Card](../../doc/controllers/charges.md#update-charge-card)
-* [Get Charge](../../doc/controllers/charges.md#get-charge)
 * [Get Charges Summary](../../doc/controllers/charges.md#get-charges-summary)
-* [Retry Charge](../../doc/controllers/charges.md#retry-charge)
-* [Cancel Charge](../../doc/controllers/charges.md#cancel-charge)
 * [Create Charge](../../doc/controllers/charges.md#create-charge)
+* [Get Charge Transactions](../../doc/controllers/charges.md#get-charge-transactions)
+* [Capture Charge](../../doc/controllers/charges.md#capture-charge)
+* [Get Charge](../../doc/controllers/charges.md#get-charge)
+* [Cancel Charge](../../doc/controllers/charges.md#cancel-charge)
+* [Get Charges](../../doc/controllers/charges.md#get-charges)
 * [Confirm Payment](../../doc/controllers/charges.md#confirm-payment)
+* [Update Charge Due Date](../../doc/controllers/charges.md#update-charge-due-date)
+* [Retry Charge](../../doc/controllers/charges.md#retry-charge)
 
 
 # Update Charge Metadata
@@ -165,6 +165,138 @@ try {
 ```
 
 
+# Update Charge Card
+
+Updates the card from a charge
+
+```java
+GetChargeResponse updateChargeCard(
+    final String chargeId,
+    final UpdateChargeCardRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `request` | [`UpdateChargeCardRequest`](../../doc/models/update-charge-card-request.md) | Body, Required | Request for updating a charge's card |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+UpdateChargeCardRequest request = new UpdateChargeCardRequest.Builder(
+    false,
+    "card_id2",
+    new CreateCardRequest.Builder()
+        .type("credit")
+        .build(),
+    false
+)
+.build();
+
+
+try {
+    GetChargeResponse result = chargesController.updateChargeCard(chargeId, request, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Charges Summary
+
+```java
+GetChargesSummaryResponse getChargesSummary(
+    final String status,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `status` | `String` | Query, Required | - |
+| `createdSince` | `LocalDateTime` | Query, Optional | - |
+| `createdUntil` | `LocalDateTime` | Query, Optional | - |
+
+## Response Type
+
+[`GetChargesSummaryResponse`](../../doc/models/get-charges-summary-response.md)
+
+## Example Usage
+
+```java
+String status = "status8";
+
+try {
+    GetChargesSummaryResponse result = chargesController.getChargesSummary(status, null, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Create Charge
+
+Creates a new charge
+
+```java
+GetChargeResponse createCharge(
+    final CreateChargeRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `request` | [`CreateChargeRequest`](../../doc/models/create-charge-request.md) | Body, Required | Request for creating a charge |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+CreateChargeRequest request = new CreateChargeRequest.Builder(
+    242,
+    new CreatePaymentRequest.Builder(
+        "payment_method2"
+    )
+    .build(),
+    "order_id0"
+)
+.build();
+
+
+try {
+    GetChargeResponse result = chargesController.createCharge(request, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
 # Get Charge Transactions
 
 ```java
@@ -202,14 +334,14 @@ try {
 ```
 
 
-# Update Charge Due Date
+# Capture Charge
 
-Updates the due date from a charge
+Captures a charge
 
 ```java
-GetChargeResponse updateChargeDueDate(
+GetChargeResponse captureCharge(
     final String chargeId,
-    final UpdateChargeDueDateRequest request,
+    final CreateCaptureChargeRequest request,
     final String idempotencyKey)
 ```
 
@@ -217,8 +349,8 @@ GetChargeResponse updateChargeDueDate(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge Id |
-| `request` | [`UpdateChargeDueDateRequest`](../../doc/models/update-charge-due-date-request.md) | Body, Required | Request for updating the due date |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `request` | [`CreateCaptureChargeRequest`](../../doc/models/create-capture-charge-request.md) | Body, Optional | Request for capturing a charge |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
@@ -229,12 +361,83 @@ GetChargeResponse updateChargeDueDate(
 
 ```java
 String chargeId = "charge_id8";
-UpdateChargeDueDateRequest request = new UpdateChargeDueDateRequest.Builder()
-    .build();
-
 
 try {
-    GetChargeResponse result = chargesController.updateChargeDueDate(chargeId, request, null);
+    GetChargeResponse result = chargesController.captureCharge(chargeId, null, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Charge
+
+Get a charge from its id
+
+```java
+GetChargeResponse getCharge(
+    final String chargeId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+
+try {
+    GetChargeResponse result = chargesController.getCharge(chargeId);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Cancel Charge
+
+Cancel a charge
+
+```java
+GetChargeResponse cancelCharge(
+    final String chargeId,
+    final CreateCancelChargeRequest request,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `chargeId` | `String` | Template, Required | Charge id |
+| `request` | [`CreateCancelChargeRequest`](../../doc/models/create-cancel-charge-request.md) | Body, Optional | Request for cancelling a charge |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetChargeResponse`](../../doc/models/get-charge-response.md)
+
+## Example Usage
+
+```java
+String chargeId = "charge_id8";
+
+try {
+    GetChargeResponse result = chargesController.cancelCharge(chargeId, null, null);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -293,14 +496,12 @@ try {
 ```
 
 
-# Capture Charge
-
-Captures a charge
+# Confirm Payment
 
 ```java
-GetChargeResponse captureCharge(
+GetChargeResponse confirmPayment(
     final String chargeId,
-    final CreateCaptureChargeRequest request,
+    final CreateConfirmPaymentRequest request,
     final String idempotencyKey)
 ```
 
@@ -308,8 +509,8 @@ GetChargeResponse captureCharge(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`CreateCaptureChargeRequest`](../../doc/models/create-capture-charge-request.md) | Body, Optional | Request for capturing a charge |
+| `chargeId` | `String` | Template, Required | - |
+| `request` | [`CreateConfirmPaymentRequest`](../../doc/models/create-confirm-payment-request.md) | Body, Optional | Request for confirm payment |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
@@ -322,7 +523,7 @@ GetChargeResponse captureCharge(
 String chargeId = "charge_id8";
 
 try {
-    GetChargeResponse result = chargesController.captureCharge(chargeId, null, null);
+    GetChargeResponse result = chargesController.confirmPayment(chargeId, null, null);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -332,14 +533,14 @@ try {
 ```
 
 
-# Update Charge Card
+# Update Charge Due Date
 
-Updates the card from a charge
+Updates the due date from a charge
 
 ```java
-GetChargeResponse updateChargeCard(
+GetChargeResponse updateChargeDueDate(
     final String chargeId,
-    final UpdateChargeCardRequest request,
+    final UpdateChargeDueDateRequest request,
     final String idempotencyKey)
 ```
 
@@ -347,8 +548,8 @@ GetChargeResponse updateChargeCard(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`UpdateChargeCardRequest`](../../doc/models/update-charge-card-request.md) | Body, Required | Request for updating a charge's card |
+| `chargeId` | `String` | Template, Required | Charge Id |
+| `request` | [`UpdateChargeDueDateRequest`](../../doc/models/update-charge-due-date-request.md) | Body, Required | Request for updating the due date |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
@@ -359,91 +560,12 @@ GetChargeResponse updateChargeCard(
 
 ```java
 String chargeId = "charge_id8";
-UpdateChargeCardRequest request = new UpdateChargeCardRequest.Builder(
-    false,
-    "card_id2",
-    new CreateCardRequest.Builder()
-        .type("credit")
-        .build(),
-    false
-)
-.build();
+UpdateChargeDueDateRequest request = new UpdateChargeDueDateRequest.Builder()
+    .build();
 
 
 try {
-    GetChargeResponse result = chargesController.updateChargeCard(chargeId, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Charge
-
-Get a charge from its id
-
-```java
-GetChargeResponse getCharge(
-    final String chargeId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-
-try {
-    GetChargeResponse result = chargesController.getCharge(chargeId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Charges Summary
-
-```java
-GetChargesSummaryResponse getChargesSummary(
-    final String status,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `status` | `String` | Query, Required | - |
-| `createdSince` | `LocalDateTime` | Query, Optional | - |
-| `createdUntil` | `LocalDateTime` | Query, Optional | - |
-
-## Response Type
-
-[`GetChargesSummaryResponse`](../../doc/models/get-charges-summary-response.md)
-
-## Example Usage
-
-```java
-String status = "status8";
-
-try {
-    GetChargesSummaryResponse result = chargesController.getChargesSummary(status, null, null);
+    GetChargeResponse result = chargesController.updateChargeDueDate(chargeId, request, null);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -481,128 +603,6 @@ String chargeId = "charge_id8";
 
 try {
     GetChargeResponse result = chargesController.retryCharge(chargeId, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Cancel Charge
-
-Cancel a charge
-
-```java
-GetChargeResponse cancelCharge(
-    final String chargeId,
-    final CreateCancelChargeRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | Charge id |
-| `request` | [`CreateCancelChargeRequest`](../../doc/models/create-cancel-charge-request.md) | Body, Optional | Request for cancelling a charge |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-
-try {
-    GetChargeResponse result = chargesController.cancelCharge(chargeId, null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Charge
-
-Creates a new charge
-
-```java
-GetChargeResponse createCharge(
-    final CreateChargeRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `request` | [`CreateChargeRequest`](../../doc/models/create-charge-request.md) | Body, Required | Request for creating a charge |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-CreateChargeRequest request = new CreateChargeRequest.Builder(
-    242,
-    new CreatePaymentRequest.Builder(
-        "payment_method2"
-    )
-    .build(),
-    "order_id0"
-)
-.build();
-
-
-try {
-    GetChargeResponse result = chargesController.createCharge(request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Confirm Payment
-
-```java
-GetChargeResponse confirmPayment(
-    final String chargeId,
-    final CreateConfirmPaymentRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `chargeId` | `String` | Template, Required | - |
-| `request` | [`CreateConfirmPaymentRequest`](../../doc/models/create-confirm-payment-request.md) | Body, Optional | Request for confirm payment |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetChargeResponse`](../../doc/models/get-charge-response.md)
-
-## Example Usage
-
-```java
-String chargeId = "charge_id8";
-
-try {
-    GetChargeResponse result = chargesController.confirmPayment(chargeId, null, null);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();

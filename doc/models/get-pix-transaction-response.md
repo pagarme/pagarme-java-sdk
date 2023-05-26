@@ -21,6 +21,7 @@ Response object when getting a pix transaction
 | `AdditionalInformation` | [`List<PixAdditionalInformation>`](../../doc/models/pix-additional-information.md) | Optional | - | List<PixAdditionalInformation> getAdditionalInformation() | setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) |
 | `EndToEndId` | `String` | Optional | - | String getEndToEndId() | setEndToEndId(String endToEndId) |
 | `Payer` | [`GetPixPayerResponse`](../../doc/models/get-pix-payer-response.md) | Optional | - | GetPixPayerResponse getPayer() | setPayer(GetPixPayerResponse payer) |
+| `PixProviderTid` | `String` | Optional | Pix provider TID | String getPixProviderTid() | setPixProviderTid(String pixProviderTid) |
 
 ## Example (as JSON)
 
