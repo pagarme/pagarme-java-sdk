@@ -10,35 +10,9 @@ TransfersController transfersController = client.getTransfersController();
 
 ## Methods
 
-* [Get Transfers](../../doc/controllers/transfers.md#get-transfers)
 * [Get Transfer by Id](../../doc/controllers/transfers.md#get-transfer-by-id)
 * [Create Transfer](../../doc/controllers/transfers.md#create-transfer)
-
-
-# Get Transfers
-
-Gets all transfers
-
-```java
-ListTransfers getTransfers()
-```
-
-## Response Type
-
-[`ListTransfers`](../../doc/models/list-transfers.md)
-
-## Example Usage
-
-```java
-try {
-    ListTransfers result = transfersController.getTransfers();
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+* [Get Transfers](../../doc/controllers/transfers.md#get-transfers)
 
 
 # Get Transfer by Id
@@ -103,6 +77,32 @@ CreateTransfer request = new CreateTransfer.Builder(
 
 try {
     GetTransfer result = transfersController.createTransfer(request);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Transfers
+
+Gets all transfers
+
+```java
+ListTransfers getTransfers()
+```
+
+## Response Type
+
+[`ListTransfers`](../../doc/models/list-transfers.md)
+
+## Example Usage
+
+```java
+try {
+    ListTransfers result = transfersController.getTransfers();
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();

@@ -11,15 +11,15 @@ OrdersController ordersController = client.getOrdersController();
 ## Methods
 
 * [Get Orders](../../doc/controllers/orders.md#get-orders)
-* [Get Order Item](../../doc/controllers/orders.md#get-order-item)
-* [Get Order](../../doc/controllers/orders.md#get-order)
-* [Close Order](../../doc/controllers/orders.md#close-order)
-* [Create Order](../../doc/controllers/orders.md#create-order)
 * [Update Order Item](../../doc/controllers/orders.md#update-order-item)
 * [Delete All Order Items](../../doc/controllers/orders.md#delete-all-order-items)
-* [Update Order Metadata](../../doc/controllers/orders.md#update-order-metadata)
 * [Delete Order Item](../../doc/controllers/orders.md#delete-order-item)
+* [Close Order](../../doc/controllers/orders.md#close-order)
+* [Create Order](../../doc/controllers/orders.md#create-order)
 * [Create Order Item](../../doc/controllers/orders.md#create-order-item)
+* [Get Order Item](../../doc/controllers/orders.md#get-order-item)
+* [Update Order Metadata](../../doc/controllers/orders.md#update-order-metadata)
+* [Get Order](../../doc/controllers/orders.md#get-order)
 
 
 # Get Orders
@@ -67,12 +67,14 @@ try {
 ```
 
 
-# Get Order Item
+# Update Order Item
 
 ```java
-GetOrderItemResponse getOrderItem(
+GetOrderItemResponse updateOrderItem(
     final String orderId,
-    final String itemId)
+    final String itemId,
+    final UpdateOrderItemRequest request,
+    final String idempotencyKey)
 ```
 
 ## Parameters
@@ -81,6 +83,89 @@ GetOrderItemResponse getOrderItem(
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
 | `itemId` | `String` | Template, Required | Item Id |
+| `request` | [`UpdateOrderItemRequest`](../../doc/models/update-order-item-request.md) | Body, Required | Item Model |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
+
+## Example Usage
+
+```java
+String orderId = "orderId2";
+String itemId = "itemId8";
+UpdateOrderItemRequest request = new UpdateOrderItemRequest.Builder(
+    242,
+    "description6",
+    100,
+    "category4"
+)
+.build();
+
+
+try {
+    GetOrderItemResponse result = ordersController.updateOrderItem(orderId, itemId, request, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Delete All Order Items
+
+```java
+GetOrderResponse deleteAllOrderItems(
+    final String orderId,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `orderId` | `String` | Template, Required | Order Id |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
+
+## Example Usage
+
+```java
+String orderId = "orderId2";
+
+try {
+    GetOrderResponse result = ordersController.deleteAllOrderItems(orderId, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Delete Order Item
+
+```java
+GetOrderItemResponse deleteOrderItem(
+    final String orderId,
+    final String itemId,
+    final String idempotencyKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `orderId` | `String` | Template, Required | Order Id |
+| `itemId` | `String` | Template, Required | Item Id |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
@@ -93,42 +178,7 @@ String orderId = "orderId2";
 String itemId = "itemId8";
 
 try {
-    GetOrderItemResponse result = ordersController.getOrderItem(orderId, itemId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Order
-
-Gets an order
-
-```java
-GetOrderResponse getOrder(
-    final String orderId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order id |
-
-## Response Type
-
-[`GetOrderResponse`](../../doc/models/get-order-response.md)
-
-## Example Usage
-
-```java
-String orderId = "order_id6";
-
-try {
-    GetOrderResponse result = ordersController.getOrder(orderId);
+    GetOrderItemResponse result = ordersController.deleteOrderItem(orderId, itemId, null);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -272,13 +322,12 @@ try {
 ```
 
 
-# Update Order Item
+# Create Order Item
 
 ```java
-GetOrderItemResponse updateOrderItem(
+GetOrderItemResponse createOrderItem(
     final String orderId,
-    final String itemId,
-    final UpdateOrderItemRequest request,
+    final CreateOrderItemRequest request,
     final String idempotencyKey)
 ```
 
@@ -287,8 +336,7 @@ GetOrderItemResponse updateOrderItem(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
-| `itemId` | `String` | Template, Required | Item Id |
-| `request` | [`UpdateOrderItemRequest`](../../doc/models/update-order-item-request.md) | Body, Required | Item Model |
+| `request` | [`CreateOrderItemRequest`](../../doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
@@ -299,8 +347,7 @@ GetOrderItemResponse updateOrderItem(
 
 ```java
 String orderId = "orderId2";
-String itemId = "itemId8";
-UpdateOrderItemRequest request = new UpdateOrderItemRequest.Builder(
+CreateOrderItemRequest request = new CreateOrderItemRequest.Builder(
     242,
     "description6",
     100,
@@ -310,7 +357,7 @@ UpdateOrderItemRequest request = new UpdateOrderItemRequest.Builder(
 
 
 try {
-    GetOrderItemResponse result = ordersController.updateOrderItem(orderId, itemId, request, null);
+    GetOrderItemResponse result = ordersController.createOrderItem(orderId, request, null);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -320,12 +367,12 @@ try {
 ```
 
 
-# Delete All Order Items
+# Get Order Item
 
 ```java
-GetOrderResponse deleteAllOrderItems(
+GetOrderItemResponse getOrderItem(
     final String orderId,
-    final String idempotencyKey)
+    final String itemId)
 ```
 
 ## Parameters
@@ -333,19 +380,20 @@ GetOrderResponse deleteAllOrderItems(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
-| `idempotencyKey` | `String` | Header, Optional | - |
+| `itemId` | `String` | Template, Required | Item Id |
 
 ## Response Type
 
-[`GetOrderResponse`](../../doc/models/get-order-response.md)
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
 
 ```java
 String orderId = "orderId2";
+String itemId = "itemId8";
 
 try {
-    GetOrderResponse result = ordersController.deleteAllOrderItems(orderId, null);
+    GetOrderItemResponse result = ordersController.getOrderItem(orderId, itemId);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -401,80 +449,32 @@ try {
 ```
 
 
-# Delete Order Item
+# Get Order
+
+Gets an order
 
 ```java
-GetOrderItemResponse deleteOrderItem(
-    final String orderId,
-    final String itemId,
-    final String idempotencyKey)
+GetOrderResponse getOrder(
+    final String orderId)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order Id |
-| `itemId` | `String` | Template, Required | Item Id |
-| `idempotencyKey` | `String` | Header, Optional | - |
+| `orderId` | `String` | Template, Required | Order id |
 
 ## Response Type
 
-[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
 ```java
-String orderId = "orderId2";
-String itemId = "itemId8";
+String orderId = "order_id6";
 
 try {
-    GetOrderItemResponse result = ordersController.deleteOrderItem(orderId, itemId, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Order Item
-
-```java
-GetOrderItemResponse createOrderItem(
-    final String orderId,
-    final CreateOrderItemRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order Id |
-| `request` | [`CreateOrderItemRequest`](../../doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
-
-## Example Usage
-
-```java
-String orderId = "orderId2";
-CreateOrderItemRequest request = new CreateOrderItemRequest.Builder(
-    242,
-    "description6",
-    100,
-    "category4"
-)
-.build();
-
-
-try {
-    GetOrderItemResponse result = ordersController.createOrderItem(orderId, request, null);
+    GetOrderResponse result = ordersController.getOrder(orderId);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
