@@ -20,6 +20,12 @@ public interface Configuration {
     Environment getEnvironment();
 
     /**
+     * .
+     * @return a copy of serviceRefererName
+     */
+    String getServiceRefererName();
+
+    /**
      * Http Client Configuration instance.
      * @return a copy of httpClientConfig
      */

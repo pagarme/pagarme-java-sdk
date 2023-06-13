@@ -60,12 +60,17 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
 
     private static final CompatibilityFactory compatibilityFactory = new CompatibilityFactoryImpl();
 
-    private static String userAgent = "PagarmeApiSDK - Java 6.7.12";
+    private static String userAgent = "PagarmeApiSDK - Java 6.7.13";
 
     /**
      * Current API environment.
      */
     private final Environment environment;
+
+    /**
+     * .
+     */
+    private final String serviceRefererName;
 
     /**
      * The HTTP Client instance to use for making HTTP requests.
@@ -88,10 +93,12 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     private Map<String, Authentication> authentications;
 
 
-    private PagarmeApiSDKClient(Environment environment, HttpClient httpClient,
-            ReadonlyHttpClientConfiguration httpClientConfig, String basicAuthUserName,
-            String basicAuthPassword, Map<String, Authentication> authentications) {
+    private PagarmeApiSDKClient(Environment environment, String serviceRefererName,
+            HttpClient httpClient, ReadonlyHttpClientConfiguration httpClientConfig,
+            String basicAuthUserName, String basicAuthPassword,
+            Map<String, Authentication> authentications) {
         this.environment = environment;
+        this.serviceRefererName = serviceRefererName;
         this.httpClient = httpClient;
         this.httpClientConfig = httpClientConfig;
         this.authentications = 
@@ -110,6 +117,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
                 .authentication(this.authentications).compatibilityFactory(compatibilityFactory)
                 .httpClient(httpClient).baseUri(server -> getBaseUri(server))
                 .userAgent(userAgent)
+                .globalHeader("ServiceRefererName", serviceRefererName)
                 .build();
         plans = new DefaultPlansController(globalConfig);
         subscriptions = new DefaultSubscriptionsController(globalConfig);
@@ -219,6 +227,14 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
+     * .
+     * @return serviceRefererName
+     */
+    public String getServiceRefererName() {
+        return serviceRefererName;
+    }
+
+    /**
      * The HTTP Client instance to use for making HTTP requests.
      * @return httpClient
      */
@@ -303,8 +319,9 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
      */
     @Override
     public String toString() {
-        return "PagarmeApiSDKClient [" + "environment=" + environment + ", httpClientConfig="
-                + httpClientConfig + ", authentications=" + authentications + "]";
+        return "PagarmeApiSDKClient [" + "environment=" + environment + ", serviceRefererName="
+                + serviceRefererName + ", httpClientConfig=" + httpClientConfig
+                + ", authentications=" + authentications + "]";
     }
 
     /**
@@ -315,6 +332,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     public Builder newBuilder() {
         Builder builder = new Builder();
         builder.environment = getEnvironment();
+        builder.serviceRefererName = getServiceRefererName();
         builder.httpClient = getHttpClient();
         builder.basicAuthUserName = getBasicAuthCredentials().getBasicAuthUserName();
         builder.basicAuthPassword = getBasicAuthCredentials().getBasicAuthPassword();
@@ -330,6 +348,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     public static class Builder {
 
         private Environment environment = Environment.PRODUCTION;
+        private String serviceRefererName = "";
         private HttpClient httpClient;
         private String basicAuthUserName = "TODO: Replace";
         private String basicAuthPassword = "TODO: Replace";
@@ -367,6 +386,19 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
         }
 
         /**
+         * .
+         * @param serviceRefererName The serviceRefererName for client.
+         * @return Builder
+         */
+        public Builder serviceRefererName(String serviceRefererName) {
+            if (serviceRefererName == null) {
+                throw new NullPointerException("serviceRefererName cannot be null");
+            }
+            this.serviceRefererName = serviceRefererName;
+            return this;
+        }
+
+        /**
          * The timeout to use for making HTTP requests.
          * @deprecated This method will be removed in a future version. Use
          *             {@link #httpClientConfig(Consumer) httpClientConfig} instead.
@@ -399,8 +431,8 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
             HttpClientConfiguration httpClientConfig = httpClientConfigBuilder.build();
             httpClient = new OkClient(httpClientConfig.getConfiguration(), compatibilityFactory);
 
-            return new PagarmeApiSDKClient(environment, httpClient, httpClientConfig,
-                    basicAuthUserName, basicAuthPassword, authentications);
+            return new PagarmeApiSDKClient(environment, serviceRefererName, httpClient,
+                    httpClientConfig, basicAuthUserName, basicAuthPassword, authentications);
         }
     }
 }
