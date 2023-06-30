@@ -17,7 +17,7 @@ Request for creating an order
 | `Code` | `String` | Required | The order code | String getCode() | setCode(String code) |
 | `CustomerId` | `String` | Optional | The customer id | String getCustomerId() | setCustomerId(String customerId) |
 | `Shipping` | [`CreateShippingRequest`](../../doc/models/create-shipping-request.md) | Optional | Shipping data | CreateShippingRequest getShipping() | setShipping(CreateShippingRequest shipping) |
-| `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
+| `Metadata` | `Map<String, String>` | Optional | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `AntifraudEnabled` | `Boolean` | Optional | Defines whether the order will go through anti-fraud | Boolean getAntifraudEnabled() | setAntifraudEnabled(Boolean antifraudEnabled) |
 | `Ip` | `String` | Optional | Ip address | String getIp() | setIp(String ip) |
 | `SessionId` | `String` | Optional | Session id | String getSessionId() | setSessionId(String sessionId) |
@@ -137,11 +137,6 @@ Request for creating an order
           "days": 28,
           "type": "type4",
           "amount": 102
-        },
-        "fine": {
-          "days": 10,
-          "type": "type8",
-          "amount": 84
         }
       },
       "currency": "currency6",
@@ -161,11 +156,6 @@ Request for creating an order
     }
   ],
   "code": "code8",
-  "metadata": {
-    "key0": "metadata3",
-    "key1": "metadata4",
-    "key2": "metadata5"
-  },
   "closed": true,
   "customer_id": "customer_id8",
   "shipping": {
@@ -193,9 +183,13 @@ Request for creating an order
     "estimated_delivery_date": "2016-03-13T12:52:32.123Z",
     "type": "type6"
   },
+  "metadata": {
+    "key0": "metadata3",
+    "key1": "metadata4",
+    "key2": "metadata5"
+  },
   "antifraud_enabled": false,
-  "ip": "ip4",
-  "session_id": "session_id8"
+  "ip": "ip4"
 }
 ```
 

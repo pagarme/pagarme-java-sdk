@@ -20,7 +20,7 @@ import me.pagar.api.DateTimeHelper;
  */
 public class CreateBoletoPaymentRequest {
     private int retries;
-    private String bank;
+    private OptionalNullable<String> bank;
     private String instructions;
     private OptionalNullable<LocalDateTime> dueAt;
     private CreateAddressRequest billingAddress;
@@ -41,11 +41,11 @@ public class CreateBoletoPaymentRequest {
     /**
      * Initialization constructor.
      * @param  retries  int value for retries.
-     * @param  bank  String value for bank.
      * @param  instructions  String value for instructions.
      * @param  billingAddress  CreateAddressRequest value for billingAddress.
      * @param  documentNumber  String value for documentNumber.
      * @param  statementDescriptor  String value for statementDescriptor.
+     * @param  bank  String value for bank.
      * @param  dueAt  LocalDateTime value for dueAt.
      * @param  billingAddressId  String value for billingAddressId.
      * @param  nossoNumero  String value for nossoNumero.
@@ -55,11 +55,11 @@ public class CreateBoletoPaymentRequest {
      */
     public CreateBoletoPaymentRequest(
             int retries,
-            String bank,
             String instructions,
             CreateAddressRequest billingAddress,
             String documentNumber,
             String statementDescriptor,
+            String bank,
             LocalDateTime dueAt,
             String billingAddressId,
             String nossoNumero,
@@ -67,7 +67,7 @@ public class CreateBoletoPaymentRequest {
             CreateFineRequest fine,
             Integer maxDaysToPayPastDue) {
         this.retries = retries;
-        this.bank = bank;
+        this.bank = OptionalNullable.of(bank);
         this.instructions = instructions;
         this.dueAt = OptionalNullable.of(dueAt);
         this.billingAddress = billingAddress;
@@ -83,10 +83,11 @@ public class CreateBoletoPaymentRequest {
     /**
      * Internal initialization constructor.
      */
-    protected CreateBoletoPaymentRequest(int retries, String bank, String instructions,
+    protected CreateBoletoPaymentRequest(int retries, String instructions,
             CreateAddressRequest billingAddress, String documentNumber, String statementDescriptor,
-            OptionalNullable<LocalDateTime> dueAt, OptionalNullable<String> billingAddressId,
-            OptionalNullable<String> nossoNumero, OptionalNullable<CreateInterestRequest> interest,
+            OptionalNullable<String> bank, OptionalNullable<LocalDateTime> dueAt,
+            OptionalNullable<String> billingAddressId, OptionalNullable<String> nossoNumero,
+            OptionalNullable<CreateInterestRequest> interest,
             OptionalNullable<CreateFineRequest> fine,
             OptionalNullable<Integer> maxDaysToPayPastDue) {
         this.retries = retries;
@@ -124,13 +125,24 @@ public class CreateBoletoPaymentRequest {
     }
 
     /**
+     * Internal Getter for Bank.
+     * The bank code, containing three characters. The available codes are on the API specification
+     * @return Returns the Internal String
+     */
+    @JsonGetter("bank")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetBank() {
+        return this.bank;
+    }
+
+    /**
      * Getter for Bank.
      * The bank code, containing three characters. The available codes are on the API specification
      * @return Returns the String
      */
-    @JsonGetter("bank")
     public String getBank() {
-        return bank;
+        return OptionalNullable.getFrom(bank);
     }
 
     /**
@@ -140,7 +152,15 @@ public class CreateBoletoPaymentRequest {
      */
     @JsonSetter("bank")
     public void setBank(String bank) {
-        this.bank = bank;
+        this.bank = OptionalNullable.of(bank);
+    }
+
+    /**
+     * UnSetter for Bank.
+     * The bank code, containing three characters. The available codes are on the API specification
+     */
+    public void unsetBank() {
+        bank = null;
     }
 
     /**
@@ -452,12 +472,12 @@ public class CreateBoletoPaymentRequest {
      */
     @Override
     public String toString() {
-        return "CreateBoletoPaymentRequest [" + "retries=" + retries + ", bank=" + bank
-                + ", instructions=" + instructions + ", billingAddress=" + billingAddress
-                + ", documentNumber=" + documentNumber + ", statementDescriptor="
-                + statementDescriptor + ", dueAt=" + dueAt + ", billingAddressId="
-                + billingAddressId + ", nossoNumero=" + nossoNumero + ", interest=" + interest
-                + ", fine=" + fine + ", maxDaysToPayPastDue=" + maxDaysToPayPastDue + "]";
+        return "CreateBoletoPaymentRequest [" + "retries=" + retries + ", instructions="
+                + instructions + ", billingAddress=" + billingAddress + ", documentNumber="
+                + documentNumber + ", statementDescriptor=" + statementDescriptor + ", bank=" + bank
+                + ", dueAt=" + dueAt + ", billingAddressId=" + billingAddressId + ", nossoNumero="
+                + nossoNumero + ", interest=" + interest + ", fine=" + fine
+                + ", maxDaysToPayPastDue=" + maxDaysToPayPastDue + "]";
     }
 
     /**
@@ -466,8 +486,9 @@ public class CreateBoletoPaymentRequest {
      * @return a new {@link CreateBoletoPaymentRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(retries, bank, instructions, billingAddress, documentNumber,
+        Builder builder = new Builder(retries, instructions, billingAddress, documentNumber,
                 statementDescriptor);
+        builder.bank = internalGetBank();
         builder.dueAt = internalGetDueAt();
         builder.billingAddressId = internalGetBillingAddressId();
         builder.nossoNumero = internalGetNossoNumero();
@@ -482,11 +503,11 @@ public class CreateBoletoPaymentRequest {
      */
     public static class Builder {
         private int retries;
-        private String bank;
         private String instructions;
         private CreateAddressRequest billingAddress;
         private String documentNumber;
         private String statementDescriptor;
+        private OptionalNullable<String> bank;
         private OptionalNullable<LocalDateTime> dueAt;
         private OptionalNullable<String> billingAddressId;
         private OptionalNullable<String> nossoNumero;
@@ -503,17 +524,14 @@ public class CreateBoletoPaymentRequest {
         /**
          * Initialization constructor.
          * @param  retries  int value for retries.
-         * @param  bank  String value for bank.
          * @param  instructions  String value for instructions.
          * @param  billingAddress  CreateAddressRequest value for billingAddress.
          * @param  documentNumber  String value for documentNumber.
          * @param  statementDescriptor  String value for statementDescriptor.
          */
-        public Builder(int retries, String bank, String instructions,
-                CreateAddressRequest billingAddress, String documentNumber,
-                String statementDescriptor) {
+        public Builder(int retries, String instructions, CreateAddressRequest billingAddress,
+                String documentNumber, String statementDescriptor) {
             this.retries = retries;
-            this.bank = bank;
             this.instructions = instructions;
             this.billingAddress = billingAddress;
             this.documentNumber = documentNumber;
@@ -527,16 +545,6 @@ public class CreateBoletoPaymentRequest {
          */
         public Builder retries(int retries) {
             this.retries = retries;
-            return this;
-        }
-
-        /**
-         * Setter for bank.
-         * @param  bank  String value for bank.
-         * @return Builder
-         */
-        public Builder bank(String bank) {
-            this.bank = bank;
             return this;
         }
 
@@ -577,6 +585,25 @@ public class CreateBoletoPaymentRequest {
          */
         public Builder statementDescriptor(String statementDescriptor) {
             this.statementDescriptor = statementDescriptor;
+            return this;
+        }
+
+        /**
+         * Setter for bank.
+         * @param  bank  String value for bank.
+         * @return Builder
+         */
+        public Builder bank(String bank) {
+            this.bank = OptionalNullable.of(bank);
+            return this;
+        }
+
+        /**
+         * UnSetter for bank.
+         * @return Builder
+         */
+        public Builder unsetBank() {
+            bank = null;
             return this;
         }
 
@@ -699,8 +726,8 @@ public class CreateBoletoPaymentRequest {
          * @return {@link CreateBoletoPaymentRequest}
          */
         public CreateBoletoPaymentRequest build() {
-            return new CreateBoletoPaymentRequest(retries, bank, instructions, billingAddress,
-                    documentNumber, statementDescriptor, dueAt, billingAddressId, nossoNumero,
+            return new CreateBoletoPaymentRequest(retries, instructions, billingAddress,
+                    documentNumber, statementDescriptor, bank, dueAt, billingAddressId, nossoNumero,
                     interest, fine, maxDaysToPayPastDue);
         }
     }

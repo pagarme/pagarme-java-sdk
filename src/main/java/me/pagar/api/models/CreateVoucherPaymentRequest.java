@@ -9,8 +9,6 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for CreateVoucherPaymentRequest type.
@@ -21,7 +19,6 @@ public class CreateVoucherPaymentRequest {
     private String cardToken;
     private CreateCardRequest card;
     private String recurrencyCycle;
-    private OptionalNullable<Long> merchantCategoryCode;
 
     /**
      * Default constructor.
@@ -36,35 +33,18 @@ public class CreateVoucherPaymentRequest {
      * @param  cardToken  String value for cardToken.
      * @param  card  CreateCardRequest value for card.
      * @param  recurrencyCycle  String value for recurrencyCycle.
-     * @param  merchantCategoryCode  Long value for merchantCategoryCode.
      */
     public CreateVoucherPaymentRequest(
             String statementDescriptor,
             String cardId,
             String cardToken,
             CreateCardRequest card,
-            String recurrencyCycle,
-            Long merchantCategoryCode) {
+            String recurrencyCycle) {
         this.statementDescriptor = statementDescriptor;
         this.cardId = cardId;
         this.cardToken = cardToken;
         this.card = card;
         this.recurrencyCycle = recurrencyCycle;
-        this.merchantCategoryCode = OptionalNullable.of(merchantCategoryCode);
-    }
-
-    /**
-     * Internal initialization constructor.
-     */
-    protected CreateVoucherPaymentRequest(String statementDescriptor, String cardId,
-            String cardToken, CreateCardRequest card, String recurrencyCycle,
-            OptionalNullable<Long> merchantCategoryCode) {
-        this.statementDescriptor = statementDescriptor;
-        this.cardId = cardId;
-        this.cardToken = cardToken;
-        this.card = card;
-        this.recurrencyCycle = recurrencyCycle;
-        this.merchantCategoryCode = merchantCategoryCode;
     }
 
     /**
@@ -173,45 +153,6 @@ public class CreateVoucherPaymentRequest {
     }
 
     /**
-     * Internal Getter for MerchantCategoryCode.
-     * Customer business segment code
-     * @return Returns the Internal Long
-     */
-    @JsonGetter("merchant_category_code")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<Long> internalGetMerchantCategoryCode() {
-        return this.merchantCategoryCode;
-    }
-
-    /**
-     * Getter for MerchantCategoryCode.
-     * Customer business segment code
-     * @return Returns the Long
-     */
-    public Long getMerchantCategoryCode() {
-        return OptionalNullable.getFrom(merchantCategoryCode);
-    }
-
-    /**
-     * Setter for MerchantCategoryCode.
-     * Customer business segment code
-     * @param merchantCategoryCode Value for Long
-     */
-    @JsonSetter("merchant_category_code")
-    public void setMerchantCategoryCode(Long merchantCategoryCode) {
-        this.merchantCategoryCode = OptionalNullable.of(merchantCategoryCode);
-    }
-
-    /**
-     * UnSetter for MerchantCategoryCode.
-     * Customer business segment code
-     */
-    public void unsetMerchantCategoryCode() {
-        merchantCategoryCode = null;
-    }
-
-    /**
      * Converts this CreateVoucherPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -219,8 +160,7 @@ public class CreateVoucherPaymentRequest {
     public String toString() {
         return "CreateVoucherPaymentRequest [" + "statementDescriptor=" + statementDescriptor
                 + ", cardId=" + cardId + ", cardToken=" + cardToken + ", card=" + card
-                + ", recurrencyCycle=" + recurrencyCycle + ", merchantCategoryCode="
-                + merchantCategoryCode + "]";
+                + ", recurrencyCycle=" + recurrencyCycle + "]";
     }
 
     /**
@@ -235,7 +175,6 @@ public class CreateVoucherPaymentRequest {
                 .cardToken(getCardToken())
                 .card(getCard())
                 .recurrencyCycle(getRecurrencyCycle());
-        builder.merchantCategoryCode = internalGetMerchantCategoryCode();
         return builder;
     }
 
@@ -248,7 +187,6 @@ public class CreateVoucherPaymentRequest {
         private String cardToken;
         private CreateCardRequest card;
         private String recurrencyCycle;
-        private OptionalNullable<Long> merchantCategoryCode;
 
 
 
@@ -303,31 +241,12 @@ public class CreateVoucherPaymentRequest {
         }
 
         /**
-         * Setter for merchantCategoryCode.
-         * @param  merchantCategoryCode  Long value for merchantCategoryCode.
-         * @return Builder
-         */
-        public Builder merchantCategoryCode(Long merchantCategoryCode) {
-            this.merchantCategoryCode = OptionalNullable.of(merchantCategoryCode);
-            return this;
-        }
-
-        /**
-         * UnSetter for merchantCategoryCode.
-         * @return Builder
-         */
-        public Builder unsetMerchantCategoryCode() {
-            merchantCategoryCode = null;
-            return this;
-        }
-
-        /**
          * Builds a new {@link CreateVoucherPaymentRequest} object using the set fields.
          * @return {@link CreateVoucherPaymentRequest}
          */
         public CreateVoucherPaymentRequest build() {
             return new CreateVoucherPaymentRequest(statementDescriptor, cardId, cardToken, card,
-                    recurrencyCycle, merchantCategoryCode);
+                    recurrencyCycle);
         }
     }
 }

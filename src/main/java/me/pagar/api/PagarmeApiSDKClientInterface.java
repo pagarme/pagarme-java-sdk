@@ -6,10 +6,12 @@
 
 package me.pagar.api;
 
+import me.pagar.api.controllers.BalanceOperationsController;
 import me.pagar.api.controllers.ChargesController;
 import me.pagar.api.controllers.CustomersController;
 import me.pagar.api.controllers.InvoicesController;
 import me.pagar.api.controllers.OrdersController;
+import me.pagar.api.controllers.PayablesController;
 import me.pagar.api.controllers.PlansController;
 import me.pagar.api.controllers.RecipientsController;
 import me.pagar.api.controllers.SubscriptionsController;
@@ -24,6 +26,12 @@ import me.pagar.api.controllers.TransfersController;
  */
 public interface PagarmeApiSDKClientInterface extends Configuration {
     
+    /**
+     * Provides access to Orders controller.
+     * @return Returns the OrdersController instance
+     */
+    OrdersController getOrdersController();
+
     /**
      * Provides access to Plans controller.
      * @return Returns the PlansController instance
@@ -41,12 +49,6 @@ public interface PagarmeApiSDKClientInterface extends Configuration {
      * @return Returns the InvoicesController instance
      */
     InvoicesController getInvoicesController();
-
-    /**
-     * Provides access to Orders controller.
-     * @return Returns the OrdersController instance
-     */
-    OrdersController getOrdersController();
 
     /**
      * Provides access to Customers controller.
@@ -67,21 +69,33 @@ public interface PagarmeApiSDKClientInterface extends Configuration {
     ChargesController getChargesController();
 
     /**
-     * Provides access to Transfers controller.
-     * @return Returns the TransfersController instance
-     */
-    TransfersController getTransfersController();
-
-    /**
      * Provides access to Tokens controller.
      * @return Returns the TokensController instance
      */
     TokensController getTokensController();
 
     /**
+     * Provides access to Transfers controller.
+     * @return Returns the TransfersController instance
+     */
+    TransfersController getTransfersController();
+
+    /**
      * Provides access to Transactions controller.
      * @return Returns the TransactionsController instance
      */
     TransactionsController getTransactionsController();
+
+    /**
+     * Provides access to Payables controller.
+     * @return Returns the PayablesController instance
+     */
+    PayablesController getPayablesController();
+
+    /**
+     * Provides access to BalanceOperations controller.
+     * @return Returns the BalanceOperationsController instance
+     */
+    BalanceOperationsController getBalanceOperationsController();
 
 }

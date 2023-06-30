@@ -16,7 +16,6 @@ The settings for creating a voucher payment
 | `CardToken` | `String` | Optional | Card token | String getCardToken() | setCardToken(String cardToken) |
 | `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Optional | Card info | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
-| `MerchantCategoryCode` | `Long` | Optional | Customer business segment code | Long getMerchantCategoryCode() | setMerchantCategoryCode(Long merchantCategoryCode) |
 
 ## Example (as JSON)
 

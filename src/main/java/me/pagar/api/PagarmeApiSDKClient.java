@@ -14,12 +14,15 @@ import io.apimatic.okhttpclient.adapter.OkClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import me.pagar.api.controllers.BalanceOperationsController;
 import me.pagar.api.controllers.ChargesController;
 import me.pagar.api.controllers.CustomersController;
+import me.pagar.api.controllers.DefaultBalanceOperationsController;
 import me.pagar.api.controllers.DefaultChargesController;
 import me.pagar.api.controllers.DefaultCustomersController;
 import me.pagar.api.controllers.DefaultInvoicesController;
 import me.pagar.api.controllers.DefaultOrdersController;
+import me.pagar.api.controllers.DefaultPayablesController;
 import me.pagar.api.controllers.DefaultPlansController;
 import me.pagar.api.controllers.DefaultRecipientsController;
 import me.pagar.api.controllers.DefaultSubscriptionsController;
@@ -28,6 +31,7 @@ import me.pagar.api.controllers.DefaultTransactionsController;
 import me.pagar.api.controllers.DefaultTransfersController;
 import me.pagar.api.controllers.InvoicesController;
 import me.pagar.api.controllers.OrdersController;
+import me.pagar.api.controllers.PayablesController;
 import me.pagar.api.controllers.PlansController;
 import me.pagar.api.controllers.RecipientsController;
 import me.pagar.api.controllers.SubscriptionsController;
@@ -47,20 +51,22 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     /**
      * Private store for controllers.
      */
+    private OrdersController orders;
     private PlansController plans;
     private SubscriptionsController subscriptions;
     private InvoicesController invoices;
-    private OrdersController orders;
     private CustomersController customers;
     private RecipientsController recipients;
     private ChargesController charges;
-    private TransfersController transfers;
     private TokensController tokens;
+    private TransfersController transfers;
     private TransactionsController transactions;
+    private PayablesController payables;
+    private BalanceOperationsController balanceOperations;
 
     private static final CompatibilityFactory compatibilityFactory = new CompatibilityFactoryImpl();
 
-    private static String userAgent = "PagarmeApiSDK - Java 6.7.13";
+    private static String userAgent = "PagarmeApiSDK - Java 6.8.0";
 
     /**
      * Current API environment.
@@ -119,16 +125,18 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
                 .userAgent(userAgent)
                 .globalHeader("ServiceRefererName", serviceRefererName)
                 .build();
+        orders = new DefaultOrdersController(globalConfig);
         plans = new DefaultPlansController(globalConfig);
         subscriptions = new DefaultSubscriptionsController(globalConfig);
         invoices = new DefaultInvoicesController(globalConfig);
-        orders = new DefaultOrdersController(globalConfig);
         customers = new DefaultCustomersController(globalConfig);
         recipients = new DefaultRecipientsController(globalConfig);
         charges = new DefaultChargesController(globalConfig);
-        transfers = new DefaultTransfersController(globalConfig);
         tokens = new DefaultTokensController(globalConfig);
+        transfers = new DefaultTransfersController(globalConfig);
         transactions = new DefaultTransactionsController(globalConfig);
+        payables = new DefaultPayablesController(globalConfig);
+        balanceOperations = new DefaultBalanceOperationsController(globalConfig);
     }
 
     /**
@@ -136,6 +144,14 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
      */
     public static void shutdown() {
         OkClient.shutdown();
+    }
+
+    /**
+     * Get the instance of OrdersController.
+     * @return orders
+     */
+    public OrdersController getOrdersController() {
+        return orders;
     }
 
     /**
@@ -163,14 +179,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of OrdersController.
-     * @return orders
-     */
-    public OrdersController getOrdersController() {
-        return orders;
-    }
-
-    /**
      * Get the instance of CustomersController.
      * @return customers
      */
@@ -195,14 +203,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of TransfersController.
-     * @return transfers
-     */
-    public TransfersController getTransfersController() {
-        return transfers;
-    }
-
-    /**
      * Get the instance of TokensController.
      * @return tokens
      */
@@ -211,11 +211,35 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
+     * Get the instance of TransfersController.
+     * @return transfers
+     */
+    public TransfersController getTransfersController() {
+        return transfers;
+    }
+
+    /**
      * Get the instance of TransactionsController.
      * @return transactions
      */
     public TransactionsController getTransactionsController() {
         return transactions;
+    }
+
+    /**
+     * Get the instance of PayablesController.
+     * @return payables
+     */
+    public PayablesController getPayablesController() {
+        return payables;
+    }
+
+    /**
+     * Get the instance of BalanceOperationsController.
+     * @return balanceOperations
+     */
+    public BalanceOperationsController getBalanceOperationsController() {
+        return balanceOperations;
     }
 
     /**

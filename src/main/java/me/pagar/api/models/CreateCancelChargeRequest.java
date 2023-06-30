@@ -19,6 +19,7 @@ public class CreateCancelChargeRequest {
     private List<CreateCancelChargeSplitRulesRequest> splitRules;
     private List<CreateSplitRequest> split;
     private String operationReference;
+    private CreateBankAccountRefundingDTO bankAccount;
 
     /**
      * Default constructor.
@@ -32,16 +33,19 @@ public class CreateCancelChargeRequest {
      * @param  amount  Integer value for amount.
      * @param  splitRules  List of CreateCancelChargeSplitRulesRequest value for splitRules.
      * @param  split  List of CreateSplitRequest value for split.
+     * @param  bankAccount  CreateBankAccountRefundingDTO value for bankAccount.
      */
     public CreateCancelChargeRequest(
             String operationReference,
             Integer amount,
             List<CreateCancelChargeSplitRulesRequest> splitRules,
-            List<CreateSplitRequest> split) {
+            List<CreateSplitRequest> split,
+            CreateBankAccountRefundingDTO bankAccount) {
         this.amount = amount;
         this.splitRules = splitRules;
         this.split = split;
         this.operationReference = operationReference;
+        this.bankAccount = bankAccount;
     }
 
     /**
@@ -126,13 +130,33 @@ public class CreateCancelChargeRequest {
     }
 
     /**
+     * Getter for BankAccount.
+     * @return Returns the CreateBankAccountRefundingDTO
+     */
+    @JsonGetter("bank_account")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreateBankAccountRefundingDTO getBankAccount() {
+        return bankAccount;
+    }
+
+    /**
+     * Setter for BankAccount.
+     * @param bankAccount Value for CreateBankAccountRefundingDTO
+     */
+    @JsonSetter("bank_account")
+    public void setBankAccount(CreateBankAccountRefundingDTO bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    /**
      * Converts this CreateCancelChargeRequest into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
         return "CreateCancelChargeRequest [" + "operationReference=" + operationReference
-                + ", amount=" + amount + ", splitRules=" + splitRules + ", split=" + split + "]";
+                + ", amount=" + amount + ", splitRules=" + splitRules + ", split=" + split
+                + ", bankAccount=" + bankAccount + "]";
     }
 
     /**
@@ -144,7 +168,8 @@ public class CreateCancelChargeRequest {
         Builder builder = new Builder(operationReference)
                 .amount(getAmount())
                 .splitRules(getSplitRules())
-                .split(getSplit());
+                .split(getSplit())
+                .bankAccount(getBankAccount());
         return builder;
     }
 
@@ -156,6 +181,7 @@ public class CreateCancelChargeRequest {
         private Integer amount;
         private List<CreateCancelChargeSplitRulesRequest> splitRules;
         private List<CreateSplitRequest> split;
+        private CreateBankAccountRefundingDTO bankAccount;
 
         /**
          * Initialization constructor.
@@ -212,11 +238,22 @@ public class CreateCancelChargeRequest {
         }
 
         /**
+         * Setter for bankAccount.
+         * @param  bankAccount  CreateBankAccountRefundingDTO value for bankAccount.
+         * @return Builder
+         */
+        public Builder bankAccount(CreateBankAccountRefundingDTO bankAccount) {
+            this.bankAccount = bankAccount;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateCancelChargeRequest} object using the set fields.
          * @return {@link CreateCancelChargeRequest}
          */
         public CreateCancelChargeRequest build() {
-            return new CreateCancelChargeRequest(operationReference, amount, splitRules, split);
+            return new CreateCancelChargeRequest(operationReference, amount, splitRules, split,
+                    bankAccount);
         }
     }
 }

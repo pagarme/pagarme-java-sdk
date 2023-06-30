@@ -7,7 +7,10 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.OptionalNullable;
 import java.util.Map;
 
 /**
@@ -22,7 +25,7 @@ public class CreateAddressRequest {
     private String state;
     private String country;
     private String complement;
-    private Map<String, String> metadata;
+    private OptionalNullable<Map<String, String>> metadata;
     private String line1;
     private String line2;
 
@@ -42,9 +45,9 @@ public class CreateAddressRequest {
      * @param  state  String value for state.
      * @param  country  String value for country.
      * @param  complement  String value for complement.
-     * @param  metadata  Map of String, value for metadata.
      * @param  line1  String value for line1.
      * @param  line2  String value for line2.
+     * @param  metadata  Map of String, value for metadata.
      */
     public CreateAddressRequest(
             String street,
@@ -55,9 +58,28 @@ public class CreateAddressRequest {
             String state,
             String country,
             String complement,
-            Map<String, String> metadata,
             String line1,
-            String line2) {
+            String line2,
+            Map<String, String> metadata) {
+        this.street = street;
+        this.number = number;
+        this.zipCode = zipCode;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.complement = complement;
+        this.metadata = OptionalNullable.of(metadata);
+        this.line1 = line1;
+        this.line2 = line2;
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected CreateAddressRequest(String street, String number, String zipCode,
+            String neighborhood, String city, String state, String country, String complement,
+            String line1, String line2, OptionalNullable<Map<String, String>> metadata) {
         this.street = street;
         this.number = number;
         this.zipCode = zipCode;
@@ -234,13 +256,24 @@ public class CreateAddressRequest {
     }
 
     /**
+     * Internal Getter for Metadata.
+     * Metadata
+     * @return Returns the Internal Map of String, String
+     */
+    @JsonGetter("metadata")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Map<String, String>> internalGetMetadata() {
+        return this.metadata;
+    }
+
+    /**
      * Getter for Metadata.
      * Metadata
      * @return Returns the Map of String, String
      */
-    @JsonGetter("metadata")
     public Map<String, String> getMetadata() {
-        return metadata;
+        return OptionalNullable.getFrom(metadata);
     }
 
     /**
@@ -250,7 +283,15 @@ public class CreateAddressRequest {
      */
     @JsonSetter("metadata")
     public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
+        this.metadata = OptionalNullable.of(metadata);
+    }
+
+    /**
+     * UnSetter for Metadata.
+     * Metadata
+     */
+    public void unsetMetadata() {
+        metadata = null;
     }
 
     /**
@@ -301,8 +342,8 @@ public class CreateAddressRequest {
     public String toString() {
         return "CreateAddressRequest [" + "street=" + street + ", number=" + number + ", zipCode="
                 + zipCode + ", neighborhood=" + neighborhood + ", city=" + city + ", state=" + state
-                + ", country=" + country + ", complement=" + complement + ", metadata=" + metadata
-                + ", line1=" + line1 + ", line2=" + line2 + "]";
+                + ", country=" + country + ", complement=" + complement + ", line1=" + line1
+                + ", line2=" + line2 + ", metadata=" + metadata + "]";
     }
 
     /**
@@ -312,7 +353,8 @@ public class CreateAddressRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(street, number, zipCode, neighborhood, city, state, country,
-                complement, metadata, line1, line2);
+                complement, line1, line2);
+        builder.metadata = internalGetMetadata();
         return builder;
     }
 
@@ -328,9 +370,9 @@ public class CreateAddressRequest {
         private String state;
         private String country;
         private String complement;
-        private Map<String, String> metadata;
         private String line1;
         private String line2;
+        private OptionalNullable<Map<String, String>> metadata;
 
         /**
          * Initialization constructor.
@@ -348,13 +390,12 @@ public class CreateAddressRequest {
          * @param  state  String value for state.
          * @param  country  String value for country.
          * @param  complement  String value for complement.
-         * @param  metadata  Map of String, value for metadata.
          * @param  line1  String value for line1.
          * @param  line2  String value for line2.
          */
         public Builder(String street, String number, String zipCode, String neighborhood,
-                String city, String state, String country, String complement,
-                Map<String, String> metadata, String line1, String line2) {
+                String city, String state, String country, String complement, String line1,
+                String line2) {
             this.street = street;
             this.number = number;
             this.zipCode = zipCode;
@@ -363,7 +404,6 @@ public class CreateAddressRequest {
             this.state = state;
             this.country = country;
             this.complement = complement;
-            this.metadata = metadata;
             this.line1 = line1;
             this.line2 = line2;
         }
@@ -449,16 +489,6 @@ public class CreateAddressRequest {
         }
 
         /**
-         * Setter for metadata.
-         * @param  metadata  Map of String, value for metadata.
-         * @return Builder
-         */
-        public Builder metadata(Map<String, String> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
          * Setter for line1.
          * @param  line1  String value for line1.
          * @return Builder
@@ -479,12 +509,31 @@ public class CreateAddressRequest {
         }
 
         /**
+         * Setter for metadata.
+         * @param  metadata  Map of String, value for metadata.
+         * @return Builder
+         */
+        public Builder metadata(Map<String, String> metadata) {
+            this.metadata = OptionalNullable.of(metadata);
+            return this;
+        }
+
+        /**
+         * UnSetter for metadata.
+         * @return Builder
+         */
+        public Builder unsetMetadata() {
+            metadata = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateAddressRequest} object using the set fields.
          * @return {@link CreateAddressRequest}
          */
         public CreateAddressRequest build() {
             return new CreateAddressRequest(street, number, zipCode, neighborhood, city, state,
-                    country, complement, metadata, line1, line2);
+                    country, complement, line1, line2, metadata);
         }
     }
 }

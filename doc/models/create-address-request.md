@@ -19,7 +19,7 @@ Request for creating a new Address
 | `State` | `String` | Required | State | String getState() | setState(String state) |
 | `Country` | `String` | Required | Country. Must be entered using ISO 3166-1 alpha-2 format. See https://pt.wikipedia.org/wiki/ISO_3166-1_alfa-2 | String getCountry() | setCountry(String country) |
 | `Complement` | `String` | Required | Complement | String getComplement() | setComplement(String complement) |
-| `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
+| `Metadata` | `Map<String, String>` | Optional | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `Line1` | `String` | Required | Line 1 for address | String getLine1() | setLine1(String line1) |
 | `Line2` | `String` | Required | Line 2 for address | String getLine2() | setLine2(String line2) |
 
