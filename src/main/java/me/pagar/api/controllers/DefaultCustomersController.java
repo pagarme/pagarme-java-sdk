@@ -193,6 +193,47 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Creates a new customer.
+     * @param  request  Required parameter: Request for creating a customer
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCustomerResponse createCustomer(
+            final CreateCustomerRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateCustomerRequest(request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createCustomer.
+     */
+    private ApiCall<GetCustomerResponse, ApiException> prepareCreateCustomerRequest(
+            final CreateCustomerRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetCustomerResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Creates a new address for a customer.
      * @param  customerId  Required parameter: Customer Id
      * @param  request  Required parameter: Request for creating an address
@@ -239,124 +280,27 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
-     * Creates a new customer.
-     * @param  request  Required parameter: Request for creating a customer
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCustomerResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCustomerResponse createCustomer(
-            final CreateCustomerRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateCustomerRequest(request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createCustomer.
-     */
-    private ApiCall<GetCustomerResponse, ApiException> prepareCreateCustomerRequest(
-            final CreateCustomerRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetCustomerResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a new card for a customer.
-     * @param  customerId  Required parameter: Customer id
-     * @param  request  Required parameter: Request for creating a card
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCardResponse createCard(
-            final String customerId,
-            final CreateCardRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateCardRequest(customerId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createCard.
-     */
-    private ApiCall<GetCardResponse, ApiException> prepareCreateCardRequest(
-            final String customerId,
-            final CreateCardRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetCardResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get all cards from a customer.
+     * Delete a Customer's access tokens.
      * @param  customerId  Required parameter: Customer Id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListCardsResponse response from the API call
+     * @return    Returns the ListAccessTokensResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public ListCardsResponse getCards(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException {
-        return prepareGetCardsRequest(customerId, page, size).execute();
+    public ListAccessTokensResponse deleteAccessTokens(
+            final String customerId) throws ApiException, IOException {
+        return prepareDeleteAccessTokensRequest(customerId).execute();
     }
 
     /**
-     * Builds the ApiCall object for getCards.
+     * Builds the ApiCall object for deleteAccessTokens.
      */
-    private ApiCall<ListCardsResponse, ApiException> prepareGetCardsRequest(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws IOException {
-        return new ApiCall.Builder<ListCardsResponse, ApiException>()
+    private ApiCall<ListAccessTokensResponse, ApiException> prepareDeleteAccessTokensRequest(
+            final String customerId) throws IOException {
+        return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
+                        .path("/customers/{customer_id}/access-tokens/")
                         .templateParam(param -> param.key("customer_id").value(customerId)
                                 .shouldEncode(true))
                         .headerParam(param -> param.key("accept").value("application/json"))
@@ -364,52 +308,7 @@ public final class DefaultCustomersController extends BaseController implements 
                         .httpMethod(HttpMethod.GET))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
-                                response -> ApiHelper.deserialize(response, ListCardsResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Renew a card.
-     * @param  customerId  Required parameter: Customer id
-     * @param  cardId  Required parameter: Card Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCardResponse renewCard(
-            final String customerId,
-            final String cardId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareRenewCardRequest(customerId, cardId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for renewCard.
-     */
-    private ApiCall<GetCardResponse, ApiException> prepareRenewCardRequest(
-            final String customerId,
-            final String cardId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetCardResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards/{card_id}/renew")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("card_id").value(cardId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
+                                response -> ApiHelper.deserialize(response, ListAccessTokensResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -501,194 +400,33 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
-     * Get a Customer's access token.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  tokenId  Required parameter: Token Id
-     * @return    Returns the GetAccessTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAccessTokenResponse getAccessToken(
-            final String customerId,
-            final String tokenId) throws ApiException, IOException {
-        return prepareGetAccessTokenRequest(customerId, tokenId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getAccessToken.
-     */
-    private ApiCall<GetAccessTokenResponse, ApiException> prepareGetAccessTokenRequest(
-            final String customerId,
-            final String tokenId) throws IOException {
-        return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/access-tokens/{token_id}")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("token_id").value(tokenId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAccessTokenResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates the metadata a customer.
-     * @param  customerId  Required parameter: The customer id
-     * @param  request  Required parameter: Request for updating the customer metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCustomerResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCustomerResponse updateCustomerMetadata(
-            final String customerId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateCustomerMetadataRequest(customerId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateCustomerMetadata.
-     */
-    private ApiCall<GetCustomerResponse, ApiException> prepareUpdateCustomerMetadataRequest(
-            final String customerId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetCustomerResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/Customers/{customer_id}/metadata")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get a customer's card.
+     * Creates a new card for a customer.
      * @param  customerId  Required parameter: Customer id
-     * @param  cardId  Required parameter: Card id
+     * @param  request  Required parameter: Request for creating a card
+     * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetCardResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetCardResponse getCard(
+    public GetCardResponse createCard(
             final String customerId,
-            final String cardId) throws ApiException, IOException {
-        return prepareGetCardRequest(customerId, cardId).execute();
+            final CreateCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateCardRequest(customerId, request, idempotencyKey).execute();
     }
 
     /**
-     * Builds the ApiCall object for getCard.
+     * Builds the ApiCall object for createCard.
      */
-    private ApiCall<GetCardResponse, ApiException> prepareGetCardRequest(
+    private ApiCall<GetCardResponse, ApiException> prepareCreateCardRequest(
             final String customerId,
-            final String cardId) throws IOException {
+            final CreateCardRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
         return new ApiCall.Builder<GetCardResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards/{card_id}")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("card_id").value(cardId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Delete a Customer's access tokens.
-     * @param  customerId  Required parameter: Customer Id
-     * @return    Returns the ListAccessTokensResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListAccessTokensResponse deleteAccessTokens(
-            final String customerId) throws ApiException, IOException {
-        return prepareDeleteAccessTokensRequest(customerId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for deleteAccessTokens.
-     */
-    private ApiCall<ListAccessTokensResponse, ApiException> prepareDeleteAccessTokensRequest(
-            final String customerId) throws IOException {
-        return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/access-tokens/")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListAccessTokensResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a access token for a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  request  Required parameter: Request for creating a access token
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetAccessTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAccessTokenResponse createAccessToken(
-            final String customerId,
-            final CreateAccessTokenRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateAccessTokenRequest(customerId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createAccessToken.
-     */
-    private ApiCall<GetAccessTokenResponse, ApiException> prepareCreateAccessTokenRequest(
-            final String customerId,
-            final CreateAccessTokenRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/access-tokens")
+                        .path("/customers/{customer_id}/cards")
                         .bodyParam(param -> param.value(request))
                         .bodySerializer(() ->  ApiHelper.serialize(request))
                         .templateParam(param -> param.key("customer_id").value(customerId)
@@ -701,52 +439,7 @@ public final class DefaultCustomersController extends BaseController implements 
                         .httpMethod(HttpMethod.POST))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAccessTokenResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get all access tokens from a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListAccessTokensResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListAccessTokensResponse getAccessTokens(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException {
-        return prepareGetAccessTokensRequest(customerId, page, size).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getAccessTokens.
-     */
-    private ApiCall<ListAccessTokensResponse, ApiException> prepareGetAccessTokensRequest(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws IOException {
-        return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/access-tokens")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListAccessTokensResponse.class))
+                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -850,6 +543,273 @@ public final class DefaultCustomersController extends BaseController implements 
                         .headerParam(param -> param.key("accept").value("application/json"))
                         .authenticationKey(BaseController.AUTHENTICATION_KEY)
                         .httpMethod(HttpMethod.PUT))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a access token for a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  request  Required parameter: Request for creating a access token
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetAccessTokenResponse createAccessToken(
+            final String customerId,
+            final CreateAccessTokenRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateAccessTokenRequest(customerId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createAccessToken.
+     */
+    private ApiCall<GetAccessTokenResponse, ApiException> prepareCreateAccessTokenRequest(
+            final String customerId,
+            final CreateAccessTokenRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/access-tokens")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetAccessTokenResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get all access tokens from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListAccessTokensResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListAccessTokensResponse getAccessTokens(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException {
+        return prepareGetAccessTokensRequest(customerId, page, size).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getAccessTokens.
+     */
+    private ApiCall<ListAccessTokensResponse, ApiException> prepareGetAccessTokensRequest(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws IOException {
+        return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/access-tokens")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListAccessTokensResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get all cards from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListCardsResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListCardsResponse getCards(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException {
+        return prepareGetCardsRequest(customerId, page, size).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getCards.
+     */
+    private ApiCall<ListCardsResponse, ApiException> prepareGetCardsRequest(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws IOException {
+        return new ApiCall.Builder<ListCardsResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/cards")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListCardsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Renew a card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCardResponse renewCard(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareRenewCardRequest(customerId, cardId, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for renewCard.
+     */
+    private ApiCall<GetCardResponse, ApiException> prepareRenewCardRequest(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetCardResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/cards/{card_id}/renew")
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("card_id").value(cardId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get a Customer's access token.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  tokenId  Required parameter: Token Id
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetAccessTokenResponse getAccessToken(
+            final String customerId,
+            final String tokenId) throws ApiException, IOException {
+        return prepareGetAccessTokenRequest(customerId, tokenId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getAccessToken.
+     */
+    private ApiCall<GetAccessTokenResponse, ApiException> prepareGetAccessTokenRequest(
+            final String customerId,
+            final String tokenId) throws IOException {
+        return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/access-tokens/{token_id}")
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("token_id").value(tokenId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetAccessTokenResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates the metadata a customer.
+     * @param  customerId  Required parameter: The customer id
+     * @param  request  Required parameter: Request for updating the customer metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCustomerResponse updateCustomerMetadata(
+            final String customerId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateCustomerMetadataRequest(customerId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateCustomerMetadata.
+     */
+    private ApiCall<GetCustomerResponse, ApiException> prepareUpdateCustomerMetadataRequest(
+            final String customerId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetCustomerResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/Customers/{customer_id}/metadata")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
@@ -978,6 +938,46 @@ public final class DefaultCustomersController extends BaseController implements 
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get a customer's card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card id
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCardResponse getCard(
+            final String customerId,
+            final String cardId) throws ApiException, IOException {
+        return prepareGetCardRequest(customerId, cardId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getCard.
+     */
+    private ApiCall<GetCardResponse, ApiException> prepareGetCardRequest(
+            final String customerId,
+            final String cardId) throws IOException {
+        return new ApiCall.Builder<GetCardResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/cards/{card_id}")
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("card_id").value(cardId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

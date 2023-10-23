@@ -51,22 +51,22 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     /**
      * Private store for controllers.
      */
-    private OrdersController orders;
     private PlansController plans;
     private SubscriptionsController subscriptions;
     private InvoicesController invoices;
+    private OrdersController orders;
     private CustomersController customers;
     private RecipientsController recipients;
     private ChargesController charges;
-    private TokensController tokens;
     private TransfersController transfers;
+    private TokensController tokens;
     private TransactionsController transactions;
     private PayablesController payables;
     private BalanceOperationsController balanceOperations;
 
     private static final CompatibilityFactory compatibilityFactory = new CompatibilityFactoryImpl();
 
-    private static String userAgent = "PagarmeApiSDK - Java 6.8.0";
+    private static String userAgent = "PagarmeApiSDK - Java 6.8.1";
 
     /**
      * Current API environment.
@@ -125,15 +125,15 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
                 .userAgent(userAgent)
                 .globalHeader("ServiceRefererName", serviceRefererName)
                 .build();
-        orders = new DefaultOrdersController(globalConfig);
         plans = new DefaultPlansController(globalConfig);
         subscriptions = new DefaultSubscriptionsController(globalConfig);
         invoices = new DefaultInvoicesController(globalConfig);
+        orders = new DefaultOrdersController(globalConfig);
         customers = new DefaultCustomersController(globalConfig);
         recipients = new DefaultRecipientsController(globalConfig);
         charges = new DefaultChargesController(globalConfig);
-        tokens = new DefaultTokensController(globalConfig);
         transfers = new DefaultTransfersController(globalConfig);
+        tokens = new DefaultTokensController(globalConfig);
         transactions = new DefaultTransactionsController(globalConfig);
         payables = new DefaultPayablesController(globalConfig);
         balanceOperations = new DefaultBalanceOperationsController(globalConfig);
@@ -144,14 +144,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
      */
     public static void shutdown() {
         OkClient.shutdown();
-    }
-
-    /**
-     * Get the instance of OrdersController.
-     * @return orders
-     */
-    public OrdersController getOrdersController() {
-        return orders;
     }
 
     /**
@@ -179,6 +171,14 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
+     * Get the instance of OrdersController.
+     * @return orders
+     */
+    public OrdersController getOrdersController() {
+        return orders;
+    }
+
+    /**
      * Get the instance of CustomersController.
      * @return customers
      */
@@ -203,19 +203,19 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     }
 
     /**
-     * Get the instance of TokensController.
-     * @return tokens
-     */
-    public TokensController getTokensController() {
-        return tokens;
-    }
-
-    /**
      * Get the instance of TransfersController.
      * @return transfers
      */
     public TransfersController getTransfersController() {
         return transfers;
+    }
+
+    /**
+     * Get the instance of TokensController.
+     * @return tokens
+     */
+    public TokensController getTokensController() {
+        return tokens;
     }
 
     /**

@@ -101,6 +101,236 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     }
 
     /**
+     * Updates the credit card from a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for updating a card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionCard(
+            final String subscriptionId,
+            final UpdateSubscriptionCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionCardRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionCard.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionCardRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionCardRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/card")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Deletes a usage.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  itemId  Required parameter: The subscription item id
+     * @param  usageId  Required parameter: The usage id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetUsageResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetUsageResponse deleteUsage(
+            final String subscriptionId,
+            final String itemId,
+            final String usageId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeleteUsageRequest(subscriptionId, itemId, usageId, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for deleteUsage.
+     */
+    private ApiCall<GetUsageResponse, ApiException> prepareDeleteUsageRequest(
+            final String subscriptionId,
+            final String itemId,
+            final String usageId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetUsageResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("usage_id").value(usageId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a discount.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for creating a discount
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetDiscountResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetDiscountResponse createDiscount(
+            final String subscriptionId,
+            final CreateDiscountRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateDiscountRequest(subscriptionId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createDiscount.
+     */
+    private ApiCall<GetDiscountResponse, ApiException> prepareCreateDiscountRequest(
+            final String subscriptionId,
+            final CreateDiscountRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetDiscountResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/discounts")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetDiscountResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Create Usage.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  itemId  Required parameter: Item id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetUsageResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetUsageResponse createAnUsage(
+            final String subscriptionId,
+            final String itemId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateAnUsageRequest(subscriptionId, itemId, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createAnUsage.
+     */
+    private ApiCall<GetUsageResponse, ApiException> prepareCreateAnUsageRequest(
+            final String subscriptionId,
+            final String itemId,
+            final String idempotencyKey) throws IOException {
+        return new ApiCall.Builder<GetUsageResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  request  Required parameter: Request for updating the end date of the subscription
+     *         current status
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public void updateCurrentCycleStatus(
+            final String subscriptionId,
+            final UpdateCurrentCycleStatusRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        prepareUpdateCurrentCycleStatusRequest(subscriptionId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateCurrentCycleStatus.
+     */
+    private ApiCall<Void, ApiException> prepareUpdateCurrentCycleStatusRequest(
+            final String subscriptionId,
+            final UpdateCurrentCycleStatusRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<Void, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycle-status")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Deletes a discount.
      * @param  subscriptionId  Required parameter: Subscription id
      * @param  discountId  Required parameter: Discount Id
@@ -140,6 +370,170 @@ public final class DefaultSubscriptionsController extends BaseController impleme
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetDiscountResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get Subscription Items.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  name  Optional parameter: The item name
+     * @param  code  Optional parameter: Identification code in the client system
+     * @param  status  Optional parameter: The item statis
+     * @param  description  Optional parameter: The item description
+     * @param  createdSince  Optional parameter: Filter for item's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for item's creation date end range
+     * @return    Returns the ListSubscriptionItemsResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListSubscriptionItemsResponse getSubscriptionItems(
+            final String subscriptionId,
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String code,
+            final String status,
+            final String description,
+            final String createdSince,
+            final String createdUntil) throws ApiException, IOException {
+        return prepareGetSubscriptionItemsRequest(subscriptionId, page, size, name, code, status,
+                description, createdSince, createdUntil).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getSubscriptionItems.
+     */
+    private ApiCall<ListSubscriptionItemsResponse, ApiException> prepareGetSubscriptionItemsRequest(
+            final String subscriptionId,
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String code,
+            final String status,
+            final String description,
+            final String createdSince,
+            final String createdUntil) throws IOException {
+        return new ApiCall.Builder<ListSubscriptionItemsResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("name")
+                                .value(name).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("status")
+                                .value(status).isRequired(false))
+                        .queryParam(param -> param.key("description")
+                                .value(description).isRequired(false))
+                        .queryParam(param -> param.key("created_since")
+                                .value(createdSince).isRequired(false))
+                        .queryParam(param -> param.key("created_until")
+                                .value(createdUntil).isRequired(false))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListSubscriptionItemsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates the payment method from a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for updating the paymentmethod from a
+     *         subscription
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionPaymentMethod(
+            final String subscriptionId,
+            final UpdateSubscriptionPaymentMethodRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionPaymentMethodRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionPaymentMethod.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionPaymentMethodRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionPaymentMethodRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/payment-method")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get Subscription Item.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  itemId  Required parameter: Item id
+     * @return    Returns the GetSubscriptionItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionItemResponse getSubscriptionItem(
+            final String subscriptionId,
+            final String itemId) throws ApiException, IOException {
+        return prepareGetSubscriptionItemRequest(subscriptionId, itemId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getSubscriptionItem.
+     */
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareGetSubscriptionItemRequest(
+            final String subscriptionId,
+            final String itemId) throws IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -234,6 +628,149 @@ public final class DefaultSubscriptionsController extends BaseController impleme
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, ListSubscriptionsResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Cancels a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Optional parameter: Request for cancelling a subscription
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse cancelSubscription(
+            final String subscriptionId,
+            final CreateCancelSubscriptionRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCancelSubscriptionRequest(subscriptionId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for cancelSubscription.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareCancelSubscriptionRequest(
+            final String subscriptionId,
+            final CreateCancelSubscriptionRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}")
+                        .bodyParam(param -> param.value(request).isRequired(false))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a increment.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for creating a increment
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetIncrementResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetIncrementResponse createIncrement(
+            final String subscriptionId,
+            final CreateIncrementRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateIncrementRequest(subscriptionId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createIncrement.
+     */
+    private ApiCall<GetIncrementResponse, ApiException> prepareCreateIncrementRequest(
+            final String subscriptionId,
+            final CreateIncrementRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetIncrementResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/increments")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetIncrementResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a usage.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  itemId  Required parameter: Item id
+     * @param  body  Required parameter: Request for creating a usage
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetUsageResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetUsageResponse createUsage(
+            final String subscriptionId,
+            final String itemId,
+            final CreateUsageRequest body,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateUsageRequest(subscriptionId, itemId, body, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createUsage.
+     */
+    private ApiCall<GetUsageResponse, ApiException> prepareCreateUsageRequest(
+            final String subscriptionId,
+            final String itemId,
+            final CreateUsageRequest body,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetUsageResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
+                        .bodyParam(param -> param.value(body))
+                        .bodySerializer(() ->  ApiHelper.serialize(body))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -359,6 +896,52 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     }
 
     /**
+     * @param  subscriptionId  Required parameter: Example:
+     * @param  request  Required parameter: Request for updating a subscription affiliation id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionAffiliationId(
+            final String subscriptionId,
+            final UpdateSubscriptionAffiliationIdRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionAffiliationIdRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionAffiliationId.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionAffiliationIdRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionAffiliationIdRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/gateway-affiliation-id")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Updates the metadata from a subscription.
      * @param  subscriptionId  Required parameter: The subscription id
      * @param  request  Required parameter: Request for updating the subscrption metadata
@@ -451,192 +1034,36 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     }
 
     /**
-     * Gets a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse getSubscription(
-            final String subscriptionId) throws ApiException, IOException {
-        return prepareGetSubscriptionRequest(subscriptionId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getSubscription.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareGetSubscriptionRequest(
-            final String subscriptionId) throws IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}")
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Example:
-     * @param  request  Required parameter: Request for updating the end date of the current
-     *         signature cycle
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateLatestPeriodEndAt(
-            final String subscriptionId,
-            final UpdateCurrentCycleEndDateRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateLatestPeriodEndAtRequest(subscriptionId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateLatestPeriodEndAt.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateLatestPeriodEndAtRequest(
-            final String subscriptionId,
-            final UpdateCurrentCycleEndDateRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/periods/latest/end-at")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  request  Required parameter: Request for updating the end date of the subscription
-     *         current status
-     * @param  idempotencyKey  Optional parameter: Example:
+     * @param  page  Required parameter: Page number
+     * @param  size  Required parameter: Page size
+     * @return    Returns the ListCyclesResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public void updateCurrentCycleStatus(
+    public ListCyclesResponse getSubscriptionCycles(
             final String subscriptionId,
-            final UpdateCurrentCycleStatusRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        prepareUpdateCurrentCycleStatusRequest(subscriptionId, request, idempotencyKey).execute();
+            final String page,
+            final String size) throws ApiException, IOException {
+        return prepareGetSubscriptionCyclesRequest(subscriptionId, page, size).execute();
     }
 
     /**
-     * Builds the ApiCall object for updateCurrentCycleStatus.
+     * Builds the ApiCall object for getSubscriptionCycles.
      */
-    private ApiCall<Void, ApiException> prepareUpdateCurrentCycleStatusRequest(
+    private ApiCall<ListCyclesResponse, ApiException> prepareGetSubscriptionCyclesRequest(
             final String subscriptionId,
-            final UpdateCurrentCycleStatusRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<Void, ApiException>()
+            final String page,
+            final String size) throws IOException {
+        return new ApiCall.Builder<ListCyclesResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/cycle-status")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get Subscription Items.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  name  Optional parameter: The item name
-     * @param  code  Optional parameter: Identification code in the client system
-     * @param  status  Optional parameter: The item statis
-     * @param  description  Optional parameter: The item description
-     * @param  createdSince  Optional parameter: Filter for item's creation date start range
-     * @param  createdUntil  Optional parameter: Filter for item's creation date end range
-     * @return    Returns the ListSubscriptionItemsResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListSubscriptionItemsResponse getSubscriptionItems(
-            final String subscriptionId,
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String code,
-            final String status,
-            final String description,
-            final String createdSince,
-            final String createdUntil) throws ApiException, IOException {
-        return prepareGetSubscriptionItemsRequest(subscriptionId, page, size, name, code, status,
-                description, createdSince, createdUntil).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getSubscriptionItems.
-     */
-    private ApiCall<ListSubscriptionItemsResponse, ApiException> prepareGetSubscriptionItemsRequest(
-            final String subscriptionId,
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String code,
-            final String status,
-            final String description,
-            final String createdSince,
-            final String createdUntil) throws IOException {
-        return new ApiCall.Builder<ListSubscriptionItemsResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items")
+                        .path("/subscriptions/{subscription_id}/cycles")
                         .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
+                                .value(page))
                         .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .queryParam(param -> param.key("name")
-                                .value(name).isRequired(false))
-                        .queryParam(param -> param.key("code")
-                                .value(code).isRequired(false))
-                        .queryParam(param -> param.key("status")
-                                .value(status).isRequired(false))
-                        .queryParam(param -> param.key("description")
-                                .value(description).isRequired(false))
-                        .queryParam(param -> param.key("created_since")
-                                .value(createdSince).isRequired(false))
-                        .queryParam(param -> param.key("created_until")
-                                .value(createdUntil).isRequired(false))
+                                .value(size))
                         .templateParam(param -> param.key("subscription_id").value(subscriptionId)
                                 .shouldEncode(true))
                         .headerParam(param -> param.key("accept").value("application/json"))
@@ -644,93 +1071,7 @@ public final class DefaultSubscriptionsController extends BaseController impleme
                         .httpMethod(HttpMethod.GET))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
-                                response -> ApiHelper.deserialize(response, ListSubscriptionItemsResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get Subscription Item.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  itemId  Required parameter: Item id
-     * @return    Returns the GetSubscriptionItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionItemResponse getSubscriptionItem(
-            final String subscriptionId,
-            final String itemId) throws ApiException, IOException {
-        return prepareGetSubscriptionItemRequest(subscriptionId, itemId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getSubscriptionItem.
-     */
-    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareGetSubscriptionItemRequest(
-            final String subscriptionId,
-            final String itemId) throws IOException {
-        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items/{item_id}")
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("item_id").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Example:
-     * @param  request  Required parameter: Request for updating a subscription affiliation id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionAffiliationId(
-            final String subscriptionId,
-            final UpdateSubscriptionAffiliationIdRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateSubscriptionAffiliationIdRequest(subscriptionId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateSubscriptionAffiliationId.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionAffiliationIdRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionAffiliationIdRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/gateway-affiliation-id")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                                response -> ApiHelper.deserialize(response, ListCyclesResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -781,205 +1122,34 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     }
 
     /**
-     * Updates a subscription item.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  itemId  Required parameter: Item id
-     * @param  body  Required parameter: Request for updating a subscription item
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionItemResponse updateSubscriptionItem(
-            final String subscriptionId,
-            final String itemId,
-            final UpdateSubscriptionItemRequest body,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateSubscriptionItemRequest(subscriptionId, itemId, body,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateSubscriptionItem.
-     */
-    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareUpdateSubscriptionItemRequest(
-            final String subscriptionId,
-            final String itemId,
-            final UpdateSubscriptionItemRequest body,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items/{item_id}")
-                        .bodyParam(param -> param.value(body))
-                        .bodySerializer(() ->  ApiHelper.serialize(body))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("item_id").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PUT))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a new Subscription item.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for creating a subscription item
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionItemResponse createSubscriptionItem(
-            final String subscriptionId,
-            final CreateSubscriptionItemRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateSubscriptionItemRequest(subscriptionId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createSubscriptionItem.
-     */
-    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareCreateSubscriptionItemRequest(
-            final String subscriptionId,
-            final CreateSubscriptionItemRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Lists all usages from a subscription item.
+     * Updates the billing date from a subscription.
      * @param  subscriptionId  Required parameter: The subscription id
-     * @param  itemId  Required parameter: The subscription item id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  code  Optional parameter: Identification code in the client system
-     * @param  group  Optional parameter: Identification group in the client system
-     * @param  usedSince  Optional parameter: Example:
-     * @param  usedUntil  Optional parameter: Example:
-     * @return    Returns the ListUsagesResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListUsagesResponse getUsages(
-            final String subscriptionId,
-            final String itemId,
-            final Integer page,
-            final Integer size,
-            final String code,
-            final String group,
-            final LocalDateTime usedSince,
-            final LocalDateTime usedUntil) throws ApiException, IOException {
-        return prepareGetUsagesRequest(subscriptionId, itemId, page, size, code, group, usedSince,
-                usedUntil).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getUsages.
-     */
-    private ApiCall<ListUsagesResponse, ApiException> prepareGetUsagesRequest(
-            final String subscriptionId,
-            final String itemId,
-            final Integer page,
-            final Integer size,
-            final String code,
-            final String group,
-            final LocalDateTime usedSince,
-            final LocalDateTime usedUntil) throws IOException {
-        return new ApiCall.Builder<ListUsagesResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .queryParam(param -> param.key("code")
-                                .value(code).isRequired(false))
-                        .queryParam(param -> param.key("group")
-                                .value(group).isRequired(false))
-                        .queryParam(param -> param.key("used_since")
-                                .value(DateTimeHelper.toRfc8601DateTime(usedSince)).isRequired(false))
-                        .queryParam(param -> param.key("used_until")
-                                .value(DateTimeHelper.toRfc8601DateTime(usedUntil)).isRequired(false))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("item_id").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListUsagesResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Atualização do valor mínimo da assinatura.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  request  Required parameter: Request da requisição com o valor mínimo que será
-     *         configurado
+     * @param  request  Required parameter: Request for updating the subscription billing date
      * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetSubscriptionResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetSubscriptionResponse updateSubscriptionMiniumPrice(
+    public GetSubscriptionResponse updateSubscriptionBillingDate(
             final String subscriptionId,
-            final UpdateSubscriptionMinimumPriceRequest request,
+            final UpdateSubscriptionBillingDateRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateSubscriptionMiniumPriceRequest(subscriptionId, request,
+        return prepareUpdateSubscriptionBillingDateRequest(subscriptionId, request,
                 idempotencyKey).execute();
     }
 
     /**
-     * Builds the ApiCall object for updateSubscriptionMiniumPrice.
+     * Builds the ApiCall object for updateSubscriptionBillingDate.
      */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionMiniumPriceRequest(
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionBillingDateRequest(
             final String subscriptionId,
-            final UpdateSubscriptionMinimumPriceRequest request,
+            final UpdateSubscriptionBillingDateRequest request,
             final String idempotencyKey) throws JsonProcessingException, IOException {
         return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/minimum_price")
+                        .path("/subscriptions/{subscription_id}/billing-date")
                         .bodyParam(param -> param.value(request))
                         .bodySerializer(() ->  ApiHelper.serialize(request))
                         .templateParam(param -> param.key("subscription_id").value(subscriptionId)
@@ -990,136 +1160,6 @@ public final class DefaultSubscriptionsController extends BaseController impleme
                         .headerParam(param -> param.key("accept").value("application/json"))
                         .authenticationKey(BaseController.AUTHENTICATION_KEY)
                         .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  cycleId  Required parameter: Example:
-     * @return    Returns the GetPeriodResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPeriodResponse getSubscriptionCycleById(
-            final String subscriptionId,
-            final String cycleId) throws ApiException, IOException {
-        return prepareGetSubscriptionCycleByIdRequest(subscriptionId, cycleId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getSubscriptionCycleById.
-     */
-    private ApiCall<GetPeriodResponse, ApiException> prepareGetSubscriptionCycleByIdRequest(
-            final String subscriptionId,
-            final String cycleId) throws IOException {
-        return new ApiCall.Builder<GetPeriodResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/cycles/{cycleId}")
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("cycleId").value(cycleId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetPeriodResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Create Usage.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  itemId  Required parameter: Item id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetUsageResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetUsageResponse createAnUsage(
-            final String subscriptionId,
-            final String itemId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateAnUsageRequest(subscriptionId, itemId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createAnUsage.
-     */
-    private ApiCall<GetUsageResponse, ApiException> prepareCreateAnUsageRequest(
-            final String subscriptionId,
-            final String itemId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetUsageResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("item_id").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Cancels a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Optional parameter: Request for cancelling a subscription
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse cancelSubscription(
-            final String subscriptionId,
-            final CreateCancelSubscriptionRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCancelSubscriptionRequest(subscriptionId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for cancelSubscription.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareCancelSubscriptionRequest(
-            final String subscriptionId,
-            final CreateCancelSubscriptionRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}")
-                        .bodyParam(param -> param.value(request).isRequired(false))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.DELETE))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
@@ -1266,385 +1306,6 @@ public final class DefaultSubscriptionsController extends BaseController impleme
     }
 
     /**
-     * Updates the credit card from a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for updating a card
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionCard(
-            final String subscriptionId,
-            final UpdateSubscriptionCardRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateSubscriptionCardRequest(subscriptionId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateSubscriptionCard.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionCardRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionCardRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/card")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Deletes a usage.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  itemId  Required parameter: The subscription item id
-     * @param  usageId  Required parameter: The usage id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetUsageResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetUsageResponse deleteUsage(
-            final String subscriptionId,
-            final String itemId,
-            final String usageId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareDeleteUsageRequest(subscriptionId, itemId, usageId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for deleteUsage.
-     */
-    private ApiCall<GetUsageResponse, ApiException> prepareDeleteUsageRequest(
-            final String subscriptionId,
-            final String itemId,
-            final String usageId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetUsageResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}")
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("item_id").value(itemId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("usage_id").value(usageId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.DELETE))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a discount.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for creating a discount
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetDiscountResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetDiscountResponse createDiscount(
-            final String subscriptionId,
-            final CreateDiscountRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateDiscountRequest(subscriptionId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createDiscount.
-     */
-    private ApiCall<GetDiscountResponse, ApiException> prepareCreateDiscountRequest(
-            final String subscriptionId,
-            final CreateDiscountRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetDiscountResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/discounts")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetDiscountResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates the payment method from a subscription.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for updating the paymentmethod from a
-     *         subscription
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionPaymentMethod(
-            final String subscriptionId,
-            final UpdateSubscriptionPaymentMethodRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateSubscriptionPaymentMethodRequest(subscriptionId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateSubscriptionPaymentMethod.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionPaymentMethodRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionPaymentMethodRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/payment-method")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a increment.
-     * @param  subscriptionId  Required parameter: Subscription id
-     * @param  request  Required parameter: Request for creating a increment
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetIncrementResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetIncrementResponse createIncrement(
-            final String subscriptionId,
-            final CreateIncrementRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateIncrementRequest(subscriptionId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createIncrement.
-     */
-    private ApiCall<GetIncrementResponse, ApiException> prepareCreateIncrementRequest(
-            final String subscriptionId,
-            final CreateIncrementRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetIncrementResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/increments")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetIncrementResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a usage.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  itemId  Required parameter: Item id
-     * @param  body  Required parameter: Request for creating a usage
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetUsageResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetUsageResponse createUsage(
-            final String subscriptionId,
-            final String itemId,
-            final CreateUsageRequest body,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateUsageRequest(subscriptionId, itemId, body, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createUsage.
-     */
-    private ApiCall<GetUsageResponse, ApiException> prepareCreateUsageRequest(
-            final String subscriptionId,
-            final String itemId,
-            final CreateUsageRequest body,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetUsageResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
-                        .bodyParam(param -> param.value(body))
-                        .bodySerializer(() ->  ApiHelper.serialize(body))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("item_id").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetUsageResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  page  Required parameter: Page number
-     * @param  size  Required parameter: Page size
-     * @return    Returns the ListCyclesResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListCyclesResponse getSubscriptionCycles(
-            final String subscriptionId,
-            final String page,
-            final String size) throws ApiException, IOException {
-        return prepareGetSubscriptionCyclesRequest(subscriptionId, page, size).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getSubscriptionCycles.
-     */
-    private ApiCall<ListCyclesResponse, ApiException> prepareGetSubscriptionCyclesRequest(
-            final String subscriptionId,
-            final String page,
-            final String size) throws IOException {
-        return new ApiCall.Builder<ListCyclesResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/cycles")
-                        .queryParam(param -> param.key("page")
-                                .value(page))
-                        .queryParam(param -> param.key("size")
-                                .value(size))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListCyclesResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates the billing date from a subscription.
-     * @param  subscriptionId  Required parameter: The subscription id
-     * @param  request  Required parameter: Request for updating the subscription billing date
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetSubscriptionResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetSubscriptionResponse updateSubscriptionBillingDate(
-            final String subscriptionId,
-            final UpdateSubscriptionBillingDateRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateSubscriptionBillingDateRequest(subscriptionId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateSubscriptionBillingDate.
-     */
-    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionBillingDateRequest(
-            final String subscriptionId,
-            final UpdateSubscriptionBillingDateRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/subscriptions/{subscription_id}/billing-date")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Updates the start at date from a subscription.
      * @param  subscriptionId  Required parameter: The subscription id
      * @param  request  Required parameter: Request for updating the subscription start date
@@ -1686,6 +1347,345 @@ public final class DefaultSubscriptionsController extends BaseController impleme
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates a subscription item.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  itemId  Required parameter: Item id
+     * @param  body  Required parameter: Request for updating a subscription item
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionItemResponse updateSubscriptionItem(
+            final String subscriptionId,
+            final String itemId,
+            final UpdateSubscriptionItemRequest body,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionItemRequest(subscriptionId, itemId, body,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionItem.
+     */
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareUpdateSubscriptionItemRequest(
+            final String subscriptionId,
+            final String itemId,
+            final UpdateSubscriptionItemRequest body,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}")
+                        .bodyParam(param -> param.value(body))
+                        .bodySerializer(() ->  ApiHelper.serialize(body))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PUT))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a new Subscription item.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @param  request  Required parameter: Request for creating a subscription item
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionItemResponse createSubscriptionItem(
+            final String subscriptionId,
+            final CreateSubscriptionItemRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateSubscriptionItemRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for createSubscriptionItem.
+     */
+    private ApiCall<GetSubscriptionItemResponse, ApiException> prepareCreateSubscriptionItemRequest(
+            final String subscriptionId,
+            final CreateSubscriptionItemRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Gets a subscription.
+     * @param  subscriptionId  Required parameter: Subscription id
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse getSubscription(
+            final String subscriptionId) throws ApiException, IOException {
+        return prepareGetSubscriptionRequest(subscriptionId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getSubscription.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareGetSubscriptionRequest(
+            final String subscriptionId) throws IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Lists all usages from a subscription item.
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  itemId  Required parameter: The subscription item id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  code  Optional parameter: Identification code in the client system
+     * @param  group  Optional parameter: Identification group in the client system
+     * @param  usedSince  Optional parameter: Example:
+     * @param  usedUntil  Optional parameter: Example:
+     * @return    Returns the ListUsagesResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListUsagesResponse getUsages(
+            final String subscriptionId,
+            final String itemId,
+            final Integer page,
+            final Integer size,
+            final String code,
+            final String group,
+            final LocalDateTime usedSince,
+            final LocalDateTime usedUntil) throws ApiException, IOException {
+        return prepareGetUsagesRequest(subscriptionId, itemId, page, size, code, group, usedSince,
+                usedUntil).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getUsages.
+     */
+    private ApiCall<ListUsagesResponse, ApiException> prepareGetUsagesRequest(
+            final String subscriptionId,
+            final String itemId,
+            final Integer page,
+            final Integer size,
+            final String code,
+            final String group,
+            final LocalDateTime usedSince,
+            final LocalDateTime usedUntil) throws IOException {
+        return new ApiCall.Builder<ListUsagesResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/items/{item_id}/usages")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("group")
+                                .value(group).isRequired(false))
+                        .queryParam(param -> param.key("used_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(usedSince)).isRequired(false))
+                        .queryParam(param -> param.key("used_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(usedUntil)).isRequired(false))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("item_id").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListUsagesResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  subscriptionId  Required parameter: Example:
+     * @param  request  Required parameter: Request for updating the end date of the current
+     *         signature cycle
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateLatestPeriodEndAt(
+            final String subscriptionId,
+            final UpdateCurrentCycleEndDateRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateLatestPeriodEndAtRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateLatestPeriodEndAt.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateLatestPeriodEndAtRequest(
+            final String subscriptionId,
+            final UpdateCurrentCycleEndDateRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/periods/latest/end-at")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Atualização do valor mínimo da assinatura.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  request  Required parameter: Request da requisição com o valor mínimo que será
+     *         configurado
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetSubscriptionResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetSubscriptionResponse updateSubscriptionMiniumPrice(
+            final String subscriptionId,
+            final UpdateSubscriptionMinimumPriceRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateSubscriptionMiniumPriceRequest(subscriptionId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateSubscriptionMiniumPrice.
+     */
+    private ApiCall<GetSubscriptionResponse, ApiException> prepareUpdateSubscriptionMiniumPriceRequest(
+            final String subscriptionId,
+            final UpdateSubscriptionMinimumPriceRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetSubscriptionResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/minimum_price")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetSubscriptionResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  subscriptionId  Required parameter: The subscription id
+     * @param  cycleId  Required parameter: Example:
+     * @return    Returns the GetPeriodResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPeriodResponse getSubscriptionCycleById(
+            final String subscriptionId,
+            final String cycleId) throws ApiException, IOException {
+        return prepareGetSubscriptionCycleByIdRequest(subscriptionId, cycleId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getSubscriptionCycleById.
+     */
+    private ApiCall<GetPeriodResponse, ApiException> prepareGetSubscriptionCycleByIdRequest(
+            final String subscriptionId,
+            final String cycleId) throws IOException {
+        return new ApiCall.Builder<GetPeriodResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/subscriptions/{subscription_id}/cycles/{cycleId}")
+                        .templateParam(param -> param.key("subscription_id").value(subscriptionId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("cycleId").value(cycleId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .authenticationKey(BaseController.AUTHENTICATION_KEY)
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetPeriodResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

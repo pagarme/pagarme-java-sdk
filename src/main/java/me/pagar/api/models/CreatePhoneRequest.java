@@ -9,6 +9,8 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for CreatePhoneRequest type.
@@ -17,6 +19,7 @@ public class CreatePhoneRequest {
     private String countryCode;
     private String number;
     private String areaCode;
+    private OptionalNullable<String> type;
 
     /**
      * Default constructor.
@@ -29,14 +32,28 @@ public class CreatePhoneRequest {
      * @param  countryCode  String value for countryCode.
      * @param  number  String value for number.
      * @param  areaCode  String value for areaCode.
+     * @param  type  String value for type.
      */
     public CreatePhoneRequest(
             String countryCode,
             String number,
-            String areaCode) {
+            String areaCode,
+            String type) {
         this.countryCode = countryCode;
         this.number = number;
         this.areaCode = areaCode;
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * Internal initialization constructor.
+     */
+    protected CreatePhoneRequest(String countryCode, String number, String areaCode,
+            OptionalNullable<String> type) {
+        this.countryCode = countryCode;
+        this.number = number;
+        this.areaCode = areaCode;
+        this.type = type;
     }
 
     /**
@@ -97,13 +114,48 @@ public class CreatePhoneRequest {
     }
 
     /**
+     * Internal Getter for Type.
+     * @return Returns the Internal String
+     */
+    @JsonGetter("Type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetType() {
+        return this.type;
+    }
+
+    /**
+     * Getter for Type.
+     * @return Returns the String
+     */
+    public String getType() {
+        return OptionalNullable.getFrom(type);
+    }
+
+    /**
+     * Setter for Type.
+     * @param type Value for String
+     */
+    @JsonSetter("Type")
+    public void setType(String type) {
+        this.type = OptionalNullable.of(type);
+    }
+
+    /**
+     * UnSetter for Type.
+     */
+    public void unsetType() {
+        type = null;
+    }
+
+    /**
      * Converts this CreatePhoneRequest into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
         return "CreatePhoneRequest [" + "countryCode=" + countryCode + ", number=" + number
-                + ", areaCode=" + areaCode + "]";
+                + ", areaCode=" + areaCode + ", type=" + type + "]";
     }
 
     /**
@@ -116,6 +168,7 @@ public class CreatePhoneRequest {
                 .countryCode(getCountryCode())
                 .number(getNumber())
                 .areaCode(getAreaCode());
+        builder.type = internalGetType();
         return builder;
     }
 
@@ -126,6 +179,7 @@ public class CreatePhoneRequest {
         private String countryCode;
         private String number;
         private String areaCode;
+        private OptionalNullable<String> type;
 
 
 
@@ -160,11 +214,30 @@ public class CreatePhoneRequest {
         }
 
         /**
+         * Setter for type.
+         * @param  type  String value for type.
+         * @return Builder
+         */
+        public Builder type(String type) {
+            this.type = OptionalNullable.of(type);
+            return this;
+        }
+
+        /**
+         * UnSetter for type.
+         * @return Builder
+         */
+        public Builder unsetType() {
+            type = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreatePhoneRequest} object using the set fields.
          * @return {@link CreatePhoneRequest}
          */
         public CreatePhoneRequest build() {
-            return new CreatePhoneRequest(countryCode, number, areaCode);
+            return new CreatePhoneRequest(countryCode, number, areaCode, type);
         }
     }
 }
