@@ -30,6 +30,8 @@ public class CreateCreditCardPaymentRequest {
     private String operationType;
     private String recurrencyCycle;
     private CreateCardPayloadRequest payload;
+    private String initiatedType;
+    private String recurrenceModel;
 
     /**
      * Default constructor.
@@ -57,6 +59,8 @@ public class CreateCreditCardPaymentRequest {
      * @param  operationType  String value for operationType.
      * @param  recurrencyCycle  String value for recurrencyCycle.
      * @param  payload  CreateCardPayloadRequest value for payload.
+     * @param  initiatedType  String value for initiatedType.
+     * @param  recurrenceModel  String value for recurrenceModel.
      */
     public CreateCreditCardPaymentRequest(
             Integer installments,
@@ -74,7 +78,9 @@ public class CreateCreditCardPaymentRequest {
             Boolean autoRecovery,
             String operationType,
             String recurrencyCycle,
-            CreateCardPayloadRequest payload) {
+            CreateCardPayloadRequest payload,
+            String initiatedType,
+            String recurrenceModel) {
         this.installments = installments;
         this.statementDescriptor = statementDescriptor;
         this.card = card;
@@ -91,6 +97,8 @@ public class CreateCreditCardPaymentRequest {
         this.operationType = operationType;
         this.recurrencyCycle = recurrencyCycle;
         this.payload = payload;
+        this.initiatedType = initiatedType;
+        this.recurrenceModel = recurrenceModel;
     }
 
     /**
@@ -426,6 +434,44 @@ public class CreateCreditCardPaymentRequest {
     }
 
     /**
+     * Getter for InitiatedType.
+     * @return Returns the String
+     */
+    @JsonGetter("initiated_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getInitiatedType() {
+        return initiatedType;
+    }
+
+    /**
+     * Setter for InitiatedType.
+     * @param initiatedType Value for String
+     */
+    @JsonSetter("initiated_type")
+    public void setInitiatedType(String initiatedType) {
+        this.initiatedType = initiatedType;
+    }
+
+    /**
+     * Getter for RecurrenceModel.
+     * @return Returns the String
+     */
+    @JsonGetter("recurrence_model")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getRecurrenceModel() {
+        return recurrenceModel;
+    }
+
+    /**
+     * Setter for RecurrenceModel.
+     * @param recurrenceModel Value for String
+     */
+    @JsonSetter("recurrence_model")
+    public void setRecurrenceModel(String recurrenceModel) {
+        this.recurrenceModel = recurrenceModel;
+    }
+
+    /**
      * Converts this CreateCreditCardPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -439,7 +485,7 @@ public class CreateCreditCardPaymentRequest {
                 + merchantCategoryCode + ", authentication=" + authentication + ", contactless="
                 + contactless + ", autoRecovery=" + autoRecovery + ", operationType="
                 + operationType + ", recurrencyCycle=" + recurrencyCycle + ", payload=" + payload
-                + "]";
+                + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel + "]";
     }
 
     /**
@@ -464,7 +510,9 @@ public class CreateCreditCardPaymentRequest {
                 .autoRecovery(getAutoRecovery())
                 .operationType(getOperationType())
                 .recurrencyCycle(getRecurrencyCycle())
-                .payload(getPayload());
+                .payload(getPayload())
+                .initiatedType(getInitiatedType())
+                .recurrenceModel(getRecurrenceModel());
         return builder;
     }
 
@@ -488,6 +536,8 @@ public class CreateCreditCardPaymentRequest {
         private String operationType;
         private String recurrencyCycle;
         private CreateCardPayloadRequest payload;
+        private String initiatedType;
+        private String recurrenceModel;
 
 
 
@@ -652,6 +702,26 @@ public class CreateCreditCardPaymentRequest {
         }
 
         /**
+         * Setter for initiatedType.
+         * @param  initiatedType  String value for initiatedType.
+         * @return Builder
+         */
+        public Builder initiatedType(String initiatedType) {
+            this.initiatedType = initiatedType;
+            return this;
+        }
+
+        /**
+         * Setter for recurrenceModel.
+         * @param  recurrenceModel  String value for recurrenceModel.
+         * @return Builder
+         */
+        public Builder recurrenceModel(String recurrenceModel) {
+            this.recurrenceModel = recurrenceModel;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateCreditCardPaymentRequest} object using the set fields.
          * @return {@link CreateCreditCardPaymentRequest}
          */
@@ -659,7 +729,7 @@ public class CreateCreditCardPaymentRequest {
             return new CreateCreditCardPaymentRequest(installments, statementDescriptor, card,
                     cardId, cardToken, recurrence, capture, extendedLimitEnabled, extendedLimitCode,
                     merchantCategoryCode, authentication, contactless, autoRecovery, operationType,
-                    recurrencyCycle, payload);
+                    recurrencyCycle, payload, initiatedType, recurrenceModel);
         }
     }
 }

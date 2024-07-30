@@ -7,6 +7,7 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
@@ -17,6 +18,8 @@ public class UpdateChargeCardRequest {
     private String cardId;
     private CreateCardRequest card;
     private boolean recurrence;
+    private String initiatedType;
+    private String recurrenceModel;
 
     /**
      * Default constructor.
@@ -30,16 +33,22 @@ public class UpdateChargeCardRequest {
      * @param  cardId  String value for cardId.
      * @param  card  CreateCardRequest value for card.
      * @param  recurrence  boolean value for recurrence.
+     * @param  initiatedType  String value for initiatedType.
+     * @param  recurrenceModel  String value for recurrenceModel.
      */
     public UpdateChargeCardRequest(
             boolean updateSubscription,
             String cardId,
             CreateCardRequest card,
-            boolean recurrence) {
+            boolean recurrence,
+            String initiatedType,
+            String recurrenceModel) {
         this.updateSubscription = updateSubscription;
         this.cardId = cardId;
         this.card = card;
         this.recurrence = recurrence;
+        this.initiatedType = initiatedType;
+        this.recurrenceModel = recurrenceModel;
     }
 
     /**
@@ -123,13 +132,52 @@ public class UpdateChargeCardRequest {
     }
 
     /**
+     * Getter for InitiatedType.
+     * @return Returns the String
+     */
+    @JsonGetter("initiated_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getInitiatedType() {
+        return initiatedType;
+    }
+
+    /**
+     * Setter for InitiatedType.
+     * @param initiatedType Value for String
+     */
+    @JsonSetter("initiated_type")
+    public void setInitiatedType(String initiatedType) {
+        this.initiatedType = initiatedType;
+    }
+
+    /**
+     * Getter for RecurrenceModel.
+     * @return Returns the String
+     */
+    @JsonGetter("recurrence_model")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getRecurrenceModel() {
+        return recurrenceModel;
+    }
+
+    /**
+     * Setter for RecurrenceModel.
+     * @param recurrenceModel Value for String
+     */
+    @JsonSetter("recurrence_model")
+    public void setRecurrenceModel(String recurrenceModel) {
+        this.recurrenceModel = recurrenceModel;
+    }
+
+    /**
      * Converts this UpdateChargeCardRequest into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
         return "UpdateChargeCardRequest [" + "updateSubscription=" + updateSubscription
-                + ", cardId=" + cardId + ", card=" + card + ", recurrence=" + recurrence + "]";
+                + ", cardId=" + cardId + ", card=" + card + ", recurrence=" + recurrence
+                + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel + "]";
     }
 
     /**
@@ -138,7 +186,9 @@ public class UpdateChargeCardRequest {
      * @return a new {@link UpdateChargeCardRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(updateSubscription, cardId, card, recurrence);
+        Builder builder = new Builder(updateSubscription, cardId, card, recurrence)
+                .initiatedType(getInitiatedType())
+                .recurrenceModel(getRecurrenceModel());
         return builder;
     }
 
@@ -150,6 +200,8 @@ public class UpdateChargeCardRequest {
         private String cardId;
         private CreateCardRequest card;
         private boolean recurrence;
+        private String initiatedType;
+        private String recurrenceModel;
 
         /**
          * Initialization constructor.
@@ -213,11 +265,32 @@ public class UpdateChargeCardRequest {
         }
 
         /**
+         * Setter for initiatedType.
+         * @param  initiatedType  String value for initiatedType.
+         * @return Builder
+         */
+        public Builder initiatedType(String initiatedType) {
+            this.initiatedType = initiatedType;
+            return this;
+        }
+
+        /**
+         * Setter for recurrenceModel.
+         * @param  recurrenceModel  String value for recurrenceModel.
+         * @return Builder
+         */
+        public Builder recurrenceModel(String recurrenceModel) {
+            this.recurrenceModel = recurrenceModel;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateChargeCardRequest} object using the set fields.
          * @return {@link UpdateChargeCardRequest}
          */
         public UpdateChargeCardRequest build() {
-            return new UpdateChargeCardRequest(updateSubscription, cardId, card, recurrence);
+            return new UpdateChargeCardRequest(updateSubscription, cardId, card, recurrence,
+                    initiatedType, recurrenceModel);
         }
     }
 }
