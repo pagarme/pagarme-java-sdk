@@ -21,6 +21,8 @@ public class CreateDebitCardPaymentRequest {
     private Boolean recurrence;
     private CreatePaymentAuthenticationRequest authentication;
     private CreateCardPaymentContactlessRequest token;
+    private String initiatedType;
+    private String recurrenceModel;
 
     /**
      * Default constructor.
@@ -37,6 +39,8 @@ public class CreateDebitCardPaymentRequest {
      * @param  recurrence  Boolean value for recurrence.
      * @param  authentication  CreatePaymentAuthenticationRequest value for authentication.
      * @param  token  CreateCardPaymentContactlessRequest value for token.
+     * @param  initiatedType  String value for initiatedType.
+     * @param  recurrenceModel  String value for recurrenceModel.
      */
     public CreateDebitCardPaymentRequest(
             String statementDescriptor,
@@ -45,7 +49,9 @@ public class CreateDebitCardPaymentRequest {
             String cardToken,
             Boolean recurrence,
             CreatePaymentAuthenticationRequest authentication,
-            CreateCardPaymentContactlessRequest token) {
+            CreateCardPaymentContactlessRequest token,
+            String initiatedType,
+            String recurrenceModel) {
         this.statementDescriptor = statementDescriptor;
         this.card = card;
         this.cardId = cardId;
@@ -53,6 +59,8 @@ public class CreateDebitCardPaymentRequest {
         this.recurrence = recurrence;
         this.authentication = authentication;
         this.token = token;
+        this.initiatedType = initiatedType;
+        this.recurrenceModel = recurrenceModel;
     }
 
     /**
@@ -203,6 +211,44 @@ public class CreateDebitCardPaymentRequest {
     }
 
     /**
+     * Getter for InitiatedType.
+     * @return Returns the String
+     */
+    @JsonGetter("initiated_type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getInitiatedType() {
+        return initiatedType;
+    }
+
+    /**
+     * Setter for InitiatedType.
+     * @param initiatedType Value for String
+     */
+    @JsonSetter("initiated_type")
+    public void setInitiatedType(String initiatedType) {
+        this.initiatedType = initiatedType;
+    }
+
+    /**
+     * Getter for RecurrenceModel.
+     * @return Returns the String
+     */
+    @JsonGetter("recurrence_model")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getRecurrenceModel() {
+        return recurrenceModel;
+    }
+
+    /**
+     * Setter for RecurrenceModel.
+     * @param recurrenceModel Value for String
+     */
+    @JsonSetter("recurrence_model")
+    public void setRecurrenceModel(String recurrenceModel) {
+        this.recurrenceModel = recurrenceModel;
+    }
+
+    /**
      * Converts this CreateDebitCardPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -211,7 +257,8 @@ public class CreateDebitCardPaymentRequest {
         return "CreateDebitCardPaymentRequest [" + "statementDescriptor=" + statementDescriptor
                 + ", card=" + card + ", cardId=" + cardId + ", cardToken=" + cardToken
                 + ", recurrence=" + recurrence + ", authentication=" + authentication + ", token="
-                + token + "]";
+                + token + ", initiatedType=" + initiatedType + ", recurrenceModel="
+                + recurrenceModel + "]";
     }
 
     /**
@@ -227,7 +274,9 @@ public class CreateDebitCardPaymentRequest {
                 .cardToken(getCardToken())
                 .recurrence(getRecurrence())
                 .authentication(getAuthentication())
-                .token(getToken());
+                .token(getToken())
+                .initiatedType(getInitiatedType())
+                .recurrenceModel(getRecurrenceModel());
         return builder;
     }
 
@@ -242,6 +291,8 @@ public class CreateDebitCardPaymentRequest {
         private Boolean recurrence;
         private CreatePaymentAuthenticationRequest authentication;
         private CreateCardPaymentContactlessRequest token;
+        private String initiatedType;
+        private String recurrenceModel;
 
 
 
@@ -316,12 +367,32 @@ public class CreateDebitCardPaymentRequest {
         }
 
         /**
+         * Setter for initiatedType.
+         * @param  initiatedType  String value for initiatedType.
+         * @return Builder
+         */
+        public Builder initiatedType(String initiatedType) {
+            this.initiatedType = initiatedType;
+            return this;
+        }
+
+        /**
+         * Setter for recurrenceModel.
+         * @param  recurrenceModel  String value for recurrenceModel.
+         * @return Builder
+         */
+        public Builder recurrenceModel(String recurrenceModel) {
+            this.recurrenceModel = recurrenceModel;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateDebitCardPaymentRequest} object using the set fields.
          * @return {@link CreateDebitCardPaymentRequest}
          */
         public CreateDebitCardPaymentRequest build() {
             return new CreateDebitCardPaymentRequest(statementDescriptor, card, cardId, cardToken,
-                    recurrence, authentication, token);
+                    recurrence, authentication, token, initiatedType, recurrenceModel);
         }
     }
 }

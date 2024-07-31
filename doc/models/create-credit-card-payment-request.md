@@ -27,6 +27,8 @@ The settings for creating a credit card payment
 | `OperationType` | `String` | Optional | AuthOnly, AuthAndCapture, PreAuth | String getOperationType() | setOperationType(String operationType) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 | `Payload` | [`CreateCardPayloadRequest`](../../doc/models/create-card-payload-request.md) | Optional | - | CreateCardPayloadRequest getPayload() | setPayload(CreateCardPayloadRequest payload) |
+| `InitiatedType` | `String` | Optional | - | String getInitiatedType() | setInitiatedType(String initiatedType) |
+| `RecurrenceModel` | `String` | Optional | - | String getRecurrenceModel() | setRecurrenceModel(String recurrenceModel) |
 
 ## Example (as JSON)
 
