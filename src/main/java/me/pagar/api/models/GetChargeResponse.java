@@ -41,6 +41,7 @@ public class GetChargeResponse {
     private OptionalNullable<Integer> paidAmount;
     private OptionalNullable<Integer> interestAndFinePaid;
     private OptionalNullable<String> recurrencyCycle;
+    private OptionalNullable<GetPaymentOriginResponse> paymentOrigin;
 
     /**
      * Default constructor.
@@ -71,6 +72,7 @@ public class GetChargeResponse {
      * @param  paidAmount  Integer value for paidAmount.
      * @param  interestAndFinePaid  Integer value for interestAndFinePaid.
      * @param  recurrencyCycle  String value for recurrencyCycle.
+     * @param  paymentOrigin  GetPaymentOriginResponse value for paymentOrigin.
      */
     public GetChargeResponse(
             String id,
@@ -93,7 +95,8 @@ public class GetChargeResponse {
             Integer canceledAmount,
             Integer paidAmount,
             Integer interestAndFinePaid,
-            String recurrencyCycle) {
+            String recurrencyCycle,
+            GetPaymentOriginResponse paymentOrigin) {
         this.id = OptionalNullable.of(id);
         this.code = OptionalNullable.of(code);
         this.gatewayId = OptionalNullable.of(gatewayId);
@@ -115,6 +118,7 @@ public class GetChargeResponse {
         this.paidAmount = OptionalNullable.of(paidAmount);
         this.interestAndFinePaid = OptionalNullable.of(interestAndFinePaid);
         this.recurrencyCycle = OptionalNullable.of(recurrencyCycle);
+        this.paymentOrigin = OptionalNullable.of(paymentOrigin);
     }
 
     /**
@@ -140,6 +144,7 @@ public class GetChargeResponse {
      * @param  paidAmount  Integer value for paidAmount.
      * @param  interestAndFinePaid  Integer value for interestAndFinePaid.
      * @param  recurrencyCycle  String value for recurrencyCycle.
+     * @param  paymentOrigin  GetPaymentOriginResponse value for paymentOrigin.
      */
 
     protected GetChargeResponse(OptionalNullable<String> id, OptionalNullable<String> code,
@@ -153,7 +158,8 @@ public class GetChargeResponse {
             OptionalNullable<Map<String, String>> metadata, OptionalNullable<LocalDateTime> paidAt,
             OptionalNullable<LocalDateTime> canceledAt, OptionalNullable<Integer> canceledAmount,
             OptionalNullable<Integer> paidAmount, OptionalNullable<Integer> interestAndFinePaid,
-            OptionalNullable<String> recurrencyCycle) {
+            OptionalNullable<String> recurrencyCycle,
+            OptionalNullable<GetPaymentOriginResponse> paymentOrigin) {
         this.id = id;
         this.code = code;
         this.gatewayId = gatewayId;
@@ -175,6 +181,7 @@ public class GetChargeResponse {
         this.paidAmount = paidAmount;
         this.interestAndFinePaid = interestAndFinePaid;
         this.recurrencyCycle = recurrencyCycle;
+        this.paymentOrigin = paymentOrigin;
     }
 
     /**
@@ -934,6 +941,41 @@ public class GetChargeResponse {
     }
 
     /**
+     * Internal Getter for PaymentOrigin.
+     * @return Returns the Internal GetPaymentOriginResponse
+     */
+    @JsonGetter("payment_origin")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetPaymentOriginResponse> internalGetPaymentOrigin() {
+        return this.paymentOrigin;
+    }
+
+    /**
+     * Getter for PaymentOrigin.
+     * @return Returns the GetPaymentOriginResponse
+     */
+    public GetPaymentOriginResponse getPaymentOrigin() {
+        return OptionalNullable.getFrom(paymentOrigin);
+    }
+
+    /**
+     * Setter for PaymentOrigin.
+     * @param paymentOrigin Value for GetPaymentOriginResponse
+     */
+    @JsonSetter("payment_origin")
+    public void setPaymentOrigin(GetPaymentOriginResponse paymentOrigin) {
+        this.paymentOrigin = OptionalNullable.of(paymentOrigin);
+    }
+
+    /**
+     * UnSetter for PaymentOrigin.
+     */
+    public void unsetPaymentOrigin() {
+        paymentOrigin = null;
+    }
+
+    /**
      * Converts this GetChargeResponse into string format.
      * @return String representation of this class
      */
@@ -947,7 +989,7 @@ public class GetChargeResponse {
                 + ", metadata=" + metadata + ", paidAt=" + paidAt + ", canceledAt=" + canceledAt
                 + ", canceledAmount=" + canceledAmount + ", paidAmount=" + paidAmount
                 + ", interestAndFinePaid=" + interestAndFinePaid + ", recurrencyCycle="
-                + recurrencyCycle + "]";
+                + recurrencyCycle + ", paymentOrigin=" + paymentOrigin + "]";
     }
 
     /**
@@ -978,6 +1020,7 @@ public class GetChargeResponse {
         builder.paidAmount = internalGetPaidAmount();
         builder.interestAndFinePaid = internalGetInterestAndFinePaid();
         builder.recurrencyCycle = internalGetRecurrencyCycle();
+        builder.paymentOrigin = internalGetPaymentOrigin();
         return builder;
     }
 
@@ -1006,6 +1049,7 @@ public class GetChargeResponse {
         private OptionalNullable<Integer> paidAmount;
         private OptionalNullable<Integer> interestAndFinePaid;
         private OptionalNullable<String> recurrencyCycle;
+        private OptionalNullable<GetPaymentOriginResponse> paymentOrigin;
 
 
 
@@ -1409,6 +1453,25 @@ public class GetChargeResponse {
         }
 
         /**
+         * Setter for paymentOrigin.
+         * @param  paymentOrigin  GetPaymentOriginResponse value for paymentOrigin.
+         * @return Builder
+         */
+        public Builder paymentOrigin(GetPaymentOriginResponse paymentOrigin) {
+            this.paymentOrigin = OptionalNullable.of(paymentOrigin);
+            return this;
+        }
+
+        /**
+         * UnSetter for paymentOrigin.
+         * @return Builder
+         */
+        public Builder unsetPaymentOrigin() {
+            paymentOrigin = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetChargeResponse} object using the set fields.
          * @return {@link GetChargeResponse}
          */
@@ -1416,7 +1479,7 @@ public class GetChargeResponse {
             return new GetChargeResponse(id, code, gatewayId, amount, status, currency,
                     paymentMethod, dueAt, createdAt, updatedAt, lastTransaction, invoice, order,
                     customer, metadata, paidAt, canceledAt, canceledAmount, paidAmount,
-                    interestAndFinePaid, recurrencyCycle);
+                    interestAndFinePaid, recurrencyCycle, paymentOrigin);
         }
     }
 }

@@ -23,6 +23,7 @@ public class CreateDebitCardPaymentRequest {
     private CreateCardPaymentContactlessRequest token;
     private String initiatedType;
     private String recurrenceModel;
+    private CreatePaymentOriginRequest paymentOrigin;
 
     /**
      * Default constructor.
@@ -41,6 +42,7 @@ public class CreateDebitCardPaymentRequest {
      * @param  token  CreateCardPaymentContactlessRequest value for token.
      * @param  initiatedType  String value for initiatedType.
      * @param  recurrenceModel  String value for recurrenceModel.
+     * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
      */
     public CreateDebitCardPaymentRequest(
             String statementDescriptor,
@@ -51,7 +53,8 @@ public class CreateDebitCardPaymentRequest {
             CreatePaymentAuthenticationRequest authentication,
             CreateCardPaymentContactlessRequest token,
             String initiatedType,
-            String recurrenceModel) {
+            String recurrenceModel,
+            CreatePaymentOriginRequest paymentOrigin) {
         this.statementDescriptor = statementDescriptor;
         this.card = card;
         this.cardId = cardId;
@@ -61,6 +64,7 @@ public class CreateDebitCardPaymentRequest {
         this.token = token;
         this.initiatedType = initiatedType;
         this.recurrenceModel = recurrenceModel;
+        this.paymentOrigin = paymentOrigin;
     }
 
     /**
@@ -249,6 +253,25 @@ public class CreateDebitCardPaymentRequest {
     }
 
     /**
+     * Getter for PaymentOrigin.
+     * @return Returns the CreatePaymentOriginRequest
+     */
+    @JsonGetter("payment_origin")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreatePaymentOriginRequest getPaymentOrigin() {
+        return paymentOrigin;
+    }
+
+    /**
+     * Setter for PaymentOrigin.
+     * @param paymentOrigin Value for CreatePaymentOriginRequest
+     */
+    @JsonSetter("payment_origin")
+    public void setPaymentOrigin(CreatePaymentOriginRequest paymentOrigin) {
+        this.paymentOrigin = paymentOrigin;
+    }
+
+    /**
      * Converts this CreateDebitCardPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -258,7 +281,7 @@ public class CreateDebitCardPaymentRequest {
                 + ", card=" + card + ", cardId=" + cardId + ", cardToken=" + cardToken
                 + ", recurrence=" + recurrence + ", authentication=" + authentication + ", token="
                 + token + ", initiatedType=" + initiatedType + ", recurrenceModel="
-                + recurrenceModel + "]";
+                + recurrenceModel + ", paymentOrigin=" + paymentOrigin + "]";
     }
 
     /**
@@ -276,7 +299,8 @@ public class CreateDebitCardPaymentRequest {
                 .authentication(getAuthentication())
                 .token(getToken())
                 .initiatedType(getInitiatedType())
-                .recurrenceModel(getRecurrenceModel());
+                .recurrenceModel(getRecurrenceModel())
+                .paymentOrigin(getPaymentOrigin());
         return builder;
     }
 
@@ -293,6 +317,7 @@ public class CreateDebitCardPaymentRequest {
         private CreateCardPaymentContactlessRequest token;
         private String initiatedType;
         private String recurrenceModel;
+        private CreatePaymentOriginRequest paymentOrigin;
 
 
 
@@ -387,12 +412,23 @@ public class CreateDebitCardPaymentRequest {
         }
 
         /**
+         * Setter for paymentOrigin.
+         * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
+         * @return Builder
+         */
+        public Builder paymentOrigin(CreatePaymentOriginRequest paymentOrigin) {
+            this.paymentOrigin = paymentOrigin;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateDebitCardPaymentRequest} object using the set fields.
          * @return {@link CreateDebitCardPaymentRequest}
          */
         public CreateDebitCardPaymentRequest build() {
             return new CreateDebitCardPaymentRequest(statementDescriptor, card, cardId, cardToken,
-                    recurrence, authentication, token, initiatedType, recurrenceModel);
+                    recurrence, authentication, token, initiatedType, recurrenceModel,
+                    paymentOrigin);
         }
     }
 }

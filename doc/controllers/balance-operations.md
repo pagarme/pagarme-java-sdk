@@ -10,41 +10,8 @@ BalanceOperationsController balanceOperationsController = client.getBalanceOpera
 
 ## Methods
 
-* [Get Balance Operation by Id](../../doc/controllers/balance-operations.md#get-balance-operation-by-id)
 * [Get Balance Operations](../../doc/controllers/balance-operations.md#get-balance-operations)
-
-
-# Get Balance Operation by Id
-
-```java
-GetBalanceOperationResponse getBalanceOperationById(
-    final long id)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `long` | Template, Required | - |
-
-## Response Type
-
-[`GetBalanceOperationResponse`](../../doc/models/get-balance-operation-response.md)
-
-## Example Usage
-
-```java
-long id = 112L;
-
-try {
-    GetBalanceOperationResponse result = balanceOperationsController.getBalanceOperationById(id);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+* [Get Balance Operation by Id](../../doc/controllers/balance-operations.md#get-balance-operation-by-id)
 
 
 # Get Balance Operations
@@ -75,6 +42,39 @@ ListBalanceOperationResponse getBalanceOperations(
 ```java
 try {
     ListBalanceOperationResponse result = balanceOperationsController.getBalanceOperations(null, null, null, null);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Balance Operation by Id
+
+```java
+GetBalanceOperationResponse getBalanceOperationById(
+    final long id)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `id` | `long` | Template, Required | - |
+
+## Response Type
+
+[`GetBalanceOperationResponse`](../../doc/models/get-balance-operation-response.md)
+
+## Example Usage
+
+```java
+long id = 112L;
+
+try {
+    GetBalanceOperationResponse result = balanceOperationsController.getBalanceOperationById(id);
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();

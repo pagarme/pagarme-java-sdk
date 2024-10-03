@@ -20,6 +20,7 @@ public class UpdateChargeCardRequest {
     private boolean recurrence;
     private String initiatedType;
     private String recurrenceModel;
+    private CreatePaymentOriginRequest paymentOrigin;
 
     /**
      * Default constructor.
@@ -35,6 +36,7 @@ public class UpdateChargeCardRequest {
      * @param  recurrence  boolean value for recurrence.
      * @param  initiatedType  String value for initiatedType.
      * @param  recurrenceModel  String value for recurrenceModel.
+     * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
      */
     public UpdateChargeCardRequest(
             boolean updateSubscription,
@@ -42,13 +44,15 @@ public class UpdateChargeCardRequest {
             CreateCardRequest card,
             boolean recurrence,
             String initiatedType,
-            String recurrenceModel) {
+            String recurrenceModel,
+            CreatePaymentOriginRequest paymentOrigin) {
         this.updateSubscription = updateSubscription;
         this.cardId = cardId;
         this.card = card;
         this.recurrence = recurrence;
         this.initiatedType = initiatedType;
         this.recurrenceModel = recurrenceModel;
+        this.paymentOrigin = paymentOrigin;
     }
 
     /**
@@ -170,6 +174,25 @@ public class UpdateChargeCardRequest {
     }
 
     /**
+     * Getter for PaymentOrigin.
+     * @return Returns the CreatePaymentOriginRequest
+     */
+    @JsonGetter("payment_origin")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreatePaymentOriginRequest getPaymentOrigin() {
+        return paymentOrigin;
+    }
+
+    /**
+     * Setter for PaymentOrigin.
+     * @param paymentOrigin Value for CreatePaymentOriginRequest
+     */
+    @JsonSetter("payment_origin")
+    public void setPaymentOrigin(CreatePaymentOriginRequest paymentOrigin) {
+        this.paymentOrigin = paymentOrigin;
+    }
+
+    /**
      * Converts this UpdateChargeCardRequest into string format.
      * @return String representation of this class
      */
@@ -177,7 +200,8 @@ public class UpdateChargeCardRequest {
     public String toString() {
         return "UpdateChargeCardRequest [" + "updateSubscription=" + updateSubscription
                 + ", cardId=" + cardId + ", card=" + card + ", recurrence=" + recurrence
-                + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel + "]";
+                + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel
+                + ", paymentOrigin=" + paymentOrigin + "]";
     }
 
     /**
@@ -188,7 +212,8 @@ public class UpdateChargeCardRequest {
     public Builder toBuilder() {
         Builder builder = new Builder(updateSubscription, cardId, card, recurrence)
                 .initiatedType(getInitiatedType())
-                .recurrenceModel(getRecurrenceModel());
+                .recurrenceModel(getRecurrenceModel())
+                .paymentOrigin(getPaymentOrigin());
         return builder;
     }
 
@@ -202,6 +227,7 @@ public class UpdateChargeCardRequest {
         private boolean recurrence;
         private String initiatedType;
         private String recurrenceModel;
+        private CreatePaymentOriginRequest paymentOrigin;
 
         /**
          * Initialization constructor.
@@ -285,12 +311,22 @@ public class UpdateChargeCardRequest {
         }
 
         /**
+         * Setter for paymentOrigin.
+         * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
+         * @return Builder
+         */
+        public Builder paymentOrigin(CreatePaymentOriginRequest paymentOrigin) {
+            this.paymentOrigin = paymentOrigin;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateChargeCardRequest} object using the set fields.
          * @return {@link UpdateChargeCardRequest}
          */
         public UpdateChargeCardRequest build() {
             return new UpdateChargeCardRequest(updateSubscription, cardId, card, recurrence,
-                    initiatedType, recurrenceModel);
+                    initiatedType, recurrenceModel, paymentOrigin);
         }
     }
 }
