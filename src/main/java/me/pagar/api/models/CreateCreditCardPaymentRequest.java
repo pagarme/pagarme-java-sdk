@@ -32,6 +32,7 @@ public class CreateCreditCardPaymentRequest {
     private CreateCardPayloadRequest payload;
     private String initiatedType;
     private String recurrenceModel;
+    private CreatePaymentOriginRequest paymentOrigin;
 
     /**
      * Default constructor.
@@ -61,6 +62,7 @@ public class CreateCreditCardPaymentRequest {
      * @param  payload  CreateCardPayloadRequest value for payload.
      * @param  initiatedType  String value for initiatedType.
      * @param  recurrenceModel  String value for recurrenceModel.
+     * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
      */
     public CreateCreditCardPaymentRequest(
             Integer installments,
@@ -80,7 +82,8 @@ public class CreateCreditCardPaymentRequest {
             String recurrencyCycle,
             CreateCardPayloadRequest payload,
             String initiatedType,
-            String recurrenceModel) {
+            String recurrenceModel,
+            CreatePaymentOriginRequest paymentOrigin) {
         this.installments = installments;
         this.statementDescriptor = statementDescriptor;
         this.card = card;
@@ -99,6 +102,7 @@ public class CreateCreditCardPaymentRequest {
         this.payload = payload;
         this.initiatedType = initiatedType;
         this.recurrenceModel = recurrenceModel;
+        this.paymentOrigin = paymentOrigin;
     }
 
     /**
@@ -472,6 +476,25 @@ public class CreateCreditCardPaymentRequest {
     }
 
     /**
+     * Getter for PaymentOrigin.
+     * @return Returns the CreatePaymentOriginRequest
+     */
+    @JsonGetter("payment_origin")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public CreatePaymentOriginRequest getPaymentOrigin() {
+        return paymentOrigin;
+    }
+
+    /**
+     * Setter for PaymentOrigin.
+     * @param paymentOrigin Value for CreatePaymentOriginRequest
+     */
+    @JsonSetter("payment_origin")
+    public void setPaymentOrigin(CreatePaymentOriginRequest paymentOrigin) {
+        this.paymentOrigin = paymentOrigin;
+    }
+
+    /**
      * Converts this CreateCreditCardPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -485,7 +508,8 @@ public class CreateCreditCardPaymentRequest {
                 + merchantCategoryCode + ", authentication=" + authentication + ", contactless="
                 + contactless + ", autoRecovery=" + autoRecovery + ", operationType="
                 + operationType + ", recurrencyCycle=" + recurrencyCycle + ", payload=" + payload
-                + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel + "]";
+                + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel
+                + ", paymentOrigin=" + paymentOrigin + "]";
     }
 
     /**
@@ -512,7 +536,8 @@ public class CreateCreditCardPaymentRequest {
                 .recurrencyCycle(getRecurrencyCycle())
                 .payload(getPayload())
                 .initiatedType(getInitiatedType())
-                .recurrenceModel(getRecurrenceModel());
+                .recurrenceModel(getRecurrenceModel())
+                .paymentOrigin(getPaymentOrigin());
         return builder;
     }
 
@@ -538,6 +563,7 @@ public class CreateCreditCardPaymentRequest {
         private CreateCardPayloadRequest payload;
         private String initiatedType;
         private String recurrenceModel;
+        private CreatePaymentOriginRequest paymentOrigin;
 
 
 
@@ -722,6 +748,16 @@ public class CreateCreditCardPaymentRequest {
         }
 
         /**
+         * Setter for paymentOrigin.
+         * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
+         * @return Builder
+         */
+        public Builder paymentOrigin(CreatePaymentOriginRequest paymentOrigin) {
+            this.paymentOrigin = paymentOrigin;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateCreditCardPaymentRequest} object using the set fields.
          * @return {@link CreateCreditCardPaymentRequest}
          */
@@ -729,7 +765,7 @@ public class CreateCreditCardPaymentRequest {
             return new CreateCreditCardPaymentRequest(installments, statementDescriptor, card,
                     cardId, cardToken, recurrence, capture, extendedLimitEnabled, extendedLimitCode,
                     merchantCategoryCode, authentication, contactless, autoRecovery, operationType,
-                    recurrencyCycle, payload, initiatedType, recurrenceModel);
+                    recurrencyCycle, payload, initiatedType, recurrenceModel, paymentOrigin);
         }
     }
 }

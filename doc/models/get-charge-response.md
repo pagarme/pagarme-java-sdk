@@ -32,6 +32,7 @@ Response object for getting a charge
 | `PaidAmount` | `Integer` | Optional | Paid amount | Integer getPaidAmount() | setPaidAmount(Integer paidAmount) |
 | `InterestAndFinePaid` | `Integer` | Optional | interest and fine paid | Integer getInterestAndFinePaid() | setInterestAndFinePaid(Integer interestAndFinePaid) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
+| `PaymentOrigin` | [`GetPaymentOriginResponse`](../../doc/models/get-payment-origin-response.md) | Optional | - | GetPaymentOriginResponse getPaymentOrigin() | setPaymentOrigin(GetPaymentOriginResponse paymentOrigin) |
 
 ## Example (as JSON)
 

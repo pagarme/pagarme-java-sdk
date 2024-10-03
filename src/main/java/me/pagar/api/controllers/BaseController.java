@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.exceptions.ErrorException;
+import me.pagar.api.http.client.HttpCallback;
 
 /**
  * Base class for all Controllers.
@@ -42,6 +43,13 @@ public abstract class BaseController {
         this.globalConfig = globalConfig;
     }
 
+    /**
+     * Get httpCallback associated with this controller.
+     * @return HttpCallback
+     */
+    public HttpCallback getHttpCallback() {
+        return (HttpCallback) globalConfig.getHttpCallback();
+    }
     
     /**
      * Shared instance of the Http client.

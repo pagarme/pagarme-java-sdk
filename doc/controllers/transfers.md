@@ -11,8 +11,8 @@ TransfersController transfersController = client.getTransfersController();
 ## Methods
 
 * [Get Transfer by Id](../../doc/controllers/transfers.md#get-transfer-by-id)
-* [Get Transfers](../../doc/controllers/transfers.md#get-transfers)
 * [Create Transfer](../../doc/controllers/transfers.md#create-transfer)
+* [Get Transfers](../../doc/controllers/transfers.md#get-transfers)
 
 
 # Get Transfer by Id
@@ -39,32 +39,6 @@ String transferId = "transfer_id6";
 
 try {
     GetTransfer result = transfersController.getTransferById(transferId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Transfers
-
-Gets all transfers
-
-```java
-ListTransfers getTransfers()
-```
-
-## Response Type
-
-[`ListTransfers`](../../doc/models/list-transfers.md)
-
-## Example Usage
-
-```java
-try {
-    ListTransfers result = transfersController.getTransfers();
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();
@@ -103,6 +77,32 @@ CreateTransfer request = new CreateTransfer.Builder(
 
 try {
     GetTransfer result = transfersController.createTransfer(request);
+    System.out.println(result);
+} catch (ApiException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+
+# Get Transfers
+
+Gets all transfers
+
+```java
+ListTransfers getTransfers()
+```
+
+## Response Type
+
+[`ListTransfers`](../../doc/models/list-transfers.md)
+
+## Example Usage
+
+```java
+try {
+    ListTransfers result = transfersController.getTransfers();
     System.out.println(result);
 } catch (ApiException e) {
     e.printStackTrace();

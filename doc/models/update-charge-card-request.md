@@ -17,6 +17,7 @@ Request for updating card data
 | `Recurrence` | `boolean` | Required | Indicates a recurrence | boolean getRecurrence() | setRecurrence(boolean recurrence) |
 | `InitiatedType` | `String` | Optional | - | String getInitiatedType() | setInitiatedType(String initiatedType) |
 | `RecurrenceModel` | `String` | Optional | - | String getRecurrenceModel() | setRecurrenceModel(String recurrenceModel) |
+| `PaymentOrigin` | [`CreatePaymentOriginRequest`](../../doc/models/create-payment-origin-request.md) | Optional | - | CreatePaymentOriginRequest getPaymentOrigin() | setPaymentOrigin(CreatePaymentOriginRequest paymentOrigin) |
 
 ## Example (as JSON)
 
@@ -34,7 +35,11 @@ Request for updating card data
   },
   "recurrence": false,
   "initiated_type": "initiated_type8",
-  "recurrence_model": "recurrence_model6"
+  "recurrence_model": "recurrence_model6",
+  "payment_origin": {
+    "brand_id": "brand_id8",
+    "charge_id": "charge_id2"
+  }
 }
 ```
 
