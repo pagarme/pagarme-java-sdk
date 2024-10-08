@@ -41,6 +41,7 @@ public class GetOrderResponse {
     private OptionalNullable<String> sessionId;
     private OptionalNullable<GetLocationResponse> location;
     private OptionalNullable<GetDeviceResponse> device;
+    private OptionalNullable<GetIntegrationResponse> integration;
 
     /**
      * Default constructor.
@@ -70,6 +71,7 @@ public class GetOrderResponse {
      * @param  sessionId  String value for sessionId.
      * @param  location  GetLocationResponse value for location.
      * @param  device  GetDeviceResponse value for device.
+     * @param  integration  GetIntegrationResponse value for integration.
      */
     public GetOrderResponse(
             String id,
@@ -91,7 +93,8 @@ public class GetOrderResponse {
             String ip,
             String sessionId,
             GetLocationResponse location,
-            GetDeviceResponse device) {
+            GetDeviceResponse device,
+            GetIntegrationResponse integration) {
         this.id = OptionalNullable.of(id);
         this.code = OptionalNullable.of(code);
         this.amount = OptionalNullable.of(amount);
@@ -112,6 +115,7 @@ public class GetOrderResponse {
         this.sessionId = OptionalNullable.of(sessionId);
         this.location = OptionalNullable.of(location);
         this.device = OptionalNullable.of(device);
+        this.integration = OptionalNullable.of(integration);
     }
 
     /**
@@ -136,6 +140,7 @@ public class GetOrderResponse {
      * @param  sessionId  String value for sessionId.
      * @param  location  GetLocationResponse value for location.
      * @param  device  GetDeviceResponse value for device.
+     * @param  integration  GetIntegrationResponse value for integration.
      */
 
     protected GetOrderResponse(OptionalNullable<String> id, OptionalNullable<String> code,
@@ -150,7 +155,8 @@ public class GetOrderResponse {
             OptionalNullable<List<GetCheckoutPaymentResponse>> checkouts,
             OptionalNullable<String> ip, OptionalNullable<String> sessionId,
             OptionalNullable<GetLocationResponse> location,
-            OptionalNullable<GetDeviceResponse> device) {
+            OptionalNullable<GetDeviceResponse> device,
+            OptionalNullable<GetIntegrationResponse> integration) {
         this.id = id;
         this.code = code;
         this.amount = amount;
@@ -171,6 +177,7 @@ public class GetOrderResponse {
         this.sessionId = sessionId;
         this.location = location;
         this.device = device;
+        this.integration = integration;
     }
 
     /**
@@ -901,6 +908,41 @@ public class GetOrderResponse {
     }
 
     /**
+     * Internal Getter for Integration.
+     * @return Returns the Internal GetIntegrationResponse
+     */
+    @JsonGetter("integration")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<GetIntegrationResponse> internalGetIntegration() {
+        return this.integration;
+    }
+
+    /**
+     * Getter for Integration.
+     * @return Returns the GetIntegrationResponse
+     */
+    public GetIntegrationResponse getIntegration() {
+        return OptionalNullable.getFrom(integration);
+    }
+
+    /**
+     * Setter for Integration.
+     * @param integration Value for GetIntegrationResponse
+     */
+    @JsonSetter("integration")
+    public void setIntegration(GetIntegrationResponse integration) {
+        this.integration = OptionalNullable.of(integration);
+    }
+
+    /**
+     * UnSetter for Integration.
+     */
+    public void unsetIntegration() {
+        integration = null;
+    }
+
+    /**
      * Converts this GetOrderResponse into string format.
      * @return String representation of this class
      */
@@ -912,7 +954,8 @@ public class GetOrderResponse {
                 + ", updatedAt=" + updatedAt + ", closedAt=" + closedAt + ", charges=" + charges
                 + ", invoiceUrl=" + invoiceUrl + ", shipping=" + shipping + ", metadata=" + metadata
                 + ", checkouts=" + checkouts + ", ip=" + ip + ", sessionId=" + sessionId
-                + ", location=" + location + ", device=" + device + "]";
+                + ", location=" + location + ", device=" + device + ", integration=" + integration
+                + "]";
     }
 
     /**
@@ -942,6 +985,7 @@ public class GetOrderResponse {
         builder.sessionId = internalGetSessionId();
         builder.location = internalGetLocation();
         builder.device = internalGetDevice();
+        builder.integration = internalGetIntegration();
         return builder;
     }
 
@@ -969,6 +1013,7 @@ public class GetOrderResponse {
         private OptionalNullable<String> sessionId;
         private OptionalNullable<GetLocationResponse> location;
         private OptionalNullable<GetDeviceResponse> device;
+        private OptionalNullable<GetIntegrationResponse> integration;
 
 
 
@@ -1353,13 +1398,32 @@ public class GetOrderResponse {
         }
 
         /**
+         * Setter for integration.
+         * @param  integration  GetIntegrationResponse value for integration.
+         * @return Builder
+         */
+        public Builder integration(GetIntegrationResponse integration) {
+            this.integration = OptionalNullable.of(integration);
+            return this;
+        }
+
+        /**
+         * UnSetter for integration.
+         * @return Builder
+         */
+        public Builder unsetIntegration() {
+            integration = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetOrderResponse} object using the set fields.
          * @return {@link GetOrderResponse}
          */
         public GetOrderResponse build() {
             return new GetOrderResponse(id, code, amount, currency, closed, items, customer, status,
                     createdAt, updatedAt, closedAt, charges, invoiceUrl, shipping, metadata,
-                    checkouts, ip, sessionId, location, device);
+                    checkouts, ip, sessionId, location, device, integration);
         }
     }
 }
