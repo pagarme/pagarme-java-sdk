@@ -31,6 +31,7 @@ Response object for getting an Order
 | `SessionId` | `String` | Optional | Session id | String getSessionId() | setSessionId(String sessionId) |
 | `Location` | [`GetLocationResponse`](../../doc/models/get-location-response.md) | Optional | Location | GetLocationResponse getLocation() | setLocation(GetLocationResponse location) |
 | `Device` | [`GetDeviceResponse`](../../doc/models/get-device-response.md) | Optional | Device's informations | GetDeviceResponse getDevice() | setDevice(GetDeviceResponse device) |
+| `Integration` | [`GetIntegrationResponse`](../../doc/models/get-integration-response.md) | Optional | - | GetIntegrationResponse getIntegration() | setIntegration(GetIntegrationResponse integration) |
 
 ## Example (as JSON)
 

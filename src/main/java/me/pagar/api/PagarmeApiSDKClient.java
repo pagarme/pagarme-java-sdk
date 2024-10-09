@@ -70,7 +70,7 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
 
     private static final CompatibilityFactory compatibilityFactory = new CompatibilityFactoryImpl();
 
-    private static String userAgent = "PagarmeApiSDK - Java 6.8.12";
+    private static String userAgent = "PagarmeApiSDK - Java 6.8.13";
 
     /**
      * Current API environment.
