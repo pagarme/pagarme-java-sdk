@@ -34,15 +34,17 @@ public interface PlansController {
             final String planId) throws ApiException, IOException;
 
     /**
-     * Deletes a plan.
+     * Removes an item from a plan.
      * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
      * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
+     * @return    Returns the GetPlanItemResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetPlanResponse deletePlan(
+    GetPlanItemResponse deletePlanItem(
             final String planId,
+            final String planItemId,
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
@@ -58,6 +60,66 @@ public interface PlansController {
             final String planId,
             final UpdateMetadataRequest request,
             final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Creates a new plan.
+     * @param  body  Required parameter: Request for creating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetPlanResponse createPlan(
+            final CreatePlanRequest body,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Updates a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  request  Required parameter: Request for updating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetPlanResponse updatePlan(
+            final String planId,
+            final UpdatePlanRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Deletes a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetPlanResponse deletePlan(
+            final String planId,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Gets all plans.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  name  Optional parameter: Filter for Plan's name
+     * @param  status  Optional parameter: Filter for Plan's status
+     * @param  billingType  Optional parameter: Filter for plan's billing type
+     * @param  createdSince  Optional parameter: Filter for plan's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for plan's creation date end range
+     * @return    Returns the ListPlansResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListPlansResponse getPlans(
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String status,
+            final String billingType,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException;
 
     /**
      * Updates a plan item.
@@ -100,67 +162,5 @@ public interface PlansController {
     GetPlanItemResponse getPlanItem(
             final String planId,
             final String planItemId) throws ApiException, IOException;
-
-    /**
-     * Creates a new plan.
-     * @param  body  Required parameter: Request for creating a plan
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetPlanResponse createPlan(
-            final CreatePlanRequest body,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Removes an item from a plan.
-     * @param  planId  Required parameter: Plan id
-     * @param  planItemId  Required parameter: Plan item id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetPlanItemResponse deletePlanItem(
-            final String planId,
-            final String planItemId,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Gets all plans.
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  name  Optional parameter: Filter for Plan's name
-     * @param  status  Optional parameter: Filter for Plan's status
-     * @param  billingType  Optional parameter: Filter for plan's billing type
-     * @param  createdSince  Optional parameter: Filter for plan's creation date start range
-     * @param  createdUntil  Optional parameter: Filter for plan's creation date end range
-     * @return    Returns the ListPlansResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    ListPlansResponse getPlans(
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String status,
-            final String billingType,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException;
-
-    /**
-     * Updates a plan.
-     * @param  planId  Required parameter: Plan id
-     * @param  request  Required parameter: Request for updating a plan
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetPlanResponse updatePlan(
-            final String planId,
-            final UpdatePlanRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
 
 }
