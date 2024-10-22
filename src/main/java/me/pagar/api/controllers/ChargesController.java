@@ -42,17 +42,40 @@ public interface ChargesController {
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
-     * Updates a charge's payment method.
+     * Captures a charge.
      * @param  chargeId  Required parameter: Charge id
-     * @param  request  Required parameter: Request for updating the payment method from a charge
+     * @param  request  Optional parameter: Request for capturing a charge
      * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetChargeResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetChargeResponse updateChargePaymentMethod(
+    GetChargeResponse captureCharge(
             final String chargeId,
-            final UpdateChargePaymentMethodRequest request,
+            final CreateCaptureChargeRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Get a charge from its id.
+     * @param  chargeId  Required parameter: Charge id
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargeResponse getCharge(
+            final String chargeId) throws ApiException, IOException;
+
+    /**
+     * @param  chargeId  Required parameter: Example:
+     * @param  request  Optional parameter: Request for confirm payment
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargeResponse confirmPayment(
+            final String chargeId,
+            final CreateConfirmPaymentRequest request,
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
@@ -69,6 +92,46 @@ public interface ChargesController {
             final Integer size) throws ApiException, IOException;
 
     /**
+     * Updates the card from a charge.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  request  Required parameter: Request for updating a charge's card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargeResponse updateChargeCard(
+            final String chargeId,
+            final UpdateChargeCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Creates a new charge.
+     * @param  request  Required parameter: Request for creating a charge
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargeResponse createCharge(
+            final CreateChargeRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Updates a charge's payment method.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  request  Required parameter: Request for updating the payment method from a charge
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargeResponse updateChargePaymentMethod(
+            final String chargeId,
+            final UpdateChargePaymentMethodRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
      * Updates the due date from a charge.
      * @param  chargeId  Required parameter: Charge Id
      * @param  request  Required parameter: Request for updating the due date
@@ -80,6 +143,31 @@ public interface ChargesController {
     GetChargeResponse updateChargeDueDate(
             final String chargeId,
             final UpdateChargeDueDateRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * @param  status  Required parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @return    Returns the GetChargesSummaryResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargesSummaryResponse getChargesSummary(
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException;
+
+    /**
+     * Retries a charge.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetChargeResponse retryCharge(
+            final String chargeId,
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
@@ -111,69 +199,6 @@ public interface ChargesController {
             final LocalDateTime createdUntil) throws ApiException, IOException;
 
     /**
-     * Captures a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  request  Optional parameter: Request for capturing a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargeResponse captureCharge(
-            final String chargeId,
-            final CreateCaptureChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Updates the card from a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  request  Required parameter: Request for updating a charge's card
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargeResponse updateChargeCard(
-            final String chargeId,
-            final UpdateChargeCardRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Get a charge from its id.
-     * @param  chargeId  Required parameter: Charge id
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargeResponse getCharge(
-            final String chargeId) throws ApiException, IOException;
-
-    /**
-     * @param  status  Required parameter: Example:
-     * @param  createdSince  Optional parameter: Example:
-     * @param  createdUntil  Optional parameter: Example:
-     * @return    Returns the GetChargesSummaryResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargesSummaryResponse getChargesSummary(
-            final String status,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException;
-
-    /**
-     * Retries a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargeResponse retryCharge(
-            final String chargeId,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
      * Cancel a charge.
      * @param  chargeId  Required parameter: Charge id
      * @param  request  Optional parameter: Request for cancelling a charge
@@ -185,31 +210,6 @@ public interface ChargesController {
     GetChargeResponse cancelCharge(
             final String chargeId,
             final CreateCancelChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Creates a new charge.
-     * @param  request  Required parameter: Request for creating a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargeResponse createCharge(
-            final CreateChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * @param  chargeId  Required parameter: Example:
-     * @param  request  Optional parameter: Request for confirm payment
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetChargeResponse confirmPayment(
-            final String chargeId,
-            final CreateConfirmPaymentRequest request,
             final String idempotencyKey) throws ApiException, IOException;
 
 }

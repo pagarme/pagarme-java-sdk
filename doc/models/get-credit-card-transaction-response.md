@@ -30,6 +30,7 @@ Response object for getting a credit card transaction
 | `FundingSource` | `String` | Optional | Identify when a card is prepaid, credit or debit. | String getFundingSource() | setFundingSource(String fundingSource) |
 | `RetryInfo` | [`GetRetryTransactionInformationResponse`](../../doc/models/get-retry-transaction-information-response.md) | Optional | Retry transaction information | GetRetryTransactionInformationResponse getRetryInfo() | setRetryInfo(GetRetryTransactionInformationResponse retryInfo) |
 | `BrandId` | `String` | Optional | - | String getBrandId() | setBrandId(String brandId) |
+| `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
 ## Example (as JSON)
 

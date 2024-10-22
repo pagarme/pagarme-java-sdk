@@ -46,6 +46,7 @@ public class GetCreditCardTransactionResponse
     private OptionalNullable<String> fundingSource;
     private OptionalNullable<GetRetryTransactionInformationResponse> retryInfo;
     private OptionalNullable<String> brandId;
+    private OptionalNullable<String> indirectAcceptor;
 
     /**
      * Default constructor.
@@ -91,6 +92,7 @@ public class GetCreditCardTransactionResponse
      * @param  fundingSource  String value for fundingSource.
      * @param  retryInfo  GetRetryTransactionInformationResponse value for retryInfo.
      * @param  brandId  String value for brandId.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public GetCreditCardTransactionResponse(
             String gatewayId,
@@ -126,7 +128,8 @@ public class GetCreditCardTransactionResponse
             String threedAuthenticationUrl,
             String fundingSource,
             GetRetryTransactionInformationResponse retryInfo,
-            String brandId) {
+            String brandId,
+            String indirectAcceptor) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -145,6 +148,7 @@ public class GetCreditCardTransactionResponse
         this.fundingSource = OptionalNullable.of(fundingSource);
         this.retryInfo = OptionalNullable.of(retryInfo);
         this.brandId = OptionalNullable.of(brandId);
+        this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
     }
 
     /**
@@ -183,6 +187,7 @@ public class GetCreditCardTransactionResponse
      * @param  fundingSource  String value for fundingSource.
      * @param  retryInfo  GetRetryTransactionInformationResponse value for retryInfo.
      * @param  brandId  String value for brandId.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
 
     protected GetCreditCardTransactionResponse(OptionalNullable<String> gatewayId,
@@ -207,7 +212,7 @@ public class GetCreditCardTransactionResponse
             OptionalNullable<String> threedAuthenticationUrl,
             OptionalNullable<String> fundingSource,
             OptionalNullable<GetRetryTransactionInformationResponse> retryInfo,
-            OptionalNullable<String> brandId) {
+            OptionalNullable<String> brandId, OptionalNullable<String> indirectAcceptor) {
         super(gatewayId, amount, status, success, createdAt, updatedAt, attemptCount, maxAttempts,
                 splits, nextAttempt, transactionType, id, gatewayResponse, antifraudResponse,
                 metadata, split, interest, fine, maxDaysToPayPastDue);
@@ -226,6 +231,7 @@ public class GetCreditCardTransactionResponse
         this.fundingSource = fundingSource;
         this.retryInfo = retryInfo;
         this.brandId = brandId;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -756,6 +762,45 @@ public class GetCreditCardTransactionResponse
     }
 
     /**
+     * Internal Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the Internal String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetIndirectAcceptor() {
+        return this.indirectAcceptor;
+    }
+
+    /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    public String getIndirectAcceptor() {
+        return OptionalNullable.getFrom(indirectAcceptor);
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+    }
+
+    /**
+     * UnSetter for IndirectAcceptor.
+     * Business model identifier
+     */
+    public void unsetIndirectAcceptor() {
+        indirectAcceptor = null;
+    }
+
+    /**
      * Converts this GetCreditCardTransactionResponse into string format.
      * @return String representation of this class
      */
@@ -769,11 +814,12 @@ public class GetCreditCardTransactionResponse
                 + ", acquirerReturnCode=" + acquirerReturnCode + ", installments=" + installments
                 + ", threedAuthenticationUrl=" + threedAuthenticationUrl + ", fundingSource="
                 + fundingSource + ", retryInfo=" + retryInfo + ", brandId=" + brandId
-                + ", gatewayId=" + getGatewayId() + ", amount=" + getAmount() + ", status="
-                + getStatus() + ", success=" + getSuccess() + ", createdAt=" + getCreatedAt()
-                + ", updatedAt=" + getUpdatedAt() + ", attemptCount=" + getAttemptCount()
-                + ", maxAttempts=" + getMaxAttempts() + ", splits=" + getSplits() + ", nextAttempt="
-                + getNextAttempt() + ", transactionType=" + getTransactionType() + ", id=" + getId()
+                + ", indirectAcceptor=" + indirectAcceptor + ", gatewayId=" + getGatewayId()
+                + ", amount=" + getAmount() + ", status=" + getStatus() + ", success="
+                + getSuccess() + ", createdAt=" + getCreatedAt() + ", updatedAt=" + getUpdatedAt()
+                + ", attemptCount=" + getAttemptCount() + ", maxAttempts=" + getMaxAttempts()
+                + ", splits=" + getSplits() + ", nextAttempt=" + getNextAttempt()
+                + ", transactionType=" + getTransactionType() + ", id=" + getId()
                 + ", gatewayResponse=" + getGatewayResponse() + ", antifraudResponse="
                 + getAntifraudResponse() + ", metadata=" + getMetadata() + ", split=" + getSplit()
                 + ", interest=" + getInterest() + ", fine=" + getFine() + ", maxDaysToPayPastDue="
@@ -803,6 +849,7 @@ public class GetCreditCardTransactionResponse
         builder.fundingSource = internalGetFundingSource();
         builder.retryInfo = internalGetRetryInfo();
         builder.brandId = internalGetBrandId();
+        builder.indirectAcceptor = internalGetIndirectAcceptor();
         builder.gatewayId = internalGetGatewayId();
         builder.amount = internalGetAmount();
         builder.status = internalGetStatus();
@@ -862,6 +909,7 @@ public class GetCreditCardTransactionResponse
         private OptionalNullable<String> fundingSource;
         private OptionalNullable<GetRetryTransactionInformationResponse> retryInfo;
         private OptionalNullable<String> brandId;
+        private OptionalNullable<String> indirectAcceptor;
 
 
 
@@ -1476,6 +1524,25 @@ public class GetCreditCardTransactionResponse
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder unsetIndirectAcceptor() {
+            indirectAcceptor = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetCreditCardTransactionResponse} object using the set fields.
          * @return {@link GetCreditCardTransactionResponse}
          */
@@ -1486,7 +1553,7 @@ public class GetCreditCardTransactionResponse
                     interest, fine, maxDaysToPayPastDue, statementDescriptor, acquirerName,
                     acquirerAffiliationCode, acquirerTid, acquirerNsu, acquirerAuthCode,
                     operationType, card, acquirerMessage, acquirerReturnCode, installments,
-                    threedAuthenticationUrl, fundingSource, retryInfo, brandId);
+                    threedAuthenticationUrl, fundingSource, retryInfo, brandId, indirectAcceptor);
         }
     }
 }

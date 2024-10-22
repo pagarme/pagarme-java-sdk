@@ -7,6 +7,7 @@
 package me.pagar.api.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class UpdateSubscriptionCardRequest {
     private CreateCardRequest card;
     private String cardId;
+    private String indirectAcceptor;
 
     /**
      * Default constructor.
@@ -26,12 +28,15 @@ public class UpdateSubscriptionCardRequest {
      * Initialization constructor.
      * @param  card  CreateCardRequest value for card.
      * @param  cardId  String value for cardId.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public UpdateSubscriptionCardRequest(
             CreateCardRequest card,
-            String cardId) {
+            String cardId,
+            String indirectAcceptor) {
         this.card = card;
         this.cardId = cardId;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -75,12 +80,34 @@ public class UpdateSubscriptionCardRequest {
     }
 
     /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getIndirectAcceptor() {
+        return indirectAcceptor;
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = indirectAcceptor;
+    }
+
+    /**
      * Converts this UpdateSubscriptionCardRequest into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
-        return "UpdateSubscriptionCardRequest [" + "card=" + card + ", cardId=" + cardId + "]";
+        return "UpdateSubscriptionCardRequest [" + "card=" + card + ", cardId=" + cardId
+                + ", indirectAcceptor=" + indirectAcceptor + "]";
     }
 
     /**
@@ -89,7 +116,8 @@ public class UpdateSubscriptionCardRequest {
      * @return a new {@link UpdateSubscriptionCardRequest.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder(card, cardId);
+        Builder builder = new Builder(card, cardId)
+                .indirectAcceptor(getIndirectAcceptor());
         return builder;
     }
 
@@ -99,6 +127,7 @@ public class UpdateSubscriptionCardRequest {
     public static class Builder {
         private CreateCardRequest card;
         private String cardId;
+        private String indirectAcceptor;
 
         /**
          * Initialization constructor.
@@ -137,11 +166,21 @@ public class UpdateSubscriptionCardRequest {
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = indirectAcceptor;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateSubscriptionCardRequest} object using the set fields.
          * @return {@link UpdateSubscriptionCardRequest}
          */
         public UpdateSubscriptionCardRequest build() {
-            return new UpdateSubscriptionCardRequest(card, cardId);
+            return new UpdateSubscriptionCardRequest(card, cardId, indirectAcceptor);
         }
     }
 }

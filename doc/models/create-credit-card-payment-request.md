@@ -30,6 +30,7 @@ The settings for creating a credit card payment
 | `InitiatedType` | `String` | Optional | - | String getInitiatedType() | setInitiatedType(String initiatedType) |
 | `RecurrenceModel` | `String` | Optional | - | String getRecurrenceModel() | setRecurrenceModel(String recurrenceModel) |
 | `PaymentOrigin` | [`CreatePaymentOriginRequest`](../../doc/models/create-payment-origin-request.md) | Optional | - | CreatePaymentOriginRequest getPaymentOrigin() | setPaymentOrigin(CreatePaymentOriginRequest paymentOrigin) |
+| `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
 ## Example (as JSON)
 

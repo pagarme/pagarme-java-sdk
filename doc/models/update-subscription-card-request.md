@@ -13,6 +13,7 @@ Request for updating the card from a subscription
 |  --- | --- | --- | --- | --- | --- |
 | `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Required | Credit card data | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `CardId` | `String` | Required | Credit card id | String getCardId() | setCardId(String cardId) |
+| `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
 ## Example (as JSON)
 
@@ -26,7 +27,8 @@ Request for updating the card from a subscription
     "exp_year": 68,
     "cvv": "cvv4"
   },
-  "card_id": "card_id0"
+  "card_id": "card_id0",
+  "indirect_acceptor": "indirect_acceptor0"
 }
 ```
 

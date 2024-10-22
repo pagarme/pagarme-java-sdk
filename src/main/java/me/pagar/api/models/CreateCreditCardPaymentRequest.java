@@ -33,6 +33,7 @@ public class CreateCreditCardPaymentRequest {
     private String initiatedType;
     private String recurrenceModel;
     private CreatePaymentOriginRequest paymentOrigin;
+    private String indirectAcceptor;
 
     /**
      * Default constructor.
@@ -63,6 +64,7 @@ public class CreateCreditCardPaymentRequest {
      * @param  initiatedType  String value for initiatedType.
      * @param  recurrenceModel  String value for recurrenceModel.
      * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public CreateCreditCardPaymentRequest(
             Integer installments,
@@ -83,7 +85,8 @@ public class CreateCreditCardPaymentRequest {
             CreateCardPayloadRequest payload,
             String initiatedType,
             String recurrenceModel,
-            CreatePaymentOriginRequest paymentOrigin) {
+            CreatePaymentOriginRequest paymentOrigin,
+            String indirectAcceptor) {
         this.installments = installments;
         this.statementDescriptor = statementDescriptor;
         this.card = card;
@@ -103,6 +106,7 @@ public class CreateCreditCardPaymentRequest {
         this.initiatedType = initiatedType;
         this.recurrenceModel = recurrenceModel;
         this.paymentOrigin = paymentOrigin;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -495,6 +499,27 @@ public class CreateCreditCardPaymentRequest {
     }
 
     /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getIndirectAcceptor() {
+        return indirectAcceptor;
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = indirectAcceptor;
+    }
+
+    /**
      * Converts this CreateCreditCardPaymentRequest into string format.
      * @return String representation of this class
      */
@@ -509,7 +534,8 @@ public class CreateCreditCardPaymentRequest {
                 + contactless + ", autoRecovery=" + autoRecovery + ", operationType="
                 + operationType + ", recurrencyCycle=" + recurrencyCycle + ", payload=" + payload
                 + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel
-                + ", paymentOrigin=" + paymentOrigin + "]";
+                + ", paymentOrigin=" + paymentOrigin + ", indirectAcceptor=" + indirectAcceptor
+                + "]";
     }
 
     /**
@@ -537,7 +563,8 @@ public class CreateCreditCardPaymentRequest {
                 .payload(getPayload())
                 .initiatedType(getInitiatedType())
                 .recurrenceModel(getRecurrenceModel())
-                .paymentOrigin(getPaymentOrigin());
+                .paymentOrigin(getPaymentOrigin())
+                .indirectAcceptor(getIndirectAcceptor());
         return builder;
     }
 
@@ -564,6 +591,7 @@ public class CreateCreditCardPaymentRequest {
         private String initiatedType;
         private String recurrenceModel;
         private CreatePaymentOriginRequest paymentOrigin;
+        private String indirectAcceptor;
 
 
 
@@ -758,6 +786,16 @@ public class CreateCreditCardPaymentRequest {
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = indirectAcceptor;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateCreditCardPaymentRequest} object using the set fields.
          * @return {@link CreateCreditCardPaymentRequest}
          */
@@ -765,7 +803,8 @@ public class CreateCreditCardPaymentRequest {
             return new CreateCreditCardPaymentRequest(installments, statementDescriptor, card,
                     cardId, cardToken, recurrence, capture, extendedLimitEnabled, extendedLimitCode,
                     merchantCategoryCode, authentication, contactless, autoRecovery, operationType,
-                    recurrencyCycle, payload, initiatedType, recurrenceModel, paymentOrigin);
+                    recurrencyCycle, payload, initiatedType, recurrenceModel, paymentOrigin,
+                    indirectAcceptor);
         }
     }
 }

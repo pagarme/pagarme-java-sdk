@@ -53,6 +53,7 @@ public class CreateSubscriptionRequest {
     private CreateSubMerchantRequest submerchant;
     private CreateSubscriptionSplitRequest split;
     private CreateSubscriptionBoletoRequest boleto;
+    private String indirectAcceptor;
 
     /**
      * Default constructor.
@@ -95,6 +96,7 @@ public class CreateSubscriptionRequest {
      * @param  submerchant  CreateSubMerchantRequest value for submerchant.
      * @param  split  CreateSubscriptionSplitRequest value for split.
      * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public CreateSubscriptionRequest(
             CreateCustomerRequest customer,
@@ -129,7 +131,8 @@ public class CreateSubscriptionRequest {
             CreatePeriodRequest period,
             CreateSubMerchantRequest submerchant,
             CreateSubscriptionSplitRequest split,
-            CreateSubscriptionBoletoRequest boleto) {
+            CreateSubscriptionBoletoRequest boleto,
+            String indirectAcceptor) {
         this.customer = customer;
         this.card = card;
         this.code = code;
@@ -163,6 +166,7 @@ public class CreateSubscriptionRequest {
         this.submerchant = submerchant;
         this.split = split;
         this.boleto = boleto;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -843,6 +847,27 @@ public class CreateSubscriptionRequest {
     }
 
     /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getIndirectAcceptor() {
+        return indirectAcceptor;
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = indirectAcceptor;
+    }
+
+    /**
      * Converts this CreateSubscriptionRequest into string format.
      * @return String representation of this class
      */
@@ -860,7 +885,8 @@ public class CreateSubscriptionRequest {
                 + minimumPrice + ", cycles=" + cycles + ", cardToken=" + cardToken
                 + ", gatewayAffiliationId=" + gatewayAffiliationId + ", quantity=" + quantity
                 + ", boletoDueDays=" + boletoDueDays + ", period=" + period + ", submerchant="
-                + submerchant + ", split=" + split + ", boleto=" + boleto + "]";
+                + submerchant + ", split=" + split + ", boleto=" + boleto + ", indirectAcceptor="
+                + indirectAcceptor + "]";
     }
 
     /**
@@ -888,7 +914,8 @@ public class CreateSubscriptionRequest {
                 .period(getPeriod())
                 .submerchant(getSubmerchant())
                 .split(getSplit())
-                .boleto(getBoleto());
+                .boleto(getBoleto())
+                .indirectAcceptor(getIndirectAcceptor());
         return builder;
     }
 
@@ -929,6 +956,7 @@ public class CreateSubscriptionRequest {
         private CreateSubMerchantRequest submerchant;
         private CreateSubscriptionSplitRequest split;
         private CreateSubscriptionBoletoRequest boleto;
+        private String indirectAcceptor;
 
         /**
          * Initialization constructor.
@@ -1310,6 +1338,16 @@ public class CreateSubscriptionRequest {
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = indirectAcceptor;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateSubscriptionRequest} object using the set fields.
          * @return {@link CreateSubscriptionRequest}
          */
@@ -1319,7 +1357,7 @@ public class CreateSubscriptionRequest {
                     pricingScheme, items, shipping, discounts, metadata, increments, setup, planId,
                     customerId, cardId, billingDay, installments, startAt, minimumPrice, cycles,
                     cardToken, gatewayAffiliationId, quantity, boletoDueDays, period, submerchant,
-                    split, boleto);
+                    split, boleto, indirectAcceptor);
         }
     }
 }
