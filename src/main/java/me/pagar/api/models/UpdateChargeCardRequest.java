@@ -21,6 +21,7 @@ public class UpdateChargeCardRequest {
     private String initiatedType;
     private String recurrenceModel;
     private CreatePaymentOriginRequest paymentOrigin;
+    private String indirectAcceptor;
 
     /**
      * Default constructor.
@@ -37,6 +38,7 @@ public class UpdateChargeCardRequest {
      * @param  initiatedType  String value for initiatedType.
      * @param  recurrenceModel  String value for recurrenceModel.
      * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public UpdateChargeCardRequest(
             boolean updateSubscription,
@@ -45,7 +47,8 @@ public class UpdateChargeCardRequest {
             boolean recurrence,
             String initiatedType,
             String recurrenceModel,
-            CreatePaymentOriginRequest paymentOrigin) {
+            CreatePaymentOriginRequest paymentOrigin,
+            String indirectAcceptor) {
         this.updateSubscription = updateSubscription;
         this.cardId = cardId;
         this.card = card;
@@ -53,6 +56,7 @@ public class UpdateChargeCardRequest {
         this.initiatedType = initiatedType;
         this.recurrenceModel = recurrenceModel;
         this.paymentOrigin = paymentOrigin;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -193,6 +197,27 @@ public class UpdateChargeCardRequest {
     }
 
     /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getIndirectAcceptor() {
+        return indirectAcceptor;
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = indirectAcceptor;
+    }
+
+    /**
      * Converts this UpdateChargeCardRequest into string format.
      * @return String representation of this class
      */
@@ -201,7 +226,8 @@ public class UpdateChargeCardRequest {
         return "UpdateChargeCardRequest [" + "updateSubscription=" + updateSubscription
                 + ", cardId=" + cardId + ", card=" + card + ", recurrence=" + recurrence
                 + ", initiatedType=" + initiatedType + ", recurrenceModel=" + recurrenceModel
-                + ", paymentOrigin=" + paymentOrigin + "]";
+                + ", paymentOrigin=" + paymentOrigin + ", indirectAcceptor=" + indirectAcceptor
+                + "]";
     }
 
     /**
@@ -213,7 +239,8 @@ public class UpdateChargeCardRequest {
         Builder builder = new Builder(updateSubscription, cardId, card, recurrence)
                 .initiatedType(getInitiatedType())
                 .recurrenceModel(getRecurrenceModel())
-                .paymentOrigin(getPaymentOrigin());
+                .paymentOrigin(getPaymentOrigin())
+                .indirectAcceptor(getIndirectAcceptor());
         return builder;
     }
 
@@ -228,6 +255,7 @@ public class UpdateChargeCardRequest {
         private String initiatedType;
         private String recurrenceModel;
         private CreatePaymentOriginRequest paymentOrigin;
+        private String indirectAcceptor;
 
         /**
          * Initialization constructor.
@@ -321,12 +349,22 @@ public class UpdateChargeCardRequest {
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = indirectAcceptor;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateChargeCardRequest} object using the set fields.
          * @return {@link UpdateChargeCardRequest}
          */
         public UpdateChargeCardRequest build() {
             return new UpdateChargeCardRequest(updateSubscription, cardId, card, recurrence,
-                    initiatedType, recurrenceModel, paymentOrigin);
+                    initiatedType, recurrenceModel, paymentOrigin, indirectAcceptor);
         }
     }
 }

@@ -51,6 +51,7 @@ public class GetSubscriptionResponse {
     private OptionalNullable<GetSubscriptionSplitResponse> split;
     private OptionalNullable<GetSubscriptionBoletoResponse> boleto;
     private OptionalNullable<Boolean> manualBilling;
+    private OptionalNullable<String> indirectAcceptor;
 
     /**
      * Default constructor.
@@ -90,6 +91,7 @@ public class GetSubscriptionResponse {
      * @param  split  GetSubscriptionSplitResponse value for split.
      * @param  boleto  GetSubscriptionBoletoResponse value for boleto.
      * @param  manualBilling  Boolean value for manualBilling.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public GetSubscriptionResponse(
             String id,
@@ -121,7 +123,8 @@ public class GetSubscriptionResponse {
             Integer boletoDueDays,
             GetSubscriptionSplitResponse split,
             GetSubscriptionBoletoResponse boleto,
-            Boolean manualBilling) {
+            Boolean manualBilling,
+            String indirectAcceptor) {
         this.id = OptionalNullable.of(id);
         this.code = OptionalNullable.of(code);
         this.startAt = OptionalNullable.of(startAt);
@@ -152,6 +155,7 @@ public class GetSubscriptionResponse {
         this.split = OptionalNullable.of(split);
         this.boleto = OptionalNullable.of(boleto);
         this.manualBilling = OptionalNullable.of(manualBilling);
+        this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
     }
 
     /**
@@ -186,6 +190,7 @@ public class GetSubscriptionResponse {
      * @param  split  GetSubscriptionSplitResponse value for split.
      * @param  boleto  GetSubscriptionBoletoResponse value for boleto.
      * @param  manualBilling  Boolean value for manualBilling.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
 
     protected GetSubscriptionResponse(OptionalNullable<String> id, OptionalNullable<String> code,
@@ -207,7 +212,7 @@ public class GetSubscriptionResponse {
             OptionalNullable<Integer> boletoDueDays,
             OptionalNullable<GetSubscriptionSplitResponse> split,
             OptionalNullable<GetSubscriptionBoletoResponse> boleto,
-            OptionalNullable<Boolean> manualBilling) {
+            OptionalNullable<Boolean> manualBilling, OptionalNullable<String> indirectAcceptor) {
         this.id = id;
         this.code = code;
         this.startAt = startAt;
@@ -238,6 +243,7 @@ public class GetSubscriptionResponse {
         this.split = split;
         this.boleto = boleto;
         this.manualBilling = manualBilling;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -1316,6 +1322,45 @@ public class GetSubscriptionResponse {
     }
 
     /**
+     * Internal Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the Internal String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetIndirectAcceptor() {
+        return this.indirectAcceptor;
+    }
+
+    /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    public String getIndirectAcceptor() {
+        return OptionalNullable.getFrom(indirectAcceptor);
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+    }
+
+    /**
+     * UnSetter for IndirectAcceptor.
+     * Business model identifier
+     */
+    public void unsetIndirectAcceptor() {
+        indirectAcceptor = null;
+    }
+
+    /**
      * Converts this GetSubscriptionResponse into string format.
      * @return String representation of this class
      */
@@ -1333,7 +1378,7 @@ public class GetSubscriptionResponse {
                 + ", minimumPrice=" + minimumPrice + ", canceledAt=" + canceledAt + ", discounts="
                 + discounts + ", increments=" + increments + ", boletoDueDays=" + boletoDueDays
                 + ", split=" + split + ", boleto=" + boleto + ", manualBilling=" + manualBilling
-                + "]";
+                + ", indirectAcceptor=" + indirectAcceptor + "]";
     }
 
     /**
@@ -1373,6 +1418,7 @@ public class GetSubscriptionResponse {
         builder.split = internalGetSplit();
         builder.boleto = internalGetBoleto();
         builder.manualBilling = internalGetManualBilling();
+        builder.indirectAcceptor = internalGetIndirectAcceptor();
         return builder;
     }
 
@@ -1410,6 +1456,7 @@ public class GetSubscriptionResponse {
         private OptionalNullable<GetSubscriptionSplitResponse> split;
         private OptionalNullable<GetSubscriptionBoletoResponse> boleto;
         private OptionalNullable<Boolean> manualBilling;
+        private OptionalNullable<String> indirectAcceptor;
 
 
 
@@ -1984,6 +2031,25 @@ public class GetSubscriptionResponse {
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder unsetIndirectAcceptor() {
+            indirectAcceptor = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link GetSubscriptionResponse} object using the set fields.
          * @return {@link GetSubscriptionResponse}
          */
@@ -1992,7 +2058,8 @@ public class GetSubscriptionResponse {
                     billingType, currentCycle, paymentMethod, currency, installments, status,
                     createdAt, updatedAt, customer, card, items, statementDescriptor, metadata,
                     setup, gatewayAffiliationId, nextBillingAt, billingDay, minimumPrice,
-                    canceledAt, discounts, increments, boletoDueDays, split, boleto, manualBilling);
+                    canceledAt, discounts, increments, boletoDueDays, split, boleto, manualBilling,
+                    indirectAcceptor);
         }
     }
 }

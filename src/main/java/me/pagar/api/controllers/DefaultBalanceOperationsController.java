@@ -32,6 +32,41 @@ public final class DefaultBalanceOperationsController extends BaseController imp
     }
 
     /**
+     * @param  id  Required parameter: Example:
+     * @return    Returns the GetBalanceOperationResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetBalanceOperationResponse getBalanceOperationById(
+            final long id) throws ApiException, IOException {
+        return prepareGetBalanceOperationByIdRequest(id).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getBalanceOperationById.
+     */
+    private ApiCall<GetBalanceOperationResponse, ApiException> prepareGetBalanceOperationByIdRequest(
+            final long id) throws IOException {
+        return new ApiCall.Builder<GetBalanceOperationResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/balance/operations/{id}")
+                        .templateParam(param -> param.key("id").value(id).isRequired(false)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetBalanceOperationResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * @param  status  Optional parameter: Example:
      * @param  createdSince  Optional parameter: Example:
      * @param  createdUntil  Optional parameter: Example:
@@ -77,41 +112,6 @@ public final class DefaultBalanceOperationsController extends BaseController imp
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, ListBalanceOperationResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  id  Required parameter: Example:
-     * @return    Returns the GetBalanceOperationResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetBalanceOperationResponse getBalanceOperationById(
-            final long id) throws ApiException, IOException {
-        return prepareGetBalanceOperationByIdRequest(id).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getBalanceOperationById.
-     */
-    private ApiCall<GetBalanceOperationResponse, ApiException> prepareGetBalanceOperationByIdRequest(
-            final long id) throws IOException {
-        return new ApiCall.Builder<GetBalanceOperationResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/balance/operations/{id}")
-                        .templateParam(param -> param.key("id").value(id).isRequired(false)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetBalanceOperationResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

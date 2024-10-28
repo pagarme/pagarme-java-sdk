@@ -39,6 +39,7 @@
 | `Split` | [`GetSubscriptionSplitResponse`](../../doc/models/get-subscription-split-response.md) | Optional | Subscription's split response | GetSubscriptionSplitResponse getSplit() | setSplit(GetSubscriptionSplitResponse split) |
 | `Boleto` | [`GetSubscriptionBoletoResponse`](../../doc/models/get-subscription-boleto-response.md) | Optional | - | GetSubscriptionBoletoResponse getBoleto() | setBoleto(GetSubscriptionBoletoResponse boleto) |
 | `ManualBilling` | `Boolean` | Optional | - | Boolean getManualBilling() | setManualBilling(Boolean manualBilling) |
+| `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
 ## Example (as JSON)
 

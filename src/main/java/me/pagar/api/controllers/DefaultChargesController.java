@@ -90,34 +90,34 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
-     * Updates a charge's payment method.
+     * Captures a charge.
      * @param  chargeId  Required parameter: Charge id
-     * @param  request  Required parameter: Request for updating the payment method from a charge
+     * @param  request  Optional parameter: Request for capturing a charge
      * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetChargeResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetChargeResponse updateChargePaymentMethod(
+    public GetChargeResponse captureCharge(
             final String chargeId,
-            final UpdateChargePaymentMethodRequest request,
+            final CreateCaptureChargeRequest request,
             final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateChargePaymentMethodRequest(chargeId, request, idempotencyKey).execute();
+        return prepareCaptureChargeRequest(chargeId, request, idempotencyKey).execute();
     }
 
     /**
-     * Builds the ApiCall object for updateChargePaymentMethod.
+     * Builds the ApiCall object for captureCharge.
      */
-    private ApiCall<GetChargeResponse, ApiException> prepareUpdateChargePaymentMethodRequest(
+    private ApiCall<GetChargeResponse, ApiException> prepareCaptureChargeRequest(
             final String chargeId,
-            final UpdateChargePaymentMethodRequest request,
+            final CreateCaptureChargeRequest request,
             final String idempotencyKey) throws JsonProcessingException, IOException {
         return new ApiCall.Builder<GetChargeResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/charges/{charge_id}/payment-method")
-                        .bodyParam(param -> param.value(request))
+                        .path("/charges/{charge_id}/capture")
+                        .bodyParam(param -> param.value(request).isRequired(false))
                         .bodySerializer(() ->  ApiHelper.serialize(request))
                         .templateParam(param -> param.key("charge_id").value(chargeId)
                                 .shouldEncode(true))
@@ -127,7 +127,89 @@ public final class DefaultChargesController extends BaseController implements Ch
                         .headerParam(param -> param.key("accept").value("application/json"))
                         .withAuth(auth -> auth
                                 .add("httpBasic"))
-                        .httpMethod(HttpMethod.PATCH))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get a charge from its id.
+     * @param  chargeId  Required parameter: Charge id
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse getCharge(
+            final String chargeId) throws ApiException, IOException {
+        return prepareGetChargeRequest(chargeId).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getCharge.
+     */
+    private ApiCall<GetChargeResponse, ApiException> prepareGetChargeRequest(
+            final String chargeId) throws IOException {
+        return new ApiCall.Builder<GetChargeResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/charges/{charge_id}")
+                        .templateParam(param -> param.key("charge_id").value(chargeId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  chargeId  Required parameter: Example:
+     * @param  request  Optional parameter: Request for confirm payment
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse confirmPayment(
+            final String chargeId,
+            final CreateConfirmPaymentRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareConfirmPaymentRequest(chargeId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for confirmPayment.
+     */
+    private ApiCall<GetChargeResponse, ApiException> prepareConfirmPaymentRequest(
+            final String chargeId,
+            final CreateConfirmPaymentRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetChargeResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/charges/{charge_id}/confirm-payment")
+                        .bodyParam(param -> param.value(request).isRequired(false))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("charge_id").value(chargeId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetChargeResponse.class))
@@ -182,179 +264,6 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
-     * Updates the due date from a charge.
-     * @param  chargeId  Required parameter: Charge Id
-     * @param  request  Required parameter: Request for updating the due date
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse updateChargeDueDate(
-            final String chargeId,
-            final UpdateChargeDueDateRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateChargeDueDateRequest(chargeId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateChargeDueDate.
-     */
-    private ApiCall<GetChargeResponse, ApiException> prepareUpdateChargeDueDateRequest(
-            final String chargeId,
-            final UpdateChargeDueDateRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetChargeResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/Charges/{charge_id}/due-date")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("charge_id").value(chargeId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Lists all charges.
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  code  Optional parameter: Filter for charge's code
-     * @param  status  Optional parameter: Filter for charge's status
-     * @param  paymentMethod  Optional parameter: Filter for charge's payment method
-     * @param  customerId  Optional parameter: Filter for charge's customer id
-     * @param  orderId  Optional parameter: Filter for charge's order id
-     * @param  createdSince  Optional parameter: Filter for the beginning of the range for charge's
-     *         creation
-     * @param  createdUntil  Optional parameter: Filter for the end of the range for charge's
-     *         creation
-     * @return    Returns the ListChargesResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListChargesResponse getCharges(
-            final Integer page,
-            final Integer size,
-            final String code,
-            final String status,
-            final String paymentMethod,
-            final String customerId,
-            final String orderId,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException {
-        return prepareGetChargesRequest(page, size, code, status, paymentMethod, customerId,
-                orderId, createdSince, createdUntil).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getCharges.
-     */
-    private ApiCall<ListChargesResponse, ApiException> prepareGetChargesRequest(
-            final Integer page,
-            final Integer size,
-            final String code,
-            final String status,
-            final String paymentMethod,
-            final String customerId,
-            final String orderId,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws IOException {
-        return new ApiCall.Builder<ListChargesResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/charges")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .queryParam(param -> param.key("code")
-                                .value(code).isRequired(false))
-                        .queryParam(param -> param.key("status")
-                                .value(status).isRequired(false))
-                        .queryParam(param -> param.key("payment_method")
-                                .value(paymentMethod).isRequired(false))
-                        .queryParam(param -> param.key("customer_id")
-                                .value(customerId).isRequired(false))
-                        .queryParam(param -> param.key("order_id")
-                                .value(orderId).isRequired(false))
-                        .queryParam(param -> param.key("created_since")
-                                .value(DateTimeHelper.toRfc8601DateTime(createdSince)).isRequired(false))
-                        .queryParam(param -> param.key("created_until")
-                                .value(DateTimeHelper.toRfc8601DateTime(createdUntil)).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListChargesResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Captures a charge.
-     * @param  chargeId  Required parameter: Charge id
-     * @param  request  Optional parameter: Request for capturing a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse captureCharge(
-            final String chargeId,
-            final CreateCaptureChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCaptureChargeRequest(chargeId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for captureCharge.
-     */
-    private ApiCall<GetChargeResponse, ApiException> prepareCaptureChargeRequest(
-            final String chargeId,
-            final CreateCaptureChargeRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetChargeResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/charges/{charge_id}/capture")
-                        .bodyParam(param -> param.value(request).isRequired(false))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("charge_id").value(chargeId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Updates the card from a charge.
      * @param  chargeId  Required parameter: Charge id
      * @param  request  Required parameter: Request for updating a charge's card
@@ -402,33 +311,133 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
-     * Get a charge from its id.
-     * @param  chargeId  Required parameter: Charge id
+     * Creates a new charge.
+     * @param  request  Required parameter: Request for creating a charge
+     * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetChargeResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetChargeResponse getCharge(
-            final String chargeId) throws ApiException, IOException {
-        return prepareGetChargeRequest(chargeId).execute();
+    public GetChargeResponse createCharge(
+            final CreateChargeRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateChargeRequest(request, idempotencyKey).execute();
     }
 
     /**
-     * Builds the ApiCall object for getCharge.
+     * Builds the ApiCall object for createCharge.
      */
-    private ApiCall<GetChargeResponse, ApiException> prepareGetChargeRequest(
-            final String chargeId) throws IOException {
+    private ApiCall<GetChargeResponse, ApiException> prepareCreateChargeRequest(
+            final CreateChargeRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
         return new ApiCall.Builder<GetChargeResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/charges/{charge_id}")
-                        .templateParam(param -> param.key("charge_id").value(chargeId)
-                                .shouldEncode(true))
+                        .path("/Charges")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
                         .headerParam(param -> param.key("accept").value("application/json"))
                         .withAuth(auth -> auth
                                 .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates a charge's payment method.
+     * @param  chargeId  Required parameter: Charge id
+     * @param  request  Required parameter: Request for updating the payment method from a charge
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse updateChargePaymentMethod(
+            final String chargeId,
+            final UpdateChargePaymentMethodRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateChargePaymentMethodRequest(chargeId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateChargePaymentMethod.
+     */
+    private ApiCall<GetChargeResponse, ApiException> prepareUpdateChargePaymentMethodRequest(
+            final String chargeId,
+            final UpdateChargePaymentMethodRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetChargeResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/charges/{charge_id}/payment-method")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("charge_id").value(chargeId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates the due date from a charge.
+     * @param  chargeId  Required parameter: Charge Id
+     * @param  request  Required parameter: Request for updating the due date
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetChargeResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetChargeResponse updateChargeDueDate(
+            final String chargeId,
+            final UpdateChargeDueDateRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateChargeDueDateRequest(chargeId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for updateChargeDueDate.
+     */
+    private ApiCall<GetChargeResponse, ApiException> prepareUpdateChargeDueDateRequest(
+            final String chargeId,
+            final UpdateChargeDueDateRequest request,
+            final String idempotencyKey) throws JsonProcessingException, IOException {
+        return new ApiCall.Builder<GetChargeResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/Charges/{charge_id}/due-date")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("charge_id").value(chargeId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PATCH))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetChargeResponse.class))
@@ -524,6 +533,85 @@ public final class DefaultChargesController extends BaseController implements Ch
     }
 
     /**
+     * Lists all charges.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  code  Optional parameter: Filter for charge's code
+     * @param  status  Optional parameter: Filter for charge's status
+     * @param  paymentMethod  Optional parameter: Filter for charge's payment method
+     * @param  customerId  Optional parameter: Filter for charge's customer id
+     * @param  orderId  Optional parameter: Filter for charge's order id
+     * @param  createdSince  Optional parameter: Filter for the beginning of the range for charge's
+     *         creation
+     * @param  createdUntil  Optional parameter: Filter for the end of the range for charge's
+     *         creation
+     * @return    Returns the ListChargesResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListChargesResponse getCharges(
+            final Integer page,
+            final Integer size,
+            final String code,
+            final String status,
+            final String paymentMethod,
+            final String customerId,
+            final String orderId,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException {
+        return prepareGetChargesRequest(page, size, code, status, paymentMethod, customerId,
+                orderId, createdSince, createdUntil).execute();
+    }
+
+    /**
+     * Builds the ApiCall object for getCharges.
+     */
+    private ApiCall<ListChargesResponse, ApiException> prepareGetChargesRequest(
+            final Integer page,
+            final Integer size,
+            final String code,
+            final String status,
+            final String paymentMethod,
+            final String customerId,
+            final String orderId,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws IOException {
+        return new ApiCall.Builder<ListChargesResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/charges")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("code")
+                                .value(code).isRequired(false))
+                        .queryParam(param -> param.key("status")
+                                .value(status).isRequired(false))
+                        .queryParam(param -> param.key("payment_method")
+                                .value(paymentMethod).isRequired(false))
+                        .queryParam(param -> param.key("customer_id")
+                                .value(customerId).isRequired(false))
+                        .queryParam(param -> param.key("order_id")
+                                .value(orderId).isRequired(false))
+                        .queryParam(param -> param.key("created_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdSince)).isRequired(false))
+                        .queryParam(param -> param.key("created_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdUntil)).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListChargesResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Cancel a charge.
      * @param  chargeId  Required parameter: Charge id
      * @param  request  Optional parameter: Request for cancelling a charge
@@ -562,94 +650,6 @@ public final class DefaultChargesController extends BaseController implements Ch
                         .withAuth(auth -> auth
                                 .add("httpBasic"))
                         .httpMethod(HttpMethod.DELETE))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a new charge.
-     * @param  request  Required parameter: Request for creating a charge
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse createCharge(
-            final CreateChargeRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateChargeRequest(request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createCharge.
-     */
-    private ApiCall<GetChargeResponse, ApiException> prepareCreateChargeRequest(
-            final CreateChargeRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetChargeResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/Charges")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetChargeResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  chargeId  Required parameter: Example:
-     * @param  request  Optional parameter: Request for confirm payment
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetChargeResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetChargeResponse confirmPayment(
-            final String chargeId,
-            final CreateConfirmPaymentRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareConfirmPaymentRequest(chargeId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for confirmPayment.
-     */
-    private ApiCall<GetChargeResponse, ApiException> prepareConfirmPaymentRequest(
-            final String chargeId,
-            final CreateConfirmPaymentRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetChargeResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/charges/{charge_id}/confirm-payment")
-                        .bodyParam(param -> param.value(request).isRequired(false))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("charge_id").value(chargeId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetChargeResponse.class))
