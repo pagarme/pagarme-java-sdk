@@ -9,6 +9,8 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for UpdateSubscriptionPaymentMethodRequest type.
@@ -19,6 +21,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
     private CreateCardRequest card;
     private String cardToken;
     private CreateSubscriptionBoletoRequest boleto;
+    private OptionalNullable<String> indirectAcceptor;
 
     /**
      * Default constructor.
@@ -33,18 +36,42 @@ public class UpdateSubscriptionPaymentMethodRequest {
      * @param  card  CreateCardRequest value for card.
      * @param  cardToken  String value for cardToken.
      * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
      */
     public UpdateSubscriptionPaymentMethodRequest(
             String paymentMethod,
             String cardId,
             CreateCardRequest card,
             String cardToken,
-            CreateSubscriptionBoletoRequest boleto) {
+            CreateSubscriptionBoletoRequest boleto,
+            String indirectAcceptor) {
         this.paymentMethod = paymentMethod;
         this.cardId = cardId;
         this.card = card;
         this.cardToken = cardToken;
         this.boleto = boleto;
+        this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+    }
+
+    /**
+     * Initialization constructor.
+     * @param  paymentMethod  String value for paymentMethod.
+     * @param  cardId  String value for cardId.
+     * @param  card  CreateCardRequest value for card.
+     * @param  cardToken  String value for cardToken.
+     * @param  boleto  CreateSubscriptionBoletoRequest value for boleto.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
+     */
+
+    protected UpdateSubscriptionPaymentMethodRequest(String paymentMethod, String cardId,
+            CreateCardRequest card, String cardToken, CreateSubscriptionBoletoRequest boleto,
+            OptionalNullable<String> indirectAcceptor) {
+        this.paymentMethod = paymentMethod;
+        this.cardId = cardId;
+        this.card = card;
+        this.cardToken = cardToken;
+        this.boleto = boleto;
+        this.indirectAcceptor = indirectAcceptor;
     }
 
     /**
@@ -150,6 +177,45 @@ public class UpdateSubscriptionPaymentMethodRequest {
     }
 
     /**
+     * Internal Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the Internal String
+     */
+    @JsonGetter("indirect_acceptor")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<String> internalGetIndirectAcceptor() {
+        return this.indirectAcceptor;
+    }
+
+    /**
+     * Getter for IndirectAcceptor.
+     * Business model identifier
+     * @return Returns the String
+     */
+    public String getIndirectAcceptor() {
+        return OptionalNullable.getFrom(indirectAcceptor);
+    }
+
+    /**
+     * Setter for IndirectAcceptor.
+     * Business model identifier
+     * @param indirectAcceptor Value for String
+     */
+    @JsonSetter("indirect_acceptor")
+    public void setIndirectAcceptor(String indirectAcceptor) {
+        this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+    }
+
+    /**
+     * UnSetter for IndirectAcceptor.
+     * Business model identifier
+     */
+    public void unsetIndirectAcceptor() {
+        indirectAcceptor = null;
+    }
+
+    /**
      * Converts this UpdateSubscriptionPaymentMethodRequest into string format.
      * @return String representation of this class
      */
@@ -157,7 +223,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
     public String toString() {
         return "UpdateSubscriptionPaymentMethodRequest [" + "paymentMethod=" + paymentMethod
                 + ", cardId=" + cardId + ", card=" + card + ", cardToken=" + cardToken + ", boleto="
-                + boleto + "]";
+                + boleto + ", indirectAcceptor=" + indirectAcceptor + "]";
     }
 
     /**
@@ -169,6 +235,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
         Builder builder = new Builder(paymentMethod, cardId, card)
                 .cardToken(getCardToken())
                 .boleto(getBoleto());
+        builder.indirectAcceptor = internalGetIndirectAcceptor();
         return builder;
     }
 
@@ -181,6 +248,7 @@ public class UpdateSubscriptionPaymentMethodRequest {
         private CreateCardRequest card;
         private String cardToken;
         private CreateSubscriptionBoletoRequest boleto;
+        private OptionalNullable<String> indirectAcceptor;
 
         /**
          * Initialization constructor.
@@ -251,12 +319,31 @@ public class UpdateSubscriptionPaymentMethodRequest {
         }
 
         /**
+         * Setter for indirectAcceptor.
+         * @param  indirectAcceptor  String value for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder indirectAcceptor(String indirectAcceptor) {
+            this.indirectAcceptor = OptionalNullable.of(indirectAcceptor);
+            return this;
+        }
+
+        /**
+         * UnSetter for indirectAcceptor.
+         * @return Builder
+         */
+        public Builder unsetIndirectAcceptor() {
+            indirectAcceptor = null;
+            return this;
+        }
+
+        /**
          * Builds a new {@link UpdateSubscriptionPaymentMethodRequest} object using the set fields.
          * @return {@link UpdateSubscriptionPaymentMethodRequest}
          */
         public UpdateSubscriptionPaymentMethodRequest build() {
             return new UpdateSubscriptionPaymentMethodRequest(paymentMethod, cardId, card,
-                    cardToken, boleto);
+                    cardToken, boleto, indirectAcceptor);
         }
     }
 }
