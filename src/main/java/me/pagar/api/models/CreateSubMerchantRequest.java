@@ -21,6 +21,7 @@ public class CreateSubMerchantRequest {
     private String type;
     private CreatePhoneRequest phone;
     private CreateAddressRequest address;
+    private String legalName;
 
     /**
      * Default constructor.
@@ -38,6 +39,7 @@ public class CreateSubMerchantRequest {
      * @param  type  String value for type.
      * @param  phone  CreatePhoneRequest value for phone.
      * @param  address  CreateAddressRequest value for address.
+     * @param  legalName  String value for legalName.
      */
     public CreateSubMerchantRequest(
             String paymentFacilitatorCode,
@@ -47,7 +49,8 @@ public class CreateSubMerchantRequest {
             String document,
             String type,
             CreatePhoneRequest phone,
-            CreateAddressRequest address) {
+            CreateAddressRequest address,
+            String legalName) {
         this.paymentFacilitatorCode = paymentFacilitatorCode;
         this.code = code;
         this.name = name;
@@ -56,6 +59,7 @@ public class CreateSubMerchantRequest {
         this.type = type;
         this.phone = phone;
         this.address = address;
+        this.legalName = legalName;
     }
 
     /**
@@ -219,6 +223,26 @@ public class CreateSubMerchantRequest {
     }
 
     /**
+     * Getter for LegalName.
+     * Legal name
+     * @return Returns the String
+     */
+    @JsonGetter("legal_name")
+    public String getLegalName() {
+        return legalName;
+    }
+
+    /**
+     * Setter for LegalName.
+     * Legal name
+     * @param legalName Value for String
+     */
+    @JsonSetter("legal_name")
+    public void setLegalName(String legalName) {
+        this.legalName = legalName;
+    }
+
+    /**
      * Converts this CreateSubMerchantRequest into string format.
      * @return String representation of this class
      */
@@ -227,7 +251,7 @@ public class CreateSubMerchantRequest {
         return "CreateSubMerchantRequest [" + "paymentFacilitatorCode=" + paymentFacilitatorCode
                 + ", code=" + code + ", name=" + name + ", merchantCategoryCode="
                 + merchantCategoryCode + ", document=" + document + ", type=" + type + ", phone="
-                + phone + ", address=" + address + "]";
+                + phone + ", address=" + address + ", legalName=" + legalName + "]";
     }
 
     /**
@@ -237,7 +261,7 @@ public class CreateSubMerchantRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(paymentFacilitatorCode, code, name, merchantCategoryCode,
-                document, type, phone, address);
+                document, type, phone, address, legalName);
         return builder;
     }
 
@@ -253,6 +277,7 @@ public class CreateSubMerchantRequest {
         private String type;
         private CreatePhoneRequest phone;
         private CreateAddressRequest address;
+        private String legalName;
 
         /**
          * Initialization constructor.
@@ -270,10 +295,11 @@ public class CreateSubMerchantRequest {
          * @param  type  String value for type.
          * @param  phone  CreatePhoneRequest value for phone.
          * @param  address  CreateAddressRequest value for address.
+         * @param  legalName  String value for legalName.
          */
         public Builder(String paymentFacilitatorCode, String code, String name,
                 String merchantCategoryCode, String document, String type, CreatePhoneRequest phone,
-                CreateAddressRequest address) {
+                CreateAddressRequest address, String legalName) {
             this.paymentFacilitatorCode = paymentFacilitatorCode;
             this.code = code;
             this.name = name;
@@ -282,6 +308,7 @@ public class CreateSubMerchantRequest {
             this.type = type;
             this.phone = phone;
             this.address = address;
+            this.legalName = legalName;
         }
 
         /**
@@ -365,12 +392,22 @@ public class CreateSubMerchantRequest {
         }
 
         /**
+         * Setter for legalName.
+         * @param  legalName  String value for legalName.
+         * @return Builder
+         */
+        public Builder legalName(String legalName) {
+            this.legalName = legalName;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateSubMerchantRequest} object using the set fields.
          * @return {@link CreateSubMerchantRequest}
          */
         public CreateSubMerchantRequest build() {
             return new CreateSubMerchantRequest(paymentFacilitatorCode, code, name,
-                    merchantCategoryCode, document, type, phone, address);
+                    merchantCategoryCode, document, type, phone, address, legalName);
         }
     }
 }

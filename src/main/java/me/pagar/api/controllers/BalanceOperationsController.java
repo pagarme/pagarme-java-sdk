@@ -18,15 +18,6 @@ import me.pagar.api.models.ListBalanceOperationResponse;
  */
 public interface BalanceOperationsController {
     /**
-     * @param  id  Required parameter: Example:
-     * @return    Returns the GetBalanceOperationResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetBalanceOperationResponse getBalanceOperationById(
-            final long id) throws ApiException, IOException;
-
-    /**
      * @param  status  Optional parameter: Example:
      * @param  createdSince  Optional parameter: Example:
      * @param  createdUntil  Optional parameter: Example:
@@ -40,5 +31,14 @@ public interface BalanceOperationsController {
             final LocalDateTime createdSince,
             final LocalDateTime createdUntil,
             final String recipientId) throws ApiException, IOException;
+
+    /**
+     * @param  id  Required parameter: Example:
+     * @return    Returns the GetBalanceOperationResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetBalanceOperationResponse getBalanceOperationById(
+            final long id) throws ApiException, IOException;
 
 }

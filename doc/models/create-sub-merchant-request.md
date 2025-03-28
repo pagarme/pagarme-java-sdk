@@ -19,6 +19,7 @@ SubMerchant
 | `Type` | `String` | Required | Document type. Can be either 'individual' or 'company' | String getType() | setType(String type) |
 | `Phone` | [`CreatePhoneRequest`](../../doc/models/create-phone-request.md) | Required | Phone | CreatePhoneRequest getPhone() | setPhone(CreatePhoneRequest phone) |
 | `Address` | [`CreateAddressRequest`](../../doc/models/create-address-request.md) | Required | Address | CreateAddressRequest getAddress() | setAddress(CreateAddressRequest address) |
+| `LegalName` | `String` | Required | Legal name | String getLegalName() | setLegalName(String legalName) |
 
 ## Example (as JSON)
 
@@ -52,7 +53,8 @@ SubMerchant
     },
     "line_1": "line_10",
     "line_2": "line_24"
-  }
+  },
+  "legal_name": "legal_name2"
 }
 ```
 

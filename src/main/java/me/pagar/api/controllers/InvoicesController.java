@@ -21,6 +21,57 @@ import me.pagar.api.models.UpdateMetadataRequest;
  */
 public interface InvoicesController {
     /**
+     * Updates the metadata from an invoice.
+     * @param  invoiceId  Required parameter: The invoice id
+     * @param  request  Required parameter: Request for updating the invoice metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse updateInvoiceMetadata(
+            final String invoiceId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse getPartialInvoice(
+            final String subscriptionId) throws ApiException, IOException;
+
+    /**
+     * Cancels an invoice.
+     * @param  invoiceId  Required parameter: Invoice id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse cancelInvoice(
+            final String invoiceId,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Create an Invoice.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  cycleId  Required parameter: Cycle Id
+     * @param  request  Optional parameter: Example:
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse createInvoice(
+            final String subscriptionId,
+            final String cycleId,
+            final CreateInvoiceRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
      * Gets all invoices.
      * @param  page  Optional parameter: Page number
      * @param  size  Optional parameter: Page size
@@ -51,16 +102,14 @@ public interface InvoicesController {
             final String customerDocument) throws ApiException, IOException;
 
     /**
-     * Cancels an invoice.
-     * @param  invoiceId  Required parameter: Invoice id
-     * @param  idempotencyKey  Optional parameter: Example:
+     * Gets an invoice.
+     * @param  invoiceId  Required parameter: Invoice Id
      * @return    Returns the GetInvoiceResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetInvoiceResponse cancelInvoice(
-            final String invoiceId,
-            final String idempotencyKey) throws ApiException, IOException;
+    GetInvoiceResponse getInvoice(
+            final String invoiceId) throws ApiException, IOException;
 
     /**
      * Updates the status from an invoice.
@@ -75,54 +124,5 @@ public interface InvoicesController {
             final String invoiceId,
             final UpdateInvoiceStatusRequest request,
             final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Updates the metadata from an invoice.
-     * @param  invoiceId  Required parameter: The invoice id
-     * @param  request  Required parameter: Request for updating the invoice metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse updateInvoiceMetadata(
-            final String invoiceId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse getPartialInvoice(
-            final String subscriptionId) throws ApiException, IOException;
-
-    /**
-     * Create an Invoice.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  cycleId  Required parameter: Cycle Id
-     * @param  request  Optional parameter: Example:
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse createInvoice(
-            final String subscriptionId,
-            final String cycleId,
-            final CreateInvoiceRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Gets an invoice.
-     * @param  invoiceId  Required parameter: Invoice Id
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse getInvoice(
-            final String invoiceId) throws ApiException, IOException;
 
 }
