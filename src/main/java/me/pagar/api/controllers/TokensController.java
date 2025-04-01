@@ -17,18 +17,6 @@ import me.pagar.api.models.GetTokenResponse;
  */
 public interface TokensController {
     /**
-     * Gets a token from its id.
-     * @param  id  Required parameter: Token id
-     * @param  publicKey  Required parameter: Public key
-     * @return    Returns the GetTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetTokenResponse getToken(
-            final String id,
-            final String publicKey) throws ApiException, IOException;
-
-    /**
      * @param  publicKey  Required parameter: Public key
      * @param  request  Required parameter: Request for creating a token
      * @param  idempotencyKey  Optional parameter: Example:
@@ -40,5 +28,17 @@ public interface TokensController {
             final String publicKey,
             final CreateTokenRequest request,
             final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Gets a token from its id.
+     * @param  id  Required parameter: Token id
+     * @param  publicKey  Required parameter: Public key
+     * @return    Returns the GetTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetTokenResponse getToken(
+            final String id,
+            final String publicKey) throws ApiException, IOException;
 
 }
