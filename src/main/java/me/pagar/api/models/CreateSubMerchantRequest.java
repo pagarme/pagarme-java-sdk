@@ -22,6 +22,7 @@ public class CreateSubMerchantRequest {
     private CreatePhoneRequest phone;
     private CreateAddressRequest address;
     private String legalName;
+    private String siteUrl;
 
     /**
      * Default constructor.
@@ -40,6 +41,7 @@ public class CreateSubMerchantRequest {
      * @param  phone  CreatePhoneRequest value for phone.
      * @param  address  CreateAddressRequest value for address.
      * @param  legalName  String value for legalName.
+     * @param  siteUrl  String value for siteUrl.
      */
     public CreateSubMerchantRequest(
             String paymentFacilitatorCode,
@@ -50,7 +52,8 @@ public class CreateSubMerchantRequest {
             String type,
             CreatePhoneRequest phone,
             CreateAddressRequest address,
-            String legalName) {
+            String legalName,
+            String siteUrl) {
         this.paymentFacilitatorCode = paymentFacilitatorCode;
         this.code = code;
         this.name = name;
@@ -60,6 +63,7 @@ public class CreateSubMerchantRequest {
         this.phone = phone;
         this.address = address;
         this.legalName = legalName;
+        this.siteUrl = siteUrl;
     }
 
     /**
@@ -243,6 +247,26 @@ public class CreateSubMerchantRequest {
     }
 
     /**
+     * Getter for SiteUrl.
+     * Site Url
+     * @return Returns the String
+     */
+    @JsonGetter("site_url")
+    public String getSiteUrl() {
+        return siteUrl;
+    }
+
+    /**
+     * Setter for SiteUrl.
+     * Site Url
+     * @param siteUrl Value for String
+     */
+    @JsonSetter("site_url")
+    public void setSiteUrl(String siteUrl) {
+        this.siteUrl = siteUrl;
+    }
+
+    /**
      * Converts this CreateSubMerchantRequest into string format.
      * @return String representation of this class
      */
@@ -251,7 +275,8 @@ public class CreateSubMerchantRequest {
         return "CreateSubMerchantRequest [" + "paymentFacilitatorCode=" + paymentFacilitatorCode
                 + ", code=" + code + ", name=" + name + ", merchantCategoryCode="
                 + merchantCategoryCode + ", document=" + document + ", type=" + type + ", phone="
-                + phone + ", address=" + address + ", legalName=" + legalName + "]";
+                + phone + ", address=" + address + ", legalName=" + legalName + ", siteUrl="
+                + siteUrl + "]";
     }
 
     /**
@@ -261,7 +286,7 @@ public class CreateSubMerchantRequest {
      */
     public Builder toBuilder() {
         Builder builder = new Builder(paymentFacilitatorCode, code, name, merchantCategoryCode,
-                document, type, phone, address, legalName);
+                document, type, phone, address, legalName, siteUrl);
         return builder;
     }
 
@@ -278,6 +303,7 @@ public class CreateSubMerchantRequest {
         private CreatePhoneRequest phone;
         private CreateAddressRequest address;
         private String legalName;
+        private String siteUrl;
 
         /**
          * Initialization constructor.
@@ -296,10 +322,11 @@ public class CreateSubMerchantRequest {
          * @param  phone  CreatePhoneRequest value for phone.
          * @param  address  CreateAddressRequest value for address.
          * @param  legalName  String value for legalName.
+         * @param  siteUrl  String value for siteUrl.
          */
         public Builder(String paymentFacilitatorCode, String code, String name,
                 String merchantCategoryCode, String document, String type, CreatePhoneRequest phone,
-                CreateAddressRequest address, String legalName) {
+                CreateAddressRequest address, String legalName, String siteUrl) {
             this.paymentFacilitatorCode = paymentFacilitatorCode;
             this.code = code;
             this.name = name;
@@ -309,6 +336,7 @@ public class CreateSubMerchantRequest {
             this.phone = phone;
             this.address = address;
             this.legalName = legalName;
+            this.siteUrl = siteUrl;
         }
 
         /**
@@ -402,12 +430,22 @@ public class CreateSubMerchantRequest {
         }
 
         /**
+         * Setter for siteUrl.
+         * @param  siteUrl  String value for siteUrl.
+         * @return Builder
+         */
+        public Builder siteUrl(String siteUrl) {
+            this.siteUrl = siteUrl;
+            return this;
+        }
+
+        /**
          * Builds a new {@link CreateSubMerchantRequest} object using the set fields.
          * @return {@link CreateSubMerchantRequest}
          */
         public CreateSubMerchantRequest build() {
             return new CreateSubMerchantRequest(paymentFacilitatorCode, code, name,
-                    merchantCategoryCode, document, type, phone, address, legalName);
+                    merchantCategoryCode, document, type, phone, address, legalName, siteUrl);
         }
     }
 }

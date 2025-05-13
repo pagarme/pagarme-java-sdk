@@ -24,6 +24,65 @@ import me.pagar.api.models.UpdateOrderStatusRequest;
  */
 public interface OrdersController {
     /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetOrderResponse deleteAllOrderItems(
+            final String orderId,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @return    Returns the GetOrderItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetOrderItemResponse getOrderItem(
+            final String orderId,
+            final String itemId) throws ApiException, IOException;
+
+    /**
+     * Updates the metadata from an order.
+     * @param  orderId  Required parameter: The order id
+     * @param  request  Required parameter: Request for updating the order metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetOrderResponse updateOrderMetadata(
+            final String orderId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetOrderItemResponse deleteOrderItem(
+            final String orderId,
+            final String itemId,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Gets an order.
+     * @param  orderId  Required parameter: Order id
+     * @return    Returns the GetOrderResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetOrderResponse getOrder(
+            final String orderId) throws ApiException, IOException;
+
+    /**
      * Gets all orders.
      * @param  page  Optional parameter: Page number
      * @param  size  Optional parameter: Page size
@@ -58,30 +117,6 @@ public interface OrdersController {
             final String orderId,
             final String itemId,
             final UpdateOrderItemRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * @param  orderId  Required parameter: Order Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetOrderResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetOrderResponse deleteAllOrderItems(
-            final String orderId,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * @param  orderId  Required parameter: Order Id
-     * @param  itemId  Required parameter: Item Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetOrderItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetOrderItemResponse deleteOrderItem(
-            final String orderId,
-            final String itemId,
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
@@ -121,40 +156,5 @@ public interface OrdersController {
             final String orderId,
             final CreateOrderItemRequest request,
             final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * @param  orderId  Required parameter: Order Id
-     * @param  itemId  Required parameter: Item Id
-     * @return    Returns the GetOrderItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetOrderItemResponse getOrderItem(
-            final String orderId,
-            final String itemId) throws ApiException, IOException;
-
-    /**
-     * Updates the metadata from an order.
-     * @param  orderId  Required parameter: The order id
-     * @param  request  Required parameter: Request for updating the order metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetOrderResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetOrderResponse updateOrderMetadata(
-            final String orderId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Gets an order.
-     * @param  orderId  Required parameter: Order id
-     * @return    Returns the GetOrderResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetOrderResponse getOrder(
-            final String orderId) throws ApiException, IOException;
 
 }

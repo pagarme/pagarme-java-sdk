@@ -20,7 +20,7 @@ Card data
 | `Brand` | `String` | Optional | Card brand | String getBrand() | setBrand(String brand) |
 | `BillingAddressId` | `String` | Optional | The address id for the billing address | String getBillingAddressId() | setBillingAddressId(String billingAddressId) |
 | `Metadata` | `Map<String, String>` | Optional | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
-| `Type` | `String` | Optional | Card type<br>**Default**: `"credit"` | String getType() | setType(String type) |
+| `Type` | `String` | Optional | Card type<br><br>**Default**: `"credit"` | String getType() | setType(String type) |
 | `Options` | [`CreateCardOptionsRequest`](../../doc/models/create-card-options-request.md) | Optional | Options for creating the card | CreateCardOptionsRequest getOptions() | setOptions(CreateCardOptionsRequest options) |
 | `HolderDocument` | `String` | Optional | Document number for the card's holder | String getHolderDocument() | setHolderDocument(String holderDocument) |
 | `PrivateLabel` | `Boolean` | Optional | Indicates whether it is a private label card | Boolean getPrivateLabel() | setPrivateLabel(Boolean privateLabel) |
