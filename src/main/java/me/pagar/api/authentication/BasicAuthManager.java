@@ -81,6 +81,6 @@ public class BasicAuthManager extends HeaderAuth implements BasicAuthCredentials
         }
 
         return "BasicAuth - " + errorMessage;
-     }
+    }
 
 }

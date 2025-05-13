@@ -20,7 +20,7 @@ Request for creating a recipient
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `TransferSettings` | [`CreateTransferSettingsRequest`](../../doc/models/create-transfer-settings-request.md) | Optional | Receiver Transfer Information | CreateTransferSettingsRequest getTransferSettings() | setTransferSettings(CreateTransferSettingsRequest transferSettings) |
 | `Code` | `String` | Required | Recipient code | String getCode() | setCode(String code) |
-| `PaymentMode` | `String` | Required | Payment mode<br>**Default**: `"bank_transfer"` | String getPaymentMode() | setPaymentMode(String paymentMode) |
+| `PaymentMode` | `String` | Required | Payment mode<br><br>**Default**: `"bank_transfer"` | String getPaymentMode() | setPaymentMode(String paymentMode) |
 | `RegisterInformation` | [`CreateRegisterInformationBaseRequest`](../../doc/models/create-register-information-base-request.md) | Optional | Register Information | CreateRegisterInformationBaseRequest getRegisterInformation() | setRegisterInformation(CreateRegisterInformationBaseRequest registerInformation) |
 
 ## Example (as JSON)
