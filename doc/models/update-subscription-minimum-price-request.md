@@ -13,11 +13,13 @@ Atualização do valor mínimo da assinatura
 |  --- | --- | --- | --- | --- | --- |
 | `MinimumPrice` | `Integer` | Optional | Valor mínimo da assinatura | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "minimum_price": 212
-}
+```java
+import me.pagar.api.models.UpdateSubscriptionMinimumPriceRequest;
+
+UpdateSubscriptionMinimumPriceRequest updateSubscriptionMinimumPriceRequest = new UpdateSubscriptionMinimumPriceRequest.Builder()
+    .minimumPrice(134)
+    .build();
 ```
 

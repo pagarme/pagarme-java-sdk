@@ -14,12 +14,15 @@ Options for card installment
 | `Number` | `int` | Required | Installment quantity | int getNumber() | setNumber(int number) |
 | `Total` | `int` | Required | Total amount | int getTotal() | setTotal(int total) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "number": 154,
-  "total": 46
-}
+```java
+import me.pagar.api.models.CreateCheckoutCardInstallmentOptionRequest;
+
+CreateCheckoutCardInstallmentOptionRequest createCheckoutCardInstallmentOptionRequest = new CreateCheckoutCardInstallmentOptionRequest.Builder(
+    68,
+    176
+)
+.build();
 ```
 

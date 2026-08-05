@@ -17,28 +17,27 @@ Request for creating a pricing scheme
 | `MinimumPrice` | `Integer` | Optional | Minimum price | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 | `Percentage` | `Double` | Optional | percentual value used in pricing_scheme Percent | Double getPercentage() | setPercentage(Double percentage) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "scheme_type": "scheme_type2",
-  "price_brackets": [
-    {
-      "start_quantity": 144,
-      "price": 174,
-      "end_quantity": 152,
-      "overage_price": 166
-    },
-    {
-      "start_quantity": 144,
-      "price": 174,
-      "end_quantity": 152,
-      "overage_price": 166
-    }
-  ],
-  "price": 84,
-  "minimum_price": 12,
-  "percentage": 157.1
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreatePriceBracketRequest;
+import me.pagar.api.models.CreatePricingSchemeRequest;
+
+CreatePricingSchemeRequest createPricingSchemeRequest = new CreatePricingSchemeRequest.Builder(
+    "scheme_type8"
+)
+.priceBrackets(Arrays.asList(
+        null,
+        new CreatePriceBracketRequest.Builder(
+            0,
+            0
+        )
+        .build()
+    ))
+.price(124)
+.minimumPrice(28)
+.percentage(5.66D)
+.build();
 ```
 

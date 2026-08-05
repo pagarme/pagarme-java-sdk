@@ -27,15 +27,18 @@ Response object for getting a customer
 | `Code` | `String` | Optional | Código de referência do cliente no sistema da loja. Max: 52 caracteres | String getCode() | setCode(String code) |
 | `DocumentType` | `String` | Optional | - | String getDocumentType() | setDocumentType(String documentType) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id4",
-  "name": "name4",
-  "email": "email2",
-  "delinquent": false,
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetCustomerResponse;
+
+GetCustomerResponse getCustomerResponse = new GetCustomerResponse.Builder()
+    .id("id6")
+    .name("name6")
+    .email("email0")
+    .delinquent(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

@@ -16,14 +16,16 @@ Payer's bank details.
 | `BranchCode` | `String` | Optional | - | String getBranchCode() | setBranchCode(String branchCode) |
 | `AccountNumber` | `String` | Optional | - | String getAccountNumber() | setAccountNumber(String accountNumber) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "bank_name": "bank_name0",
-  "ispb": "ispb8",
-  "branch_code": "branch_code2",
-  "account_number": "account_number4"
-}
+```java
+import me.pagar.api.models.GetPixBankAccountResponse;
+
+GetPixBankAccountResponse getPixBankAccountResponse = new GetPixBankAccountResponse.Builder()
+    .bankName("bank_name4")
+    .ispb("ispb4")
+    .branchCode("branch_code8")
+    .accountNumber("account_number0")
+    .build();
 ```
 

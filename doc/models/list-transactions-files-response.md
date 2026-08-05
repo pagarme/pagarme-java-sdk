@@ -14,29 +14,17 @@ Response object for listing of transactions files
 | `Data` | [`List<GetTransactionReportFileResponse>`](../../doc/models/get-transaction-report-file-response.md) | Optional | - | List<GetTransactionReportFileResponse> getData() | setData(List<GetTransactionReportFileResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "name": "name0",
-      "date": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "name": "name0",
-      "date": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "name": "name0",
-      "date": "2016-03-13T12:52:32.123Z"
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.ListTransactionsFilesResponse;
+
+ListTransactionsFilesResponse listTransactionsFilesResponse = new ListTransactionsFilesResponse.Builder()
+    .data(Arrays.asList(
+        null
+    ))
+    .paging(null)
+    .build();
 ```
 

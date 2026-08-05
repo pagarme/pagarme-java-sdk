@@ -17,22 +17,21 @@ Request for updating a pricing scheme
 | `MinimumPrice` | `Integer` | Optional | Minimum price | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 | `Percentage` | `Double` | Optional | percentual value used in pricing_scheme Percent | Double getPercentage() | setPercentage(Double percentage) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "scheme_type": "scheme_type0",
-  "price_brackets": [
-    {
-      "start_quantity": 144,
-      "price": 174,
-      "end_quantity": 152,
-      "overage_price": 166
-    }
-  ],
-  "price": 162,
-  "minimum_price": 2,
-  "percentage": 62.28
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.UpdatePricingSchemeRequest;
+
+UpdatePricingSchemeRequest updatePricingSchemeRequest = new UpdatePricingSchemeRequest.Builder(
+    null,
+    Arrays.asList(
+        null
+    )
+)
+.price(180)
+.minimumPrice(84)
+.percentage(238.06D)
+.build();
 ```
 

@@ -15,21 +15,25 @@ Response object for getting a boleto
 | `Fine` | [`GetFineResponse`](../../doc/models/get-fine-response.md) | Optional | Fine | GetFineResponse getFine() | setFine(GetFineResponse fine) |
 | `MaxDaysToPayPastDue` | `Integer` | Optional | - | Integer getMaxDaysToPayPastDue() | setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "interest": {
-    "days": 2,
-    "type": "percentage",
-    "amount": 20
-  },
-  "fine": {
-    "days": 2,
-    "type": "flat",
-    "amount": 10
-  },
-  "max_days_to_pay_past_due": 2
-}
+```java
+import me.pagar.api.models.GetFineResponse;
+import me.pagar.api.models.GetInterestResponse;
+import me.pagar.api.models.GetSubscriptionBoletoResponse;
+
+GetSubscriptionBoletoResponse getSubscriptionBoletoResponse = new GetSubscriptionBoletoResponse.Builder()
+    .interest(new GetInterestResponse.Builder()
+        .days(2)
+        .type("percentage")
+        .amount(20)
+        .build())
+    .fine(new GetFineResponse.Builder()
+        .days(2)
+        .type("flat")
+        .amount(10)
+        .build())
+    .maxDaysToPayPastDue(2)
+    .build();
 ```
 

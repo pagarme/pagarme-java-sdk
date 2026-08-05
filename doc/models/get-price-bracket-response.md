@@ -16,14 +16,16 @@ Response object for getting a price bracket
 | `EndQuantity` | `Integer` | Optional | - | Integer getEndQuantity() | setEndQuantity(Integer endQuantity) |
 | `OveragePrice` | `Integer` | Optional | - | Integer getOveragePrice() | setOveragePrice(Integer overagePrice) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_quantity": 186,
-  "price": 124,
-  "end_quantity": 194,
-  "overage_price": 208
-}
+```java
+import me.pagar.api.models.GetPriceBracketResponse;
+
+GetPriceBracketResponse getPriceBracketResponse = new GetPriceBracketResponse.Builder()
+    .startQuantity(80)
+    .price(18)
+    .endQuantity(88)
+    .overagePrice(102)
+    .build();
 ```
 

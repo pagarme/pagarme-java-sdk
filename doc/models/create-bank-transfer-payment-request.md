@@ -14,12 +14,15 @@ Request for creating a bank transfer payment
 | `Bank` | `String` | Required | Bank | String getBank() | setBank(String bank) |
 | `Retries` | `int` | Required | Number of retries | int getRetries() | setRetries(int retries) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "bank": "bank4",
-  "retries": 188
-}
+```java
+import me.pagar.api.models.CreateBankTransferPaymentRequest;
+
+CreateBankTransferPaymentRequest createBankTransferPaymentRequest = new CreateBankTransferPaymentRequest.Builder(
+    "bank6",
+    20
+)
+.build();
 ```
 

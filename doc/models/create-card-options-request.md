@@ -13,11 +13,14 @@ Options for creating the card
 |  --- | --- | --- | --- | --- | --- |
 | `VerifyCard` | `boolean` | Required | Indicates if the card should be verified before creation. If true, executes an authorization before saving the card. | boolean getVerifyCard() | setVerifyCard(boolean verifyCard) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "verify_card": false
-}
+```java
+import me.pagar.api.models.CreateCardOptionsRequest;
+
+CreateCardOptionsRequest createCardOptionsRequest = new CreateCardOptionsRequest.Builder(
+    false
+)
+.build();
 ```
 

@@ -17,21 +17,18 @@ Response object for getting a access token
 | `CreatedAt` | `LocalDateTime` | Optional | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `Customer` | [`GetCustomerResponse`](../../doc/models/get-customer-response.md) | Optional | - | GetCustomerResponse getCustomer() | setCustomer(GetCustomerResponse customer) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id0",
-  "code": "code8",
-  "status": "status2",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "customer": {
-    "id": "id0",
-    "name": "name0",
-    "email": "email6",
-    "delinquent": false,
-    "created_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetAccessTokenResponse;
+
+GetAccessTokenResponse getAccessTokenResponse = new GetAccessTokenResponse.Builder()
+    .id("id2")
+    .code("code0")
+    .status("status6")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .customer(null)
+    .build();
 ```
 

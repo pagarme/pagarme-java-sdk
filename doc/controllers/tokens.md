@@ -10,48 +10,8 @@ TokensController tokensController = client.getTokensController();
 
 ## Methods
 
-* [Get Token](../../doc/controllers/tokens.md#get-token)
 * [Create Token](../../doc/controllers/tokens.md#create-token)
-
-
-# Get Token
-
-Gets a token from its id
-
-:information_source: **Note** This endpoint does not require authentication.
-
-```java
-GetTokenResponse getToken(
-    final String id,
-    final String publicKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `String` | Template, Required | Token id |
-| `publicKey` | `String` | Template, Required | Public key |
-
-## Response Type
-
-[`GetTokenResponse`](../../doc/models/get-token-response.md)
-
-## Example Usage
-
-```java
-String id = "id0";
-String publicKey = "public_key6";
-
-try {
-    GetTokenResponse result = tokensController.getToken(id, publicKey);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+* [Get Token](../../doc/controllers/tokens.md#get-token)
 
 
 # Create Token
@@ -59,7 +19,7 @@ try {
 :information_source: **Note** This endpoint does not require authentication.
 
 ```java
-GetTokenResponse createToken(
+CompletableFuture<GetTokenResponse> createTokenAsync(
     final String publicKey,
     final CreateTokenRequest request,
     final String idempotencyKey)
@@ -75,6 +35,8 @@ GetTokenResponse createToken(
 
 ## Response Type
 
+**200**
+
 [`GetTokenResponse`](../../doc/models/get-token-response.md)
 
 ## Example Usage
@@ -83,27 +45,76 @@ GetTokenResponse createToken(
 String publicKey = "public_key6";
 CreateTokenRequest request = new CreateTokenRequest.Builder(
     "card",
-    new CreateCardTokenRequest.Builder(
-        "number6",
-        "holder_name2",
-        228,
-        68,
-        "cvv4",
-        "brand0",
-        "label6"
-    )
-    .build()
+    null
 )
 .build();
 
 
-try {
-    GetTokenResponse result = tokensController.createToken(publicKey, request, null);
+tokensController.createTokenAsync(publicKey, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Token
+
+Gets a token from its id
+
+:information_source: **Note** This endpoint does not require authentication.
+
+```java
+CompletableFuture<GetTokenResponse> getTokenAsync(
+    final String id,
+    final String publicKey)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `id` | `String` | Template, Required | Token id |
+| `publicKey` | `String` | Template, Required | Public key |
+
+## Response Type
+
+**200**
+
+[`GetTokenResponse`](../../doc/models/get-token-response.md)
+
+## Example Usage
+
+```java
+String id = "id0";
+String publicKey = "public_key6";
+
+tokensController.getTokenAsync(id, publicKey).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 

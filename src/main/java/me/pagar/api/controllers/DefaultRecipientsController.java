@@ -6,11 +6,12 @@
 
 package me.pagar.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.DateTimeHelper;
 import me.pagar.api.Server;
@@ -68,12 +69,30 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Updates a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Recipient data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> updateRecipientAsync(
+            final String recipientId,
+            final UpdateRecipientRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateRecipientRequest(recipientId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateRecipient.
      */
     private ApiCall<GetRecipientResponse, ApiException> prepareUpdateRecipientRequest(
             final String recipientId,
             final UpdateRecipientRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetRecipientResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -99,103 +118,120 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
-     * @param  recipientId  Required parameter: Example:
-     * @param  withdrawalId  Required parameter: Example:
-     * @return    Returns the GetWithdrawResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetWithdrawResponse getWithdrawById(
-            final String recipientId,
-            final String withdrawalId) throws ApiException, IOException {
-        return prepareGetWithdrawByIdRequest(recipientId, withdrawalId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getWithdrawById.
-     */
-    private ApiCall<GetWithdrawResponse, ApiException> prepareGetWithdrawByIdRequest(
-            final String recipientId,
-            final String withdrawalId) throws IOException {
-        return new ApiCall.Builder<GetWithdrawResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/withdrawals/{withdrawal_id}")
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("withdrawal_id").value(withdrawalId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetWithdrawResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Retrieves recipient information.
-     * @param  recipientId  Required parameter: Recipiend id
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse getRecipient(
-            final String recipientId) throws ApiException, IOException {
-        return prepareGetRecipientRequest(recipientId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getRecipient.
-     */
-    private ApiCall<GetRecipientResponse, ApiException> prepareGetRecipientRequest(
-            final String recipientId) throws IOException {
-        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}")
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get balance information for a recipient.
+     * Creates an anticipation.
      * @param  recipientId  Required parameter: Recipient id
-     * @return    Returns the GetBalanceResponse response from the API call
+     * @param  request  Required parameter: Anticipation data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAnticipationResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetBalanceResponse getBalance(
-            final String recipientId) throws ApiException, IOException {
-        return prepareGetBalanceRequest(recipientId).execute();
+    public GetAnticipationResponse createAnticipation(
+            final String recipientId,
+            final CreateAnticipationRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateAnticipationRequest(recipientId, request, idempotencyKey).execute();
     }
 
     /**
-     * Builds the ApiCall object for getBalance.
+     * Creates an anticipation.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Anticipation data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAnticipationResponse response from the API call
      */
-    private ApiCall<GetBalanceResponse, ApiException> prepareGetBalanceRequest(
-            final String recipientId) throws IOException {
-        return new ApiCall.Builder<GetBalanceResponse, ApiException>()
+    public CompletableFuture<GetAnticipationResponse> createAnticipationAsync(
+            final String recipientId,
+            final CreateAnticipationRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateAnticipationRequest(recipientId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for createAnticipation.
+     */
+    private ApiCall<GetAnticipationResponse, ApiException> prepareCreateAnticipationRequest(
+            final String recipientId,
+            final CreateAnticipationRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetAnticipationResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/balance")
+                        .path("/recipients/{recipient_id}/anticipations")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetAnticipationResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Gets the anticipation limits for a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  timeframe  Required parameter: Timeframe
+     * @param  paymentDate  Required parameter: Anticipation payment date
+     * @return    Returns the GetAnticipationLimitResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetAnticipationLimitResponse getAnticipationLimits(
+            final String recipientId,
+            final String timeframe,
+            final LocalDateTime paymentDate) throws ApiException, IOException {
+        return prepareGetAnticipationLimitsRequest(recipientId, timeframe, paymentDate).execute();
+    }
+
+    /**
+     * Gets the anticipation limits for a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  timeframe  Required parameter: Timeframe
+     * @param  paymentDate  Required parameter: Anticipation payment date
+     * @return    Returns the GetAnticipationLimitResponse response from the API call
+     */
+    public CompletableFuture<GetAnticipationLimitResponse> getAnticipationLimitsAsync(
+            final String recipientId,
+            final String timeframe,
+            final LocalDateTime paymentDate) {
+        try {
+            return prepareGetAnticipationLimitsRequest(recipientId, timeframe, paymentDate).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getAnticipationLimits.
+     */
+    private ApiCall<GetAnticipationLimitResponse, ApiException> prepareGetAnticipationLimitsRequest(
+            final String recipientId,
+            final String timeframe,
+            final LocalDateTime paymentDate) {
+        return new ApiCall.Builder<GetAnticipationLimitResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}/anticipation_limits")
+                        .queryParam(param -> param.key("timeframe")
+                                .value(timeframe))
+                        .queryParam(param -> param.key("payment_date")
+                                .value(DateTimeHelper.toRfc8601DateTime(paymentDate)))
                         .templateParam(param -> param.key("recipient_id").value(recipientId)
                                 .shouldEncode(true))
                         .headerParam(param -> param.key("accept").value("application/json"))
@@ -204,7 +240,7 @@ public final class DefaultRecipientsController extends BaseController implements
                         .httpMethod(HttpMethod.GET))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
-                                response -> ApiHelper.deserialize(response, GetBalanceResponse.class))
+                                response -> ApiHelper.deserialize(response, GetAnticipationLimitResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -225,11 +261,27 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Retrieves paginated recipients information.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListRecipientResponse response from the API call
+     */
+    public CompletableFuture<ListRecipientResponse> getRecipientsAsync(
+            final Integer page,
+            final Integer size) {
+        try {
+            return prepareGetRecipientsRequest(page, size).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getRecipients.
      */
     private ApiCall<ListRecipientResponse, ApiException> prepareGetRecipientsRequest(
             final Integer page,
-            final Integer size) throws IOException {
+            final Integer size) {
         return new ApiCall.Builder<ListRecipientResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -246,6 +298,61 @@ public final class DefaultRecipientsController extends BaseController implements
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, ListRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  withdrawalId  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetWithdrawResponse getWithdrawById(
+            final String recipientId,
+            final String withdrawalId) throws ApiException, IOException {
+        return prepareGetWithdrawByIdRequest(recipientId, withdrawalId).execute();
+    }
+
+    /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  withdrawalId  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     */
+    public CompletableFuture<GetWithdrawResponse> getWithdrawByIdAsync(
+            final String recipientId,
+            final String withdrawalId) {
+        try {
+            return prepareGetWithdrawByIdRequest(recipientId, withdrawalId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getWithdrawById.
+     */
+    private ApiCall<GetWithdrawResponse, ApiException> prepareGetWithdrawByIdRequest(
+            final String recipientId,
+            final String withdrawalId) {
+        return new ApiCall.Builder<GetWithdrawResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}/withdrawals/{withdrawal_id}")
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("withdrawal_id").value(withdrawalId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetWithdrawResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -269,17 +376,103 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Updates the default bank account from a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Bank account data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> updateRecipientDefaultBankAccountAsync(
+            final String recipientId,
+            final UpdateRecipientBankAccountRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateRecipientDefaultBankAccountRequest(recipientId, request,
+            idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateRecipientDefaultBankAccount.
      */
     private ApiCall<GetRecipientResponse, ApiException> prepareUpdateRecipientDefaultBankAccountRequest(
             final String recipientId,
             final UpdateRecipientBankAccountRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetRecipientResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
                         .path("/recipients/{recipient_id}/default-bank-account")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates recipient metadata.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse updateRecipientMetadata(
+            final String recipientId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateRecipientMetadataRequest(recipientId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Updates recipient metadata.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> updateRecipientMetadataAsync(
+            final String recipientId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateRecipientMetadataRequest(recipientId, request,
+            idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for updateRecipientMetadata.
+     */
+    private ApiCall<GetRecipientResponse, ApiException> prepareUpdateRecipientMetadataRequest(
+            final String recipientId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}/metadata")
                         .bodyParam(param -> param.value(request))
                         .bodySerializer(() ->  ApiHelper.serialize(request))
                         .templateParam(param -> param.key("recipient_id").value(recipientId)
@@ -323,6 +516,31 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Gets a paginated list of transfers for the recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  status  Optional parameter: Filter for transfer status
+     * @param  createdSince  Optional parameter: Filter for start range of transfer creation date
+     * @param  createdUntil  Optional parameter: Filter for end range of transfer creation date
+     * @return    Returns the ListTransferResponse response from the API call
+     */
+    public CompletableFuture<ListTransferResponse> getTransfersAsync(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        try {
+            return prepareGetTransfersRequest(recipientId, page, size, status, createdSince,
+            createdUntil).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getTransfers.
      */
     private ApiCall<ListTransferResponse, ApiException> prepareGetTransfersRequest(
@@ -331,7 +549,7 @@ public final class DefaultRecipientsController extends BaseController implements
             final Integer size,
             final String status,
             final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws IOException {
+            final LocalDateTime createdUntil) {
         return new ApiCall.Builder<ListTransferResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -376,11 +594,27 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Gets a transfer.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  transferId  Required parameter: Transfer id
+     * @return    Returns the GetTransferResponse response from the API call
+     */
+    public CompletableFuture<GetTransferResponse> getTransferAsync(
+            final String recipientId,
+            final String transferId) {
+        try {
+            return prepareGetTransferRequest(recipientId, transferId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getTransfer.
      */
     private ApiCall<GetTransferResponse, ApiException> prepareGetTransferRequest(
             final String recipientId,
-            final String transferId) throws IOException {
+            final String transferId) {
         return new ApiCall.Builder<GetTransferResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -416,11 +650,26 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * @param  recipientId  Required parameter: Example:
+     * @param  request  Required parameter: Example:
+     * @return    Returns the GetWithdrawResponse response from the API call
+     */
+    public CompletableFuture<GetWithdrawResponse> createWithdrawAsync(
+            final String recipientId,
+            final CreateWithdrawRequest request) {
+        try {
+            return prepareCreateWithdrawRequest(recipientId, request).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createWithdraw.
      */
     private ApiCall<GetWithdrawResponse, ApiException> prepareCreateWithdrawRequest(
             final String recipientId,
-            final CreateWithdrawRequest request) throws JsonProcessingException, IOException {
+            final CreateWithdrawRequest request) {
         return new ApiCall.Builder<GetWithdrawResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -444,6 +693,73 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Updates recipient metadata.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse updateAutomaticAnticipationSettings(
+            final String recipientId,
+            final UpdateAutomaticAnticipationSettingsRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateAutomaticAnticipationSettingsRequest(recipientId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Updates recipient metadata.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: Metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> updateAutomaticAnticipationSettingsAsync(
+            final String recipientId,
+            final UpdateAutomaticAnticipationSettingsRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateAutomaticAnticipationSettingsRequest(recipientId, request,
+            idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for updateAutomaticAnticipationSettings.
+     */
+    private ApiCall<GetRecipientResponse, ApiException> prepareUpdateAutomaticAnticipationSettingsRequest(
+            final String recipientId,
+            final UpdateAutomaticAnticipationSettingsRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}/automatic-anticipation-settings")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Gets an anticipation.
      * @param  recipientId  Required parameter: Recipient id
      * @param  anticipationId  Required parameter: Anticipation id
@@ -458,11 +774,27 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Gets an anticipation.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  anticipationId  Required parameter: Anticipation id
+     * @return    Returns the GetAnticipationResponse response from the API call
+     */
+    public CompletableFuture<GetAnticipationResponse> getAnticipationAsync(
+            final String recipientId,
+            final String anticipationId) {
+        try {
+            return prepareGetAnticipationRequest(recipientId, anticipationId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getAnticipation.
      */
     private ApiCall<GetAnticipationResponse, ApiException> prepareGetAnticipationRequest(
             final String recipientId,
-            final String anticipationId) throws IOException {
+            final String anticipationId) {
         return new ApiCall.Builder<GetAnticipationResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -501,361 +833,35 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * @param  recipientId  Required parameter: Recipient Identificator
+     * @param  request  Required parameter: Example:
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> updateRecipientTransferSettingsAsync(
+            final String recipientId,
+            final UpdateTransferSettingsRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateRecipientTransferSettingsRequest(recipientId, request,
+            idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateRecipientTransferSettings.
      */
     private ApiCall<GetRecipientResponse, ApiException> prepareUpdateRecipientTransferSettingsRequest(
             final String recipientId,
             final UpdateTransferSettingsRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetRecipientResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
                         .path("/recipients/{recipient_id}/transfer-settings")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Retrieves recipient information.
-     * @param  code  Required parameter: Recipient code
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse getRecipientByCode(
-            final String code) throws ApiException, IOException {
-        return prepareGetRecipientByCodeRequest(code).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getRecipientByCode.
-     */
-    private ApiCall<GetRecipientResponse, ApiException> prepareGetRecipientByCodeRequest(
-            final String code) throws IOException {
-        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{code}")
-                        .templateParam(param -> param.key("code").value(code)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates recipient metadata.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse updateAutomaticAnticipationSettings(
-            final String recipientId,
-            final UpdateAutomaticAnticipationSettingsRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateAutomaticAnticipationSettingsRequest(recipientId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateAutomaticAnticipationSettings.
-     */
-    private ApiCall<GetRecipientResponse, ApiException> prepareUpdateAutomaticAnticipationSettingsRequest(
-            final String recipientId,
-            final UpdateAutomaticAnticipationSettingsRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/automatic-anticipation-settings")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a transfer for a recipient.
-     * @param  recipientId  Required parameter: Recipient Id
-     * @param  request  Required parameter: Transfer data
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetTransferResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetTransferResponse createTransfer(
-            final String recipientId,
-            final CreateTransferRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateTransferRequest(recipientId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createTransfer.
-     */
-    private ApiCall<GetTransferResponse, ApiException> prepareCreateTransferRequest(
-            final String recipientId,
-            final CreateTransferRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetTransferResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/transfers")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetTransferResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a new recipient.
-     * @param  request  Required parameter: Recipient data
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse createRecipient(
-            final CreateRecipientRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateRecipientRequest(request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createRecipient.
-     */
-    private ApiCall<GetRecipientResponse, ApiException> prepareCreateRecipientRequest(
-            final CreateRecipientRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse getDefaultRecipient() throws ApiException, IOException {
-        return prepareGetDefaultRecipientRequest().execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getDefaultRecipient.
-     */
-    private ApiCall<GetRecipientResponse, ApiException> prepareGetDefaultRecipientRequest() throws IOException {
-        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/default")
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates an anticipation.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Anticipation data
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetAnticipationResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAnticipationResponse createAnticipation(
-            final String recipientId,
-            final CreateAnticipationRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateAnticipationRequest(recipientId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createAnticipation.
-     */
-    private ApiCall<GetAnticipationResponse, ApiException> prepareCreateAnticipationRequest(
-            final String recipientId,
-            final CreateAnticipationRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetAnticipationResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/anticipations")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAnticipationResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Gets the anticipation limits for a recipient.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  timeframe  Required parameter: Timeframe
-     * @param  paymentDate  Required parameter: Anticipation payment date
-     * @return    Returns the GetAnticipationLimitResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAnticipationLimitResponse getAnticipationLimits(
-            final String recipientId,
-            final String timeframe,
-            final LocalDateTime paymentDate) throws ApiException, IOException {
-        return prepareGetAnticipationLimitsRequest(recipientId, timeframe, paymentDate).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getAnticipationLimits.
-     */
-    private ApiCall<GetAnticipationLimitResponse, ApiException> prepareGetAnticipationLimitsRequest(
-            final String recipientId,
-            final String timeframe,
-            final LocalDateTime paymentDate) throws IOException {
-        return new ApiCall.Builder<GetAnticipationLimitResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/anticipation_limits")
-                        .queryParam(param -> param.key("timeframe")
-                                .value(timeframe))
-                        .queryParam(param -> param.key("payment_date")
-                                .value(DateTimeHelper.toRfc8601DateTime(paymentDate)))
-                        .templateParam(param -> param.key("recipient_id").value(recipientId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAnticipationLimitResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates recipient metadata.
-     * @param  recipientId  Required parameter: Recipient id
-     * @param  request  Required parameter: Metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetRecipientResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetRecipientResponse updateRecipientMetadata(
-            final String recipientId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateRecipientMetadataRequest(recipientId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateRecipientMetadata.
-     */
-    private ApiCall<GetRecipientResponse, ApiException> prepareUpdateRecipientMetadataRequest(
-            final String recipientId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/recipients/{recipient_id}/metadata")
                         .bodyParam(param -> param.value(request))
                         .bodySerializer(() ->  ApiHelper.serialize(request))
                         .templateParam(param -> param.key("recipient_id").value(recipientId)
@@ -908,6 +914,40 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Retrieves a paginated list of anticipations from a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  status  Optional parameter: Filter for anticipation status
+     * @param  timeframe  Optional parameter: Filter for anticipation timeframe
+     * @param  paymentDateSince  Optional parameter: Filter for start range for anticipation payment
+     *         date
+     * @param  paymentDateUntil  Optional parameter: Filter for end range for anticipation payment
+     *         date
+     * @param  createdSince  Optional parameter: Filter for start range for anticipation creation
+     *         date
+     * @param  createdUntil  Optional parameter: Filter for end range for anticipation creation date
+     * @return    Returns the ListAnticipationResponse response from the API call
+     */
+    public CompletableFuture<ListAnticipationResponse> getAnticipationsAsync(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final String timeframe,
+            final LocalDateTime paymentDateSince,
+            final LocalDateTime paymentDateUntil,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        try {
+            return prepareGetAnticipationsRequest(recipientId, page, size, status, timeframe,
+            paymentDateSince, paymentDateUntil, createdSince, createdUntil).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getAnticipations.
      */
     private ApiCall<ListAnticipationResponse, ApiException> prepareGetAnticipationsRequest(
@@ -919,7 +959,7 @@ public final class DefaultRecipientsController extends BaseController implements
             final LocalDateTime paymentDateSince,
             final LocalDateTime paymentDateUntil,
             final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws IOException {
+            final LocalDateTime createdUntil) {
         return new ApiCall.Builder<ListAnticipationResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -956,6 +996,106 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Retrieves recipient information.
+     * @param  recipientId  Required parameter: Recipiend id
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse getRecipient(
+            final String recipientId) throws ApiException, IOException {
+        return prepareGetRecipientRequest(recipientId).execute();
+    }
+
+    /**
+     * Retrieves recipient information.
+     * @param  recipientId  Required parameter: Recipiend id
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> getRecipientAsync(
+            final String recipientId) {
+        try {
+            return prepareGetRecipientRequest(recipientId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getRecipient.
+     */
+    private ApiCall<GetRecipientResponse, ApiException> prepareGetRecipientRequest(
+            final String recipientId) {
+        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}")
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get balance information for a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @return    Returns the GetBalanceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetBalanceResponse getBalance(
+            final String recipientId) throws ApiException, IOException {
+        return prepareGetBalanceRequest(recipientId).execute();
+    }
+
+    /**
+     * Get balance information for a recipient.
+     * @param  recipientId  Required parameter: Recipient id
+     * @return    Returns the GetBalanceResponse response from the API call
+     */
+    public CompletableFuture<GetBalanceResponse> getBalanceAsync(
+            final String recipientId) {
+        try {
+            return prepareGetBalanceRequest(recipientId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getBalance.
+     */
+    private ApiCall<GetBalanceResponse, ApiException> prepareGetBalanceRequest(
+            final String recipientId) {
+        return new ApiCall.Builder<GetBalanceResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}/balance")
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetBalanceResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Gets a paginated list of transfers for the recipient.
      * @param  recipientId  Required parameter: Example:
      * @param  page  Optional parameter: Example:
@@ -979,6 +1119,31 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Gets a paginated list of transfers for the recipient.
+     * @param  recipientId  Required parameter: Example:
+     * @param  page  Optional parameter: Example:
+     * @param  size  Optional parameter: Example:
+     * @param  status  Optional parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @return    Returns the ListWithdrawals response from the API call
+     */
+    public CompletableFuture<ListWithdrawals> getWithdrawalsAsync(
+            final String recipientId,
+            final Integer page,
+            final Integer size,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        try {
+            return prepareGetWithdrawalsRequest(recipientId, page, size, status, createdSince,
+            createdUntil).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getWithdrawals.
      */
     private ApiCall<ListWithdrawals, ApiException> prepareGetWithdrawalsRequest(
@@ -987,7 +1152,7 @@ public final class DefaultRecipientsController extends BaseController implements
             final Integer size,
             final String status,
             final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws IOException {
+            final LocalDateTime createdUntil) {
         return new ApiCall.Builder<ListWithdrawals, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -1018,6 +1183,220 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Creates a transfer for a recipient.
+     * @param  recipientId  Required parameter: Recipient Id
+     * @param  request  Required parameter: Transfer data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetTransferResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetTransferResponse createTransfer(
+            final String recipientId,
+            final CreateTransferRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateTransferRequest(recipientId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Creates a transfer for a recipient.
+     * @param  recipientId  Required parameter: Recipient Id
+     * @param  request  Required parameter: Transfer data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetTransferResponse response from the API call
+     */
+    public CompletableFuture<GetTransferResponse> createTransferAsync(
+            final String recipientId,
+            final CreateTransferRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateTransferRequest(recipientId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for createTransfer.
+     */
+    private ApiCall<GetTransferResponse, ApiException> prepareCreateTransferRequest(
+            final String recipientId,
+            final CreateTransferRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetTransferResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{recipient_id}/transfers")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("recipient_id").value(recipientId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTransferResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a new recipient.
+     * @param  request  Required parameter: Recipient data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse createRecipient(
+            final CreateRecipientRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateRecipientRequest(request, idempotencyKey).execute();
+    }
+
+    /**
+     * Creates a new recipient.
+     * @param  request  Required parameter: Recipient data
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> createRecipientAsync(
+            final CreateRecipientRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateRecipientRequest(request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for createRecipient.
+     */
+    private ApiCall<GetRecipientResponse, ApiException> prepareCreateRecipientRequest(
+            final CreateRecipientRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Retrieves recipient information.
+     * @param  code  Required parameter: Recipient code
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse getRecipientByCode(
+            final String code) throws ApiException, IOException {
+        return prepareGetRecipientByCodeRequest(code).execute();
+    }
+
+    /**
+     * Retrieves recipient information.
+     * @param  code  Required parameter: Recipient code
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> getRecipientByCodeAsync(
+            final String code) {
+        try {
+            return prepareGetRecipientByCodeRequest(code).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getRecipientByCode.
+     */
+    private ApiCall<GetRecipientResponse, ApiException> prepareGetRecipientByCodeRequest(
+            final String code) {
+        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/{code}")
+                        .templateParam(param -> param.key("code").value(code)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @return    Returns the GetRecipientResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetRecipientResponse getDefaultRecipient() throws ApiException, IOException {
+        return prepareGetDefaultRecipientRequest().execute();
+    }
+
+    /**
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> getDefaultRecipientAsync() {
+        try {
+            return prepareGetDefaultRecipientRequest().executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getDefaultRecipient.
+     */
+    private ApiCall<GetRecipientResponse, ApiException> prepareGetDefaultRecipientRequest() {
+        return new ApiCall.Builder<GetRecipientResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/recipients/default")
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetRecipientResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Create a KYC link.
      * @param  recipientId  Required parameter: Recipient id
      * @return    Returns the CreateKYCLinkResponse response from the API call
@@ -1030,10 +1409,24 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Create a KYC link.
+     * @param  recipientId  Required parameter: Recipient id
+     * @return    Returns the CreateKYCLinkResponse response from the API call
+     */
+    public CompletableFuture<CreateKYCLinkResponse> createKYCLinkAsync(
+            final String recipientId) {
+        try {
+            return prepareCreateKYCLinkRequest(recipientId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createKYCLink.
      */
     private ApiCall<CreateKYCLinkResponse, ApiException> prepareCreateKYCLinkRequest(
-            final String recipientId) throws IOException {
+            final String recipientId) {
         return new ApiCall.Builder<CreateKYCLinkResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -1070,12 +1463,30 @@ public final class DefaultRecipientsController extends BaseController implements
     }
 
     /**
+     * Updates recipient code.
+     * @param  recipientId  Required parameter: Recipient id
+     * @param  request  Required parameter: UpdateRecipientCodeRequest
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetRecipientResponse response from the API call
+     */
+    public CompletableFuture<GetRecipientResponse> updateRecipientCodeAsync(
+            final String recipientId,
+            final UpdateRecipientCodeRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateRecipientCodeRequest(recipientId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateRecipientCode.
      */
     private ApiCall<GetRecipientResponse, ApiException> prepareUpdateRecipientCodeRequest(
             final String recipientId,
             final UpdateRecipientCodeRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetRecipientResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder

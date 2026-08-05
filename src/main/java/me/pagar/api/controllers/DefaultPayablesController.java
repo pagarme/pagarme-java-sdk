@@ -10,12 +10,13 @@ import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.DateTimeHelper;
 import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.http.request.HttpMethod;
-import me.pagar.api.models.GetPayableResponse;
 import me.pagar.api.models.ListPayablesResponse;
 
 /**
@@ -80,6 +81,56 @@ public final class DefaultPayablesController extends BaseController implements P
     }
 
     /**
+     * @param  type  Optional parameter: Example:
+     * @param  splitId  Optional parameter: Example:
+     * @param  bulkAnticipationId  Optional parameter: Example:
+     * @param  installment  Optional parameter: Example:
+     * @param  status  Optional parameter: Example:
+     * @param  recipientId  Optional parameter: Example:
+     * @param  amount  Optional parameter: Example:
+     * @param  chargeId  Optional parameter: Example:
+     * @param  paymentDateUntil  Optional parameter: Example:
+     * @param  paymentDateSince  Optional parameter: Example:
+     * @param  updatedUntil  Optional parameter: Example:
+     * @param  updatedSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  liquidationArrangementId  Optional parameter: Example:
+     * @param  page  Optional parameter: Example:
+     * @param  size  Optional parameter: Example:
+     * @param  gatewayId  Optional parameter: Example:
+     * @return    Returns the ListPayablesResponse response from the API call
+     */
+    public CompletableFuture<ListPayablesResponse> getPayablesAsync(
+            final String type,
+            final String splitId,
+            final String bulkAnticipationId,
+            final Integer installment,
+            final String status,
+            final String recipientId,
+            final Integer amount,
+            final String chargeId,
+            final String paymentDateUntil,
+            final LocalDateTime paymentDateSince,
+            final LocalDateTime updatedUntil,
+            final LocalDateTime updatedSince,
+            final LocalDateTime createdUntil,
+            final LocalDateTime createdSince,
+            final String liquidationArrangementId,
+            final Integer page,
+            final Integer size,
+            final Long gatewayId) {
+        try {
+            return prepareGetPayablesRequest(type, splitId, bulkAnticipationId, installment, status,
+            recipientId, amount, chargeId, paymentDateUntil, paymentDateSince, updatedUntil,
+            updatedSince, createdUntil, createdSince, liquidationArrangementId, page, size,
+            gatewayId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getPayables.
      */
     private ApiCall<ListPayablesResponse, ApiException> prepareGetPayablesRequest(
@@ -100,7 +151,7 @@ public final class DefaultPayablesController extends BaseController implements P
             final String liquidationArrangementId,
             final Integer page,
             final Integer size,
-            final Long gatewayId) throws IOException {
+            final Long gatewayId) {
         return new ApiCall.Builder<ListPayablesResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -149,41 +200,6 @@ public final class DefaultPayablesController extends BaseController implements P
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, ListPayablesResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  id  Required parameter: Example:
-     * @return    Returns the GetPayableResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPayableResponse getPayableById(
-            final long id) throws ApiException, IOException {
-        return prepareGetPayableByIdRequest(id).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getPayableById.
-     */
-    private ApiCall<GetPayableResponse, ApiException> prepareGetPayableByIdRequest(
-            final long id) throws IOException {
-        return new ApiCall.Builder<GetPayableResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/payables/{id}")
-                        .templateParam(param -> param.key("id").value(id).isRequired(false)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetPayableResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

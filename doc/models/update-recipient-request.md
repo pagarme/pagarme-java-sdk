@@ -18,19 +18,23 @@ Request for updating a Recipient
 | `Status` | `String` | Required | Status | String getStatus() | setStatus(String status) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name0",
-  "email": "email6",
-  "description": "description0",
-  "type": "type0",
-  "status": "status8",
-  "metadata": {
-    "key0": "metadata3",
-    "key1": "metadata4"
-  }
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.models.UpdateRecipientRequest;
+
+UpdateRecipientRequest updateRecipientRequest = new UpdateRecipientRequest.Builder(
+    "name4",
+    "email2",
+    "description4",
+    "type4",
+    "status6",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata1");
+        put("key1", "metadata0");
+    }}
+)
+.build();
 ```
 

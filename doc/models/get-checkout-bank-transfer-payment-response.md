@@ -13,14 +13,17 @@ Bank transfer checkout response
 |  --- | --- | --- | --- | --- | --- |
 | `Bank` | `List<String>` | Optional | bank list response | List<String> getBank() | setBank(List<String> bank) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "bank": [
-    "bank3",
-    "bank4"
-  ]
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetCheckoutBankTransferPaymentResponse;
+
+GetCheckoutBankTransferPaymentResponse getCheckoutBankTransferPaymentResponse = new GetCheckoutBankTransferPaymentResponse.Builder()
+    .bank(Arrays.asList(
+        "bank3",
+        "bank4"
+    ))
+    .build();
 ```
 

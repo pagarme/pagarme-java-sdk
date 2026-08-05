@@ -16,17 +16,20 @@ Request for updating an address
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `Line2` | `String` | Required | Line 2 for address | String getLine2() | setLine2(String line2) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "number": "number6",
-  "complement": "complement8",
-  "metadata": {
-    "key0": "metadata7",
-    "key1": "metadata8"
-  },
-  "line_2": "line_24"
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.models.UpdateAddressRequest;
+
+UpdateAddressRequest updateAddressRequest = new UpdateAddressRequest.Builder(
+    "number8",
+    "complement0",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata9");
+    }},
+    "line_22"
+)
+.build();
 ```
 

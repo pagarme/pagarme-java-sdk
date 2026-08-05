@@ -33,15 +33,17 @@ Response object for getting an Order
 | `Device` | [`GetDeviceResponse`](../../doc/models/get-device-response.md) | Optional | Device's informations | GetDeviceResponse getDevice() | setDevice(GetDeviceResponse device) |
 | `Integration` | [`GetIntegrationResponse`](../../doc/models/get-integration-response.md) | Optional | - | GetIntegrationResponse getIntegration() | setIntegration(GetIntegrationResponse integration) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id6",
-  "code": "code4",
-  "amount": 64,
-  "currency": "currency6",
-  "closed": false
-}
+```java
+import me.pagar.api.models.GetOrderResponse;
+
+GetOrderResponse getOrderResponse = new GetOrderResponse.Builder()
+    .id("id4")
+    .code("code2")
+    .amount(212)
+    .currency("currency4")
+    .closed(false)
+    .build();
 ```
 

@@ -6,10 +6,11 @@
 
 package me.pagar.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
@@ -45,53 +46,6 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
-     * Creates a new address for a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  request  Required parameter: Request for creating an address
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetAddressResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAddressResponse createAddress(
-            final String customerId,
-            final CreateAddressRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateAddressRequest(customerId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createAddress.
-     */
-    private ApiCall<GetAddressResponse, ApiException> prepareCreateAddressRequest(
-            final String customerId,
-            final CreateAddressRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetAddressResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/addresses")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAddressResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Updates a card.
      * @param  customerId  Required parameter: Customer Id
      * @param  cardId  Required parameter: Card id
@@ -110,13 +64,33 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Updates a card.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  cardId  Required parameter: Card id
+     * @param  request  Required parameter: Request for updating a card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     */
+    public CompletableFuture<GetCardResponse> updateCardAsync(
+            final String customerId,
+            final String cardId,
+            final UpdateCardRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateCardRequest(customerId, cardId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateCard.
      */
     private ApiCall<GetCardResponse, ApiException> prepareUpdateCardRequest(
             final String customerId,
             final String cardId,
             final UpdateCardRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetCardResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -144,6 +118,80 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Updates an address.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  addressId  Required parameter: Address Id
+     * @param  request  Required parameter: Request for updating an address
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAddressResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetAddressResponse updateAddress(
+            final String customerId,
+            final String addressId,
+            final UpdateAddressRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateAddressRequest(customerId, addressId, request,
+                idempotencyKey).execute();
+    }
+
+    /**
+     * Updates an address.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  addressId  Required parameter: Address Id
+     * @param  request  Required parameter: Request for updating an address
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAddressResponse response from the API call
+     */
+    public CompletableFuture<GetAddressResponse> updateAddressAsync(
+            final String customerId,
+            final String addressId,
+            final UpdateAddressRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateAddressRequest(customerId, addressId, request,
+            idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for updateAddress.
+     */
+    private ApiCall<GetAddressResponse, ApiException> prepareUpdateAddressRequest(
+            final String customerId,
+            final String addressId,
+            final UpdateAddressRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetAddressResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/addresses/{address_id}")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("address_id").value(addressId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PUT))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetAddressResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Delete a customer's access token.
      * @param  customerId  Required parameter: Customer Id
      * @param  tokenId  Required parameter: Token Id
@@ -160,12 +208,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Delete a customer's access token.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  tokenId  Required parameter: Token Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     */
+    public CompletableFuture<GetAccessTokenResponse> deleteAccessTokenAsync(
+            final String customerId,
+            final String tokenId,
+            final String idempotencyKey) {
+        try {
+            return prepareDeleteAccessTokenRequest(customerId, tokenId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for deleteAccessToken.
      */
     private ApiCall<GetAccessTokenResponse, ApiException> prepareDeleteAccessTokenRequest(
             final String customerId,
             final String tokenId,
-            final String idempotencyKey) throws IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -204,11 +270,27 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Creates a new customer.
+     * @param  request  Required parameter: Request for creating a customer
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
+     */
+    public CompletableFuture<GetCustomerResponse> createCustomerAsync(
+            final CreateCustomerRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateCustomerRequest(request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createCustomer.
      */
     private ApiCall<GetCustomerResponse, ApiException> prepareCreateCustomerRequest(
             final CreateCustomerRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetCustomerResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -232,6 +314,71 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Creates a new address for a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  request  Required parameter: Request for creating an address
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAddressResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetAddressResponse createAddress(
+            final String customerId,
+            final CreateAddressRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateAddressRequest(customerId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Creates a new address for a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  request  Required parameter: Request for creating an address
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAddressResponse response from the API call
+     */
+    public CompletableFuture<GetAddressResponse> createAddressAsync(
+            final String customerId,
+            final CreateAddressRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateAddressRequest(customerId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for createAddress.
+     */
+    private ApiCall<GetAddressResponse, ApiException> prepareCreateAddressRequest(
+            final String customerId,
+            final CreateAddressRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetAddressResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/addresses")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetAddressResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Delete a Customer's access tokens.
      * @param  customerId  Required parameter: Customer Id
      * @return    Returns the ListAccessTokensResponse response from the API call
@@ -244,10 +391,24 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Delete a Customer's access tokens.
+     * @param  customerId  Required parameter: Customer Id
+     * @return    Returns the ListAccessTokensResponse response from the API call
+     */
+    public CompletableFuture<ListAccessTokensResponse> deleteAccessTokensAsync(
+            final String customerId) {
+        try {
+            return prepareDeleteAccessTokensRequest(customerId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for deleteAccessTokens.
      */
     private ApiCall<ListAccessTokensResponse, ApiException> prepareDeleteAccessTokensRequest(
-            final String customerId) throws IOException {
+            final String customerId) {
         return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -268,59 +429,6 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
-     * Updates an address.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  addressId  Required parameter: Address Id
-     * @param  request  Required parameter: Request for updating an address
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetAddressResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAddressResponse updateAddress(
-            final String customerId,
-            final String addressId,
-            final UpdateAddressRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateAddressRequest(customerId, addressId, request,
-                idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateAddress.
-     */
-    private ApiCall<GetAddressResponse, ApiException> prepareUpdateAddressRequest(
-            final String customerId,
-            final String addressId,
-            final UpdateAddressRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetAddressResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/addresses/{address_id}")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("address_id").value(addressId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.PUT))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAddressResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Get a customer's address.
      * @param  customerId  Required parameter: Customer id
      * @param  addressId  Required parameter: Address Id
@@ -335,11 +443,27 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Get a customer's address.
+     * @param  customerId  Required parameter: Customer id
+     * @param  addressId  Required parameter: Address Id
+     * @return    Returns the GetAddressResponse response from the API call
+     */
+    public CompletableFuture<GetAddressResponse> getAddressAsync(
+            final String customerId,
+            final String addressId) {
+        try {
+            return prepareGetAddressRequest(customerId, addressId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getAddress.
      */
     private ApiCall<GetAddressResponse, ApiException> prepareGetAddressRequest(
             final String customerId,
-            final String addressId) throws IOException {
+            final String addressId) {
         return new ApiCall.Builder<GetAddressResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -378,12 +502,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Delete a Customer's address.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  addressId  Required parameter: Address Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAddressResponse response from the API call
+     */
+    public CompletableFuture<GetAddressResponse> deleteAddressAsync(
+            final String customerId,
+            final String addressId,
+            final String idempotencyKey) {
+        try {
+            return prepareDeleteAddressRequest(customerId, addressId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for deleteAddress.
      */
     private ApiCall<GetAddressResponse, ApiException> prepareDeleteAddressRequest(
             final String customerId,
             final String addressId,
-            final String idempotencyKey) throws IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetAddressResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -402,6 +544,71 @@ public final class DefaultCustomersController extends BaseController implements 
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetAddressResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a new card for a customer.
+     * @param  customerId  Required parameter: Customer id
+     * @param  request  Required parameter: Request for creating a card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCardResponse createCard(
+            final String customerId,
+            final CreateCardRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreateCardRequest(customerId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Creates a new card for a customer.
+     * @param  customerId  Required parameter: Customer id
+     * @param  request  Required parameter: Request for creating a card
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     */
+    public CompletableFuture<GetCardResponse> createCardAsync(
+            final String customerId,
+            final CreateCardRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateCardRequest(customerId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for createCard.
+     */
+    private ApiCall<GetCardResponse, ApiException> prepareCreateCardRequest(
+            final String customerId,
+            final CreateCardRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetCardResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/cards")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -430,6 +637,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Get all Customers.
+     * @param  name  Optional parameter: Name of the Customer
+     * @param  document  Optional parameter: Document of the Customer
+     * @param  page  Optional parameter: Current page the the search
+     * @param  size  Optional parameter: Quantity pages of the search
+     * @param  email  Optional parameter: Customer's email
+     * @param  code  Optional parameter: Customer's code
+     * @return    Returns the ListCustomersResponse response from the API call
+     */
+    public CompletableFuture<ListCustomersResponse> getCustomersAsync(
+            final String name,
+            final String document,
+            final Integer page,
+            final Integer size,
+            final String email,
+            final String code) {
+        try {
+            return prepareGetCustomersRequest(name, document, page, size, email, code).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getCustomers.
      */
     private ApiCall<ListCustomersResponse, ApiException> prepareGetCustomersRequest(
@@ -438,7 +669,7 @@ public final class DefaultCustomersController extends BaseController implements 
             final Integer page,
             final Integer size,
             final String email,
-            final String code) throws IOException {
+            final String code) {
         return new ApiCall.Builder<ListCustomersResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -469,273 +700,6 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
-     * Get all access tokens from a customer.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListAccessTokensResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListAccessTokensResponse getAccessTokens(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException {
-        return prepareGetAccessTokensRequest(customerId, page, size).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getAccessTokens.
-     */
-    private ApiCall<ListAccessTokensResponse, ApiException> prepareGetAccessTokensRequest(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws IOException {
-        return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/access-tokens")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListAccessTokensResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Delete a customer's card.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  cardId  Required parameter: Card Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCardResponse deleteCard(
-            final String customerId,
-            final String cardId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareDeleteCardRequest(customerId, cardId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for deleteCard.
-     */
-    private ApiCall<GetCardResponse, ApiException> prepareDeleteCardRequest(
-            final String customerId,
-            final String cardId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetCardResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards/{card_id}")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("card_id").value(cardId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.DELETE))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get a customer's card.
-     * @param  customerId  Required parameter: Customer id
-     * @param  cardId  Required parameter: Card id
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCardResponse getCard(
-            final String customerId,
-            final String cardId) throws ApiException, IOException {
-        return prepareGetCardRequest(customerId, cardId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getCard.
-     */
-    private ApiCall<GetCardResponse, ApiException> prepareGetCardRequest(
-            final String customerId,
-            final String cardId) throws IOException {
-        return new ApiCall.Builder<GetCardResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards/{card_id}")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("card_id").value(cardId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Creates a new card for a customer.
-     * @param  customerId  Required parameter: Customer id
-     * @param  request  Required parameter: Request for creating a card
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetCardResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetCardResponse createCard(
-            final String customerId,
-            final CreateCardRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreateCardRequest(customerId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createCard.
-     */
-    private ApiCall<GetCardResponse, ApiException> prepareCreateCardRequest(
-            final String customerId,
-            final CreateCardRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetCardResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/cards")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Get a Customer's access token.
-     * @param  customerId  Required parameter: Customer Id
-     * @param  tokenId  Required parameter: Token Id
-     * @return    Returns the GetAccessTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetAccessTokenResponse getAccessToken(
-            final String customerId,
-            final String tokenId) throws ApiException, IOException {
-        return prepareGetAccessTokenRequest(customerId, tokenId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getAccessToken.
-     */
-    private ApiCall<GetAccessTokenResponse, ApiException> prepareGetAccessTokenRequest(
-            final String customerId,
-            final String tokenId) throws IOException {
-        return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/access-tokens/{token_id}")
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("token_id").value(tokenId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetAccessTokenResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Gets all adressess from a customer.
-     * @param  customerId  Required parameter: Customer id
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @return    Returns the ListAddressesResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListAddressesResponse getAddresses(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws ApiException, IOException {
-        return prepareGetAddressesRequest(customerId, page, size).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getAddresses.
-     */
-    private ApiCall<ListAddressesResponse, ApiException> prepareGetAddressesRequest(
-            final String customerId,
-            final Integer page,
-            final Integer size) throws IOException {
-        return new ApiCall.Builder<ListAddressesResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/customers/{customer_id}/addresses")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .templateParam(param -> param.key("customer_id").value(customerId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListAddressesResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Updates a customer.
      * @param  customerId  Required parameter: Customer id
      * @param  request  Required parameter: Request for updating a customer
@@ -752,12 +716,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Updates a customer.
+     * @param  customerId  Required parameter: Customer id
+     * @param  request  Required parameter: Request for updating a customer
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
+     */
+    public CompletableFuture<GetCustomerResponse> updateCustomerAsync(
+            final String customerId,
+            final UpdateCustomerRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateCustomerRequest(customerId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateCustomer.
      */
     private ApiCall<GetCustomerResponse, ApiException> prepareUpdateCustomerRequest(
             final String customerId,
             final UpdateCustomerRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetCustomerResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -799,12 +781,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Creates a access token for a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  request  Required parameter: Request for creating a access token
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     */
+    public CompletableFuture<GetAccessTokenResponse> createAccessTokenAsync(
+            final String customerId,
+            final CreateAccessTokenRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateAccessTokenRequest(customerId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createAccessToken.
      */
     private ApiCall<GetAccessTokenResponse, ApiException> prepareCreateAccessTokenRequest(
             final String customerId,
             final CreateAccessTokenRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -830,6 +830,70 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Get all access tokens from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListAccessTokensResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListAccessTokensResponse getAccessTokens(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException {
+        return prepareGetAccessTokensRequest(customerId, page, size).execute();
+    }
+
+    /**
+     * Get all access tokens from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListAccessTokensResponse response from the API call
+     */
+    public CompletableFuture<ListAccessTokensResponse> getAccessTokensAsync(
+            final String customerId,
+            final Integer page,
+            final Integer size) {
+        try {
+            return prepareGetAccessTokensRequest(customerId, page, size).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getAccessTokens.
+     */
+    private ApiCall<ListAccessTokensResponse, ApiException> prepareGetAccessTokensRequest(
+            final String customerId,
+            final Integer page,
+            final Integer size) {
+        return new ApiCall.Builder<ListAccessTokensResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/access-tokens")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListAccessTokensResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Get all cards from a customer.
      * @param  customerId  Required parameter: Customer Id
      * @param  page  Optional parameter: Page number
@@ -846,12 +910,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Get all cards from a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListCardsResponse response from the API call
+     */
+    public CompletableFuture<ListCardsResponse> getCardsAsync(
+            final String customerId,
+            final Integer page,
+            final Integer size) {
+        try {
+            return prepareGetCardsRequest(customerId, page, size).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getCards.
      */
     private ApiCall<ListCardsResponse, ApiException> prepareGetCardsRequest(
             final String customerId,
             final Integer page,
-            final Integer size) throws IOException {
+            final Integer size) {
         return new ApiCall.Builder<ListCardsResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -892,12 +974,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Renew a card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     */
+    public CompletableFuture<GetCardResponse> renewCardAsync(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) {
+        try {
+            return prepareRenewCardRequest(customerId, cardId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for renewCard.
      */
     private ApiCall<GetCardResponse, ApiException> prepareRenewCardRequest(
             final String customerId,
             final String cardId,
-            final String idempotencyKey) throws IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetCardResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -922,6 +1022,63 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Get a Customer's access token.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  tokenId  Required parameter: Token Id
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetAccessTokenResponse getAccessToken(
+            final String customerId,
+            final String tokenId) throws ApiException, IOException {
+        return prepareGetAccessTokenRequest(customerId, tokenId).execute();
+    }
+
+    /**
+     * Get a Customer's access token.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  tokenId  Required parameter: Token Id
+     * @return    Returns the GetAccessTokenResponse response from the API call
+     */
+    public CompletableFuture<GetAccessTokenResponse> getAccessTokenAsync(
+            final String customerId,
+            final String tokenId) {
+        try {
+            return prepareGetAccessTokenRequest(customerId, tokenId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getAccessToken.
+     */
+    private ApiCall<GetAccessTokenResponse, ApiException> prepareGetAccessTokenRequest(
+            final String customerId,
+            final String tokenId) {
+        return new ApiCall.Builder<GetAccessTokenResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/access-tokens/{token_id}")
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("token_id").value(tokenId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetAccessTokenResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Updates the metadata a customer.
      * @param  customerId  Required parameter: The customer id
      * @param  request  Required parameter: Request for updating the customer metadata
@@ -938,12 +1095,30 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Updates the metadata a customer.
+     * @param  customerId  Required parameter: The customer id
+     * @param  request  Required parameter: Request for updating the customer metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCustomerResponse response from the API call
+     */
+    public CompletableFuture<GetCustomerResponse> updateCustomerMetadataAsync(
+            final String customerId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateCustomerMetadataRequest(customerId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateCustomerMetadata.
      */
     private ApiCall<GetCustomerResponse, ApiException> prepareUpdateCustomerMetadataRequest(
             final String customerId,
             final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetCustomerResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -969,6 +1144,134 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Delete a customer's card.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  cardId  Required parameter: Card Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCardResponse deleteCard(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeleteCardRequest(customerId, cardId, idempotencyKey).execute();
+    }
+
+    /**
+     * Delete a customer's card.
+     * @param  customerId  Required parameter: Customer Id
+     * @param  cardId  Required parameter: Card Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetCardResponse response from the API call
+     */
+    public CompletableFuture<GetCardResponse> deleteCardAsync(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) {
+        try {
+            return prepareDeleteCardRequest(customerId, cardId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for deleteCard.
+     */
+    private ApiCall<GetCardResponse, ApiException> prepareDeleteCardRequest(
+            final String customerId,
+            final String cardId,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetCardResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/cards/{card_id}")
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("card_id").value(cardId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Gets all adressess from a customer.
+     * @param  customerId  Required parameter: Customer id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListAddressesResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListAddressesResponse getAddresses(
+            final String customerId,
+            final Integer page,
+            final Integer size) throws ApiException, IOException {
+        return prepareGetAddressesRequest(customerId, page, size).execute();
+    }
+
+    /**
+     * Gets all adressess from a customer.
+     * @param  customerId  Required parameter: Customer id
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @return    Returns the ListAddressesResponse response from the API call
+     */
+    public CompletableFuture<ListAddressesResponse> getAddressesAsync(
+            final String customerId,
+            final Integer page,
+            final Integer size) {
+        try {
+            return prepareGetAddressesRequest(customerId, page, size).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getAddresses.
+     */
+    private ApiCall<ListAddressesResponse, ApiException> prepareGetAddressesRequest(
+            final String customerId,
+            final Integer page,
+            final Integer size) {
+        return new ApiCall.Builder<ListAddressesResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/addresses")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListAddressesResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * Get a customer.
      * @param  customerId  Required parameter: Customer Id
      * @return    Returns the GetCustomerResponse response from the API call
@@ -981,10 +1284,24 @@ public final class DefaultCustomersController extends BaseController implements 
     }
 
     /**
+     * Get a customer.
+     * @param  customerId  Required parameter: Customer Id
+     * @return    Returns the GetCustomerResponse response from the API call
+     */
+    public CompletableFuture<GetCustomerResponse> getCustomerAsync(
+            final String customerId) {
+        try {
+            return prepareGetCustomerRequest(customerId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getCustomer.
      */
     private ApiCall<GetCustomerResponse, ApiException> prepareGetCustomerRequest(
-            final String customerId) throws IOException {
+            final String customerId) {
         return new ApiCall.Builder<GetCustomerResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -999,6 +1316,63 @@ public final class DefaultCustomersController extends BaseController implements 
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetCustomerResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Get a customer's card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card id
+     * @return    Returns the GetCardResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetCardResponse getCard(
+            final String customerId,
+            final String cardId) throws ApiException, IOException {
+        return prepareGetCardRequest(customerId, cardId).execute();
+    }
+
+    /**
+     * Get a customer's card.
+     * @param  customerId  Required parameter: Customer id
+     * @param  cardId  Required parameter: Card id
+     * @return    Returns the GetCardResponse response from the API call
+     */
+    public CompletableFuture<GetCardResponse> getCardAsync(
+            final String customerId,
+            final String cardId) {
+        try {
+            return prepareGetCardRequest(customerId, cardId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getCard.
+     */
+    private ApiCall<GetCardResponse, ApiException> prepareGetCardRequest(
+            final String customerId,
+            final String cardId) {
+        return new ApiCall.Builder<GetCardResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/customers/{customer_id}/cards/{card_id}")
+                        .templateParam(param -> param.key("customer_id").value(customerId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("card_id").value(cardId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetCardResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

@@ -17,15 +17,18 @@ Request for creating a new discount
 | `Cycles` | `Integer` | Optional | Number of cycles that the discount will be applied | Integer getCycles() | setCycles(Integer cycles) |
 | `Description` | `String` | Optional | Description | String getDescription() | setDescription(String description) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "value": 146.6,
-  "discount_type": "discount_type6",
-  "item_id": "item_id2",
-  "cycles": 164,
-  "description": "description2"
-}
+```java
+import me.pagar.api.models.CreateDiscountRequest;
+
+CreateDiscountRequest createDiscountRequest = new CreateDiscountRequest.Builder(
+    66.94D,
+    "discount_type0",
+    "item_id8"
+)
+.cycles(194)
+.description("description8")
+.build();
 ```
 

@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- | --- | --- |
 | `Status` | `String` | Required | Status | String getStatus() | setStatus(String status) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "status": "status8"
-}
+```java
+import me.pagar.api.models.UpdateCurrentCycleStatusRequest;
+
+UpdateCurrentCycleStatusRequest updateCurrentCycleStatusRequest = new UpdateCurrentCycleStatusRequest.Builder(
+    "status0"
+)
+.build();
 ```
 

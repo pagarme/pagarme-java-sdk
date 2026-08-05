@@ -14,38 +14,22 @@ Response object for listing subscriptions
 | `Data` | [`List<GetSubscriptionResponse>`](../../doc/models/get-subscription-response.md) | Optional | The subscription objects | List<GetSubscriptionResponse> getData() | setData(List<GetSubscriptionResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "code": "code8",
-      "start_at": "2016-03-13T12:52:32.123Z",
-      "interval": "interval8",
-      "interval_count": 108
-    },
-    {
-      "id": "id0",
-      "code": "code8",
-      "start_at": "2016-03-13T12:52:32.123Z",
-      "interval": "interval8",
-      "interval_count": 108
-    },
-    {
-      "id": "id0",
-      "code": "code8",
-      "start_at": "2016-03-13T12:52:32.123Z",
-      "interval": "interval8",
-      "interval_count": 108
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetSubscriptionResponse;
+import me.pagar.api.models.ListSubscriptionsResponse;
+
+ListSubscriptionsResponse listSubscriptionsResponse = new ListSubscriptionsResponse.Builder()
+    .data(Arrays.asList(
+        null,
+        new GetSubscriptionResponse.Builder()
+            .build(),
+        new GetSubscriptionResponse.Builder()
+            .build()
+    ))
+    .paging(null)
+    .build();
 ```
 

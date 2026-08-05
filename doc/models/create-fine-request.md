@@ -15,13 +15,16 @@ Fine Request
 | `Type` | `String` | Required | Type | String getType() | setType(String type) |
 | `Amount` | `int` | Required | Amount | int getAmount() | setAmount(int amount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "days": 218,
-  "type": "\"percentage\" or \"flat\"",
-  "amount": 220
-}
+```java
+import me.pagar.api.models.CreateFineRequest;
+
+CreateFineRequest createFineRequest = new CreateFineRequest.Builder(
+    0,
+    "\"percentage\" or \"flat\"",
+    0
+)
+.build();
 ```
 

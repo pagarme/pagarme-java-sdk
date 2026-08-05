@@ -7,6 +7,7 @@
 package me.pagar.api.controllers;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.models.CreateTokenRequest;
 import me.pagar.api.models.GetTokenResponse;
@@ -16,6 +17,30 @@ import me.pagar.api.models.GetTokenResponse;
  * This can be overridden for the mock calls.
  */
 public interface TokensController {
+    /**
+     * @param  publicKey  Required parameter: Public key
+     * @param  request  Required parameter: Request for creating a token
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetTokenResponse createToken(
+            final String publicKey,
+            final CreateTokenRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * @param  publicKey  Required parameter: Public key
+     * @param  request  Required parameter: Request for creating a token
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetTokenResponse response from the API call
+     */
+    CompletableFuture<GetTokenResponse> createTokenAsync(
+            final String publicKey,
+            final CreateTokenRequest request,
+            final String idempotencyKey);
+
     /**
      * Gets a token from its id.
      * @param  id  Required parameter: Token id
@@ -29,16 +54,13 @@ public interface TokensController {
             final String publicKey) throws ApiException, IOException;
 
     /**
+     * Gets a token from its id.
+     * @param  id  Required parameter: Token id
      * @param  publicKey  Required parameter: Public key
-     * @param  request  Required parameter: Request for creating a token
-     * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetTokenResponse createToken(
-            final String publicKey,
-            final CreateTokenRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
+    CompletableFuture<GetTokenResponse> getTokenAsync(
+            final String id,
+            final String publicKey);
 
 }

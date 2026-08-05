@@ -17,21 +17,21 @@ Request object for RegisterInformation.
 | `SiteUrl` | `String` | Optional | - | String getSiteUrl() | setSiteUrl(String siteUrl) |
 | `PhoneNumbers` | [`List<CreateRegisterInformationPhoneRequest>`](../../doc/models/create-register-information-phone-request.md) | Required | - | List<CreateRegisterInformationPhoneRequest> getPhoneNumbers() | setPhoneNumbers(List<CreateRegisterInformationPhoneRequest> phoneNumbers) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "email": "email4",
-  "document": "document6",
-  "type": "type8",
-  "phone_numbers": [
-    {
-      "ddd": "ddd4",
-      "number": "number2",
-      "type": "type0"
-    }
-  ],
-  "site_url": "site_url4"
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateRegisterInformationBaseRequest;
+
+CreateRegisterInformationBaseRequest createRegisterInformationBaseRequest = new CreateRegisterInformationBaseRequest.Builder(
+    null,
+    null,
+    null,
+    Arrays.asList(
+        null
+    )
+)
+.siteUrl("site_url6")
+.build();
 ```
 

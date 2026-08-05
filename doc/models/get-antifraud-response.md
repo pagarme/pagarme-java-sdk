@@ -15,15 +15,17 @@
 | `ProviderName` | `String` | Optional | - | String getProviderName() | setProviderName(String providerName) |
 | `Score` | `String` | Optional | - | String getScore() | setScore(String score) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "status": "status0",
-  "return_code": "return_code8",
-  "return_message": "return_message6",
-  "provider_name": "provider_name6",
-  "score": "score8"
-}
+```java
+import me.pagar.api.models.GetAntifraudResponse;
+
+GetAntifraudResponse getAntifraudResponse = new GetAntifraudResponse.Builder()
+    .status("status0")
+    .returnCode("return_code8")
+    .returnMessage("return_message4")
+    .providerName("provider_name4")
+    .score("score8")
+    .build();
 ```
 

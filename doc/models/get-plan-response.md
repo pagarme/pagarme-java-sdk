@@ -33,15 +33,17 @@ Response object for getting a plan
 | `MinimumPrice` | `Integer` | Optional | - | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id0",
-  "name": "name0",
-  "description": "description0",
-  "url": "url4",
-  "statement_descriptor": "statement_descriptor0"
-}
+```java
+import me.pagar.api.models.GetPlanResponse;
+
+GetPlanResponse getPlanResponse = new GetPlanResponse.Builder()
+    .id("id0")
+    .name("name0")
+    .description("description0")
+    .url("url4")
+    .statementDescriptor("statement_descriptor0")
+    .build();
 ```
 

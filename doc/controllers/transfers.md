@@ -10,76 +10,21 @@ TransfersController transfersController = client.getTransfersController();
 
 ## Methods
 
+* [Create Transfer](../../doc/controllers/transfers.md#create-transfer)
 * [Get Transfer by Id](../../doc/controllers/transfers.md#get-transfer-by-id)
 * [Get Transfers](../../doc/controllers/transfers.md#get-transfers)
-* [Create Transfer](../../doc/controllers/transfers.md#create-transfer)
-
-
-# Get Transfer by Id
-
-```java
-GetTransfer getTransferById(
-    final String transferId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `transferId` | `String` | Template, Required | - |
-
-## Response Type
-
-[`GetTransfer`](../../doc/models/get-transfer.md)
-
-## Example Usage
-
-```java
-String transferId = "transfer_id6";
-
-try {
-    GetTransfer result = transfersController.getTransferById(transferId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Transfers
-
-Gets all transfers
-
-```java
-ListTransfers getTransfers()
-```
-
-## Response Type
-
-[`ListTransfers`](../../doc/models/list-transfers.md)
-
-## Example Usage
-
-```java
-try {
-    ListTransfers result = transfersController.getTransfers();
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
 
 
 # Create Transfer
 
 ```java
-GetTransfer createTransfer(
+CompletableFuture<GetTransfer> createTransferAsync(
     final CreateTransfer request)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -88,6 +33,8 @@ GetTransfer createTransfer(
 | `request` | [`CreateTransfer`](../../doc/models/create-transfer.md) | Body, Required | - |
 
 ## Response Type
+
+**200**
 
 [`GetTransfer`](../../doc/models/get-transfer.md)
 
@@ -101,13 +48,108 @@ CreateTransfer request = new CreateTransfer.Builder(
 )
 .build();
 
-try {
-    GetTransfer result = transfersController.createTransfer(request);
+transfersController.createTransferAsync(request).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Transfer by Id
+
+```java
+CompletableFuture<GetTransfer> getTransferByIdAsync(
+    final String transferId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `transferId` | `String` | Template, Required | - |
+
+## Response Type
+
+**200**
+
+[`GetTransfer`](../../doc/models/get-transfer.md)
+
+## Example Usage
+
+```java
+String transferId = "transfer_id6";
+
+transfersController.getTransferByIdAsync(transferId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Transfers
+
+Gets all transfers
+
+```java
+CompletableFuture<ListTransfers> getTransfersAsync()
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Response Type
+
+**200**
+
+[`ListTransfers`](../../doc/models/list-transfers.md)
+
+## Example Usage
+
+```java
+transfersController.getTransfersAsync().thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 

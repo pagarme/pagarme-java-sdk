@@ -20,19 +20,22 @@ Generic response object for getting a MovementObjectBase.
 | `ChargeId` | `String` | Optional | - | String getChargeId() | setChargeId(String chargeId) |
 | `GatewayId` | `String` | Optional | - | String getGatewayId() | setGatewayId(String gatewayId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "status": "status4",
-  "amount": "amount4",
-  "created_at": "created_at0",
-  "product": "product2",
-  "brand": "brand6",
-  "payment_date": "payment_date4",
-  "recipient_id": "recipient_id2",
-  "document_type": "document_type0"
-}
+```java
+import me.pagar.api.models.GetMovementObjectBaseResponse;
+import me.pagar.api.models.GetMovementObjectSettlementResponse;
+
+GetMovementObjectBaseResponse getMovementObjectBaseResponse = new GetMovementObjectSettlementResponse.Builder()
+    .product("product2")
+    .brand("brand6")
+    .paymentDate("payment_date4")
+    .recipientId("recipient_id2")
+    .documentType("document_type0")
+    .id("id2")
+    .status("status4")
+    .amount("amount4")
+    .createdAt("created_at0")
+    .build();
 ```
 

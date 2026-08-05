@@ -16,14 +16,17 @@ Request for creating a price bracket
 | `EndQuantity` | `Integer` | Optional | End quantity | Integer getEndQuantity() | setEndQuantity(Integer endQuantity) |
 | `OveragePrice` | `Integer` | Optional | Overage price | Integer getOveragePrice() | setOveragePrice(Integer overagePrice) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_quantity": 154,
-  "price": 164,
-  "end_quantity": 162,
-  "overage_price": 176
-}
+```java
+import me.pagar.api.models.CreatePriceBracketRequest;
+
+CreatePriceBracketRequest createPriceBracketRequest = new CreatePriceBracketRequest.Builder(
+    230,
+    88
+)
+.endQuantity(238)
+.overagePrice(252)
+.build();
 ```
 

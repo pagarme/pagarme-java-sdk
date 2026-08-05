@@ -23,15 +23,18 @@ Response object for getting a usage
 | `Group` | `String` | Optional | Identification group in the client system | String getGroup() | setGroup(String group) |
 | `Amount` | `Integer` | Optional | Field used in item scheme type 'Percent' | Integer getAmount() | setAmount(Integer amount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "quantity": 34,
-  "description": "description2",
-  "used_at": "2016-03-13T12:52:32.123Z",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetUsageResponse;
+
+GetUsageResponse getUsageResponse = new GetUsageResponse.Builder()
+    .id("id6")
+    .quantity(226)
+    .description("description6")
+    .usedAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

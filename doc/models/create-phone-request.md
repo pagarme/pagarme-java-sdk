@@ -14,14 +14,16 @@
 | `AreaCode` | `String` | Optional | - | String getAreaCode() | setAreaCode(String areaCode) |
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "country_code": "country_code0",
-  "number": "number2",
-  "area_code": "area_code0",
-  "Type": "Type0"
-}
+```java
+import me.pagar.api.models.CreatePhoneRequest;
+
+CreatePhoneRequest createPhoneRequest = new CreatePhoneRequest.Builder()
+    .countryCode("country_code2")
+    .number("number4")
+    .areaCode("area_code8")
+    .type("Type8")
+    .build();
 ```
 

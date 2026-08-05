@@ -17,19 +17,18 @@ Split
 | `Options` | [`CreateSplitOptionsRequest`](../../doc/models/create-split-options-request.md) | Optional | The split options request | CreateSplitOptionsRequest getOptions() | setOptions(CreateSplitOptionsRequest options) |
 | `SplitRuleId` | `String` | Optional | Rule code used in cancellation. | String getSplitRuleId() | setSplitRuleId(String splitRuleId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "type6",
-  "amount": 100,
-  "recipient_id": "recipient_id6",
-  "options": {
-    "liable": false,
-    "charge_processing_fee": false,
-    "charge_remainder_fee": false
-  },
-  "split_rule_id": "split_rule_id8"
-}
+```java
+import me.pagar.api.models.CreateSplitRequest;
+
+CreateSplitRequest createSplitRequest = new CreateSplitRequest.Builder(
+    "type8",
+    166,
+    "recipient_id8"
+)
+.options(null)
+.splitRuleId("split_rule_id4")
+.build();
 ```
 

@@ -12,12 +12,14 @@
 | `SourceId` | `String` | Optional | - | String getSourceId() | setSourceId(String sourceId) |
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "source_id": "source_id2",
-  "type": "type8"
-}
+```java
+import me.pagar.api.models.GetWithdrawSourceResponse;
+
+GetWithdrawSourceResponse getWithdrawSourceResponse = new GetWithdrawSourceResponse.Builder()
+    .sourceId("source_id6")
+    .type("type8")
+    .build();
 ```
 

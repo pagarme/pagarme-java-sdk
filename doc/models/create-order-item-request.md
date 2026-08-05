@@ -17,15 +17,18 @@ Request for creating an order item
 | `Category` | `String` | Required | Category | String getCategory() | setCategory(String category) |
 | `Code` | `String` | Optional | The item code passed by the client | String getCode() | setCode(String code) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 102,
-  "description": "description4",
-  "quantity": 216,
-  "category": "category4",
-  "code": "code4"
-}
+```java
+import me.pagar.api.models.CreateOrderItemRequest;
+
+CreateOrderItemRequest createOrderItemRequest = new CreateOrderItemRequest.Builder(
+    154,
+    "description6",
+    12,
+    "category4"
+)
+.code("code4")
+.build();
 ```
 

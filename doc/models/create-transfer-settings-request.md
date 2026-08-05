@@ -15,13 +15,16 @@ Informações de transferência do recebedor
 | `TransferInterval` | `String` | Required | - | String getTransferInterval() | setTransferInterval(String transferInterval) |
 | `TransferDay` | `int` | Required | - | int getTransferDay() | setTransferDay(int transferDay) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transfer_enabled": false,
-  "transfer_interval": "transfer_interval4",
-  "transfer_day": 82
-}
+```java
+import me.pagar.api.models.CreateTransferSettingsRequest;
+
+CreateTransferSettingsRequest createTransferSettingsRequest = new CreateTransferSettingsRequest.Builder(
+    false,
+    "transfer_interval2",
+    128
+)
+.build();
 ```
 

@@ -6,11 +6,12 @@
 
 package me.pagar.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.DateTimeHelper;
 import me.pagar.api.Server;
@@ -51,10 +52,24 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
+     * Gets a plan.
+     * @param  planId  Required parameter: Plan id
+     * @return    Returns the GetPlanResponse response from the API call
+     */
+    public CompletableFuture<GetPlanResponse> getPlanAsync(
+            final String planId) {
+        try {
+            return prepareGetPlanRequest(planId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getPlan.
      */
     private ApiCall<GetPlanResponse, ApiException> prepareGetPlanRequest(
-            final String planId) throws IOException {
+            final String planId) {
         return new ApiCall.Builder<GetPlanResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -75,36 +90,47 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
-     * Removes an item from a plan.
+     * Deletes a plan.
      * @param  planId  Required parameter: Plan id
-     * @param  planItemId  Required parameter: Plan item id
      * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanItemResponse response from the API call
+     * @return    Returns the GetPlanResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    public GetPlanItemResponse deletePlanItem(
+    public GetPlanResponse deletePlan(
             final String planId,
-            final String planItemId,
             final String idempotencyKey) throws ApiException, IOException {
-        return prepareDeletePlanItemRequest(planId, planItemId, idempotencyKey).execute();
+        return prepareDeletePlanRequest(planId, idempotencyKey).execute();
     }
 
     /**
-     * Builds the ApiCall object for deletePlanItem.
+     * Deletes a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
      */
-    private ApiCall<GetPlanItemResponse, ApiException> prepareDeletePlanItemRequest(
+    public CompletableFuture<GetPlanResponse> deletePlanAsync(
             final String planId,
-            final String planItemId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetPlanItemResponse, ApiException>()
+            final String idempotencyKey) {
+        try {
+            return prepareDeletePlanRequest(planId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for deletePlan.
+     */
+    private ApiCall<GetPlanResponse, ApiException> prepareDeletePlanRequest(
+            final String planId,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetPlanResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
                         .server(Server.ENUM_DEFAULT.value())
-                        .path("/plans/{plan_id}/items/{plan_item_id}")
+                        .path("/plans/{plan_id}")
                         .templateParam(param -> param.key("plan_id").value(planId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("plan_item_id").value(planItemId)
                                 .shouldEncode(true))
                         .headerParam(param -> param.key("idempotency-key")
                                 .value(idempotencyKey).isRequired(false))
@@ -114,7 +140,7 @@ public final class DefaultPlansController extends BaseController implements Plan
                         .httpMethod(HttpMethod.DELETE))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
-                                response -> ApiHelper.deserialize(response, GetPlanItemResponse.class))
+                                response -> ApiHelper.deserialize(response, GetPlanResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();
@@ -137,12 +163,30 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
+     * Updates the metadata from a plan.
+     * @param  planId  Required parameter: The plan id
+     * @param  request  Required parameter: Request for updating the plan metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     */
+    public CompletableFuture<GetPlanResponse> updatePlanMetadataAsync(
+            final String planId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdatePlanMetadataRequest(planId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updatePlanMetadata.
      */
     private ApiCall<GetPlanResponse, ApiException> prepareUpdatePlanMetadataRequest(
             final String planId,
             final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetPlanResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -168,203 +212,6 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
-     * Creates a new plan.
-     * @param  body  Required parameter: Request for creating a plan
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanResponse createPlan(
-            final CreatePlanRequest body,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareCreatePlanRequest(body, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for createPlan.
-     */
-    private ApiCall<GetPlanResponse, ApiException> prepareCreatePlanRequest(
-            final CreatePlanRequest body,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetPlanResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/plans")
-                        .bodyParam(param -> param.value(body))
-                        .bodySerializer(() ->  ApiHelper.serialize(body))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.POST))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetPlanResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates a plan.
-     * @param  planId  Required parameter: Plan id
-     * @param  request  Required parameter: Request for updating a plan
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanResponse updatePlan(
-            final String planId,
-            final UpdatePlanRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdatePlanRequest(planId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updatePlan.
-     */
-    private ApiCall<GetPlanResponse, ApiException> prepareUpdatePlanRequest(
-            final String planId,
-            final UpdatePlanRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetPlanResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/plans/{plan_id}")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("plan_id").value(planId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.PUT))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetPlanResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Deletes a plan.
-     * @param  planId  Required parameter: Plan id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetPlanResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetPlanResponse deletePlan(
-            final String planId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareDeletePlanRequest(planId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for deletePlan.
-     */
-    private ApiCall<GetPlanResponse, ApiException> prepareDeletePlanRequest(
-            final String planId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetPlanResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/plans/{plan_id}")
-                        .templateParam(param -> param.key("plan_id").value(planId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.DELETE))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetPlanResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Gets all plans.
-     * @param  page  Optional parameter: Page number
-     * @param  size  Optional parameter: Page size
-     * @param  name  Optional parameter: Filter for Plan's name
-     * @param  status  Optional parameter: Filter for Plan's status
-     * @param  billingType  Optional parameter: Filter for plan's billing type
-     * @param  createdSince  Optional parameter: Filter for plan's creation date start range
-     * @param  createdUntil  Optional parameter: Filter for plan's creation date end range
-     * @return    Returns the ListPlansResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public ListPlansResponse getPlans(
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String status,
-            final String billingType,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws ApiException, IOException {
-        return prepareGetPlansRequest(page, size, name, status, billingType, createdSince,
-                createdUntil).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getPlans.
-     */
-    private ApiCall<ListPlansResponse, ApiException> prepareGetPlansRequest(
-            final Integer page,
-            final Integer size,
-            final String name,
-            final String status,
-            final String billingType,
-            final LocalDateTime createdSince,
-            final LocalDateTime createdUntil) throws IOException {
-        return new ApiCall.Builder<ListPlansResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/plans")
-                        .queryParam(param -> param.key("page")
-                                .value(page).isRequired(false))
-                        .queryParam(param -> param.key("size")
-                                .value(size).isRequired(false))
-                        .queryParam(param -> param.key("name")
-                                .value(name).isRequired(false))
-                        .queryParam(param -> param.key("status")
-                                .value(status).isRequired(false))
-                        .queryParam(param -> param.key("billing_type")
-                                .value(billingType).isRequired(false))
-                        .queryParam(param -> param.key("created_since")
-                                .value(DateTimeHelper.toRfc8601DateTime(createdSince)).isRequired(false))
-                        .queryParam(param -> param.key("created_until")
-                                .value(DateTimeHelper.toRfc8601DateTime(createdUntil)).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, ListPlansResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Updates a plan item.
      * @param  planId  Required parameter: Plan id
      * @param  planItemId  Required parameter: Plan item id
@@ -383,13 +230,33 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
+     * Updates a plan item.
+     * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
+     * @param  body  Required parameter: Request for updating the plan item
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanItemResponse response from the API call
+     */
+    public CompletableFuture<GetPlanItemResponse> updatePlanItemAsync(
+            final String planId,
+            final String planItemId,
+            final UpdatePlanItemRequest body,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdatePlanItemRequest(planId, planItemId, body, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updatePlanItem.
      */
     private ApiCall<GetPlanItemResponse, ApiException> prepareUpdatePlanItemRequest(
             final String planId,
             final String planItemId,
             final UpdatePlanItemRequest body,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetPlanItemResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -433,12 +300,30 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
+     * Adds a new item to a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  request  Required parameter: Request for creating a plan item
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanItemResponse response from the API call
+     */
+    public CompletableFuture<GetPlanItemResponse> createPlanItemAsync(
+            final String planId,
+            final CreatePlanItemRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreatePlanItemRequest(planId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createPlanItem.
      */
     private ApiCall<GetPlanItemResponse, ApiException> prepareCreatePlanItemRequest(
             final String planId,
             final CreatePlanItemRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetPlanItemResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -478,11 +363,27 @@ public final class DefaultPlansController extends BaseController implements Plan
     }
 
     /**
+     * Gets a plan item.
+     * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
+     * @return    Returns the GetPlanItemResponse response from the API call
+     */
+    public CompletableFuture<GetPlanItemResponse> getPlanItemAsync(
+            final String planId,
+            final String planItemId) {
+        try {
+            return prepareGetPlanItemRequest(planId, planItemId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getPlanItem.
      */
     private ApiCall<GetPlanItemResponse, ApiException> prepareGetPlanItemRequest(
             final String planId,
-            final String planItemId) throws IOException {
+            final String planItemId) {
         return new ApiCall.Builder<GetPlanItemResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -499,6 +400,287 @@ public final class DefaultPlansController extends BaseController implements Plan
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetPlanItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Creates a new plan.
+     * @param  body  Required parameter: Request for creating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanResponse createPlan(
+            final CreatePlanRequest body,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareCreatePlanRequest(body, idempotencyKey).execute();
+    }
+
+    /**
+     * Creates a new plan.
+     * @param  body  Required parameter: Request for creating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     */
+    public CompletableFuture<GetPlanResponse> createPlanAsync(
+            final CreatePlanRequest body,
+            final String idempotencyKey) {
+        try {
+            return prepareCreatePlanRequest(body, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for createPlan.
+     */
+    private ApiCall<GetPlanResponse, ApiException> prepareCreatePlanRequest(
+            final CreatePlanRequest body,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetPlanResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/plans")
+                        .bodyParam(param -> param.value(body))
+                        .bodySerializer(() ->  ApiHelper.serialize(body))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetPlanResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Removes an item from a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanItemResponse deletePlanItem(
+            final String planId,
+            final String planItemId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeletePlanItemRequest(planId, planItemId, idempotencyKey).execute();
+    }
+
+    /**
+     * Removes an item from a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  planItemId  Required parameter: Plan item id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanItemResponse response from the API call
+     */
+    public CompletableFuture<GetPlanItemResponse> deletePlanItemAsync(
+            final String planId,
+            final String planItemId,
+            final String idempotencyKey) {
+        try {
+            return prepareDeletePlanItemRequest(planId, planItemId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for deletePlanItem.
+     */
+    private ApiCall<GetPlanItemResponse, ApiException> prepareDeletePlanItemRequest(
+            final String planId,
+            final String planItemId,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetPlanItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/plans/{plan_id}/items/{plan_item_id}")
+                        .templateParam(param -> param.key("plan_id").value(planId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("plan_item_id").value(planItemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetPlanItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Gets all plans.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  name  Optional parameter: Filter for Plan's name
+     * @param  status  Optional parameter: Filter for Plan's status
+     * @param  billingType  Optional parameter: Filter for plan's billing type
+     * @param  createdSince  Optional parameter: Filter for plan's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for plan's creation date end range
+     * @return    Returns the ListPlansResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public ListPlansResponse getPlans(
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String status,
+            final String billingType,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) throws ApiException, IOException {
+        return prepareGetPlansRequest(page, size, name, status, billingType, createdSince,
+                createdUntil).execute();
+    }
+
+    /**
+     * Gets all plans.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  name  Optional parameter: Filter for Plan's name
+     * @param  status  Optional parameter: Filter for Plan's status
+     * @param  billingType  Optional parameter: Filter for plan's billing type
+     * @param  createdSince  Optional parameter: Filter for plan's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for plan's creation date end range
+     * @return    Returns the ListPlansResponse response from the API call
+     */
+    public CompletableFuture<ListPlansResponse> getPlansAsync(
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String status,
+            final String billingType,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        try {
+            return prepareGetPlansRequest(page, size, name, status, billingType, createdSince,
+            createdUntil).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getPlans.
+     */
+    private ApiCall<ListPlansResponse, ApiException> prepareGetPlansRequest(
+            final Integer page,
+            final Integer size,
+            final String name,
+            final String status,
+            final String billingType,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil) {
+        return new ApiCall.Builder<ListPlansResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/plans")
+                        .queryParam(param -> param.key("page")
+                                .value(page).isRequired(false))
+                        .queryParam(param -> param.key("size")
+                                .value(size).isRequired(false))
+                        .queryParam(param -> param.key("name")
+                                .value(name).isRequired(false))
+                        .queryParam(param -> param.key("status")
+                                .value(status).isRequired(false))
+                        .queryParam(param -> param.key("billing_type")
+                                .value(billingType).isRequired(false))
+                        .queryParam(param -> param.key("created_since")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdSince)).isRequired(false))
+                        .queryParam(param -> param.key("created_until")
+                                .value(DateTimeHelper.toRfc8601DateTime(createdUntil)).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, ListPlansResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  request  Required parameter: Request for updating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetPlanResponse updatePlan(
+            final String planId,
+            final UpdatePlanRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdatePlanRequest(planId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Updates a plan.
+     * @param  planId  Required parameter: Plan id
+     * @param  request  Required parameter: Request for updating a plan
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetPlanResponse response from the API call
+     */
+    public CompletableFuture<GetPlanResponse> updatePlanAsync(
+            final String planId,
+            final UpdatePlanRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdatePlanRequest(planId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for updatePlan.
+     */
+    private ApiCall<GetPlanResponse, ApiException> prepareUpdatePlanRequest(
+            final String planId,
+            final UpdatePlanRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetPlanResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/plans/{plan_id}")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("plan_id").value(planId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PUT))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetPlanResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

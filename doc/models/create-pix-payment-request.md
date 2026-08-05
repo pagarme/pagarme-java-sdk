@@ -15,22 +15,24 @@ Contains information to create a pix payment
 | `ExpiresIn` | `Integer` | Optional | Seconds until pix payment expires | Integer getExpiresIn() | setExpiresIn(Integer expiresIn) |
 | `AdditionalInformation` | [`List<PixAdditionalInformation>`](../../doc/models/pix-additional-information.md) | Optional | Pix additional information | List<PixAdditionalInformation> getAdditionalInformation() | setAdditionalInformation(List<PixAdditionalInformation> additionalInformation) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "expires_at": "2016-03-13T12:52:32.123Z",
-  "expires_in": 216,
-  "additional_information": [
-    {
-      "Name": "Name0",
-      "Value": "Value2"
-    },
-    {
-      "Name": "Name0",
-      "Value": "Value2"
-    }
-  ]
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.CreatePixPaymentRequest;
+import me.pagar.api.models.PixAdditionalInformation;
+
+CreatePixPaymentRequest createPixPaymentRequest = new CreatePixPaymentRequest.Builder()
+    .expiresAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .expiresIn(54)
+    .additionalInformation(Arrays.asList(
+        null,
+        new PixAdditionalInformation.Builder()
+            .build(),
+        new PixAdditionalInformation.Builder()
+            .build()
+    ))
+    .build();
 ```
 

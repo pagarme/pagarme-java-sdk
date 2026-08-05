@@ -19,16 +19,19 @@ Creates a 3D-S authentication payment
 | `DsTransactionId` | `String` | Optional | Directory Service Transaction Identifier | String getDsTransactionId() | setDsTransactionId(String dsTransactionId) |
 | `Version` | `String` | Optional | ThreeDSecure Version | String getVersion() | setVersion(String version) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "mpi": "mpi4",
-  "cavv": "cavv2",
-  "eci": "eci6",
-  "transaction_id": "transaction_id4",
-  "success_url": "success_url8",
-  "ds_transaction_id": "ds_transaction_id4"
-}
+```java
+import me.pagar.api.models.CreateThreeDSecureRequest;
+
+CreateThreeDSecureRequest createThreeDSecureRequest = new CreateThreeDSecureRequest.Builder(
+    "mpi2"
+)
+.cavv("cavv0")
+.eci("eci4")
+.transactionId("transaction_id2")
+.successUrl("success_url6")
+.dsTransactionId("ds_transaction_id2")
+.build();
 ```
 

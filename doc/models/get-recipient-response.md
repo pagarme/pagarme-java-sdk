@@ -30,16 +30,18 @@ Recipient response
 | `PaymentMode` | `String` | Optional | Payment mode<br><br>**Default**: `"bank_transfer"` | String getPaymentMode() | setPaymentMode(String paymentMode) |
 | `RegisterInformation` | [`GetRegisterInformationResponse`](../../doc/models/get-register-information-response.md) | Optional | - | GetRegisterInformationResponse getRegisterInformation() | setRegisterInformation(GetRegisterInformationResponse registerInformation) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment_mode": "bank_transfer",
-  "id": "id4",
-  "name": "name4",
-  "email": "email2",
-  "document": "document2",
-  "description": "description6"
-}
+```java
+import me.pagar.api.models.GetRecipientResponse;
+
+GetRecipientResponse getRecipientResponse = new GetRecipientResponse.Builder()
+    .id("id0")
+    .name("name0")
+    .email("email6")
+    .document("document6")
+    .description("description0")
+    .paymentMode("bank_transfer")
+    .build();
 ```
 

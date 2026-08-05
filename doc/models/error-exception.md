@@ -15,19 +15,15 @@ Api Error Exception
 | `Errors` | `Object` | Required | - | Object getErrors() | setErrors(Object errors) |
 | `Request` | `Object` | Required | - | Object getRequest() | setRequest(Object request) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "message": "message4",
-  "errors": {
-    "key1": "val1",
-    "key2": "val2"
-  },
-  "request": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+```java
+try {
+    // make the API call
+} catch (ErrorException e) {
+    e.printStackTrace();
+} catch (ApiException e) {
+    e.printStackTrace();
 }
 ```
 

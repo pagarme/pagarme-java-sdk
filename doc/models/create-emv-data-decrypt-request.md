@@ -13,21 +13,19 @@
 | `Dukpt` | [`CreateEmvDataDukptDecryptRequest`](../../doc/models/create-emv-data-dukpt-decrypt-request.md) | Optional | Dukpt data request | CreateEmvDataDukptDecryptRequest getDukpt() | setDukpt(CreateEmvDataDukptDecryptRequest dukpt) |
 | `Tags` | [`List<CreateEmvDataTlvDecryptRequest>`](../../doc/models/create-emv-data-tlv-decrypt-request.md) | Required | Encrypted tags list | List<CreateEmvDataTlvDecryptRequest> getTags() | setTags(List<CreateEmvDataTlvDecryptRequest> tags) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "cipher": "cipher2",
-  "tags": [
-    {
-      "tag": "tag4",
-      "lenght": "lenght2",
-      "value": "value2"
-    }
-  ],
-  "dukpt": {
-    "ksn": "ksn0"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateEmvDataDecryptRequest;
+
+CreateEmvDataDecryptRequest createEmvDataDecryptRequest = new CreateEmvDataDecryptRequest.Builder(
+    null,
+    Arrays.asList(
+        null
+    )
+)
+.dukpt(null)
+.build();
 ```
 

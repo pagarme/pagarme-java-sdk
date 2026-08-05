@@ -14,38 +14,20 @@ Response object for listing addresses
 | `Data` | [`List<GetAddressResponse>`](../../doc/models/get-address-response.md) | Optional | The address objects | List<GetAddressResponse> getData() | setData(List<GetAddressResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "street": "street0",
-      "number": "number8",
-      "complement": "complement6",
-      "zip_code": "zip_code4"
-    },
-    {
-      "id": "id0",
-      "street": "street0",
-      "number": "number8",
-      "complement": "complement6",
-      "zip_code": "zip_code4"
-    },
-    {
-      "id": "id0",
-      "street": "street0",
-      "number": "number8",
-      "complement": "complement6",
-      "zip_code": "zip_code4"
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetAddressResponse;
+import me.pagar.api.models.ListAddressesResponse;
+
+ListAddressesResponse listAddressesResponse = new ListAddressesResponse.Builder()
+    .data(Arrays.asList(
+        null,
+        new GetAddressResponse.Builder()
+            .build()
+    ))
+    .paging(null)
+    .build();
 ```
 

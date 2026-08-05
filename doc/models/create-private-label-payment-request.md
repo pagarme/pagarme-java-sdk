@@ -22,23 +22,19 @@ The settings for creating a private label payment
 | `ExtendedLimitCode` | `String` | Optional | Extended Limit Code | String getExtendedLimitCode() | setExtendedLimitCode(String extendedLimitCode) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "installments": 1,
-  "capture": true,
-  "recurrency_cycle": "\"first\" or \"subsequent\"",
-  "statement_descriptor": "statement_descriptor8",
-  "card": {
-    "number": "number6",
-    "holder_name": "holder_name2",
-    "exp_month": 228,
-    "exp_year": 68,
-    "cvv": "cvv4"
-  },
-  "card_id": "card_id4",
-  "card_token": "card_token2"
-}
+```java
+import me.pagar.api.models.CreatePrivateLabelPaymentRequest;
+
+CreatePrivateLabelPaymentRequest createPrivateLabelPaymentRequest = new CreatePrivateLabelPaymentRequest.Builder()
+    .installments(1)
+    .statementDescriptor("statement_descriptor2")
+    .card(null)
+    .cardId("card_id2")
+    .cardToken("card_token8")
+    .capture(true)
+    .recurrencyCycle("\"first\" or \"subsequent\"")
+    .build();
 ```
 

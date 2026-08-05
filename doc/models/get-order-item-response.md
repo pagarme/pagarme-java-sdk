@@ -22,15 +22,17 @@ Response object for getting an order item
 | `CreatedAt` | `LocalDateTime` | Optional | - | LocalDateTime getCreatedAt() | setCreatedAt(LocalDateTime createdAt) |
 | `UpdatedAt` | `LocalDateTime` | Optional | - | LocalDateTime getUpdatedAt() | setUpdatedAt(LocalDateTime updatedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id8",
-  "type": "type8",
-  "description": "description8",
-  "amount": 224,
-  "quantity": 82
-}
+```java
+import me.pagar.api.models.GetOrderItemResponse;
+
+GetOrderItemResponse getOrderItemResponse = new GetOrderItemResponse.Builder()
+    .id("id4")
+    .type("type6")
+    .description("description6")
+    .amount(212)
+    .quantity(70)
+    .build();
 ```
 

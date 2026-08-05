@@ -14,30 +14,20 @@ Response object for listing access tokens
 | `Data` | [`List<GetAccessTokenResponse>`](../../doc/models/get-access-token-response.md) | Optional | The access token objects | List<GetAccessTokenResponse> getData() | setData(List<GetAccessTokenResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "code": "code8",
-      "status": "status2",
-      "created_at": "2016-03-13T12:52:32.123Z",
-      "customer": {
-        "id": "id0",
-        "name": "name0",
-        "email": "email6",
-        "delinquent": false,
-        "created_at": "2016-03-13T12:52:32.123Z"
-      }
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetAccessTokenResponse;
+import me.pagar.api.models.ListAccessTokensResponse;
+
+ListAccessTokensResponse listAccessTokensResponse = new ListAccessTokensResponse.Builder()
+    .data(Arrays.asList(
+        null,
+        new GetAccessTokenResponse.Builder()
+            .build()
+    ))
+    .paging(null)
+    .build();
 ```
 

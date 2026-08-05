@@ -22,15 +22,17 @@ Response object for getting a billing address
 | `Line1` | `String` | Optional | Line 1 for address | String getLine1() | setLine1(String line1) |
 | `Line2` | `String` | Optional | Line 2 for address | String getLine2() | setLine2(String line2) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "street": "street4",
-  "number": "number2",
-  "zip_code": "zip_code8",
-  "neighborhood": "neighborhood0",
-  "city": "city4"
-}
+```java
+import me.pagar.api.models.GetBillingAddressResponse;
+
+GetBillingAddressResponse getBillingAddressResponse = new GetBillingAddressResponse.Builder()
+    .street("street8")
+    .number("number4")
+    .zipCode("zip_code2")
+    .neighborhood("neighborhood4")
+    .city("city8")
+    .build();
 ```
 

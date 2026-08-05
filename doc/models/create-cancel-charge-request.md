@@ -17,43 +17,49 @@ Request for canceling a charge.
 | `OperationReference` | `String` | Required | - | String getOperationReference() | setOperationReference(String operationReference) |
 | `BankAccount` | [`CreateBankAccountRefundingDTO`](../../doc/models/create-bank-account-refunding-dto.md) | Optional | - | CreateBankAccountRefundingDTO getBankAccount() | setBankAccount(CreateBankAccountRefundingDTO bankAccount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 244,
-  "split_rules": [
-    {
-      "id": "id2",
-      "Amount": 244,
-      "type": "type8"
-    }
-  ],
-  "split": [
-    {
-      "type": "type2",
-      "amount": 10,
-      "recipient_id": "recipient_id2",
-      "options": {
-        "liable": false,
-        "charge_processing_fee": false,
-        "charge_remainder_fee": false
-      },
-      "split_rule_id": "split_rule_id0"
-    }
-  ],
-  "operation_reference": "operation_reference8",
-  "bank_account": {
-    "holder_name": "holder_name0",
-    "holder_type": "holder_type6",
-    "holder_document": "holder_document8",
-    "bank": "bank2",
-    "branch_number": "branch_number0",
-    "branch_check_digit": "branch_check_digit0",
-    "account_number": "account_number4",
-    "account_check_digit": "account_check_digit0",
-    "type": "type6"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateCancelChargeRequest;
+import me.pagar.api.models.CreateCancelChargeSplitRulesRequest;
+import me.pagar.api.models.CreateSplitRequest;
+
+CreateCancelChargeRequest createCancelChargeRequest = new CreateCancelChargeRequest.Builder(
+    "operation_reference0"
+)
+.amount(222)
+.splitRules(Arrays.asList(
+        null,
+        new CreateCancelChargeSplitRulesRequest.Builder(
+            null,
+            0,
+            null
+        )
+        .build(),
+        new CreateCancelChargeSplitRulesRequest.Builder(
+            null,
+            0,
+            null
+        )
+        .build()
+    ))
+.split(Arrays.asList(
+        null,
+        new CreateSplitRequest.Builder(
+            null,
+            0,
+            null
+        )
+        .build(),
+        new CreateSplitRequest.Builder(
+            null,
+            0,
+            null
+        )
+        .build()
+    ))
+.bankAccount(null)
+.build();
 ```
 

@@ -6,7 +6,6 @@
 
 package me.pagar.api;
 
-import me.pagar.api.controllers.BalanceOperationsController;
 import me.pagar.api.controllers.ChargesController;
 import me.pagar.api.controllers.CustomersController;
 import me.pagar.api.controllers.InvoicesController;
@@ -91,11 +90,5 @@ public interface PagarmeApiSDKClientInterface extends Configuration {
      * @return Returns the PayablesController instance
      */
     PayablesController getPayablesController();
-
-    /**
-     * Provides access to BalanceOperations controller.
-     * @return Returns the BalanceOperationsController instance
-     */
-    BalanceOperationsController getBalanceOperationsController();
 
 }

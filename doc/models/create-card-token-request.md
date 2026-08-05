@@ -19,17 +19,20 @@ Card token data
 | `Brand` | `String` | Required | Card brand | String getBrand() | setBrand(String brand) |
 | `Label` | `String` | Required | - | String getLabel() | setLabel(String label) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "number": "number8",
-  "holder_name": "holder_name6",
-  "exp_month": 168,
-  "exp_year": 208,
-  "cvv": "cvv8",
-  "brand": "brand4",
-  "label": "label0"
-}
+```java
+import me.pagar.api.models.CreateCardTokenRequest;
+
+CreateCardTokenRequest createCardTokenRequest = new CreateCardTokenRequest.Builder(
+    "number8",
+    "holder_name0",
+    182,
+    114,
+    "cvv2",
+    "brand8",
+    "label4"
+)
+.build();
 ```
 

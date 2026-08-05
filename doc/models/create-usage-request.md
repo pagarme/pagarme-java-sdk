@@ -18,16 +18,20 @@ Request for creating a usage
 | `Group` | `String` | Optional | identification group in the client system | String getGroup() | setGroup(String group) |
 | `Amount` | `Integer` | Optional | Field used in item scheme type 'Percent' | Integer getAmount() | setAmount(Integer amount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "quantity": 224,
-  "description": "description8",
-  "used_at": "2016-03-13T12:52:32.123Z",
-  "code": "code0",
-  "group": "group0",
-  "amount": 110
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.CreateUsageRequest;
+
+CreateUsageRequest createUsageRequest = new CreateUsageRequest.Builder(
+    254,
+    "description6",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.code("code4")
+.group("group4")
+.amount(140)
+.build();
 ```
 

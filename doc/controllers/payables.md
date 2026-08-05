@@ -8,16 +8,11 @@ PayablesController payablesController = client.getPayablesController();
 
 `PayablesController`
 
-## Methods
-
-* [Get Payables](../../doc/controllers/payables.md#get-payables)
-* [Get Payable by Id](../../doc/controllers/payables.md#get-payable-by-id)
-
 
 # Get Payables
 
 ```java
-ListPayablesResponse getPayables(
+CompletableFuture<ListPayablesResponse> getPayablesAsync(
     final String type,
     final String splitId,
     final String bulkAnticipationId,
@@ -37,6 +32,10 @@ ListPayablesResponse getPayables(
     final Integer size,
     final Long gatewayId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -63,51 +62,28 @@ ListPayablesResponse getPayables(
 
 ## Response Type
 
+**200**
+
 [`ListPayablesResponse`](../../doc/models/list-payables-response.md)
 
 ## Example Usage
 
 ```java
-try {
-    ListPayablesResponse result = payablesController.getPayables(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+payablesController.getPayablesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
 
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
 
-# Get Payable by Id
-
-```java
-GetPayableResponse getPayableById(
-    final long id)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `long` | Template, Required | - |
-
-## Response Type
-
-[`GetPayableResponse`](../../doc/models/get-payable-response.md)
-
-## Example Usage
-
-```java
-long id = 112L;
-
-try {
-    GetPayableResponse result = payablesController.getPayableById(id);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+    return null;
+});
 ```
 

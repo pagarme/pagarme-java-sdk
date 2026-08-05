@@ -22,21 +22,18 @@ Response object for getting a period
 | `UpdatedAt` | `String` | Optional | - | String getUpdatedAt() | setUpdatedAt(String updatedAt) |
 | `Cycle` | `Integer` | Optional | - | Integer getCycle() | setCycle(Integer cycle) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_at": "2016-03-13T12:52:32.123Z",
-  "end_at": "2016-03-13T12:52:32.123Z",
-  "id": "id0",
-  "billing_at": "2016-03-13T12:52:32.123Z",
-  "subscription": {
-    "id": "id4",
-    "code": "code2",
-    "start_at": "2016-03-13T12:52:32.123Z",
-    "interval": "interval2",
-    "interval_count": 234
-  }
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetPeriodResponse;
+
+GetPeriodResponse getPeriodResponse = new GetPeriodResponse.Builder()
+    .startAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .endAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .id("id4")
+    .billingAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .subscription(null)
+    .build();
 ```
 

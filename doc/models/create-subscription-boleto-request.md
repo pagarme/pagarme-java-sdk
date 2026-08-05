@@ -15,21 +15,15 @@ Information about fines and interest on the "boleto" used from payment
 | `Fine` | [`CreateFineRequest`](../../doc/models/create-fine-request.md) | Optional | - | CreateFineRequest getFine() | setFine(CreateFineRequest fine) |
 | `MaxDaysToPayPastDue` | `Integer` | Optional | - | Integer getMaxDaysToPayPastDue() | setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "interest": {
-    "days": 156,
-    "type": "type0",
-    "amount": 230
-  },
-  "fine": {
-    "days": 138,
-    "type": "type2",
-    "amount": 212
-  },
-  "max_days_to_pay_past_due": 22
-}
+```java
+import me.pagar.api.models.CreateSubscriptionBoletoRequest;
+
+CreateSubscriptionBoletoRequest createSubscriptionBoletoRequest = new CreateSubscriptionBoletoRequest.Builder()
+    .interest(null)
+    .fine(null)
+    .maxDaysToPayPastDue(250)
+    .build();
 ```
 

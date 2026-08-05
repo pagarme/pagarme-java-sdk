@@ -13,13 +13,15 @@
 | `ChargeProcessingFee` | `Boolean` | Optional | - | Boolean getChargeProcessingFee() | setChargeProcessingFee(Boolean chargeProcessingFee) |
 | `ChargeRemainderFee` | `String` | Optional | - | String getChargeRemainderFee() | setChargeRemainderFee(String chargeRemainderFee) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "liable": false,
-  "charge_processing_fee": false,
-  "charge_remainder_fee": "charge_remainder_fee6"
-}
+```java
+import me.pagar.api.models.GetSplitOptionsResponse;
+
+GetSplitOptionsResponse getSplitOptionsResponse = new GetSplitOptionsResponse.Builder()
+    .liable(false)
+    .chargeProcessingFee(false)
+    .chargeRemainderFee("charge_remainder_fee6")
+    .build();
 ```
 

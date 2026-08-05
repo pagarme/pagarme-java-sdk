@@ -14,38 +14,22 @@ Response object for listing order objects
 | `Data` | [`List<GetOrderResponse>`](../../doc/models/get-order-response.md) | Optional | The order object | List<GetOrderResponse> getData() | setData(List<GetOrderResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "code": "code8",
-      "amount": 236,
-      "currency": "currency0",
-      "closed": false
-    },
-    {
-      "id": "id0",
-      "code": "code8",
-      "amount": 236,
-      "currency": "currency0",
-      "closed": false
-    },
-    {
-      "id": "id0",
-      "code": "code8",
-      "amount": 236,
-      "currency": "currency0",
-      "closed": false
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetOrderResponse;
+import me.pagar.api.models.ListOrderResponse;
+
+ListOrderResponse listOrderResponse = new ListOrderResponse.Builder()
+    .data(Arrays.asList(
+        null,
+        new GetOrderResponse.Builder()
+            .build(),
+        new GetOrderResponse.Builder()
+            .build()
+    ))
+    .paging(null)
+    .build();
 ```
 

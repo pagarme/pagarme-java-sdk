@@ -12,20 +12,14 @@
 | `HomePhone` | [`GetPhoneResponse`](../../doc/models/get-phone-response.md) | Optional | - | GetPhoneResponse getHomePhone() | setHomePhone(GetPhoneResponse homePhone) |
 | `MobilePhone` | [`GetPhoneResponse`](../../doc/models/get-phone-response.md) | Optional | - | GetPhoneResponse getMobilePhone() | setMobilePhone(GetPhoneResponse mobilePhone) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "home_phone": {
-    "country_code": "country_code0",
-    "number": "number2",
-    "area_code": "area_code0"
-  },
-  "mobile_phone": {
-    "country_code": "country_code0",
-    "number": "number8",
-    "area_code": "area_code0"
-  }
-}
+```java
+import me.pagar.api.models.GetPhonesResponse;
+
+GetPhonesResponse getPhonesResponse = new GetPhonesResponse.Builder()
+    .homePhone(null)
+    .mobilePhone(null)
+    .build();
 ```
 

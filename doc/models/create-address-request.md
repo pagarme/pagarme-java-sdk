@@ -23,23 +23,27 @@ Request for creating a new Address
 | `Line1` | `String` | Required | Line 1 for address | String getLine1() | setLine1(String line1) |
 | `Line2` | `String` | Required | Line 2 for address | String getLine2() | setLine2(String line2) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "street": "street6",
-  "number": "number6",
-  "zip_code": "zip_code0",
-  "neighborhood": "neighborhood2",
-  "city": "city6",
-  "state": "state8",
-  "country": "country0",
-  "complement": "complement8",
-  "metadata": {
-    "key0": "metadata7"
-  },
-  "line_1": "line_10",
-  "line_2": "line_24"
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.models.CreateAddressRequest;
+
+CreateAddressRequest createAddressRequest = new CreateAddressRequest.Builder(
+    "street6",
+    "number6",
+    "zip_code0",
+    "neighborhood2",
+    "city6",
+    "state2",
+    "country0",
+    "complement8",
+    "line_10",
+    "line_24"
+)
+.metadata(new LinkedHashMap<String, String>() {{
+        put("key0", "metadata7");
+    }})
+.build();
 ```
 

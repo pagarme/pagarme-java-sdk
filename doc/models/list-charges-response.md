@@ -14,38 +14,17 @@ Response object for listing charges
 | `Data` | [`List<GetChargeResponse>`](../../doc/models/get-charge-response.md) | Optional | The charge objects | List<GetChargeResponse> getData() | setData(List<GetChargeResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "code": "code8",
-      "gateway_id": "gateway_id0",
-      "amount": 236,
-      "status": "status2"
-    },
-    {
-      "id": "id0",
-      "code": "code8",
-      "gateway_id": "gateway_id0",
-      "amount": 236,
-      "status": "status2"
-    },
-    {
-      "id": "id0",
-      "code": "code8",
-      "gateway_id": "gateway_id0",
-      "amount": 236,
-      "status": "status2"
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.ListChargesResponse;
+
+ListChargesResponse listChargesResponse = new ListChargesResponse.Builder()
+    .data(Arrays.asList(
+        null
+    ))
+    .paging(null)
+    .build();
 ```
 

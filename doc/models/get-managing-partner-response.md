@@ -23,15 +23,17 @@ Response object for getting an ManagingPartnerResponse
 | `Address` | [`GetRegisterInformationAddressResponse`](../../doc/models/get-register-information-address-response.md) | Optional | - | GetRegisterInformationAddressResponse getAddress() | setAddress(GetRegisterInformationAddressResponse address) |
 | `PhoneNumbers` | [`List<GetPhoneNumberResponse>`](../../doc/models/get-phone-number-response.md) | Optional | - | List<GetPhoneNumberResponse> getPhoneNumbers() | setPhoneNumbers(List<GetPhoneNumberResponse> phoneNumbers) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name0",
-  "email": "email6",
-  "document": "document6",
-  "type": "type0",
-  "mother_name": "mother_name6"
-}
+```java
+import me.pagar.api.models.GetManagingPartnerResponse;
+
+GetManagingPartnerResponse getManagingPartnerResponse = new GetManagingPartnerResponse.Builder()
+    .name("name8")
+    .email("email8")
+    .document("document2")
+    .type("type8")
+    .motherName("mother_name4")
+    .build();
 ```
 

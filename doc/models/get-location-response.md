@@ -14,12 +14,14 @@ Response object for geetting an order location request
 | `Latitude` | `String` | Optional | Latitude | String getLatitude() | setLatitude(String latitude) |
 | `Longitude` | `String` | Optional | Longitude | String getLongitude() | setLongitude(String longitude) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "latitude": "latitude6",
-  "longitude": "longitude4"
-}
+```java
+import me.pagar.api.models.GetLocationResponse;
+
+GetLocationResponse getLocationResponse = new GetLocationResponse.Builder()
+    .latitude("latitude2")
+    .longitude("longitude8")
+    .build();
 ```
 

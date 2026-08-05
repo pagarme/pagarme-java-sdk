@@ -14,12 +14,14 @@ Request object for PaymentOrigin
 | `BrandId` | `String` | Optional | - | String getBrandId() | setBrandId(String brandId) |
 | `ChargeId` | `String` | Optional | - | String getChargeId() | setChargeId(String chargeId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "brand_id": "brand_id0",
-  "charge_id": "charge_id4"
-}
+```java
+import me.pagar.api.models.CreatePaymentOriginRequest;
+
+CreatePaymentOriginRequest createPaymentOriginRequest = new CreatePaymentOriginRequest.Builder()
+    .brandId("brand_id8")
+    .chargeId("charge_id2")
+    .build();
 ```
 

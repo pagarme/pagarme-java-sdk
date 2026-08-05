@@ -13,13 +13,15 @@
 | `UsageReportUrl` | `String` | Optional | - | String getUsageReportUrl() | setUsageReportUrl(String usageReportUrl) |
 | `GroupedReportUrl` | `String` | Optional | - | String getGroupedReportUrl() | setGroupedReportUrl(String groupedReportUrl) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "url": "url2",
-  "usage_report_url": "usage_report_url0",
-  "grouped_report_url": "grouped_report_url0"
-}
+```java
+import me.pagar.api.models.GetUsageReportResponse;
+
+GetUsageReportResponse getUsageReportResponse = new GetUsageReportResponse.Builder()
+    .url("url2")
+    .usageReportUrl("usage_report_url0")
+    .groupedReportUrl("grouped_report_url0")
+    .build();
 ```
 

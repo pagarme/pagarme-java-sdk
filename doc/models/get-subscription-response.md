@@ -41,28 +41,34 @@
 | `ManualBilling` | `Boolean` | Optional | - | Boolean getManualBilling() | setManualBilling(Boolean manualBilling) |
 | `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "boleto": {
-    "interest": {
-      "days": 2,
-      "type": "percentage",
-      "amount": 20
-    },
-    "fine": {
-      "days": 2,
-      "type": "flat",
-      "amount": 10
-    },
-    "max_days_to_pay_past_due": 2
-  },
-  "id": "id4",
-  "code": "code2",
-  "start_at": "2016-03-13T12:52:32.123Z",
-  "interval": "interval2",
-  "interval_count": 224
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetFineResponse;
+import me.pagar.api.models.GetInterestResponse;
+import me.pagar.api.models.GetSubscriptionBoletoResponse;
+import me.pagar.api.models.GetSubscriptionResponse;
+
+GetSubscriptionResponse getSubscriptionResponse = new GetSubscriptionResponse.Builder()
+    .id("id0")
+    .code("code8")
+    .startAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .interval("interval8")
+    .intervalCount(154)
+    .boleto(new GetSubscriptionBoletoResponse.Builder()
+        .interest(new GetInterestResponse.Builder()
+            .days(2)
+            .type("percentage")
+            .amount(20)
+            .build())
+        .fine(new GetFineResponse.Builder()
+            .days(2)
+            .type("flat")
+            .amount(10)
+            .build())
+        .maxDaysToPayPastDue(2)
+        .build())
+    .build();
 ```
 

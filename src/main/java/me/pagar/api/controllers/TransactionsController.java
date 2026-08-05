@@ -7,6 +7,7 @@
 package me.pagar.api.controllers;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.models.GetTransactionResponse;
 
@@ -23,5 +24,12 @@ public interface TransactionsController {
      */
     GetTransactionResponse getTransaction(
             final String transactionId) throws ApiException, IOException;
+
+    /**
+     * @param  transactionId  Required parameter: Example:
+     * @return    Returns the GetTransactionResponse response from the API call
+     */
+    CompletableFuture<GetTransactionResponse> getTransactionAsync(
+            final String transactionId);
 
 }

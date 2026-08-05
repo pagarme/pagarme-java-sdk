@@ -20,18 +20,21 @@ Register Information Address
 | `ZipCode` | `String` | Required | - | String getZipCode() | setZipCode(String zipCode) |
 | `ReferencePoint` | `String` | Required | - | String getReferencePoint() | setReferencePoint(String referencePoint) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "street": "street8",
-  "complementary": "complementary0",
-  "street_number": "street_number8",
-  "neighborhood": "neighborhood4",
-  "city": "city8",
-  "state": "state4",
-  "zip_code": "zip_code2",
-  "reference_point": "reference_point2"
-}
+```java
+import me.pagar.api.models.CreateRegisterInformationAddressRequest;
+
+CreateRegisterInformationAddressRequest createRegisterInformationAddressRequest = new CreateRegisterInformationAddressRequest.Builder(
+    "street8",
+    "complementary0",
+    "street_number8",
+    "neighborhood4",
+    "city8",
+    "state4",
+    "zip_code2",
+    "reference_point2"
+)
+.build();
 ```
 

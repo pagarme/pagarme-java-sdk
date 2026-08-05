@@ -19,17 +19,19 @@ Generic response object for getting a MovementObjectFeeCollection.
 | `PaymentDate` | `String` | Optional | - | String getPaymentDate() | setPaymentDate(String paymentDate) |
 | `RecipientId` | `String` | Optional | - | String getRecipientId() | setRecipientId(String recipientId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "status": "status4",
-  "amount": "amount4",
-  "created_at": "created_at0",
-  "description": "description4",
-  "payment_date": "payment_date4",
-  "recipient_id": "recipient_id6"
-}
+```java
+import me.pagar.api.models.GetMovementObjectFeeCollectionResponse;
+
+GetMovementObjectFeeCollectionResponse getMovementObjectFeeCollectionResponse = new GetMovementObjectFeeCollectionResponse.Builder()
+    .description("description0")
+    .paymentDate("payment_date8")
+    .recipientId("recipient_id0")
+    .id("id2")
+    .status("status4")
+    .amount("amount4")
+    .createdAt("created_at0")
+    .build();
 ```
 

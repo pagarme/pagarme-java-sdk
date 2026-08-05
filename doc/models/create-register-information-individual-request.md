@@ -20,41 +20,34 @@
 | `ProfessionalOccupation` | `String` | Required | - | String getProfessionalOccupation() | setProfessionalOccupation(String professionalOccupation) |
 | `Address` | [`CreateRegisterInformationAddressRequest`](../../doc/models/create-register-information-address-request.md) | Required | - | CreateRegisterInformationAddressRequest getAddress() | setAddress(CreateRegisterInformationAddressRequest address) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "email": "email4",
-  "document": "document6",
-  "type": "type8",
-  "site_url": "site_url4",
-  "phone_numbers": [
-    {
-      "ddd": "ddd4",
-      "number": "number2",
-      "type": "type0"
-    },
-    {
-      "ddd": "ddd4",
-      "number": "number2",
-      "type": "type0"
-    }
-  ],
-  "name": "name6",
-  "mother_name": "mother_name2",
-  "birthdate": "birthdate0",
-  "monthly_income": 206,
-  "professional_occupation": "professional_occupation0",
-  "address": {
-    "street": "street6",
-    "complementary": "complementary8",
-    "street_number": "street_number6",
-    "neighborhood": "neighborhood2",
-    "city": "city6",
-    "state": "state2",
-    "zip_code": "zip_code0",
-    "reference_point": "reference_point0"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateRegisterInformationIndividualRequest;
+import me.pagar.api.models.CreateRegisterInformationPhoneRequest;
+
+CreateRegisterInformationIndividualRequest createRegisterInformationIndividualRequest = new CreateRegisterInformationIndividualRequest.Builder(
+    "email4",
+    "document6",
+    "type8",
+    Arrays.asList(
+        null,
+        new CreateRegisterInformationPhoneRequest.Builder(
+            null,
+            null,
+            null
+        )
+        .build()
+    ),
+    "name2",
+    "birthdate6",
+    20L,
+    "professional_occupation6",
+    null
+)
+.motherName("mother_name8")
+.siteUrl("site_url4")
+.build();
 ```
 
