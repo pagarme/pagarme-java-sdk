@@ -13,14 +13,19 @@ Request for updating an metadata
 |  --- | --- | --- | --- | --- | --- |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "metadata": {
-    "key0": "metadata7",
-    "key1": "metadata6"
-  }
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.models.UpdateMetadataRequest;
+
+UpdateMetadataRequest updateMetadataRequest = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata5");
+        put("key1", "metadata6");
+        put("key2", "metadata7");
+    }}
+)
+.build();
 ```
 

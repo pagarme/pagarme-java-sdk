@@ -20,21 +20,17 @@ Response object for getting the shipping data
 | `EstimatedDeliveryDate` | `LocalDateTime` | Optional | Prazo estimado de entrega | LocalDateTime getEstimatedDeliveryDate() | setEstimatedDeliveryDate(LocalDateTime estimatedDeliveryDate) |
 | `Type` | `String` | Optional | Shipping Type | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 214,
-  "description": "description8",
-  "recipient_name": "recipient_name6",
-  "recipient_phone": "recipient_phone0",
-  "address": {
-    "id": "id6",
-    "street": "street6",
-    "number": "number4",
-    "complement": "complement2",
-    "zip_code": "zip_code0"
-  }
-}
+```java
+import me.pagar.api.models.GetShippingResponse;
+
+GetShippingResponse getShippingResponse = new GetShippingResponse.Builder()
+    .amount(228)
+    .description("description8")
+    .recipientName("recipient_name0")
+    .recipientPhone("recipient_phone4")
+    .address(null)
+    .build();
 ```
 

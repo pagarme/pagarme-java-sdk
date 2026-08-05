@@ -15,13 +15,15 @@ Interest Response
 | `Type` | `String` | Optional | Type | String getType() | setType(String type) |
 | `Amount` | `Integer` | Optional | Amount | Integer getAmount() | setAmount(Integer amount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "\"percentage\" or \"flat\"",
-  "days": 114,
-  "amount": 188
-}
+```java
+import me.pagar.api.models.GetInterestResponse;
+
+GetInterestResponse getInterestResponse = new GetInterestResponse.Builder()
+    .days(82)
+    .type("\"percentage\" or \"flat\"")
+    .amount(156)
+    .build();
 ```
 

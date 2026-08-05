@@ -27,20 +27,23 @@ Response object for getting a private label transaction
 | `AcquirerReturnCode` | `String` | Optional | Acquirer Return Code | String getAcquirerReturnCode() | setAcquirerReturnCode(String acquirerReturnCode) |
 | `Installments` | `Integer` | Optional | Number of installments | Integer getInstallments() | setInstallments(Integer installments) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "statement_descriptor": "statement_descriptor4",
-  "acquirer_name": "acquirer_name8",
-  "acquirer_affiliation_code": "acquirer_affiliation_code6",
-  "acquirer_tid": "acquirer_tid6",
-  "acquirer_nsu": "acquirer_nsu6"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetPrivateLabelTransactionResponse;
+
+GetPrivateLabelTransactionResponse getPrivateLabelTransactionResponse = new GetPrivateLabelTransactionResponse.Builder()
+    .statementDescriptor("statement_descriptor4")
+    .acquirerName("acquirer_name8")
+    .acquirerAffiliationCode("acquirer_affiliation_code4")
+    .acquirerTid("acquirer_tid6")
+    .acquirerNsu("acquirer_nsu6")
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

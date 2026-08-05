@@ -21,52 +21,25 @@ Request for creating a new subscription item
 | `Quantity` | `Integer` | Optional | Quantity of items | Integer getQuantity() | setQuantity(Integer quantity) |
 | `MinimumPrice` | `Integer` | Optional | Minimum price | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "description": "description0",
-  "pricing_scheme": {
-    "scheme_type": "scheme_type8",
-    "price_brackets": [
-      {
-        "start_quantity": 144,
-        "price": 174,
-        "end_quantity": 152,
-        "overage_price": 166
-      },
-      {
-        "start_quantity": 144,
-        "price": 174,
-        "end_quantity": 152,
-        "overage_price": 166
-      },
-      {
-        "start_quantity": 144,
-        "price": 174,
-        "end_quantity": 152,
-        "overage_price": 166
-      }
-    ],
-    "price": 166,
-    "minimum_price": 6,
-    "percentage": 251.76
-  },
-  "id": "id0",
-  "plan_item_id": "plan_item_id0",
-  "discounts": [
-    {
-      "value": 90.66,
-      "discount_type": "discount_type2",
-      "item_id": "item_id4",
-      "cycles": 126,
-      "description": "description4"
-    }
-  ],
-  "name": "name0",
-  "cycles": 106,
-  "quantity": 130,
-  "minimum_price": 114
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateSubscriptionItemRequest;
+
+CreateSubscriptionItemRequest createSubscriptionItemRequest = new CreateSubscriptionItemRequest.Builder(
+    null,
+    null,
+    null,
+    null,
+    Arrays.asList(
+        null
+    ),
+    null
+)
+.cycles(250)
+.quantity(242)
+.minimumPrice(2)
+.build();
 ```
 

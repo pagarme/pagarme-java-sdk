@@ -26,15 +26,17 @@
 | `Metadata` | `Map<String, String>` | Optional | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `PixKey` | `String` | Optional | Pix Key | String getPixKey() | setPixKey(String pixKey) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id6",
-  "holder_name": "holder_name2",
-  "holder_type": "holder_type8",
-  "bank": "bank4",
-  "branch_number": "branch_number2"
-}
+```java
+import me.pagar.api.models.GetBankAccountResponse;
+
+GetBankAccountResponse getBankAccountResponse = new GetBankAccountResponse.Builder()
+    .id("id4")
+    .holderName("holder_name0")
+    .holderType("holder_type6")
+    .bank("bank2")
+    .branchNumber("branch_number0")
+    .build();
 ```
 

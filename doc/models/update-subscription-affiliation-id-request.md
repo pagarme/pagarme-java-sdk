@@ -13,11 +13,14 @@ Request for updating a Subscription Affiliation Id
 |  --- | --- | --- | --- | --- | --- |
 | `GatewayAffiliationId` | `String` | Required | - | String getGatewayAffiliationId() | setGatewayAffiliationId(String gatewayAffiliationId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_affiliation_id": "gateway_affiliation_id8"
-}
+```java
+import me.pagar.api.models.UpdateSubscriptionAffiliationIdRequest;
+
+UpdateSubscriptionAffiliationIdRequest updateSubscriptionAffiliationIdRequest = new UpdateSubscriptionAffiliationIdRequest.Builder(
+    "gateway_affiliation_id6"
+)
+.build();
 ```
 

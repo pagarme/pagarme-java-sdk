@@ -17,22 +17,20 @@ Response object for getting a pricing scheme
 | `MinimumPrice` | `Integer` | Optional | - | Integer getMinimumPrice() | setMinimumPrice(Integer minimumPrice) |
 | `Percentage` | `Double` | Optional | percentual value used in pricing_scheme Percent | Double getPercentage() | setPercentage(Double percentage) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price": 182,
-  "scheme_type": "scheme_type8",
-  "price_brackets": [
-    {
-      "start_quantity": 144,
-      "price": 174,
-      "end_quantity": 152,
-      "overage_price": 166
-    }
-  ],
-  "minimum_price": 170,
-  "percentage": 166.36
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetPricingSchemeResponse;
+
+GetPricingSchemeResponse getPricingSchemeResponse = new GetPricingSchemeResponse.Builder()
+    .price(34)
+    .schemeType("scheme_type2")
+    .priceBrackets(Arrays.asList(
+        null
+    ))
+    .minimumPrice(130)
+    .percentage(35.4D)
+    .build();
 ```
 

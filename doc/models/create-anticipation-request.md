@@ -15,13 +15,17 @@ Request for creating an anticipation
 | `Timeframe` | `String` | Required | Timeframe | String getTimeframe() | setTimeframe(String timeframe) |
 | `PaymentDate` | `LocalDateTime` | Required | Payment date | LocalDateTime getPaymentDate() | setPaymentDate(LocalDateTime paymentDate) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 68,
-  "timeframe": "timeframe2",
-  "payment_date": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.CreateAnticipationRequest;
+
+CreateAnticipationRequest createAnticipationRequest = new CreateAnticipationRequest.Builder(
+    84,
+    "timeframe2",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 ```
 

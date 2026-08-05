@@ -25,19 +25,21 @@ Generic response object for getting a MovementObjectSettlement.
 | `LiquidationArrangementId` | `String` | Optional | - | String getLiquidationArrangementId() | setLiquidationArrangementId(String liquidationArrangementId) |
 | `ExternalEnginePaymentId` | `String` | Optional | - | String getExternalEnginePaymentId() | setExternalEnginePaymentId(String externalEnginePaymentId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "status": "status4",
-  "amount": "amount4",
-  "created_at": "created_at0",
-  "product": "product2",
-  "brand": "brand6",
-  "payment_date": "payment_date4",
-  "recipient_id": "recipient_id2",
-  "document_type": "document_type0"
-}
+```java
+import me.pagar.api.models.GetMovementObjectSettlementResponse;
+
+GetMovementObjectSettlementResponse getMovementObjectSettlementResponse = new GetMovementObjectSettlementResponse.Builder()
+    .product("product2")
+    .brand("brand6")
+    .paymentDate("payment_date4")
+    .recipientId("recipient_id8")
+    .documentType("document_type0")
+    .id("id2")
+    .status("status4")
+    .amount("amount4")
+    .createdAt("created_at0")
+    .build();
 ```
 

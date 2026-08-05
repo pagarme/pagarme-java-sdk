@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- | --- | --- |
 | `Ksn` | `String` | Required | Key serial number | String getKsn() | setKsn(String ksn) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "ksn": "ksn8"
-}
+```java
+import me.pagar.api.models.CreateEmvDataDukptDecryptRequest;
+
+CreateEmvDataDukptDecryptRequest createEmvDataDukptDecryptRequest = new CreateEmvDataDukptDecryptRequest.Builder(
+    "ksn2"
+)
+.build();
 ```
 

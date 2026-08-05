@@ -22,15 +22,18 @@ Response object for getting a increment
 | `Subscription` | [`GetSubscriptionResponse`](../../doc/models/get-subscription-response.md) | Optional | - | GetSubscriptionResponse getSubscription() | setSubscription(GetSubscriptionResponse subscription) |
 | `SubscriptionItem` | [`GetSubscriptionItemResponse`](../../doc/models/get-subscription-item-response.md) | Optional | The Subscription Item | GetSubscriptionItemResponse getSubscriptionItem() | setSubscriptionItem(GetSubscriptionItemResponse subscriptionItem) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id0",
-  "value": 167.72,
-  "increment_type": "increment_type2",
-  "status": "status2",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetIncrementResponse;
+
+GetIncrementResponse getIncrementResponse = new GetIncrementResponse.Builder()
+    .id("id4")
+    .value(191.36D)
+    .incrementType("increment_type6")
+    .status("status6")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

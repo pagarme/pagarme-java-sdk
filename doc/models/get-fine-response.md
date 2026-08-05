@@ -15,13 +15,15 @@ Fine Response
 | `Type` | `String` | Optional | Type | String getType() | setType(String type) |
 | `Amount` | `Integer` | Optional | Amount | Integer getAmount() | setAmount(Integer amount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "\"percentage\" or \"flat\"",
-  "days": 112,
-  "amount": 186
-}
+```java
+import me.pagar.api.models.GetFineResponse;
+
+GetFineResponse getFineResponse = new GetFineResponse.Builder()
+    .days(20)
+    .type("\"percentage\" or \"flat\"")
+    .amount(94)
+    .build();
 ```
 

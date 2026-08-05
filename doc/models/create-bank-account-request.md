@@ -23,25 +23,28 @@ Request for creating a bank account
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 | `PixKey` | `String` | Optional | Pix key | String getPixKey() | setPixKey(String pixKey) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "holder_name": "holder_name4",
-  "holder_type": "holder_type0",
-  "holder_document": "holder_document8",
-  "bank": "bank6",
-  "branch_number": "branch_number4",
-  "branch_check_digit": "branch_check_digit4",
-  "account_number": "account_number8",
-  "account_check_digit": "account_check_digit4",
-  "type": "type2",
-  "metadata": {
-    "key0": "metadata5",
-    "key1": "metadata6",
-    "key2": "metadata7"
-  },
-  "pix_key": "pix_key8"
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.models.CreateBankAccountRequest;
+
+CreateBankAccountRequest createBankAccountRequest = new CreateBankAccountRequest.Builder(
+    "holder_name6",
+    "holder_type2",
+    "holder_document6",
+    "bank8",
+    "branch_number6",
+    "account_number0",
+    "account_check_digit6",
+    "type0",
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+        put("key1", "metadata4");
+    }}
+)
+.branchCheckDigit("branch_check_digit4")
+.pixKey("pix_key6")
+.build();
 ```
 

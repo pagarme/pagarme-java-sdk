@@ -28,16 +28,18 @@ Card data
 | `Id` | `String` | Optional | Identifier | String getId() | setId(String id) |
 | `Token` | `String` | Optional | token identifier | String getToken() | setToken(String token) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "credit",
-  "number": "number0",
-  "holder_name": "holder_name8",
-  "exp_month": 92,
-  "exp_year": 204,
-  "cvv": "cvv0"
-}
+```java
+import me.pagar.api.models.CreateCardRequest;
+
+CreateCardRequest createCardRequest = new CreateCardRequest.Builder()
+    .number("number6")
+    .holderName("holder_name4")
+    .expMonth(22)
+    .expYear(62)
+    .cvv("cvv6")
+    .type("credit")
+    .build();
 ```
 

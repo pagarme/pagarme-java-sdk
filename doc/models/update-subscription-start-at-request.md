@@ -13,11 +13,15 @@ Request for updating the start date from a subscription
 |  --- | --- | --- | --- | --- | --- |
 | `StartAt` | `LocalDateTime` | Required | The date when the subscription periods will start | LocalDateTime getStartAt() | setStartAt(LocalDateTime startAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.UpdateSubscriptionStartAtRequest;
+
+UpdateSubscriptionStartAtRequest updateSubscriptionStartAtRequest = new UpdateSubscriptionStartAtRequest.Builder(
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 ```
 

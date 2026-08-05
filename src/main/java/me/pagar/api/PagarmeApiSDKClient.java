@@ -17,10 +17,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import me.pagar.api.authentication.BasicAuthManager;
 import me.pagar.api.authentication.BasicAuthModel;
-import me.pagar.api.controllers.BalanceOperationsController;
 import me.pagar.api.controllers.ChargesController;
 import me.pagar.api.controllers.CustomersController;
-import me.pagar.api.controllers.DefaultBalanceOperationsController;
 import me.pagar.api.controllers.DefaultChargesController;
 import me.pagar.api.controllers.DefaultCustomersController;
 import me.pagar.api.controllers.DefaultInvoicesController;
@@ -66,11 +64,10 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
     private TransactionsController transactions;
     private TransfersController transfers;
     private PayablesController payables;
-    private BalanceOperationsController balanceOperations;
 
     private static final CompatibilityFactory compatibilityFactory = new CompatibilityFactoryImpl();
 
-    private static String userAgent = "PagarmeApiSDK - Java 6.8.17";
+    private static String userAgent = "PagarmeApiSDK - Java 7.0.1";
 
     /**
      * Current API environment.
@@ -145,7 +142,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
         transactions = new DefaultTransactionsController(globalConfig);
         transfers = new DefaultTransfersController(globalConfig);
         payables = new DefaultPayablesController(globalConfig);
-        balanceOperations = new DefaultBalanceOperationsController(globalConfig);
     }
 
     /**
@@ -241,14 +237,6 @@ public final class PagarmeApiSDKClient implements PagarmeApiSDKClientInterface {
      */
     public PayablesController getPayablesController() {
         return payables;
-    }
-
-    /**
-     * Get the instance of BalanceOperationsController.
-     * @return balanceOperations
-     */
-    public BalanceOperationsController getBalanceOperationsController() {
-        return balanceOperations;
     }
 
     /**

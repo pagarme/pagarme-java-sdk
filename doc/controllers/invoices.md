@@ -10,13 +10,169 @@ InvoicesController invoicesController = client.getInvoicesController();
 
 ## Methods
 
-* [Get Invoices](../../doc/controllers/invoices.md#get-invoices)
 * [Cancel Invoice](../../doc/controllers/invoices.md#cancel-invoice)
-* [Update Invoice Status](../../doc/controllers/invoices.md#update-invoice-status)
-* [Update Invoice Metadata](../../doc/controllers/invoices.md#update-invoice-metadata)
-* [Get Partial Invoice](../../doc/controllers/invoices.md#get-partial-invoice)
 * [Create Invoice](../../doc/controllers/invoices.md#create-invoice)
 * [Get Invoice](../../doc/controllers/invoices.md#get-invoice)
+* [Get Invoices](../../doc/controllers/invoices.md#get-invoices)
+* [Get Partial Invoice](../../doc/controllers/invoices.md#get-partial-invoice)
+* [Update Invoice Metadata](../../doc/controllers/invoices.md#update-invoice-metadata)
+* [Update Invoice Status](../../doc/controllers/invoices.md#update-invoice-status)
+
+
+# Cancel Invoice
+
+Cancels an invoice
+
+```java
+CompletableFuture<GetInvoiceResponse> cancelInvoiceAsync(
+    final String invoiceId,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `invoiceId` | `String` | Template, Required | Invoice id |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
+
+## Example Usage
+
+```java
+String invoiceId = "invoice_id0";
+
+invoicesController.cancelInvoiceAsync(invoiceId, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create Invoice
+
+Create an Invoice
+
+```java
+CompletableFuture<GetInvoiceResponse> createInvoiceAsync(
+    final String subscriptionId,
+    final String cycleId,
+    final CreateInvoiceRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `String` | Template, Required | Subscription Id |
+| `cycleId` | `String` | Template, Required | Cycle Id |
+| `request` | [`CreateInvoiceRequest`](../../doc/models/create-invoice-request.md) | Body, Optional | - |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
+
+## Example Usage
+
+```java
+String subscriptionId = "subscription_id0";
+String cycleId = "cycle_id6";
+
+invoicesController.createInvoiceAsync(subscriptionId, cycleId, null, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Invoice
+
+Gets an invoice
+
+```java
+CompletableFuture<GetInvoiceResponse> getInvoiceAsync(
+    final String invoiceId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `invoiceId` | `String` | Template, Required | Invoice Id |
+
+## Response Type
+
+**200**
+
+[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
+
+## Example Usage
+
+```java
+String invoiceId = "invoice_id0";
+
+invoicesController.getInvoiceAsync(invoiceId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
 
 
 # Get Invoices
@@ -24,7 +180,7 @@ InvoicesController invoicesController = client.getInvoicesController();
 Gets all invoices
 
 ```java
-ListInvoicesResponse getInvoices(
+CompletableFuture<ListInvoicesResponse> getInvoicesAsync(
     final Integer page,
     final Integer size,
     final String code,
@@ -37,6 +193,10 @@ ListInvoicesResponse getInvoices(
     final LocalDateTime dueUntil,
     final String customerDocument)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -56,100 +216,76 @@ ListInvoicesResponse getInvoices(
 
 ## Response Type
 
+**200**
+
 [`ListInvoicesResponse`](../../doc/models/list-invoices-response.md)
 
 ## Example Usage
 
 ```java
-try {
-    ListInvoicesResponse result = invoicesController.getInvoices(null, null, null, null, null, null, null, null, null, null, null);
+invoicesController.getInvoicesAsync(null, null, null, null, null, null, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Cancel Invoice
-
-Cancels an invoice
+# Get Partial Invoice
 
 ```java
-GetInvoiceResponse cancelInvoice(
-    final String invoiceId,
-    final String idempotencyKey)
+CompletableFuture<GetInvoiceResponse> getPartialInvoiceAsync(
+    final String subscriptionId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `invoiceId` | `String` | Template, Required | Invoice id |
-| `idempotencyKey` | `String` | Header, Optional | - |
+| `subscriptionId` | `String` | Template, Required | Subscription Id |
 
 ## Response Type
+
+**200**
 
 [`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
 ## Example Usage
 
 ```java
-String invoiceId = "invoice_id0";
+String subscriptionId = "subscription_id0";
 
-try {
-    GetInvoiceResponse result = invoicesController.cancelInvoice(invoiceId, null);
+invoicesController.getPartialInvoiceAsync(subscriptionId).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
 
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
 
-# Update Invoice Status
-
-Updates the status from an invoice
-
-```java
-GetInvoiceResponse updateInvoiceStatus(
-    final String invoiceId,
-    final UpdateInvoiceStatusRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `invoiceId` | `String` | Template, Required | Invoice Id |
-| `request` | [`UpdateInvoiceStatusRequest`](../../doc/models/update-invoice-status-request.md) | Body, Required | Request for updating an invoice's status |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
-
-## Example Usage
-
-```java
-String invoiceId = "invoice_id0";
-UpdateInvoiceStatusRequest request = new UpdateInvoiceStatusRequest.Builder(
-    "status8"
-)
-.build();
-
-
-try {
-    GetInvoiceResponse result = invoicesController.updateInvoiceStatus(invoiceId, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+    return null;
+});
 ```
 
 
@@ -158,11 +294,15 @@ try {
 Updates the metadata from an invoice
 
 ```java
-GetInvoiceResponse updateInvoiceMetadata(
+CompletableFuture<GetInvoiceResponse> updateInvoiceMetadataAsync(
     final String invoiceId,
     final UpdateMetadataRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -173,6 +313,8 @@ GetInvoiceResponse updateInvoiceMetadata(
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
@@ -188,108 +330,51 @@ UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
 .build();
 
 
-try {
-    GetInvoiceResponse result = invoicesController.updateInvoiceMetadata(invoiceId, request, null);
+invoicesController.updateInvoiceMetadataAsync(invoiceId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Get Partial Invoice
+# Update Invoice Status
+
+Updates the status from an invoice
 
 ```java
-GetInvoiceResponse getPartialInvoice(
-    final String subscriptionId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `String` | Template, Required | Subscription Id |
-
-## Response Type
-
-[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
-
-## Example Usage
-
-```java
-String subscriptionId = "subscription_id0";
-
-try {
-    GetInvoiceResponse result = invoicesController.getPartialInvoice(subscriptionId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Invoice
-
-Create an Invoice
-
-```java
-GetInvoiceResponse createInvoice(
-    final String subscriptionId,
-    final String cycleId,
-    final CreateInvoiceRequest request,
+CompletableFuture<GetInvoiceResponse> updateInvoiceStatusAsync(
+    final String invoiceId,
+    final UpdateInvoiceStatusRequest request,
     final String idempotencyKey)
 ```
 
-## Parameters
+## Authentication
 
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `String` | Template, Required | Subscription Id |
-| `cycleId` | `String` | Template, Required | Cycle Id |
-| `request` | [`CreateInvoiceRequest`](../../doc/models/create-invoice-request.md) | Body, Optional | - |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
-
-## Example Usage
-
-```java
-String subscriptionId = "subscription_id0";
-String cycleId = "cycle_id6";
-
-try {
-    GetInvoiceResponse result = invoicesController.createInvoice(subscriptionId, cycleId, null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Invoice
-
-Gets an invoice
-
-```java
-GetInvoiceResponse getInvoice(
-    final String invoiceId)
-```
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `invoiceId` | `String` | Template, Required | Invoice Id |
+| `request` | [`UpdateInvoiceStatusRequest`](../../doc/models/update-invoice-status-request.md) | Body, Required | Request for updating an invoice's status |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetInvoiceResponse`](../../doc/models/get-invoice-response.md)
 
@@ -297,14 +382,27 @@ GetInvoiceResponse getInvoice(
 
 ```java
 String invoiceId = "invoice_id0";
+UpdateInvoiceStatusRequest request = new UpdateInvoiceStatusRequest.Builder(
+    "status8"
+)
+.build();
 
-try {
-    GetInvoiceResponse result = invoicesController.getInvoice(invoiceId);
+
+invoicesController.updateInvoiceStatusAsync(invoiceId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 

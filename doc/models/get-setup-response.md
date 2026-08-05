@@ -16,14 +16,16 @@ Response object for getting the setup from a subscription
 | `Amount` | `Integer` | Optional | - | Integer getAmount() | setAmount(Integer amount) |
 | `Status` | `String` | Optional | - | String getStatus() | setStatus(String status) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id6",
-  "description": "description4",
-  "amount": 152,
-  "status": "status2"
-}
+```java
+import me.pagar.api.models.GetSetupResponse;
+
+GetSetupResponse getSetupResponse = new GetSetupResponse.Builder()
+    .id("id6")
+    .description("description6")
+    .amount(108)
+    .status("status8")
+    .build();
 ```
 

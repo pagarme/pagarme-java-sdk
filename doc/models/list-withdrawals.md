@@ -12,24 +12,18 @@
 | `Data` | [`List<GetWithdrawResponse>`](../../doc/models/get-withdraw-response.md) | Required | The Increments response | List<GetWithdrawResponse> getData() | setData(List<GetWithdrawResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Required | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "gateway_id": "gateway_id0",
-      "amount": 236,
-      "status": "status2",
-      "created_at": "2016-03-13T12:52:32.123Z"
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.ListWithdrawals;
+
+ListWithdrawals listWithdrawals = new ListWithdrawals.Builder(
+    Arrays.asList(
+        null
+    ),
+    null
+)
+.build();
 ```
 

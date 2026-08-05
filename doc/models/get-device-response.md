@@ -13,11 +13,13 @@ Response object for geetting an order device
 |  --- | --- | --- | --- | --- | --- |
 | `Platform` | `String` | Optional | Device's platform name | String getPlatform() | setPlatform(String platform) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "platform": "platform8"
-}
+```java
+import me.pagar.api.models.GetDeviceResponse;
+
+GetDeviceResponse getDeviceResponse = new GetDeviceResponse.Builder()
+    .platform("platform0")
+    .build();
 ```
 

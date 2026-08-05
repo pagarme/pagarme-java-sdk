@@ -8,6 +8,7 @@ package me.pagar.api.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.models.CreateInvoiceRequest;
 import me.pagar.api.models.GetInvoiceResponse;
@@ -20,6 +21,100 @@ import me.pagar.api.models.UpdateMetadataRequest;
  * This can be overridden for the mock calls.
  */
 public interface InvoicesController {
+    /**
+     * Updates the metadata from an invoice.
+     * @param  invoiceId  Required parameter: The invoice id
+     * @param  request  Required parameter: Request for updating the invoice metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse updateInvoiceMetadata(
+            final String invoiceId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Updates the metadata from an invoice.
+     * @param  invoiceId  Required parameter: The invoice id
+     * @param  request  Required parameter: Request for updating the invoice metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     */
+    CompletableFuture<GetInvoiceResponse> updateInvoiceMetadataAsync(
+            final String invoiceId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey);
+
+    /**
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse getPartialInvoice(
+            final String subscriptionId) throws ApiException, IOException;
+
+    /**
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @return    Returns the GetInvoiceResponse response from the API call
+     */
+    CompletableFuture<GetInvoiceResponse> getPartialInvoiceAsync(
+            final String subscriptionId);
+
+    /**
+     * Cancels an invoice.
+     * @param  invoiceId  Required parameter: Invoice id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse cancelInvoice(
+            final String invoiceId,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Cancels an invoice.
+     * @param  invoiceId  Required parameter: Invoice id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     */
+    CompletableFuture<GetInvoiceResponse> cancelInvoiceAsync(
+            final String invoiceId,
+            final String idempotencyKey);
+
+    /**
+     * Create an Invoice.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  cycleId  Required parameter: Cycle Id
+     * @param  request  Optional parameter: Example:
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    GetInvoiceResponse createInvoice(
+            final String subscriptionId,
+            final String cycleId,
+            final CreateInvoiceRequest request,
+            final String idempotencyKey) throws ApiException, IOException;
+
+    /**
+     * Create an Invoice.
+     * @param  subscriptionId  Required parameter: Subscription Id
+     * @param  cycleId  Required parameter: Cycle Id
+     * @param  request  Optional parameter: Example:
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetInvoiceResponse response from the API call
+     */
+    CompletableFuture<GetInvoiceResponse> createInvoiceAsync(
+            final String subscriptionId,
+            final String cycleId,
+            final CreateInvoiceRequest request,
+            final String idempotencyKey);
+
     /**
      * Gets all invoices.
      * @param  page  Optional parameter: Page number
@@ -51,16 +146,50 @@ public interface InvoicesController {
             final String customerDocument) throws ApiException, IOException;
 
     /**
-     * Cancels an invoice.
-     * @param  invoiceId  Required parameter: Invoice id
-     * @param  idempotencyKey  Optional parameter: Example:
+     * Gets all invoices.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  code  Optional parameter: Filter for Invoice's code
+     * @param  customerId  Optional parameter: Filter for Invoice's customer id
+     * @param  subscriptionId  Optional parameter: Filter for Invoice's subscription id
+     * @param  createdSince  Optional parameter: Filter for Invoice's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for Invoices creation date end range
+     * @param  status  Optional parameter: Filter for Invoice's status
+     * @param  dueSince  Optional parameter: Filter for Invoice's due date start range
+     * @param  dueUntil  Optional parameter: Filter for Invoice's due date end range
+     * @param  customerDocument  Optional parameter: Example:
+     * @return    Returns the ListInvoicesResponse response from the API call
+     */
+    CompletableFuture<ListInvoicesResponse> getInvoicesAsync(
+            final Integer page,
+            final Integer size,
+            final String code,
+            final String customerId,
+            final String subscriptionId,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil,
+            final String status,
+            final LocalDateTime dueSince,
+            final LocalDateTime dueUntil,
+            final String customerDocument);
+
+    /**
+     * Gets an invoice.
+     * @param  invoiceId  Required parameter: Invoice Id
      * @return    Returns the GetInvoiceResponse response from the API call
      * @throws    ApiException    Represents error response from the server.
      * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetInvoiceResponse cancelInvoice(
-            final String invoiceId,
-            final String idempotencyKey) throws ApiException, IOException;
+    GetInvoiceResponse getInvoice(
+            final String invoiceId) throws ApiException, IOException;
+
+    /**
+     * Gets an invoice.
+     * @param  invoiceId  Required parameter: Invoice Id
+     * @return    Returns the GetInvoiceResponse response from the API call
+     */
+    CompletableFuture<GetInvoiceResponse> getInvoiceAsync(
+            final String invoiceId);
 
     /**
      * Updates the status from an invoice.
@@ -77,52 +206,15 @@ public interface InvoicesController {
             final String idempotencyKey) throws ApiException, IOException;
 
     /**
-     * Updates the metadata from an invoice.
-     * @param  invoiceId  Required parameter: The invoice id
-     * @param  request  Required parameter: Request for updating the invoice metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse updateInvoiceMetadata(
-            final String invoiceId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse getPartialInvoice(
-            final String subscriptionId) throws ApiException, IOException;
-
-    /**
-     * Create an Invoice.
-     * @param  subscriptionId  Required parameter: Subscription Id
-     * @param  cycleId  Required parameter: Cycle Id
-     * @param  request  Optional parameter: Example:
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    GetInvoiceResponse createInvoice(
-            final String subscriptionId,
-            final String cycleId,
-            final CreateInvoiceRequest request,
-            final String idempotencyKey) throws ApiException, IOException;
-
-    /**
-     * Gets an invoice.
+     * Updates the status from an invoice.
      * @param  invoiceId  Required parameter: Invoice Id
+     * @param  request  Required parameter: Request for updating an invoice's status
+     * @param  idempotencyKey  Optional parameter: Example:
      * @return    Returns the GetInvoiceResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
      */
-    GetInvoiceResponse getInvoice(
-            final String invoiceId) throws ApiException, IOException;
+    CompletableFuture<GetInvoiceResponse> updateInvoiceStatusAsync(
+            final String invoiceId,
+            final UpdateInvoiceStatusRequest request,
+            final String idempotencyKey);
 
 }

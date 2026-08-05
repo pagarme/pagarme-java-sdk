@@ -23,13 +23,20 @@ Documentation for accessing and setting credentials for httpBasic.
 You must provide credentials in the client as shown in the following code snippet.
 
 ```java
-PagarmeApiSDKClient client = new PagarmeApiSDKClient.Builder()
-    .basicAuthCredentials(new BasicAuthModel.Builder(
-            "BasicAuthUserName",
-            "BasicAuthPassword"
-        )
-        .build())
-    .build();
+import me.pagar.api.PagarmeApiSDKClient;
+import me.pagar.api.authentication.BasicAuthModel;
+
+public class Program {
+    public static void main(String[] args) {
+        PagarmeApiSDKClient client = new PagarmeApiSDKClient.Builder()
+            .basicAuthCredentials(new BasicAuthModel.Builder(
+                    "BasicAuthUserName",
+                    "BasicAuthPassword"
+                )
+                .build())
+            .build();
+    }
+}
 ```
 
 

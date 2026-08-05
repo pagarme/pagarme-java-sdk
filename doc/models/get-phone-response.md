@@ -13,13 +13,15 @@
 | `Number` | `String` | Optional | - | String getNumber() | setNumber(String number) |
 | `AreaCode` | `String` | Optional | - | String getAreaCode() | setAreaCode(String areaCode) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "country_code": "country_code6",
-  "number": "number4",
-  "area_code": "area_code6"
-}
+```java
+import me.pagar.api.models.GetPhoneResponse;
+
+GetPhoneResponse getPhoneResponse = new GetPhoneResponse.Builder()
+    .countryCode("country_code2")
+    .number("number0")
+    .areaCode("area_code2")
+    .build();
 ```
 

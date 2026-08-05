@@ -14,12 +14,15 @@ Request for creating a location
 | `Latitude` | `String` | Required | Latitude | String getLatitude() | setLatitude(String latitude) |
 | `Longitude` | `String` | Required | Longitude | String getLongitude() | setLongitude(String longitude) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "latitude": "latitude0",
-  "longitude": "longitude0"
-}
+```java
+import me.pagar.api.models.CreateLocationRequest;
+
+CreateLocationRequest createLocationRequest = new CreateLocationRequest.Builder(
+    "latitude0",
+    "longitude0"
+)
+.build();
 ```
 

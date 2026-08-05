@@ -12,12 +12,15 @@
 | `Description` | `String` | Required | Description | String getDescription() | setDescription(String description) |
 | `Confirm` | `boolean` | Required | Indicates whether cash collection will be confirmed in the act of creation | boolean getConfirm() | setConfirm(boolean confirm) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "description": "description8",
-  "confirm": false
-}
+```java
+import me.pagar.api.models.CreateCashPaymentRequest;
+
+CreateCashPaymentRequest createCashPaymentRequest = new CreateCashPaymentRequest.Builder(
+    "description4",
+    false
+)
+.build();
 ```
 

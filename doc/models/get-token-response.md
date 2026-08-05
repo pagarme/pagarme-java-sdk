@@ -17,21 +17,18 @@ Token data
 | `ExpiresAt` | `String` | Optional | - | String getExpiresAt() | setExpiresAt(String expiresAt) |
 | `Card` | [`GetCardTokenResponse`](../../doc/models/get-card-token-response.md) | Optional | - | GetCardTokenResponse getCard() | setCard(GetCardTokenResponse card) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id8",
-  "type": "type2",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "expires_at": "expires_at2",
-  "card": {
-    "last_four_digits": "last_four_digits2",
-    "holder_name": "holder_name2",
-    "holder_document": "holder_document0",
-    "exp_month": 228,
-    "exp_year": 68
-  }
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetTokenResponse;
+
+GetTokenResponse getTokenResponse = new GetTokenResponse.Builder()
+    .id("id4")
+    .type("type6")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .expiresAt("expires_at8")
+    .card(null)
+    .build();
 ```
 

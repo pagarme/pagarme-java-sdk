@@ -14,38 +14,22 @@ Response object for listing cards
 | `Data` | [`List<GetCardResponse>`](../../doc/models/get-card-response.md) | Optional | The card objects | List<GetCardResponse> getData() | setData(List<GetCardResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "id": "id0",
-      "last_four_digits": "last_four_digits6",
-      "brand": "brand4",
-      "holder_name": "holder_name6",
-      "exp_month": 240
-    },
-    {
-      "id": "id0",
-      "last_four_digits": "last_four_digits6",
-      "brand": "brand4",
-      "holder_name": "holder_name6",
-      "exp_month": 240
-    },
-    {
-      "id": "id0",
-      "last_four_digits": "last_four_digits6",
-      "brand": "brand4",
-      "holder_name": "holder_name6",
-      "exp_month": 240
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetCardResponse;
+import me.pagar.api.models.ListCardsResponse;
+
+ListCardsResponse listCardsResponse = new ListCardsResponse.Builder()
+    .data(Arrays.asList(
+        null,
+        new GetCardResponse.Builder()
+            .build(),
+        new GetCardResponse.Builder()
+            .build()
+    ))
+    .paging(null)
+    .build();
 ```
 

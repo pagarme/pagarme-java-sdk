@@ -10,34 +10,173 @@ PlansController plansController = client.getPlansController();
 
 ## Methods
 
-* [Get Plan](../../doc/controllers/plans.md#get-plan)
-* [Delete Plan Item](../../doc/controllers/plans.md#delete-plan-item)
-* [Update Plan Metadata](../../doc/controllers/plans.md#update-plan-metadata)
 * [Create Plan](../../doc/controllers/plans.md#create-plan)
-* [Update Plan](../../doc/controllers/plans.md#update-plan)
-* [Delete Plan](../../doc/controllers/plans.md#delete-plan)
-* [Get Plans](../../doc/controllers/plans.md#get-plans)
-* [Update Plan Item](../../doc/controllers/plans.md#update-plan-item)
 * [Create Plan Item](../../doc/controllers/plans.md#create-plan-item)
+* [Delete Plan](../../doc/controllers/plans.md#delete-plan)
+* [Delete Plan Item](../../doc/controllers/plans.md#delete-plan-item)
+* [Get Plan](../../doc/controllers/plans.md#get-plan)
 * [Get Plan Item](../../doc/controllers/plans.md#get-plan-item)
+* [Get Plans](../../doc/controllers/plans.md#get-plans)
+* [Update Plan](../../doc/controllers/plans.md#update-plan)
+* [Update Plan Item](../../doc/controllers/plans.md#update-plan-item)
+* [Update Plan Metadata](../../doc/controllers/plans.md#update-plan-metadata)
 
 
-# Get Plan
+# Create Plan
 
-Gets a plan
+Creates a new plan
 
 ```java
-GetPlanResponse getPlan(
-    final String planId)
+CompletableFuture<GetPlanResponse> createPlanAsync(
+    final CreatePlanRequest body,
+    final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreatePlanRequest`](../../doc/models/create-plan-request.md) | Body, Required | Request for creating a plan |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
+
+## Example Usage
+
+```java
+CreatePlanRequest body = new CreatePlanRequest.Builder(
+    null,
+    null,
+    null,
+    Arrays.asList(
+        null
+    ),
+    false,
+    null,
+    null,
+    null,
+    null,
+    0,
+    null,
+    null,
+    null,
+    null
+)
+.build();
+
+
+plansController.createPlanAsync(body, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create Plan Item
+
+Adds a new item to a plan
+
+```java
+CompletableFuture<GetPlanItemResponse> createPlanItemAsync(
+    final String planId,
+    final CreatePlanItemRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `planId` | `String` | Template, Required | Plan id |
+| `request` | [`CreatePlanItemRequest`](../../doc/models/create-plan-item-request.md) | Body, Required | Request for creating a plan item |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
+
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
+
+## Example Usage
+
+```java
+String planId = "plan_id8";
+CreatePlanItemRequest request = new CreatePlanItemRequest.Builder(
+    "name6",
+    null,
+    "id6",
+    "description6"
+)
+.build();
+
+
+plansController.createPlanItemAsync(planId, request, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Delete Plan
+
+Deletes a plan
+
+```java
+CompletableFuture<GetPlanResponse> deletePlanAsync(
+    final String planId,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `planId` | `String` | Template, Required | Plan id |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
 
 [`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
@@ -46,14 +185,22 @@ GetPlanResponse getPlan(
 ```java
 String planId = "plan_id8";
 
-try {
-    GetPlanResponse result = plansController.getPlan(planId);
+plansController.deletePlanAsync(planId, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
@@ -62,11 +209,15 @@ try {
 Removes an item from a plan
 
 ```java
-GetPlanItemResponse deletePlanItem(
+CompletableFuture<GetPlanItemResponse> deletePlanItemAsync(
     final String planId,
     final String planItemId,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -78,6 +229,8 @@ GetPlanItemResponse deletePlanItem(
 
 ## Response Type
 
+**200**
+
 [`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
@@ -86,37 +239,47 @@ GetPlanItemResponse deletePlanItem(
 String planId = "plan_id8";
 String planItemId = "plan_item_id0";
 
-try {
-    GetPlanItemResponse result = plansController.deletePlanItem(planId, planItemId, null);
+plansController.deletePlanItemAsync(planId, planItemId, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Update Plan Metadata
+# Get Plan
 
-Updates the metadata from a plan
+Gets a plan
 
 ```java
-GetPlanResponse updatePlanMetadata(
-    final String planId,
-    final UpdateMetadataRequest request,
-    final String idempotencyKey)
+CompletableFuture<GetPlanResponse> getPlanAsync(
+    final String planId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | The plan id |
-| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the plan metadata |
-| `idempotencyKey` | `String` | Header, Optional | - |
+| `planId` | `String` | Template, Required | Plan id |
 
 ## Response Type
+
+**200**
 
 [`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
@@ -124,100 +287,134 @@ GetPlanResponse updatePlanMetadata(
 
 ```java
 String planId = "plan_id8";
-UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
-    new LinkedHashMap<String, String>() {{
-        put("key0", "metadata3");
-    }}
-)
-.build();
 
-
-try {
-    GetPlanResponse result = plansController.updatePlanMetadata(planId, request, null);
+plansController.getPlanAsync(planId).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Create Plan
+# Get Plan Item
 
-Creates a new plan
+Gets a plan item
 
 ```java
-GetPlanResponse createPlan(
-    final CreatePlanRequest body,
-    final String idempotencyKey)
+CompletableFuture<GetPlanItemResponse> getPlanItemAsync(
+    final String planId,
+    final String planItemId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreatePlanRequest`](../../doc/models/create-plan-request.md) | Body, Required | Request for creating a plan |
-| `idempotencyKey` | `String` | Header, Optional | - |
+| `planId` | `String` | Template, Required | Plan id |
+| `planItemId` | `String` | Template, Required | Plan item id |
 
 ## Response Type
 
-[`GetPlanResponse`](../../doc/models/get-plan-response.md)
+**200**
+
+[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
 
 ```java
-CreatePlanRequest body = new CreatePlanRequest.Builder(
-    "name6",
-    "description4",
-    "statement_descriptor6",
-    Arrays.asList(
-        new CreatePlanItemRequest.Builder(
-            "name8",
-            new CreatePricingSchemeRequest.Builder(
-                "scheme_type8"
-            )
-            .build(),
-            "id8",
-            "description2"
-        )
-        .build()
-    ),
-    false,
-    Arrays.asList(
-        "payment_methods9"
-    ),
-    Arrays.asList(
-        207
-    ),
-    "currency6",
-    "interval6",
-    170,
-    Arrays.asList(
-        201,
-        200
-    ),
-    "billing_type0",
-    new CreatePricingSchemeRequest.Builder(
-        "scheme_type8"
-    )
-    .build(),
-    new LinkedHashMap<String, String>() {{
-        put("key0", "metadata7");
-        put("key1", "metadata8");
-    }}
-)
-.build();
+String planId = "plan_id8";
+String planItemId = "plan_item_id0";
 
-
-try {
-    GetPlanResponse result = plansController.createPlan(body, null);
+plansController.getPlanItemAsync(planId, planItemId).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Plans
+
+Gets all plans
+
+```java
+CompletableFuture<ListPlansResponse> getPlansAsync(
+    final Integer page,
+    final Integer size,
+    final String name,
+    final String status,
+    final String billingType,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+| `name` | `String` | Query, Optional | Filter for Plan's name |
+| `status` | `String` | Query, Optional | Filter for Plan's status |
+| `billingType` | `String` | Query, Optional | Filter for plan's billing type |
+| `createdSince` | `LocalDateTime` | Query, Optional | Filter for plan's creation date start range |
+| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for plan's creation date end range |
+
+## Response Type
+
+**200**
+
+[`ListPlansResponse`](../../doc/models/list-plans-response.md)
+
+## Example Usage
+
+```java
+plansController.getPlansAsync(null, null, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
@@ -226,11 +423,15 @@ try {
 Updates a plan
 
 ```java
-GetPlanResponse updatePlan(
+CompletableFuture<GetPlanResponse> updatePlanAsync(
     final String planId,
     final UpdatePlanRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -241,6 +442,8 @@ GetPlanResponse updatePlan(
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
@@ -277,96 +480,22 @@ UpdatePlanRequest request = new UpdatePlanRequest.Builder(
 .build();
 
 
-try {
-    GetPlanResponse result = plansController.updatePlan(planId, request, null);
+plansController.updatePlanAsync(planId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
 
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
 
-# Delete Plan
-
-Deletes a plan
-
-```java
-GetPlanResponse deletePlan(
-    final String planId,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | Plan id |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetPlanResponse`](../../doc/models/get-plan-response.md)
-
-## Example Usage
-
-```java
-String planId = "plan_id8";
-
-try {
-    GetPlanResponse result = plansController.deletePlan(planId, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Plans
-
-Gets all plans
-
-```java
-ListPlansResponse getPlans(
-    final Integer page,
-    final Integer size,
-    final String name,
-    final String status,
-    final String billingType,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-| `name` | `String` | Query, Optional | Filter for Plan's name |
-| `status` | `String` | Query, Optional | Filter for Plan's status |
-| `billingType` | `String` | Query, Optional | Filter for plan's billing type |
-| `createdSince` | `LocalDateTime` | Query, Optional | Filter for plan's creation date start range |
-| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for plan's creation date end range |
-
-## Response Type
-
-[`ListPlansResponse`](../../doc/models/list-plans-response.md)
-
-## Example Usage
-
-```java
-try {
-    ListPlansResponse result = plansController.getPlans(null, null, null, null, null, null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+    return null;
+});
 ```
 
 
@@ -375,12 +504,16 @@ try {
 Updates a plan item
 
 ```java
-GetPlanItemResponse updatePlanItem(
+CompletableFuture<GetPlanItemResponse> updatePlanItemAsync(
     final String planId,
     final String planItemId,
     final UpdatePlanItemRequest body,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -393,6 +526,8 @@ GetPlanItemResponse updatePlanItem(
 
 ## Response Type
 
+**200**
+
 [`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
 
 ## Example Usage
@@ -401,17 +536,13 @@ GetPlanItemResponse updatePlanItem(
 String planId = "plan_id8";
 String planItemId = "plan_item_id0";
 UpdatePlanItemRequest body = new UpdatePlanItemRequest.Builder(
-    "name6",
-    "description4",
-    "status2",
+    null,
+    null,
+    null,
     new UpdatePricingSchemeRequest.Builder(
-        "scheme_type8",
+        null,
         Arrays.asList(
-            new UpdatePriceBracketRequest.Builder(
-                144,
-                174
-            )
-            .build()
+            null
         )
     )
     .build()
@@ -419,101 +550,81 @@ UpdatePlanItemRequest body = new UpdatePlanItemRequest.Builder(
 .build();
 
 
-try {
-    GetPlanItemResponse result = plansController.updatePlanItem(planId, planItemId, body, null);
+plansController.updatePlanItemAsync(planId, planItemId, body, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Create Plan Item
+# Update Plan Metadata
 
-Adds a new item to a plan
+Updates the metadata from a plan
 
 ```java
-GetPlanItemResponse createPlanItem(
+CompletableFuture<GetPlanResponse> updatePlanMetadataAsync(
     final String planId,
-    final CreatePlanItemRequest request,
+    final UpdateMetadataRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | Plan id |
-| `request` | [`CreatePlanItemRequest`](../../doc/models/create-plan-item-request.md) | Body, Required | Request for creating a plan item |
+| `planId` | `String` | Template, Required | The plan id |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the plan metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
+**200**
+
+[`GetPlanResponse`](../../doc/models/get-plan-response.md)
 
 ## Example Usage
 
 ```java
 String planId = "plan_id8";
-CreatePlanItemRequest request = new CreatePlanItemRequest.Builder(
-    "name6",
-    new CreatePricingSchemeRequest.Builder(
-        "scheme_type8"
-    )
-    .build(),
-    "id6",
-    "description6"
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
 )
 .build();
 
 
-try {
-    GetPlanItemResponse result = plansController.createPlanItem(planId, request, null);
+plansController.updatePlanMetadataAsync(planId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
 
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
 
-# Get Plan Item
-
-Gets a plan item
-
-```java
-GetPlanItemResponse getPlanItem(
-    final String planId,
-    final String planItemId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `planId` | `String` | Template, Required | Plan id |
-| `planItemId` | `String` | Template, Required | Plan item id |
-
-## Response Type
-
-[`GetPlanItemResponse`](../../doc/models/get-plan-item-response.md)
-
-## Example Usage
-
-```java
-String planId = "plan_id8";
-String planItemId = "plan_item_id0";
-
-try {
-    GetPlanItemResponse result = plansController.getPlanItem(planId, planItemId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+    return null;
+});
 ```
 

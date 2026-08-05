@@ -12,16 +12,25 @@ The following parameters are configurable for the API Client:
 The API client can be initialized as follows:
 
 ```java
-PagarmeApiSDKClient client = new PagarmeApiSDKClient.Builder()
-    .httpClientConfig(configBuilder -> configBuilder
-            .timeout(0))
-    .serviceRefererName("ServiceRefererName")
-    .basicAuthCredentials(new BasicAuthModel.Builder(
-            "BasicAuthUserName",
-            "BasicAuthPassword"
-        )
-        .build())
-    .build();
+import me.pagar.api.PagarmeApiSDKClient;
+import me.pagar.api.authentication.BasicAuthModel;
+import me.pagar.api.exceptions.ApiException;
+
+public class Program {
+    public static void main(String[] args) {
+        PagarmeApiSDKClient client = new PagarmeApiSDKClient.Builder()
+            .httpClientConfig(configBuilder -> configBuilder
+                    .timeout(0))
+            .serviceRefererName("ServiceRefererName")
+            .basicAuthCredentials(new BasicAuthModel.Builder(
+                    "BasicAuthUserName",
+                    "BasicAuthPassword"
+                )
+                .build())
+            .build();
+
+    }
+}
 ```
 
 ## PagarmeApiSDKClient Class
@@ -43,7 +52,6 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | `getTransactionsController()` | Provides access to Transactions controller. | `TransactionsController` |
 | `getTransfersController()` | Provides access to Transfers controller. | `TransfersController` |
 | `getPayablesController()` | Provides access to Payables controller. | `PayablesController` |
-| `getBalanceOperationsController()` | Provides access to BalanceOperations controller. | `BalanceOperationsController` |
 
 ### Methods
 

@@ -15,13 +15,15 @@ The Split Options Request
 | `ChargeProcessingFee` | `Boolean` | Optional | Charge processing fee | Boolean getChargeProcessingFee() | setChargeProcessingFee(Boolean chargeProcessingFee) |
 | `ChargeRemainderFee` | `Boolean` | Optional | - | Boolean getChargeRemainderFee() | setChargeRemainderFee(Boolean chargeRemainderFee) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "liable": false,
-  "charge_processing_fee": false,
-  "charge_remainder_fee": false
-}
+```java
+import me.pagar.api.models.CreateSplitOptionsRequest;
+
+CreateSplitOptionsRequest createSplitOptionsRequest = new CreateSplitOptionsRequest.Builder()
+    .liable(false)
+    .chargeProcessingFee(false)
+    .chargeRemainderFee(false)
+    .build();
 ```
 

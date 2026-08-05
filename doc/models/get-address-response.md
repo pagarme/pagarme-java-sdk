@@ -29,15 +29,17 @@ Response object for getting an Address
 | `Line2` | `String` | Optional | Line 2 for address | String getLine2() | setLine2(String line2) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "street": "street2",
-  "number": "number0",
-  "complement": "complement8",
-  "zip_code": "zip_code6"
-}
+```java
+import me.pagar.api.models.GetAddressResponse;
+
+GetAddressResponse getAddressResponse = new GetAddressResponse.Builder()
+    .id("id8")
+    .street("street8")
+    .number("number4")
+    .complement("complement6")
+    .zipCode("zip_code2")
+    .build();
 ```
 

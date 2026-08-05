@@ -20,15 +20,17 @@ Card token data
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 | `Label` | `String` | Optional | - | String getLabel() | setLabel(String label) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "last_four_digits": "last_four_digits8",
-  "holder_name": "holder_name8",
-  "holder_document": "holder_document6",
-  "exp_month": 168,
-  "exp_year": 128
-}
+```java
+import me.pagar.api.models.GetCardTokenResponse;
+
+GetCardTokenResponse getCardTokenResponse = new GetCardTokenResponse.Builder()
+    .lastFourDigits("last_four_digits8")
+    .holderName("holder_name8")
+    .holderDocument("holder_document6")
+    .expMonth(232)
+    .expYear(64)
+    .build();
 ```
 

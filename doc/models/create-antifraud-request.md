@@ -12,14 +12,15 @@
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
 | `Clearsale` | [`CreateClearSaleRequest`](../../doc/models/create-clear-sale-request.md) | Required | - | CreateClearSaleRequest getClearsale() | setClearsale(CreateClearSaleRequest clearsale) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "type0",
-  "clearsale": {
-    "custom_sla": 178
-  }
-}
+```java
+import me.pagar.api.models.CreateAntifraudRequest;
+
+CreateAntifraudRequest createAntifraudRequest = new CreateAntifraudRequest.Builder(
+    "type0",
+    null
+)
+.build();
 ```
 

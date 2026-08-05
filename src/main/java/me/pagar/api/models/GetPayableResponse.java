@@ -19,144 +19,162 @@ import me.pagar.api.DateTimeHelper;
  * This is a model class for GetPayableResponse type.
  */
 public class GetPayableResponse {
-    private OptionalNullable<Long> id;
-    private OptionalNullable<String> status;
-    private OptionalNullable<Integer> amount;
+    private String id;
+    private String status;
+    private int amount;
     private OptionalNullable<Integer> fee;
     private OptionalNullable<Integer> anticipationFee;
     private OptionalNullable<Integer> fraudCoverageFee;
     private OptionalNullable<Integer> installment;
-    private OptionalNullable<Long> gatewayId;
-    private OptionalNullable<String> chargeId;
-    private OptionalNullable<String> splitId;
-    private OptionalNullable<String> bulkAnticipationId;
+    private String gatewayId;
+    private String chargeId;
+    private String splitId;
+    private String bulkAnticipationId;
     private OptionalNullable<String> anticipationId;
-    private OptionalNullable<String> recipientId;
-    private OptionalNullable<String> originatorModel;
-    private OptionalNullable<String> originatorModelId;
+    private String recipientId;
+    private String originatorModel;
+    private String originatorModelId;
     private OptionalNullable<LocalDateTime> paymentDate;
-    private OptionalNullable<LocalDateTime> originalPaymentDate;
+    private LocalDateTime originalPaymentDate;
     private OptionalNullable<String> type;
-    private OptionalNullable<String> paymentMethod;
+    private String paymentMethod;
     private OptionalNullable<LocalDateTime> accrualAt;
-    private OptionalNullable<LocalDateTime> createdAt;
+    private LocalDateTime createdAt;
     private OptionalNullable<String> liquidationArrangementId;
+    private String settlementId;
+    private String paymentProfileId;
 
     /**
      * Default constructor.
      */
     public GetPayableResponse() {
+        gatewayId = "null";
+        chargeId = "null";
+        splitId = "null";
+        bulkAnticipationId = "null";
+        originatorModel = "null";
+        originatorModelId = "null";
+        paymentMethod = "null";
+        settlementId = "null";
+        paymentProfileId = "null";
+        liquidationArrangementId = OptionalNullable.of("null");
     }
 
     /**
      * Initialization constructor.
-     * @param  id  Long value for id.
+     * @param  id  String value for id.
      * @param  status  String value for status.
-     * @param  amount  Integer value for amount.
+     * @param  amount  int value for amount.
+     * @param  gatewayId  String value for gatewayId.
+     * @param  chargeId  String value for chargeId.
+     * @param  splitId  String value for splitId.
+     * @param  bulkAnticipationId  String value for bulkAnticipationId.
+     * @param  recipientId  String value for recipientId.
+     * @param  originatorModel  String value for originatorModel.
+     * @param  originatorModelId  String value for originatorModelId.
+     * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
+     * @param  paymentMethod  String value for paymentMethod.
+     * @param  createdAt  LocalDateTime value for createdAt.
+     * @param  settlementId  String value for settlementId.
+     * @param  paymentProfileId  String value for paymentProfileId.
      * @param  fee  Integer value for fee.
      * @param  anticipationFee  Integer value for anticipationFee.
      * @param  fraudCoverageFee  Integer value for fraudCoverageFee.
      * @param  installment  Integer value for installment.
-     * @param  gatewayId  Long value for gatewayId.
-     * @param  chargeId  String value for chargeId.
-     * @param  splitId  String value for splitId.
-     * @param  bulkAnticipationId  String value for bulkAnticipationId.
      * @param  anticipationId  String value for anticipationId.
-     * @param  recipientId  String value for recipientId.
-     * @param  originatorModel  String value for originatorModel.
-     * @param  originatorModelId  String value for originatorModelId.
      * @param  paymentDate  LocalDateTime value for paymentDate.
-     * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
      * @param  type  String value for type.
-     * @param  paymentMethod  String value for paymentMethod.
      * @param  accrualAt  LocalDateTime value for accrualAt.
-     * @param  createdAt  LocalDateTime value for createdAt.
      * @param  liquidationArrangementId  String value for liquidationArrangementId.
      */
     public GetPayableResponse(
-            Long id,
+            String id,
             String status,
-            Integer amount,
+            int amount,
+            String gatewayId,
+            String chargeId,
+            String splitId,
+            String bulkAnticipationId,
+            String recipientId,
+            String originatorModel,
+            String originatorModelId,
+            LocalDateTime originalPaymentDate,
+            String paymentMethod,
+            LocalDateTime createdAt,
+            String settlementId,
+            String paymentProfileId,
             Integer fee,
             Integer anticipationFee,
             Integer fraudCoverageFee,
             Integer installment,
-            Long gatewayId,
-            String chargeId,
-            String splitId,
-            String bulkAnticipationId,
             String anticipationId,
-            String recipientId,
-            String originatorModel,
-            String originatorModelId,
             LocalDateTime paymentDate,
-            LocalDateTime originalPaymentDate,
             String type,
-            String paymentMethod,
             LocalDateTime accrualAt,
-            LocalDateTime createdAt,
             String liquidationArrangementId) {
-        this.id = OptionalNullable.of(id);
-        this.status = OptionalNullable.of(status);
-        this.amount = OptionalNullable.of(amount);
+        this.id = id;
+        this.status = status;
+        this.amount = amount;
         this.fee = OptionalNullable.of(fee);
         this.anticipationFee = OptionalNullable.of(anticipationFee);
         this.fraudCoverageFee = OptionalNullable.of(fraudCoverageFee);
         this.installment = OptionalNullable.of(installment);
-        this.gatewayId = OptionalNullable.of(gatewayId);
-        this.chargeId = OptionalNullable.of(chargeId);
-        this.splitId = OptionalNullable.of(splitId);
-        this.bulkAnticipationId = OptionalNullable.of(bulkAnticipationId);
+        this.gatewayId = gatewayId;
+        this.chargeId = chargeId;
+        this.splitId = splitId;
+        this.bulkAnticipationId = bulkAnticipationId;
         this.anticipationId = OptionalNullable.of(anticipationId);
-        this.recipientId = OptionalNullable.of(recipientId);
-        this.originatorModel = OptionalNullable.of(originatorModel);
-        this.originatorModelId = OptionalNullable.of(originatorModelId);
+        this.recipientId = recipientId;
+        this.originatorModel = originatorModel;
+        this.originatorModelId = originatorModelId;
         this.paymentDate = OptionalNullable.of(paymentDate);
-        this.originalPaymentDate = OptionalNullable.of(originalPaymentDate);
+        this.originalPaymentDate = originalPaymentDate;
         this.type = OptionalNullable.of(type);
-        this.paymentMethod = OptionalNullable.of(paymentMethod);
+        this.paymentMethod = paymentMethod;
         this.accrualAt = OptionalNullable.of(accrualAt);
-        this.createdAt = OptionalNullable.of(createdAt);
+        this.createdAt = createdAt;
         this.liquidationArrangementId = OptionalNullable.of(liquidationArrangementId);
+        this.settlementId = settlementId;
+        this.paymentProfileId = paymentProfileId;
     }
 
     /**
      * Initialization constructor.
-     * @param  id  Long value for id.
+     * @param  id  String value for id.
      * @param  status  String value for status.
-     * @param  amount  Integer value for amount.
+     * @param  amount  int value for amount.
+     * @param  gatewayId  String value for gatewayId.
+     * @param  chargeId  String value for chargeId.
+     * @param  splitId  String value for splitId.
+     * @param  bulkAnticipationId  String value for bulkAnticipationId.
+     * @param  recipientId  String value for recipientId.
+     * @param  originatorModel  String value for originatorModel.
+     * @param  originatorModelId  String value for originatorModelId.
+     * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
+     * @param  paymentMethod  String value for paymentMethod.
+     * @param  createdAt  LocalDateTime value for createdAt.
+     * @param  settlementId  String value for settlementId.
+     * @param  paymentProfileId  String value for paymentProfileId.
      * @param  fee  Integer value for fee.
      * @param  anticipationFee  Integer value for anticipationFee.
      * @param  fraudCoverageFee  Integer value for fraudCoverageFee.
      * @param  installment  Integer value for installment.
-     * @param  gatewayId  Long value for gatewayId.
-     * @param  chargeId  String value for chargeId.
-     * @param  splitId  String value for splitId.
-     * @param  bulkAnticipationId  String value for bulkAnticipationId.
      * @param  anticipationId  String value for anticipationId.
-     * @param  recipientId  String value for recipientId.
-     * @param  originatorModel  String value for originatorModel.
-     * @param  originatorModelId  String value for originatorModelId.
      * @param  paymentDate  LocalDateTime value for paymentDate.
-     * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
      * @param  type  String value for type.
-     * @param  paymentMethod  String value for paymentMethod.
      * @param  accrualAt  LocalDateTime value for accrualAt.
-     * @param  createdAt  LocalDateTime value for createdAt.
      * @param  liquidationArrangementId  String value for liquidationArrangementId.
      */
 
-    protected GetPayableResponse(OptionalNullable<Long> id, OptionalNullable<String> status,
-            OptionalNullable<Integer> amount, OptionalNullable<Integer> fee,
+    protected GetPayableResponse(String id, String status, int amount, String gatewayId,
+            String chargeId, String splitId, String bulkAnticipationId, String recipientId,
+            String originatorModel, String originatorModelId, LocalDateTime originalPaymentDate,
+            String paymentMethod, LocalDateTime createdAt, String settlementId,
+            String paymentProfileId, OptionalNullable<Integer> fee,
             OptionalNullable<Integer> anticipationFee, OptionalNullable<Integer> fraudCoverageFee,
-            OptionalNullable<Integer> installment, OptionalNullable<Long> gatewayId,
-            OptionalNullable<String> chargeId, OptionalNullable<String> splitId,
-            OptionalNullable<String> bulkAnticipationId, OptionalNullable<String> anticipationId,
-            OptionalNullable<String> recipientId, OptionalNullable<String> originatorModel,
-            OptionalNullable<String> originatorModelId, OptionalNullable<LocalDateTime> paymentDate,
-            OptionalNullable<LocalDateTime> originalPaymentDate, OptionalNullable<String> type,
-            OptionalNullable<String> paymentMethod, OptionalNullable<LocalDateTime> accrualAt,
-            OptionalNullable<LocalDateTime> createdAt,
+            OptionalNullable<Integer> installment, OptionalNullable<String> anticipationId,
+            OptionalNullable<LocalDateTime> paymentDate, OptionalNullable<String> type,
+            OptionalNullable<LocalDateTime> accrualAt,
             OptionalNullable<String> liquidationArrangementId) {
         this.id = id;
         this.status = status;
@@ -180,115 +198,73 @@ public class GetPayableResponse {
         this.accrualAt = accrualAt;
         this.createdAt = createdAt;
         this.liquidationArrangementId = liquidationArrangementId;
-    }
-
-    /**
-     * Internal Getter for Id.
-     * @return Returns the Internal Long
-     */
-    @JsonGetter("id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<Long> internalGetId() {
-        return this.id;
+        this.settlementId = settlementId;
+        this.paymentProfileId = paymentProfileId;
     }
 
     /**
      * Getter for Id.
-     * @return Returns the Long
+     * Payable Identifier
+     * @return Returns the String
      */
-    public Long getId() {
-        return OptionalNullable.getFrom(id);
+    @JsonGetter("id")
+    public String getId() {
+        return id;
     }
 
     /**
      * Setter for Id.
-     * @param id Value for Long
+     * Payable Identifier
+     * @param id Value for String
      */
     @JsonSetter("id")
-    public void setId(Long id) {
-        this.id = OptionalNullable.of(id);
-    }
-
-    /**
-     * UnSetter for Id.
-     */
-    public void unsetId() {
-        id = null;
-    }
-
-    /**
-     * Internal Getter for Status.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("status")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetStatus() {
-        return this.status;
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
      * Getter for Status.
+     * Payable status
      * @return Returns the String
      */
+    @JsonGetter("status")
     public String getStatus() {
-        return OptionalNullable.getFrom(status);
+        return status;
     }
 
     /**
      * Setter for Status.
+     * Payable status
      * @param status Value for String
      */
     @JsonSetter("status")
     public void setStatus(String status) {
-        this.status = OptionalNullable.of(status);
-    }
-
-    /**
-     * UnSetter for Status.
-     */
-    public void unsetStatus() {
-        status = null;
-    }
-
-    /**
-     * Internal Getter for Amount.
-     * @return Returns the Internal Integer
-     */
-    @JsonGetter("amount")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<Integer> internalGetAmount() {
-        return this.amount;
+        this.status = status;
     }
 
     /**
      * Getter for Amount.
-     * @return Returns the Integer
+     * Payable amount in cents
+     * @return Returns the int
      */
-    public Integer getAmount() {
-        return OptionalNullable.getFrom(amount);
+    @JsonGetter("amount")
+    public int getAmount() {
+        return amount;
     }
 
     /**
      * Setter for Amount.
-     * @param amount Value for Integer
+     * Payable amount in cents
+     * @param amount Value for int
      */
     @JsonSetter("amount")
-    public void setAmount(Integer amount) {
-        this.amount = OptionalNullable.of(amount);
-    }
-
-    /**
-     * UnSetter for Amount.
-     */
-    public void unsetAmount() {
-        amount = null;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     /**
      * Internal Getter for Fee.
+     * Payable fee amount in cents
      * @return Returns the Internal Integer
      */
     @JsonGetter("fee")
@@ -300,6 +276,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for Fee.
+     * Payable fee amount in cents
      * @return Returns the Integer
      */
     public Integer getFee() {
@@ -308,6 +285,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for Fee.
+     * Payable fee amount in cents
      * @param fee Value for Integer
      */
     @JsonSetter("fee")
@@ -317,6 +295,7 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for Fee.
+     * Payable fee amount in cents
      */
     public void unsetFee() {
         fee = null;
@@ -324,6 +303,7 @@ public class GetPayableResponse {
 
     /**
      * Internal Getter for AnticipationFee.
+     * Antecipation fee amount in cents
      * @return Returns the Internal Integer
      */
     @JsonGetter("anticipation_fee")
@@ -335,6 +315,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for AnticipationFee.
+     * Antecipation fee amount in cents
      * @return Returns the Integer
      */
     public Integer getAnticipationFee() {
@@ -343,6 +324,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for AnticipationFee.
+     * Antecipation fee amount in cents
      * @param anticipationFee Value for Integer
      */
     @JsonSetter("anticipation_fee")
@@ -352,6 +334,7 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for AnticipationFee.
+     * Antecipation fee amount in cents
      */
     public void unsetAnticipationFee() {
         anticipationFee = null;
@@ -359,6 +342,7 @@ public class GetPayableResponse {
 
     /**
      * Internal Getter for FraudCoverageFee.
+     * Fraud coverage fee amount in cents
      * @return Returns the Internal Integer
      */
     @JsonGetter("fraud_coverage_fee")
@@ -370,6 +354,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for FraudCoverageFee.
+     * Fraud coverage fee amount in cents
      * @return Returns the Integer
      */
     public Integer getFraudCoverageFee() {
@@ -378,6 +363,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for FraudCoverageFee.
+     * Fraud coverage fee amount in cents
      * @param fraudCoverageFee Value for Integer
      */
     @JsonSetter("fraud_coverage_fee")
@@ -387,6 +373,7 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for FraudCoverageFee.
+     * Fraud coverage fee amount in cents
      */
     public void unsetFraudCoverageFee() {
         fraudCoverageFee = null;
@@ -394,6 +381,7 @@ public class GetPayableResponse {
 
     /**
      * Internal Getter for Installment.
+     * Number of installment
      * @return Returns the Internal Integer
      */
     @JsonGetter("installment")
@@ -405,6 +393,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for Installment.
+     * Number of installment
      * @return Returns the Integer
      */
     public Integer getInstallment() {
@@ -413,6 +402,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for Installment.
+     * Number of installment
      * @param installment Value for Integer
      */
     @JsonSetter("installment")
@@ -422,98 +412,59 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for Installment.
+     * Number of installment
      */
     public void unsetInstallment() {
         installment = null;
     }
 
     /**
-     * Internal Getter for GatewayId.
-     * @return Returns the Internal Long
+     * Getter for GatewayId.
+     * Payment gateway identifier
+     * @return Returns the String
      */
     @JsonGetter("gateway_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<Long> internalGetGatewayId() {
-        return this.gatewayId;
-    }
-
-    /**
-     * Getter for GatewayId.
-     * @return Returns the Long
-     */
-    public Long getGatewayId() {
-        return OptionalNullable.getFrom(gatewayId);
+    public String getGatewayId() {
+        return gatewayId;
     }
 
     /**
      * Setter for GatewayId.
-     * @param gatewayId Value for Long
+     * Payment gateway identifier
+     * @param gatewayId Value for String
      */
     @JsonSetter("gateway_id")
-    public void setGatewayId(Long gatewayId) {
-        this.gatewayId = OptionalNullable.of(gatewayId);
-    }
-
-    /**
-     * UnSetter for GatewayId.
-     */
-    public void unsetGatewayId() {
-        gatewayId = null;
-    }
-
-    /**
-     * Internal Getter for ChargeId.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("charge_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetChargeId() {
-        return this.chargeId;
+    public void setGatewayId(String gatewayId) {
+        this.gatewayId = gatewayId;
     }
 
     /**
      * Getter for ChargeId.
+     * Charge identifier
      * @return Returns the String
      */
+    @JsonGetter("charge_id")
     public String getChargeId() {
-        return OptionalNullable.getFrom(chargeId);
+        return chargeId;
     }
 
     /**
      * Setter for ChargeId.
+     * Charge identifier
      * @param chargeId Value for String
      */
     @JsonSetter("charge_id")
     public void setChargeId(String chargeId) {
-        this.chargeId = OptionalNullable.of(chargeId);
-    }
-
-    /**
-     * UnSetter for ChargeId.
-     */
-    public void unsetChargeId() {
-        chargeId = null;
-    }
-
-    /**
-     * Internal Getter for SplitId.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("split_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetSplitId() {
-        return this.splitId;
+        this.chargeId = chargeId;
     }
 
     /**
      * Getter for SplitId.
      * @return Returns the String
      */
+    @JsonGetter("split_id")
     public String getSplitId() {
-        return OptionalNullable.getFrom(splitId);
+        return splitId;
     }
 
     /**
@@ -522,33 +473,16 @@ public class GetPayableResponse {
      */
     @JsonSetter("split_id")
     public void setSplitId(String splitId) {
-        this.splitId = OptionalNullable.of(splitId);
-    }
-
-    /**
-     * UnSetter for SplitId.
-     */
-    public void unsetSplitId() {
-        splitId = null;
-    }
-
-    /**
-     * Internal Getter for BulkAnticipationId.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("bulk_anticipation_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetBulkAnticipationId() {
-        return this.bulkAnticipationId;
+        this.splitId = splitId;
     }
 
     /**
      * Getter for BulkAnticipationId.
      * @return Returns the String
      */
+    @JsonGetter("bulk_anticipation_id")
     public String getBulkAnticipationId() {
-        return OptionalNullable.getFrom(bulkAnticipationId);
+        return bulkAnticipationId;
     }
 
     /**
@@ -557,14 +491,7 @@ public class GetPayableResponse {
      */
     @JsonSetter("bulk_anticipation_id")
     public void setBulkAnticipationId(String bulkAnticipationId) {
-        this.bulkAnticipationId = OptionalNullable.of(bulkAnticipationId);
-    }
-
-    /**
-     * UnSetter for BulkAnticipationId.
-     */
-    public void unsetBulkAnticipationId() {
-        bulkAnticipationId = null;
+        this.bulkAnticipationId = bulkAnticipationId;
     }
 
     /**
@@ -603,57 +530,32 @@ public class GetPayableResponse {
     }
 
     /**
-     * Internal Getter for RecipientId.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("recipient_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetRecipientId() {
-        return this.recipientId;
-    }
-
-    /**
      * Getter for RecipientId.
+     * Recipient identifier
      * @return Returns the String
      */
+    @JsonGetter("recipient_id")
     public String getRecipientId() {
-        return OptionalNullable.getFrom(recipientId);
+        return recipientId;
     }
 
     /**
      * Setter for RecipientId.
+     * Recipient identifier
      * @param recipientId Value for String
      */
     @JsonSetter("recipient_id")
     public void setRecipientId(String recipientId) {
-        this.recipientId = OptionalNullable.of(recipientId);
-    }
-
-    /**
-     * UnSetter for RecipientId.
-     */
-    public void unsetRecipientId() {
-        recipientId = null;
-    }
-
-    /**
-     * Internal Getter for OriginatorModel.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("originator_model")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetOriginatorModel() {
-        return this.originatorModel;
+        this.recipientId = recipientId;
     }
 
     /**
      * Getter for OriginatorModel.
      * @return Returns the String
      */
+    @JsonGetter("originator_model")
     public String getOriginatorModel() {
-        return OptionalNullable.getFrom(originatorModel);
+        return originatorModel;
     }
 
     /**
@@ -662,53 +564,32 @@ public class GetPayableResponse {
      */
     @JsonSetter("originator_model")
     public void setOriginatorModel(String originatorModel) {
-        this.originatorModel = OptionalNullable.of(originatorModel);
-    }
-
-    /**
-     * UnSetter for OriginatorModel.
-     */
-    public void unsetOriginatorModel() {
-        originatorModel = null;
-    }
-
-    /**
-     * Internal Getter for OriginatorModelId.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("originator_model_id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetOriginatorModelId() {
-        return this.originatorModelId;
+        this.originatorModel = originatorModel;
     }
 
     /**
      * Getter for OriginatorModelId.
+     * Originator model identifier
      * @return Returns the String
      */
+    @JsonGetter("originator_model_id")
     public String getOriginatorModelId() {
-        return OptionalNullable.getFrom(originatorModelId);
+        return originatorModelId;
     }
 
     /**
      * Setter for OriginatorModelId.
+     * Originator model identifier
      * @param originatorModelId Value for String
      */
     @JsonSetter("originator_model_id")
     public void setOriginatorModelId(String originatorModelId) {
-        this.originatorModelId = OptionalNullable.of(originatorModelId);
-    }
-
-    /**
-     * UnSetter for OriginatorModelId.
-     */
-    public void unsetOriginatorModelId() {
-        originatorModelId = null;
+        this.originatorModelId = originatorModelId;
     }
 
     /**
      * Internal Getter for PaymentDate.
+     * Payment Date
      * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("payment_date")
@@ -720,6 +601,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for PaymentDate.
+     * Payment Date
      * @return Returns the LocalDateTime
      */
     public LocalDateTime getPaymentDate() {
@@ -728,6 +610,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for PaymentDate.
+     * Payment Date
      * @param paymentDate Value for LocalDateTime
      */
     @JsonSetter("payment_date")
@@ -738,49 +621,37 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for PaymentDate.
+     * Payment Date
      */
     public void unsetPaymentDate() {
         paymentDate = null;
     }
 
     /**
-     * Internal Getter for OriginalPaymentDate.
-     * @return Returns the Internal LocalDateTime
-     */
-    @JsonGetter("original_payment_date")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
-    protected OptionalNullable<LocalDateTime> internalGetOriginalPaymentDate() {
-        return this.originalPaymentDate;
-    }
-
-    /**
      * Getter for OriginalPaymentDate.
+     * Original Payment Date
      * @return Returns the LocalDateTime
      */
+    @JsonGetter("original_payment_date")
+    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getOriginalPaymentDate() {
-        return OptionalNullable.getFrom(originalPaymentDate);
+        return originalPaymentDate;
     }
 
     /**
      * Setter for OriginalPaymentDate.
+     * Original Payment Date
      * @param originalPaymentDate Value for LocalDateTime
      */
     @JsonSetter("original_payment_date")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setOriginalPaymentDate(LocalDateTime originalPaymentDate) {
-        this.originalPaymentDate = OptionalNullable.of(originalPaymentDate);
-    }
-
-    /**
-     * UnSetter for OriginalPaymentDate.
-     */
-    public void unsetOriginalPaymentDate() {
-        originalPaymentDate = null;
+        this.originalPaymentDate = originalPaymentDate;
     }
 
     /**
      * Internal Getter for Type.
+     * Type of payable
      * @return Returns the Internal String
      */
     @JsonGetter("type")
@@ -792,6 +663,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for Type.
+     * Type of payable
      * @return Returns the String
      */
     public String getType() {
@@ -800,6 +672,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for Type.
+     * Type of payable
      * @param type Value for String
      */
     @JsonSetter("type")
@@ -809,48 +682,35 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for Type.
+     * Type of payable
      */
     public void unsetType() {
         type = null;
     }
 
     /**
-     * Internal Getter for PaymentMethod.
-     * @return Returns the Internal String
-     */
-    @JsonGetter("payment_method")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<String> internalGetPaymentMethod() {
-        return this.paymentMethod;
-    }
-
-    /**
      * Getter for PaymentMethod.
+     * Payment method of transaction
      * @return Returns the String
      */
+    @JsonGetter("payment_method")
     public String getPaymentMethod() {
-        return OptionalNullable.getFrom(paymentMethod);
+        return paymentMethod;
     }
 
     /**
      * Setter for PaymentMethod.
+     * Payment method of transaction
      * @param paymentMethod Value for String
      */
     @JsonSetter("payment_method")
     public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = OptionalNullable.of(paymentMethod);
-    }
-
-    /**
-     * UnSetter for PaymentMethod.
-     */
-    public void unsetPaymentMethod() {
-        paymentMethod = null;
+        this.paymentMethod = paymentMethod;
     }
 
     /**
      * Internal Getter for AccrualAt.
+     * Date issuer identify payment
      * @return Returns the Internal LocalDateTime
      */
     @JsonGetter("accrual_at")
@@ -862,6 +722,7 @@ public class GetPayableResponse {
 
     /**
      * Getter for AccrualAt.
+     * Date issuer identify payment
      * @return Returns the LocalDateTime
      */
     public LocalDateTime getAccrualAt() {
@@ -870,6 +731,7 @@ public class GetPayableResponse {
 
     /**
      * Setter for AccrualAt.
+     * Date issuer identify payment
      * @param accrualAt Value for LocalDateTime
      */
     @JsonSetter("accrual_at")
@@ -880,45 +742,32 @@ public class GetPayableResponse {
 
     /**
      * UnSetter for AccrualAt.
+     * Date issuer identify payment
      */
     public void unsetAccrualAt() {
         accrualAt = null;
     }
 
     /**
-     * Internal Getter for CreatedAt.
-     * @return Returns the Internal LocalDateTime
-     */
-    @JsonGetter("created_at")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Rfc8601DateTimeSerializer.class)
-    protected OptionalNullable<LocalDateTime> internalGetCreatedAt() {
-        return this.createdAt;
-    }
-
-    /**
      * Getter for CreatedAt.
+     * Creation date
      * @return Returns the LocalDateTime
      */
+    @JsonGetter("created_at")
+    @JsonSerialize(using = DateTimeHelper.Rfc8601DateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
-        return OptionalNullable.getFrom(createdAt);
+        return createdAt;
     }
 
     /**
      * Setter for CreatedAt.
+     * Creation date
      * @param createdAt Value for LocalDateTime
      */
     @JsonSetter("created_at")
     @JsonDeserialize(using = DateTimeHelper.Rfc8601DateTimeDeserializer.class)
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = OptionalNullable.of(createdAt);
-    }
-
-    /**
-     * UnSetter for CreatedAt.
-     */
-    public void unsetCreatedAt() {
-        createdAt = null;
+        this.createdAt = createdAt;
     }
 
     /**
@@ -957,21 +806,63 @@ public class GetPayableResponse {
     }
 
     /**
+     * Getter for SettlementId.
+     * Settlement identifier (new in v7.x)
+     * @return Returns the String
+     */
+    @JsonGetter("settlement_id")
+    public String getSettlementId() {
+        return settlementId;
+    }
+
+    /**
+     * Setter for SettlementId.
+     * Settlement identifier (new in v7.x)
+     * @param settlementId Value for String
+     */
+    @JsonSetter("settlement_id")
+    public void setSettlementId(String settlementId) {
+        this.settlementId = settlementId;
+    }
+
+    /**
+     * Getter for PaymentProfileId.
+     * Operational identifier of merchant inside of payment platform (new in v7.x)
+     * @return Returns the String
+     */
+    @JsonGetter("payment_profile_id")
+    public String getPaymentProfileId() {
+        return paymentProfileId;
+    }
+
+    /**
+     * Setter for PaymentProfileId.
+     * Operational identifier of merchant inside of payment platform (new in v7.x)
+     * @param paymentProfileId Value for String
+     */
+    @JsonSetter("payment_profile_id")
+    public void setPaymentProfileId(String paymentProfileId) {
+        this.paymentProfileId = paymentProfileId;
+    }
+
+    /**
      * Converts this GetPayableResponse into string format.
      * @return String representation of this class
      */
     @Override
     public String toString() {
         return "GetPayableResponse [" + "id=" + id + ", status=" + status + ", amount=" + amount
+                + ", gatewayId=" + gatewayId + ", chargeId=" + chargeId + ", splitId=" + splitId
+                + ", bulkAnticipationId=" + bulkAnticipationId + ", recipientId=" + recipientId
+                + ", originatorModel=" + originatorModel + ", originatorModelId="
+                + originatorModelId + ", originalPaymentDate=" + originalPaymentDate
+                + ", paymentMethod=" + paymentMethod + ", createdAt=" + createdAt
+                + ", settlementId=" + settlementId + ", paymentProfileId=" + paymentProfileId
                 + ", fee=" + fee + ", anticipationFee=" + anticipationFee + ", fraudCoverageFee="
-                + fraudCoverageFee + ", installment=" + installment + ", gatewayId=" + gatewayId
-                + ", chargeId=" + chargeId + ", splitId=" + splitId + ", bulkAnticipationId="
-                + bulkAnticipationId + ", anticipationId=" + anticipationId + ", recipientId="
-                + recipientId + ", originatorModel=" + originatorModel + ", originatorModelId="
-                + originatorModelId + ", paymentDate=" + paymentDate + ", originalPaymentDate="
-                + originalPaymentDate + ", type=" + type + ", paymentMethod=" + paymentMethod
-                + ", accrualAt=" + accrualAt + ", createdAt=" + createdAt
-                + ", liquidationArrangementId=" + liquidationArrangementId + "]";
+                + fraudCoverageFee + ", installment=" + installment + ", anticipationId="
+                + anticipationId + ", paymentDate=" + paymentDate + ", type=" + type
+                + ", accrualAt=" + accrualAt + ", liquidationArrangementId="
+                + liquidationArrangementId + "]";
     }
 
     /**
@@ -980,28 +871,17 @@ public class GetPayableResponse {
      * @return a new {@link GetPayableResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder();
-        builder.id = internalGetId();
-        builder.status = internalGetStatus();
-        builder.amount = internalGetAmount();
+        Builder builder = new Builder(id, status, amount, gatewayId, chargeId, splitId,
+                bulkAnticipationId, recipientId, originatorModel, originatorModelId,
+                originalPaymentDate, paymentMethod, createdAt, settlementId, paymentProfileId);
         builder.fee = internalGetFee();
         builder.anticipationFee = internalGetAnticipationFee();
         builder.fraudCoverageFee = internalGetFraudCoverageFee();
         builder.installment = internalGetInstallment();
-        builder.gatewayId = internalGetGatewayId();
-        builder.chargeId = internalGetChargeId();
-        builder.splitId = internalGetSplitId();
-        builder.bulkAnticipationId = internalGetBulkAnticipationId();
         builder.anticipationId = internalGetAnticipationId();
-        builder.recipientId = internalGetRecipientId();
-        builder.originatorModel = internalGetOriginatorModel();
-        builder.originatorModelId = internalGetOriginatorModelId();
         builder.paymentDate = internalGetPaymentDate();
-        builder.originalPaymentDate = internalGetOriginalPaymentDate();
         builder.type = internalGetType();
-        builder.paymentMethod = internalGetPaymentMethod();
         builder.accrualAt = internalGetAccrualAt();
-        builder.createdAt = internalGetCreatedAt();
         builder.liquidationArrangementId = internalGetLiquidationArrangementId();
         return builder;
     }
@@ -1010,47 +890,84 @@ public class GetPayableResponse {
      * Class to build instances of {@link GetPayableResponse}.
      */
     public static class Builder {
-        private OptionalNullable<Long> id;
-        private OptionalNullable<String> status;
-        private OptionalNullable<Integer> amount;
+        private String id;
+        private String status;
+        private int amount;
+        private String gatewayId = "null";
+        private String chargeId = "null";
+        private String splitId = "null";
+        private String bulkAnticipationId = "null";
+        private String recipientId;
+        private String originatorModel = "null";
+        private String originatorModelId = "null";
+        private LocalDateTime originalPaymentDate;
+        private String paymentMethod = "null";
+        private LocalDateTime createdAt;
+        private String settlementId = "null";
+        private String paymentProfileId = "null";
         private OptionalNullable<Integer> fee;
         private OptionalNullable<Integer> anticipationFee;
         private OptionalNullable<Integer> fraudCoverageFee;
         private OptionalNullable<Integer> installment;
-        private OptionalNullable<Long> gatewayId;
-        private OptionalNullable<String> chargeId;
-        private OptionalNullable<String> splitId;
-        private OptionalNullable<String> bulkAnticipationId;
         private OptionalNullable<String> anticipationId;
-        private OptionalNullable<String> recipientId;
-        private OptionalNullable<String> originatorModel;
-        private OptionalNullable<String> originatorModelId;
         private OptionalNullable<LocalDateTime> paymentDate;
-        private OptionalNullable<LocalDateTime> originalPaymentDate;
         private OptionalNullable<String> type;
-        private OptionalNullable<String> paymentMethod;
         private OptionalNullable<LocalDateTime> accrualAt;
-        private OptionalNullable<LocalDateTime> createdAt;
-        private OptionalNullable<String> liquidationArrangementId;
-
-
+        private OptionalNullable<String> liquidationArrangementId = OptionalNullable.of("null");
 
         /**
-         * Setter for id.
-         * @param  id  Long value for id.
-         * @return Builder
+         * Initialization constructor.
          */
-        public Builder id(Long id) {
-            this.id = OptionalNullable.of(id);
-            return this;
+        public Builder() {
         }
 
         /**
-         * UnSetter for id.
+         * Initialization constructor.
+         * @param  id  String value for id.
+         * @param  status  String value for status.
+         * @param  amount  int value for amount.
+         * @param  gatewayId  String value for gatewayId.
+         * @param  chargeId  String value for chargeId.
+         * @param  splitId  String value for splitId.
+         * @param  bulkAnticipationId  String value for bulkAnticipationId.
+         * @param  recipientId  String value for recipientId.
+         * @param  originatorModel  String value for originatorModel.
+         * @param  originatorModelId  String value for originatorModelId.
+         * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
+         * @param  paymentMethod  String value for paymentMethod.
+         * @param  createdAt  LocalDateTime value for createdAt.
+         * @param  settlementId  String value for settlementId.
+         * @param  paymentProfileId  String value for paymentProfileId.
+         */
+        public Builder(String id, String status, int amount, String gatewayId, String chargeId,
+                String splitId, String bulkAnticipationId, String recipientId,
+                String originatorModel, String originatorModelId, LocalDateTime originalPaymentDate,
+                String paymentMethod, LocalDateTime createdAt, String settlementId,
+                String paymentProfileId) {
+            this.id = id;
+            this.status = status;
+            this.amount = amount;
+            this.gatewayId = gatewayId;
+            this.chargeId = chargeId;
+            this.splitId = splitId;
+            this.bulkAnticipationId = bulkAnticipationId;
+            this.recipientId = recipientId;
+            this.originatorModel = originatorModel;
+            this.originatorModelId = originatorModelId;
+            this.originalPaymentDate = originalPaymentDate;
+            this.paymentMethod = paymentMethod;
+            this.createdAt = createdAt;
+            this.settlementId = settlementId;
+            this.paymentProfileId = paymentProfileId;
+        }
+
+        /**
+         * Setter for id.
+         * @param  id  String value for id.
          * @return Builder
          */
-        public Builder unsetId() {
-            id = null;
+        public Builder id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -1060,35 +977,137 @@ public class GetPayableResponse {
          * @return Builder
          */
         public Builder status(String status) {
-            this.status = OptionalNullable.of(status);
-            return this;
-        }
-
-        /**
-         * UnSetter for status.
-         * @return Builder
-         */
-        public Builder unsetStatus() {
-            status = null;
+            this.status = status;
             return this;
         }
 
         /**
          * Setter for amount.
-         * @param  amount  Integer value for amount.
+         * @param  amount  int value for amount.
          * @return Builder
          */
-        public Builder amount(Integer amount) {
-            this.amount = OptionalNullable.of(amount);
+        public Builder amount(int amount) {
+            this.amount = amount;
             return this;
         }
 
         /**
-         * UnSetter for amount.
+         * Setter for gatewayId.
+         * @param  gatewayId  String value for gatewayId.
          * @return Builder
          */
-        public Builder unsetAmount() {
-            amount = null;
+        public Builder gatewayId(String gatewayId) {
+            this.gatewayId = gatewayId;
+            return this;
+        }
+
+        /**
+         * Setter for chargeId.
+         * @param  chargeId  String value for chargeId.
+         * @return Builder
+         */
+        public Builder chargeId(String chargeId) {
+            this.chargeId = chargeId;
+            return this;
+        }
+
+        /**
+         * Setter for splitId.
+         * @param  splitId  String value for splitId.
+         * @return Builder
+         */
+        public Builder splitId(String splitId) {
+            this.splitId = splitId;
+            return this;
+        }
+
+        /**
+         * Setter for bulkAnticipationId.
+         * @param  bulkAnticipationId  String value for bulkAnticipationId.
+         * @return Builder
+         */
+        public Builder bulkAnticipationId(String bulkAnticipationId) {
+            this.bulkAnticipationId = bulkAnticipationId;
+            return this;
+        }
+
+        /**
+         * Setter for recipientId.
+         * @param  recipientId  String value for recipientId.
+         * @return Builder
+         */
+        public Builder recipientId(String recipientId) {
+            this.recipientId = recipientId;
+            return this;
+        }
+
+        /**
+         * Setter for originatorModel.
+         * @param  originatorModel  String value for originatorModel.
+         * @return Builder
+         */
+        public Builder originatorModel(String originatorModel) {
+            this.originatorModel = originatorModel;
+            return this;
+        }
+
+        /**
+         * Setter for originatorModelId.
+         * @param  originatorModelId  String value for originatorModelId.
+         * @return Builder
+         */
+        public Builder originatorModelId(String originatorModelId) {
+            this.originatorModelId = originatorModelId;
+            return this;
+        }
+
+        /**
+         * Setter for originalPaymentDate.
+         * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
+         * @return Builder
+         */
+        public Builder originalPaymentDate(LocalDateTime originalPaymentDate) {
+            this.originalPaymentDate = originalPaymentDate;
+            return this;
+        }
+
+        /**
+         * Setter for paymentMethod.
+         * @param  paymentMethod  String value for paymentMethod.
+         * @return Builder
+         */
+        public Builder paymentMethod(String paymentMethod) {
+            this.paymentMethod = paymentMethod;
+            return this;
+        }
+
+        /**
+         * Setter for createdAt.
+         * @param  createdAt  LocalDateTime value for createdAt.
+         * @return Builder
+         */
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        /**
+         * Setter for settlementId.
+         * @param  settlementId  String value for settlementId.
+         * @return Builder
+         */
+        public Builder settlementId(String settlementId) {
+            this.settlementId = settlementId;
+            return this;
+        }
+
+        /**
+         * Setter for paymentProfileId.
+         * @param  paymentProfileId  String value for paymentProfileId.
+         * @return Builder
+         */
+        public Builder paymentProfileId(String paymentProfileId) {
+            this.paymentProfileId = paymentProfileId;
             return this;
         }
 
@@ -1169,82 +1188,6 @@ public class GetPayableResponse {
         }
 
         /**
-         * Setter for gatewayId.
-         * @param  gatewayId  Long value for gatewayId.
-         * @return Builder
-         */
-        public Builder gatewayId(Long gatewayId) {
-            this.gatewayId = OptionalNullable.of(gatewayId);
-            return this;
-        }
-
-        /**
-         * UnSetter for gatewayId.
-         * @return Builder
-         */
-        public Builder unsetGatewayId() {
-            gatewayId = null;
-            return this;
-        }
-
-        /**
-         * Setter for chargeId.
-         * @param  chargeId  String value for chargeId.
-         * @return Builder
-         */
-        public Builder chargeId(String chargeId) {
-            this.chargeId = OptionalNullable.of(chargeId);
-            return this;
-        }
-
-        /**
-         * UnSetter for chargeId.
-         * @return Builder
-         */
-        public Builder unsetChargeId() {
-            chargeId = null;
-            return this;
-        }
-
-        /**
-         * Setter for splitId.
-         * @param  splitId  String value for splitId.
-         * @return Builder
-         */
-        public Builder splitId(String splitId) {
-            this.splitId = OptionalNullable.of(splitId);
-            return this;
-        }
-
-        /**
-         * UnSetter for splitId.
-         * @return Builder
-         */
-        public Builder unsetSplitId() {
-            splitId = null;
-            return this;
-        }
-
-        /**
-         * Setter for bulkAnticipationId.
-         * @param  bulkAnticipationId  String value for bulkAnticipationId.
-         * @return Builder
-         */
-        public Builder bulkAnticipationId(String bulkAnticipationId) {
-            this.bulkAnticipationId = OptionalNullable.of(bulkAnticipationId);
-            return this;
-        }
-
-        /**
-         * UnSetter for bulkAnticipationId.
-         * @return Builder
-         */
-        public Builder unsetBulkAnticipationId() {
-            bulkAnticipationId = null;
-            return this;
-        }
-
-        /**
          * Setter for anticipationId.
          * @param  anticipationId  String value for anticipationId.
          * @return Builder
@@ -1260,63 +1203,6 @@ public class GetPayableResponse {
          */
         public Builder unsetAnticipationId() {
             anticipationId = null;
-            return this;
-        }
-
-        /**
-         * Setter for recipientId.
-         * @param  recipientId  String value for recipientId.
-         * @return Builder
-         */
-        public Builder recipientId(String recipientId) {
-            this.recipientId = OptionalNullable.of(recipientId);
-            return this;
-        }
-
-        /**
-         * UnSetter for recipientId.
-         * @return Builder
-         */
-        public Builder unsetRecipientId() {
-            recipientId = null;
-            return this;
-        }
-
-        /**
-         * Setter for originatorModel.
-         * @param  originatorModel  String value for originatorModel.
-         * @return Builder
-         */
-        public Builder originatorModel(String originatorModel) {
-            this.originatorModel = OptionalNullable.of(originatorModel);
-            return this;
-        }
-
-        /**
-         * UnSetter for originatorModel.
-         * @return Builder
-         */
-        public Builder unsetOriginatorModel() {
-            originatorModel = null;
-            return this;
-        }
-
-        /**
-         * Setter for originatorModelId.
-         * @param  originatorModelId  String value for originatorModelId.
-         * @return Builder
-         */
-        public Builder originatorModelId(String originatorModelId) {
-            this.originatorModelId = OptionalNullable.of(originatorModelId);
-            return this;
-        }
-
-        /**
-         * UnSetter for originatorModelId.
-         * @return Builder
-         */
-        public Builder unsetOriginatorModelId() {
-            originatorModelId = null;
             return this;
         }
 
@@ -1340,25 +1226,6 @@ public class GetPayableResponse {
         }
 
         /**
-         * Setter for originalPaymentDate.
-         * @param  originalPaymentDate  LocalDateTime value for originalPaymentDate.
-         * @return Builder
-         */
-        public Builder originalPaymentDate(LocalDateTime originalPaymentDate) {
-            this.originalPaymentDate = OptionalNullable.of(originalPaymentDate);
-            return this;
-        }
-
-        /**
-         * UnSetter for originalPaymentDate.
-         * @return Builder
-         */
-        public Builder unsetOriginalPaymentDate() {
-            originalPaymentDate = null;
-            return this;
-        }
-
-        /**
          * Setter for type.
          * @param  type  String value for type.
          * @return Builder
@@ -1378,25 +1245,6 @@ public class GetPayableResponse {
         }
 
         /**
-         * Setter for paymentMethod.
-         * @param  paymentMethod  String value for paymentMethod.
-         * @return Builder
-         */
-        public Builder paymentMethod(String paymentMethod) {
-            this.paymentMethod = OptionalNullable.of(paymentMethod);
-            return this;
-        }
-
-        /**
-         * UnSetter for paymentMethod.
-         * @return Builder
-         */
-        public Builder unsetPaymentMethod() {
-            paymentMethod = null;
-            return this;
-        }
-
-        /**
          * Setter for accrualAt.
          * @param  accrualAt  LocalDateTime value for accrualAt.
          * @return Builder
@@ -1412,25 +1260,6 @@ public class GetPayableResponse {
          */
         public Builder unsetAccrualAt() {
             accrualAt = null;
-            return this;
-        }
-
-        /**
-         * Setter for createdAt.
-         * @param  createdAt  LocalDateTime value for createdAt.
-         * @return Builder
-         */
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = OptionalNullable.of(createdAt);
-            return this;
-        }
-
-        /**
-         * UnSetter for createdAt.
-         * @return Builder
-         */
-        public Builder unsetCreatedAt() {
-            createdAt = null;
             return this;
         }
 
@@ -1458,11 +1287,11 @@ public class GetPayableResponse {
          * @return {@link GetPayableResponse}
          */
         public GetPayableResponse build() {
-            return new GetPayableResponse(id, status, amount, fee, anticipationFee,
-                    fraudCoverageFee, installment, gatewayId, chargeId, splitId, bulkAnticipationId,
-                    anticipationId, recipientId, originatorModel, originatorModelId, paymentDate,
-                    originalPaymentDate, type, paymentMethod, accrualAt, createdAt,
-                    liquidationArrangementId);
+            return new GetPayableResponse(id, status, amount, gatewayId, chargeId, splitId,
+                    bulkAnticipationId, recipientId, originatorModel, originatorModelId,
+                    originalPaymentDate, paymentMethod, createdAt, settlementId, paymentProfileId,
+                    fee, anticipationFee, fraudCoverageFee, installment, anticipationId,
+                    paymentDate, type, accrualAt, liquidationArrangementId);
         }
     }
 }

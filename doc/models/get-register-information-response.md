@@ -31,26 +31,23 @@ Response object for getting an RegisterInformationResponse
 | `MainAddress` | [`GetRegisterInformationAddressResponse`](../../doc/models/get-register-information-address-response.md) | Optional | - | GetRegisterInformationAddressResponse getMainAddress() | setMainAddress(GetRegisterInformationAddressResponse mainAddress) |
 | `ManagingPartners` | [`List<GetManagingPartnerResponse>`](../../doc/models/get-managing-partner-response.md) | Optional | - | List<GetManagingPartnerResponse> getManagingPartners() | setManagingPartners(List<GetManagingPartnerResponse> managingPartners) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "email": "email2",
-  "document": "document2",
-  "type": "type6",
-  "site_url": "site_url6",
-  "phone_numbers": [
-    {
-      "ddd": "ddd4",
-      "number": "number2",
-      "type": "type0"
-    },
-    {
-      "ddd": "ddd4",
-      "number": "number2",
-      "type": "type0"
-    }
-  ]
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetPhoneNumberResponse;
+import me.pagar.api.models.GetRegisterInformationResponse;
+
+GetRegisterInformationResponse getRegisterInformationResponse = new GetRegisterInformationResponse.Builder()
+    .email("email4")
+    .document("document6")
+    .type("type2")
+    .siteUrl("site_url4")
+    .phoneNumbers(Arrays.asList(
+        null,
+        new GetPhoneNumberResponse.Builder()
+            .build()
+    ))
+    .build();
 ```
 

@@ -14,19 +14,17 @@ The Transaction Gateway Response
 | `Code` | `String` | Optional | The error code | String getCode() | setCode(String code) |
 | `Errors` | [`List<GetGatewayErrorResponse>`](../../doc/models/get-gateway-error-response.md) | Optional | The gateway response errors list | List<GetGatewayErrorResponse> getErrors() | setErrors(List<GetGatewayErrorResponse> errors) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": "code6",
-  "errors": [
-    {
-      "message": "message0"
-    },
-    {
-      "message": "message0"
-    }
-  ]
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetGatewayResponseResponse;
+
+GetGatewayResponseResponse getGatewayResponseResponse = new GetGatewayResponseResponse.Builder()
+    .code("code4")
+    .errors(Arrays.asList(
+        null
+    ))
+    .build();
 ```
 

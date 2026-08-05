@@ -17,15 +17,17 @@
 | `TransactionId` | `String` | Optional | Identificador da transação (XID) | String getTransactionId() | setTransactionId(String transactionId) |
 | `SuccessUrl` | `String` | Optional | Url de redirecionamento de sucessso | String getSuccessUrl() | setSuccessUrl(String successUrl) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "mpi": "mpi2",
-  "eci": "eci4",
-  "cavv": "cavv0",
-  "transaction_Id": "transaction_Id0",
-  "success_url": "success_url6"
-}
+```java
+import me.pagar.api.models.GetThreeDSecureResponse;
+
+GetThreeDSecureResponse getThreeDSecureResponse = new GetThreeDSecureResponse.Builder()
+    .mpi("mpi4")
+    .eci("eci6")
+    .cavv("cavv2")
+    .transactionId("transaction_Id2")
+    .successUrl("success_url8")
+    .build();
 ```
 

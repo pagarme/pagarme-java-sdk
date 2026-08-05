@@ -26,20 +26,23 @@ Response for voucher transactions
 | `OperationType` | `String` | Optional | Operation type | String getOperationType() | setOperationType(String operationType) |
 | `Card` | [`GetCardResponse`](../../doc/models/get-card-response.md) | Optional | Card data | GetCardResponse getCard() | setCard(GetCardResponse card) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "statement_descriptor": "statement_descriptor6",
-  "acquirer_name": "acquirer_name0",
-  "acquirer_affiliation_code": "acquirer_affiliation_code2",
-  "acquirer_tid": "acquirer_tid4",
-  "acquirer_nsu": "acquirer_nsu4"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetVoucherTransactionResponse;
+
+GetVoucherTransactionResponse getVoucherTransactionResponse = new GetVoucherTransactionResponse.Builder()
+    .statementDescriptor("statement_descriptor4")
+    .acquirerName("acquirer_name8")
+    .acquirerAffiliationCode("acquirer_affiliation_code4")
+    .acquirerTid("acquirer_tid6")
+    .acquirerNsu("acquirer_nsu6")
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

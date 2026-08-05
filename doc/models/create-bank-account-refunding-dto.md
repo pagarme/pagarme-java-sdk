@@ -21,19 +21,22 @@ Bank Account
 | `AccountCheckDigit` | `String` | Required | Dígito verificador da conta | String getAccountCheckDigit() | setAccountCheckDigit(String accountCheckDigit) |
 | `Type` | `String` | Required | Tipo de conta | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "holder_name": "holder_name2",
-  "holder_type": "holder_type8",
-  "holder_document": "holder_document0",
-  "bank": "bank4",
-  "branch_number": "branch_number2",
-  "branch_check_digit": "branch_check_digit2",
-  "account_number": "account_number6",
-  "account_check_digit": "account_check_digit2",
-  "type": "type4"
-}
+```java
+import me.pagar.api.models.CreateBankAccountRefundingDTO;
+
+CreateBankAccountRefundingDTO createBankAccountRefundingDTO = new CreateBankAccountRefundingDTO.Builder(
+    "holder_name4",
+    "holder_type0",
+    "holder_document8",
+    "bank6",
+    "branch_number4",
+    "branch_check_digit4",
+    "account_number2",
+    "account_check_digit4",
+    "type2"
+)
+.build();
 ```
 

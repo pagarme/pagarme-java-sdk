@@ -32,23 +32,19 @@ The settings for creating a credit card payment
 | `PaymentOrigin` | [`CreatePaymentOriginRequest`](../../doc/models/create-payment-origin-request.md) | Optional | - | CreatePaymentOriginRequest getPaymentOrigin() | setPaymentOrigin(CreatePaymentOriginRequest paymentOrigin) |
 | `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "installments": 1,
-  "capture": true,
-  "recurrency_cycle": "\"first\" or \"subsequent\"",
-  "statement_descriptor": "statement_descriptor0",
-  "card": {
-    "number": "number6",
-    "holder_name": "holder_name2",
-    "exp_month": 228,
-    "exp_year": 68,
-    "cvv": "cvv4"
-  },
-  "card_id": "card_id6",
-  "card_token": "card_token0"
-}
+```java
+import me.pagar.api.models.CreateCreditCardPaymentRequest;
+
+CreateCreditCardPaymentRequest createCreditCardPaymentRequest = new CreateCreditCardPaymentRequest.Builder()
+    .installments(1)
+    .statementDescriptor("statement_descriptor2")
+    .card(null)
+    .cardId("card_id2")
+    .cardToken("card_token8")
+    .capture(true)
+    .recurrencyCycle("\"first\" or \"subsequent\"")
+    .build();
 ```
 

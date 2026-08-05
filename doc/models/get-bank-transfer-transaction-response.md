@@ -21,20 +21,23 @@ Response object for getting a bank transfer transaction
 | `PaidAt` | `LocalDateTime` | Optional | Payment date | LocalDateTime getPaidAt() | setPaidAt(LocalDateTime paidAt) |
 | `PaidAmount` | `Integer` | Optional | Paid amount | Integer getPaidAmount() | setPaidAmount(Integer paidAmount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "url": "url2",
-  "bank_tid": "bank_tid2",
-  "bank": "bank6",
-  "paid_at": "2016-03-13T12:52:32.123Z",
-  "paid_amount": 176
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetBankTransferTransactionResponse;
+
+GetBankTransferTransactionResponse getBankTransferTransactionResponse = new GetBankTransferTransactionResponse.Builder()
+    .url("url6")
+    .bankTid("bank_tid6")
+    .bank("bank0")
+    .paidAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .paidAmount(62)
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

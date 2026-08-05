@@ -8,8 +8,8 @@ package me.pagar.api.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
 import me.pagar.api.exceptions.ApiException;
-import me.pagar.api.models.GetPayableResponse;
 import me.pagar.api.models.ListPayablesResponse;
 
 /**
@@ -21,10 +21,8 @@ public interface PayablesController {
      * @param  type  Optional parameter: Example:
      * @param  splitId  Optional parameter: Example:
      * @param  bulkAnticipationId  Optional parameter: Example:
-     * @param  installment  Optional parameter: Example:
      * @param  status  Optional parameter: Example:
      * @param  recipientId  Optional parameter: Example:
-     * @param  amount  Optional parameter: Example:
      * @param  chargeId  Optional parameter: Example:
      * @param  paymentDateUntil  Optional parameter: Example:
      * @param  paymentDateSince  Optional parameter: Example:
@@ -33,7 +31,6 @@ public interface PayablesController {
      * @param  createdUntil  Optional parameter: Example:
      * @param  createdSince  Optional parameter: Example:
      * @param  liquidationArrangementId  Optional parameter: Example:
-     * @param  page  Optional parameter: Example:
      * @param  size  Optional parameter: Example:
      * @param  gatewayId  Optional parameter: Example:
      * @return    Returns the ListPayablesResponse response from the API call
@@ -44,10 +41,8 @@ public interface PayablesController {
             final String type,
             final String splitId,
             final String bulkAnticipationId,
-            final Integer installment,
             final String status,
             final String recipientId,
-            final Integer amount,
             final String chargeId,
             final String paymentDateUntil,
             final LocalDateTime paymentDateSince,
@@ -56,17 +51,42 @@ public interface PayablesController {
             final LocalDateTime createdUntil,
             final LocalDateTime createdSince,
             final String liquidationArrangementId,
-            final Integer page,
             final Integer size,
             final Long gatewayId) throws ApiException, IOException;
 
     /**
-     * @param  id  Required parameter: Example:
-     * @return    Returns the GetPayableResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     * @param  type  Optional parameter: Example:
+     * @param  splitId  Optional parameter: Example:
+     * @param  bulkAnticipationId  Optional parameter: Example:
+     * @param  status  Optional parameter: Example:
+     * @param  recipientId  Optional parameter: Example:
+     * @param  chargeId  Optional parameter: Example:
+     * @param  paymentDateUntil  Optional parameter: Example:
+     * @param  paymentDateSince  Optional parameter: Example:
+     * @param  updatedUntil  Optional parameter: Example:
+     * @param  updatedSince  Optional parameter: Example:
+     * @param  createdUntil  Optional parameter: Example:
+     * @param  createdSince  Optional parameter: Example:
+     * @param  liquidationArrangementId  Optional parameter: Example:
+     * @param  size  Optional parameter: Example:
+     * @param  gatewayId  Optional parameter: Example:
+     * @return    Returns the ListPayablesResponse response from the API call
      */
-    GetPayableResponse getPayableById(
-            final long id) throws ApiException, IOException;
+    CompletableFuture<ListPayablesResponse> getPayablesAsync(
+            final String type,
+            final String splitId,
+            final String bulkAnticipationId,
+            final String status,
+            final String recipientId,
+            final String chargeId,
+            final String paymentDateUntil,
+            final LocalDateTime paymentDateSince,
+            final LocalDateTime updatedUntil,
+            final LocalDateTime updatedSince,
+            final LocalDateTime createdUntil,
+            final LocalDateTime createdSince,
+            final String liquidationArrangementId,
+            final Integer size,
+            final Long gatewayId);
 
 }

@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `Total` | `Integer` | Optional | - | Integer getTotal() | setTotal(Integer total) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "total": 150
-}
+```java
+import me.pagar.api.models.GetChargesSummaryResponse;
+
+GetChargesSummaryResponse getChargesSummaryResponse = new GetChargesSummaryResponse.Builder()
+    .total(134)
+    .build();
 ```
 

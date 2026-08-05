@@ -15,18 +15,22 @@
 | `Delay` | `int` | Required | - | int getDelay() | setDelay(int delay) |
 | `Days` | `List<Integer>` | Required | - | List<Integer> getDays() | setDays(List<Integer> days) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "enabled": false,
-  "type": "type8",
-  "volume_percentage": 208,
-  "delay": 82,
-  "days": [
-    58,
-    59
-  ]
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateAutomaticAnticipationSettingsRequest;
+
+CreateAutomaticAnticipationSettingsRequest createAutomaticAnticipationSettingsRequest = new CreateAutomaticAnticipationSettingsRequest.Builder(
+    false,
+    "type4",
+    24,
+    10,
+    Arrays.asList(
+        242,
+        243
+    )
+)
+.build();
 ```
 

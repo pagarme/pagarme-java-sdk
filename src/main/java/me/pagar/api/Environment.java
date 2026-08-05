@@ -12,13 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-
 /**
  * Environment to be used.
  */
 public enum Environment {
     PRODUCTION;
-
 
     private static TreeMap<String, Environment> valueMap = new TreeMap<>();
     private String value;

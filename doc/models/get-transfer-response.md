@@ -19,15 +19,18 @@ Transfer response
 | `BankAccount` | [`GetBankAccountResponse`](../../doc/models/get-bank-account-response.md) | Optional | Bank account | GetBankAccountResponse getBankAccount() | setBankAccount(GetBankAccountResponse bankAccount) |
 | `Metadata` | `Map<String, String>` | Optional | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "amount": 146,
-  "status": "status4",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetTransferResponse;
+
+GetTransferResponse getTransferResponse = new GetTransferResponse.Builder()
+    .id("id8")
+    .amount(244)
+    .status("status0")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .updatedAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

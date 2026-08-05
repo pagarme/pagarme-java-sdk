@@ -29,15 +29,17 @@ Response object for getting a credit card
 | `FirstSixDigits` | `String` | Optional | First six digits | String getFirstSixDigits() | setFirstSixDigits(String firstSixDigits) |
 | `Label` | `String` | Optional | - | String getLabel() | setLabel(String label) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id4",
-  "last_four_digits": "last_four_digits0",
-  "brand": "brand8",
-  "holder_name": "holder_name0",
-  "exp_month": 52
-}
+```java
+import me.pagar.api.models.GetCardResponse;
+
+GetCardResponse getCardResponse = new GetCardResponse.Builder()
+    .id("id6")
+    .lastFourDigits("last_four_digits2")
+    .brand("brand0")
+    .holderName("holder_name2")
+    .expMonth(2)
+    .build();
 ```
 

@@ -15,13 +15,15 @@ KYC Link
 | `Url` | `String` | Optional | URL | String getUrl() | setUrl(String url) |
 | `ExpirationDate` | `String` | Optional | Expiration Date | String getExpirationDate() | setExpirationDate(String expirationDate) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "base64": "base644",
-  "url": "url0",
-  "expiration_date": "expiration_date0"
-}
+```java
+import me.pagar.api.models.CreateKYCLinkResponse;
+
+CreateKYCLinkResponse createKYCLinkResponse = new CreateKYCLinkResponse.Builder()
+    .base64("base648")
+    .url("url4")
+    .expirationDate("expiration_date4")
+    .build();
 ```
 

@@ -10,29 +10,992 @@ RecipientsController recipientsController = client.getRecipientsController();
 
 ## Methods
 
-* [Update Recipient](../../doc/controllers/recipients.md#update-recipient)
-* [Get Withdraw by Id](../../doc/controllers/recipients.md#get-withdraw-by-id)
-* [Get Recipient](../../doc/controllers/recipients.md#get-recipient)
-* [Get Balance](../../doc/controllers/recipients.md#get-balance)
-* [Get Recipients](../../doc/controllers/recipients.md#get-recipients)
-* [Update Recipient Default Bank Account](../../doc/controllers/recipients.md#update-recipient-default-bank-account)
-* [Get Transfers](../../doc/controllers/recipients.md#get-transfers)
-* [Get Transfer](../../doc/controllers/recipients.md#get-transfer)
+* [Create Anticipation](../../doc/controllers/recipients.md#create-anticipation)
+* [Create KYC Link](../../doc/controllers/recipients.md#create-kyc-link)
+* [Create Recipient](../../doc/controllers/recipients.md#create-recipient)
+* [Create Transfer](../../doc/controllers/recipients.md#create-transfer)
 * [Create Withdraw](../../doc/controllers/recipients.md#create-withdraw)
 * [Get Anticipation](../../doc/controllers/recipients.md#get-anticipation)
-* [Update Recipient Transfer Settings](../../doc/controllers/recipients.md#update-recipient-transfer-settings)
-* [Get Recipient by Code](../../doc/controllers/recipients.md#get-recipient-by-code)
-* [Update Automatic Anticipation Settings](../../doc/controllers/recipients.md#update-automatic-anticipation-settings)
-* [Create Transfer](../../doc/controllers/recipients.md#create-transfer)
-* [Create Recipient](../../doc/controllers/recipients.md#create-recipient)
-* [Get Default Recipient](../../doc/controllers/recipients.md#get-default-recipient)
-* [Create Anticipation](../../doc/controllers/recipients.md#create-anticipation)
 * [Get Anticipation Limits](../../doc/controllers/recipients.md#get-anticipation-limits)
-* [Update Recipient Metadata](../../doc/controllers/recipients.md#update-recipient-metadata)
 * [Get Anticipations](../../doc/controllers/recipients.md#get-anticipations)
+* [Get Balance](../../doc/controllers/recipients.md#get-balance)
+* [Get Default Recipient](../../doc/controllers/recipients.md#get-default-recipient)
+* [Get Recipient](../../doc/controllers/recipients.md#get-recipient)
+* [Get Recipient by Code](../../doc/controllers/recipients.md#get-recipient-by-code)
+* [Get Recipients](../../doc/controllers/recipients.md#get-recipients)
+* [Get Transfer](../../doc/controllers/recipients.md#get-transfer)
+* [Get Transfers](../../doc/controllers/recipients.md#get-transfers)
+* [Get Withdraw by Id](../../doc/controllers/recipients.md#get-withdraw-by-id)
 * [Get Withdrawals](../../doc/controllers/recipients.md#get-withdrawals)
-* [Create KYC Link](../../doc/controllers/recipients.md#create-kyc-link)
+* [Update Automatic Anticipation Settings](../../doc/controllers/recipients.md#update-automatic-anticipation-settings)
+* [Update Recipient](../../doc/controllers/recipients.md#update-recipient)
 * [Update Recipient Code](../../doc/controllers/recipients.md#update-recipient-code)
+* [Update Recipient Default Bank Account](../../doc/controllers/recipients.md#update-recipient-default-bank-account)
+* [Update Recipient Metadata](../../doc/controllers/recipients.md#update-recipient-metadata)
+* [Update Recipient Transfer Settings](../../doc/controllers/recipients.md#update-recipient-transfer-settings)
+
+
+# Create Anticipation
+
+Creates an anticipation
+
+```java
+CompletableFuture<GetAnticipationResponse> createAnticipationAsync(
+    final String recipientId,
+    final CreateAnticipationRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `request` | [`CreateAnticipationRequest`](../../doc/models/create-anticipation-request.md) | Body, Required | Anticipation data |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetAnticipationResponse`](../../doc/models/get-anticipation-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+CreateAnticipationRequest request = new CreateAnticipationRequest.Builder(
+    242,
+    "timeframe8",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
+
+
+recipientsController.createAnticipationAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create KYC Link
+
+Create a KYC link
+
+```java
+CompletableFuture<CreateKYCLinkResponse> createKYCLinkAsync(
+    final String recipientId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+
+## Response Type
+
+**200**
+
+[`CreateKYCLinkResponse`](../../doc/models/create-kyc-link-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+recipientsController.createKYCLinkAsync(recipientId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create Recipient
+
+Creates a new recipient
+
+```java
+CompletableFuture<GetRecipientResponse> createRecipientAsync(
+    final CreateRecipientRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `request` | [`CreateRecipientRequest`](../../doc/models/create-recipient-request.md) | Body, Required | Recipient data |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+CreateRecipientRequest request = new CreateRecipientRequest.Builder(
+    null,
+    null,
+    null,
+    "bank_transfer"
+)
+.build();
+
+
+recipientsController.createRecipientAsync(request, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create Transfer
+
+Creates a transfer for a recipient
+
+```java
+CompletableFuture<GetTransferResponse> createTransferAsync(
+    final String recipientId,
+    final CreateTransferRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient Id |
+| `request` | [`CreateTransferRequest`](../../doc/models/create-transfer-request.md) | Body, Required | Transfer data |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetTransferResponse`](../../doc/models/get-transfer-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+CreateTransferRequest request = new CreateTransferRequest.Builder(
+    242,
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
+)
+.build();
+
+
+recipientsController.createTransferAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create Withdraw
+
+```java
+CompletableFuture<GetWithdrawResponse> createWithdrawAsync(
+    final String recipientId,
+    final CreateWithdrawRequest request)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | - |
+| `request` | [`CreateWithdrawRequest`](../../doc/models/create-withdraw-request.md) | Body, Required | - |
+
+## Response Type
+
+**200**
+
+[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+CreateWithdrawRequest request = new CreateWithdrawRequest.Builder(
+    242
+)
+.build();
+
+recipientsController.createWithdrawAsync(recipientId, request).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Anticipation
+
+Gets an anticipation
+
+```java
+CompletableFuture<GetAnticipationResponse> getAnticipationAsync(
+    final String recipientId,
+    final String anticipationId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `anticipationId` | `String` | Template, Required | Anticipation id |
+
+## Response Type
+
+**200**
+
+[`GetAnticipationResponse`](../../doc/models/get-anticipation-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+String anticipationId = "anticipation_id0";
+
+recipientsController.getAnticipationAsync(recipientId, anticipationId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Anticipation Limits
+
+Gets the anticipation limits for a recipient
+
+```java
+CompletableFuture<GetAnticipationLimitResponse> getAnticipationLimitsAsync(
+    final String recipientId,
+    final String timeframe,
+    final LocalDateTime paymentDate)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `timeframe` | `String` | Query, Required | Timeframe |
+| `paymentDate` | `LocalDateTime` | Query, Required | Anticipation payment date |
+
+## Response Type
+
+**200**
+
+[`GetAnticipationLimitResponse`](../../doc/models/get-anticipation-limit-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+String timeframe = "timeframe2";
+LocalDateTime paymentDate = DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z");
+
+recipientsController.getAnticipationLimitsAsync(recipientId, timeframe, paymentDate).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Anticipations
+
+Retrieves a paginated list of anticipations from a recipient
+
+```java
+CompletableFuture<ListAnticipationResponse> getAnticipationsAsync(
+    final String recipientId,
+    final Integer page,
+    final Integer size,
+    final String status,
+    final String timeframe,
+    final LocalDateTime paymentDateSince,
+    final LocalDateTime paymentDateUntil,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+| `status` | `String` | Query, Optional | Filter for anticipation status |
+| `timeframe` | `String` | Query, Optional | Filter for anticipation timeframe |
+| `paymentDateSince` | `LocalDateTime` | Query, Optional | Filter for start range for anticipation payment date |
+| `paymentDateUntil` | `LocalDateTime` | Query, Optional | Filter for end range for anticipation payment date |
+| `createdSince` | `LocalDateTime` | Query, Optional | Filter for start range for anticipation creation date |
+| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for end range for anticipation creation date |
+
+## Response Type
+
+**200**
+
+[`ListAnticipationResponse`](../../doc/models/list-anticipation-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+recipientsController.getAnticipationsAsync(recipientId, null, null, null, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Balance
+
+Get balance information for a recipient
+
+```java
+CompletableFuture<GetBalanceResponse> getBalanceAsync(
+    final String recipientId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+
+## Response Type
+
+**200**
+
+[`GetBalanceResponse`](../../doc/models/get-balance-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+recipientsController.getBalanceAsync(recipientId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Default Recipient
+
+```java
+CompletableFuture<GetRecipientResponse> getDefaultRecipientAsync()
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Response Type
+
+**200**
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+recipientsController.getDefaultRecipientAsync().thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Recipient
+
+Retrieves recipient information
+
+```java
+CompletableFuture<GetRecipientResponse> getRecipientAsync(
+    final String recipientId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipiend id |
+
+## Response Type
+
+**200**
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+recipientsController.getRecipientAsync(recipientId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Recipient by Code
+
+Retrieves recipient information
+
+```java
+CompletableFuture<GetRecipientResponse> getRecipientByCodeAsync(
+    final String code)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `code` | `String` | Template, Required | Recipient code |
+
+## Response Type
+
+**200**
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+String code = "code8";
+
+recipientsController.getRecipientByCodeAsync(code).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Recipients
+
+Retrieves paginated recipients information
+
+```java
+CompletableFuture<ListRecipientResponse> getRecipientsAsync(
+    final Integer page,
+    final Integer size)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+
+## Response Type
+
+**200**
+
+[`ListRecipientResponse`](../../doc/models/list-recipient-response.md)
+
+## Example Usage
+
+```java
+recipientsController.getRecipientsAsync(null, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Transfer
+
+Gets a transfer
+
+```java
+CompletableFuture<GetTransferResponse> getTransferAsync(
+    final String recipientId,
+    final String transferId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `transferId` | `String` | Template, Required | Transfer id |
+
+## Response Type
+
+**200**
+
+[`GetTransferResponse`](../../doc/models/get-transfer-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+String transferId = "transfer_id6";
+
+recipientsController.getTransferAsync(recipientId, transferId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Transfers
+
+Gets a paginated list of transfers for the recipient
+
+```java
+CompletableFuture<ListTransferResponse> getTransfersAsync(
+    final String recipientId,
+    final Integer page,
+    final Integer size,
+    final String status,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `page` | `Integer` | Query, Optional | Page number |
+| `size` | `Integer` | Query, Optional | Page size |
+| `status` | `String` | Query, Optional | Filter for transfer status |
+| `createdSince` | `LocalDateTime` | Query, Optional | Filter for start range of transfer creation date |
+| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for end range of transfer creation date |
+
+## Response Type
+
+**200**
+
+[`ListTransferResponse`](../../doc/models/list-transfer-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+recipientsController.getTransfersAsync(recipientId, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Withdraw by Id
+
+```java
+CompletableFuture<GetWithdrawResponse> getWithdrawByIdAsync(
+    final String recipientId,
+    final String withdrawalId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | - |
+| `withdrawalId` | `String` | Template, Required | - |
+
+## Response Type
+
+**200**
+
+[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+String withdrawalId = "withdrawal_id2";
+
+recipientsController.getWithdrawByIdAsync(recipientId, withdrawalId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Withdrawals
+
+Gets a paginated list of transfers for the recipient
+
+```java
+CompletableFuture<ListWithdrawals> getWithdrawalsAsync(
+    final String recipientId,
+    final Integer page,
+    final Integer size,
+    final String status,
+    final LocalDateTime createdSince,
+    final LocalDateTime createdUntil)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | - |
+| `page` | `Integer` | Query, Optional | - |
+| `size` | `Integer` | Query, Optional | - |
+| `status` | `String` | Query, Optional | - |
+| `createdSince` | `LocalDateTime` | Query, Optional | - |
+| `createdUntil` | `LocalDateTime` | Query, Optional | - |
+
+## Response Type
+
+**200**
+
+[`ListWithdrawals`](../../doc/models/list-withdrawals.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+
+recipientsController.getWithdrawalsAsync(recipientId, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Update Automatic Anticipation Settings
+
+Updates recipient metadata
+
+```java
+CompletableFuture<GetRecipientResponse> updateAutomaticAnticipationSettingsAsync(
+    final String recipientId,
+    final UpdateAutomaticAnticipationSettingsRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `request` | [`UpdateAutomaticAnticipationSettingsRequest`](../../doc/models/update-automatic-anticipation-settings-request.md) | Body, Required | Metadata |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
+
+## Example Usage
+
+```java
+String recipientId = "recipient_id0";
+UpdateAutomaticAnticipationSettingsRequest request = new UpdateAutomaticAnticipationSettingsRequest.Builder()
+    .build();
+
+
+recipientsController.updateAutomaticAnticipationSettingsAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
 
 
 # Update Recipient
@@ -40,11 +1003,15 @@ RecipientsController recipientsController = client.getRecipientsController();
 Updates a recipient
 
 ```java
-GetRecipientResponse updateRecipient(
+CompletableFuture<GetRecipientResponse> updateRecipientAsync(
     final String recipientId,
     final UpdateRecipientRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -55,6 +1022,8 @@ GetRecipientResponse updateRecipient(
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
@@ -75,69 +1044,51 @@ UpdateRecipientRequest request = new UpdateRecipientRequest.Builder(
 .build();
 
 
-try {
-    GetRecipientResponse result = recipientsController.updateRecipient(recipientId, request, null);
+recipientsController.updateRecipientAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Get Withdraw by Id
+# Update Recipient Code
+
+Updates recipient code
 
 ```java
-GetWithdrawResponse getWithdrawById(
+CompletableFuture<GetRecipientResponse> updateRecipientCodeAsync(
     final String recipientId,
-    final String withdrawalId)
+    final UpdateRecipientCodeRequest request,
+    final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | - |
-| `withdrawalId` | `String` | Template, Required | - |
+| `recipientId` | `String` | Template, Required | Recipient id |
+| `request` | [`UpdateRecipientCodeRequest`](../../doc/models/update-recipient-code-request.md) | Body, Required | UpdateRecipientCodeRequest |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-String withdrawalId = "withdrawal_id2";
-
-try {
-    GetWithdrawResponse result = recipientsController.getWithdrawById(recipientId, withdrawalId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Recipient
-
-Retrieves recipient information
-
-```java
-GetRecipientResponse getRecipient(
-    final String recipientId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipiend id |
-
-## Response Type
+**200**
 
 [`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
@@ -145,85 +1096,28 @@ GetRecipientResponse getRecipient(
 
 ```java
 String recipientId = "recipient_id0";
+UpdateRecipientCodeRequest request = new UpdateRecipientCodeRequest.Builder(
+    "code4"
+)
+.build();
 
-try {
-    GetRecipientResponse result = recipientsController.getRecipient(recipientId);
+
+recipientsController.updateRecipientCodeAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
 
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
 
-# Get Balance
-
-Get balance information for a recipient
-
-```java
-GetBalanceResponse getBalance(
-    final String recipientId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-
-## Response Type
-
-[`GetBalanceResponse`](../../doc/models/get-balance-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    GetBalanceResponse result = recipientsController.getBalance(recipientId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Recipients
-
-Retrieves paginated recipients information
-
-```java
-ListRecipientResponse getRecipients(
-    final Integer page,
-    final Integer size)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-
-## Response Type
-
-[`ListRecipientResponse`](../../doc/models/list-recipient-response.md)
-
-## Example Usage
-
-```java
-try {
-    ListRecipientResponse result = recipientsController.getRecipients(null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+    return null;
+});
 ```
 
 
@@ -232,11 +1126,15 @@ try {
 Updates the default bank account from a recipient
 
 ```java
-GetRecipientResponse updateRecipientDefaultBankAccount(
+CompletableFuture<GetRecipientResponse> updateRecipientDefaultBankAccountAsync(
     final String recipientId,
     final UpdateRecipientBankAccountRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -248,6 +1146,8 @@ GetRecipientResponse updateRecipientDefaultBankAccount(
 
 ## Response Type
 
+**200**
+
 [`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
 ## Example Usage
@@ -255,534 +1155,28 @@ GetRecipientResponse updateRecipientDefaultBankAccount(
 ```java
 String recipientId = "recipient_id0";
 UpdateRecipientBankAccountRequest request = new UpdateRecipientBankAccountRequest.Builder(
-    new CreateBankAccountRequest.Builder(
-        "holder_name0",
-        "holder_type6",
-        "holder_document8",
-        "bank2",
-        "branch_number0",
-        "account_number4",
-        "account_check_digit0",
-        "type6",
-        new LinkedHashMap<String, String>() {{
-            put("key0", "metadata1");
-            put("key1", "metadata0");
-        }}
-    )
-    .build(),
+    null,
     "bank_transfer"
 )
 .build();
 
 
-try {
-    GetRecipientResponse result = recipientsController.updateRecipientDefaultBankAccount(recipientId, request, null);
+recipientsController.updateRecipientDefaultBankAccountAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Transfers
-
-Gets a paginated list of transfers for the recipient
-
-```java
-ListTransferResponse getTransfers(
-    final String recipientId,
-    final Integer page,
-    final Integer size,
-    final String status,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-| `status` | `String` | Query, Optional | Filter for transfer status |
-| `createdSince` | `LocalDateTime` | Query, Optional | Filter for start range of transfer creation date |
-| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for end range of transfer creation date |
-
-## Response Type
-
-[`ListTransferResponse`](../../doc/models/list-transfer-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    ListTransferResponse result = recipientsController.getTransfers(recipientId, null, null, null, null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Transfer
-
-Gets a transfer
-
-```java
-GetTransferResponse getTransfer(
-    final String recipientId,
-    final String transferId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `transferId` | `String` | Template, Required | Transfer id |
-
-## Response Type
-
-[`GetTransferResponse`](../../doc/models/get-transfer-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-String transferId = "transfer_id6";
-
-try {
-    GetTransferResponse result = recipientsController.getTransfer(recipientId, transferId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Withdraw
-
-```java
-GetWithdrawResponse createWithdraw(
-    final String recipientId,
-    final CreateWithdrawRequest request)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | - |
-| `request` | [`CreateWithdrawRequest`](../../doc/models/create-withdraw-request.md) | Body, Required | - |
-
-## Response Type
-
-[`GetWithdrawResponse`](../../doc/models/get-withdraw-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-CreateWithdrawRequest request = new CreateWithdrawRequest.Builder(
-    242
-)
-.build();
-
-try {
-    GetWithdrawResponse result = recipientsController.createWithdraw(recipientId, request);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Anticipation
-
-Gets an anticipation
-
-```java
-GetAnticipationResponse getAnticipation(
-    final String recipientId,
-    final String anticipationId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `anticipationId` | `String` | Template, Required | Anticipation id |
-
-## Response Type
-
-[`GetAnticipationResponse`](../../doc/models/get-anticipation-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-String anticipationId = "anticipation_id0";
-
-try {
-    GetAnticipationResponse result = recipientsController.getAnticipation(recipientId, anticipationId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Recipient Transfer Settings
-
-```java
-GetRecipientResponse updateRecipientTransferSettings(
-    final String recipientId,
-    final UpdateTransferSettingsRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient Identificator |
-| `request` | [`UpdateTransferSettingsRequest`](../../doc/models/update-transfer-settings-request.md) | Body, Required | - |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-UpdateTransferSettingsRequest request = new UpdateTransferSettingsRequest.Builder(
-    "transfer_enabled2",
-    "transfer_interval6",
-    "transfer_day6"
-)
-.build();
-
-
-try {
-    GetRecipientResponse result = recipientsController.updateRecipientTransferSettings(recipientId, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Recipient by Code
-
-Retrieves recipient information
-
-```java
-GetRecipientResponse getRecipientByCode(
-    final String code)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `code` | `String` | Template, Required | Recipient code |
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-String code = "code8";
-
-try {
-    GetRecipientResponse result = recipientsController.getRecipientByCode(code);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Automatic Anticipation Settings
-
-Updates recipient metadata
-
-```java
-GetRecipientResponse updateAutomaticAnticipationSettings(
-    final String recipientId,
-    final UpdateAutomaticAnticipationSettingsRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateAutomaticAnticipationSettingsRequest`](../../doc/models/update-automatic-anticipation-settings-request.md) | Body, Required | Metadata |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-UpdateAutomaticAnticipationSettingsRequest request = new UpdateAutomaticAnticipationSettingsRequest.Builder()
-    .build();
-
-
-try {
-    GetRecipientResponse result = recipientsController.updateAutomaticAnticipationSettings(recipientId, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Transfer
-
-Creates a transfer for a recipient
-
-```java
-GetTransferResponse createTransfer(
-    final String recipientId,
-    final CreateTransferRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient Id |
-| `request` | [`CreateTransferRequest`](../../doc/models/create-transfer-request.md) | Body, Required | Transfer data |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetTransferResponse`](../../doc/models/get-transfer-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-CreateTransferRequest request = new CreateTransferRequest.Builder(
-    242,
-    new LinkedHashMap<String, String>() {{
-        put("key0", "metadata3");
-    }}
-)
-.build();
-
-
-try {
-    GetTransferResponse result = recipientsController.createTransfer(recipientId, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Recipient
-
-Creates a new recipient
-
-```java
-GetRecipientResponse createRecipient(
-    final CreateRecipientRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `request` | [`CreateRecipientRequest`](../../doc/models/create-recipient-request.md) | Body, Required | Recipient data |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-CreateRecipientRequest request = new CreateRecipientRequest.Builder(
-    new CreateBankAccountRequest.Builder(
-        "holder_name4",
-        "holder_type0",
-        "holder_document2",
-        "bank6",
-        "branch_number4",
-        "account_number8",
-        "account_check_digit4",
-        "type2",
-        new LinkedHashMap<String, String>() {{
-            put("key0", "metadata5");
-            put("key1", "metadata4");
-            put("key2", "metadata3");
-        }}
-    )
-    .build(),
-    new LinkedHashMap<String, String>() {{
-        put("key0", "metadata3");
-    }},
-    "code4",
-    "bank_transfer"
-)
-.build();
-
-
-try {
-    GetRecipientResponse result = recipientsController.createRecipient(request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Default Recipient
-
-```java
-GetRecipientResponse getDefaultRecipient()
-```
-
-## Response Type
-
-[`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
-
-## Example Usage
-
-```java
-try {
-    GetRecipientResponse result = recipientsController.getDefaultRecipient();
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Anticipation
-
-Creates an anticipation
-
-```java
-GetAnticipationResponse createAnticipation(
-    final String recipientId,
-    final CreateAnticipationRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`CreateAnticipationRequest`](../../doc/models/create-anticipation-request.md) | Body, Required | Anticipation data |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetAnticipationResponse`](../../doc/models/get-anticipation-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-CreateAnticipationRequest request = new CreateAnticipationRequest.Builder(
-    242,
-    "timeframe8",
-    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
-)
-.build();
-
-
-try {
-    GetAnticipationResponse result = recipientsController.createAnticipation(recipientId, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Anticipation Limits
-
-Gets the anticipation limits for a recipient
-
-```java
-GetAnticipationLimitResponse getAnticipationLimits(
-    final String recipientId,
-    final String timeframe,
-    final LocalDateTime paymentDate)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `timeframe` | `String` | Query, Required | Timeframe |
-| `paymentDate` | `LocalDateTime` | Query, Required | Anticipation payment date |
-
-## Response Type
-
-[`GetAnticipationLimitResponse`](../../doc/models/get-anticipation-limit-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-String timeframe = "timeframe2";
-LocalDateTime paymentDate = DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z");
-
-try {
-    GetAnticipationLimitResponse result = recipientsController.getAnticipationLimits(recipientId, timeframe, paymentDate);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
@@ -791,11 +1185,15 @@ try {
 Updates recipient metadata
 
 ```java
-GetRecipientResponse updateRecipientMetadata(
+CompletableFuture<GetRecipientResponse> updateRecipientMetadataAsync(
     final String recipientId,
     final UpdateMetadataRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -806,6 +1204,8 @@ GetRecipientResponse updateRecipientMetadata(
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
@@ -821,168 +1221,49 @@ UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
 .build();
 
 
-try {
-    GetRecipientResponse result = recipientsController.updateRecipientMetadata(recipientId, request, null);
+recipientsController.updateRecipientMetadataAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Get Anticipations
-
-Retrieves a paginated list of anticipations from a recipient
+# Update Recipient Transfer Settings
 
 ```java
-ListAnticipationResponse getAnticipations(
+CompletableFuture<GetRecipientResponse> updateRecipientTransferSettingsAsync(
     final String recipientId,
-    final Integer page,
-    final Integer size,
-    final String status,
-    final String timeframe,
-    final LocalDateTime paymentDateSince,
-    final LocalDateTime paymentDateUntil,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `page` | `Integer` | Query, Optional | Page number |
-| `size` | `Integer` | Query, Optional | Page size |
-| `status` | `String` | Query, Optional | Filter for anticipation status |
-| `timeframe` | `String` | Query, Optional | Filter for anticipation timeframe |
-| `paymentDateSince` | `LocalDateTime` | Query, Optional | Filter for start range for anticipation payment date |
-| `paymentDateUntil` | `LocalDateTime` | Query, Optional | Filter for end range for anticipation payment date |
-| `createdSince` | `LocalDateTime` | Query, Optional | Filter for start range for anticipation creation date |
-| `createdUntil` | `LocalDateTime` | Query, Optional | Filter for end range for anticipation creation date |
-
-## Response Type
-
-[`ListAnticipationResponse`](../../doc/models/list-anticipation-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    ListAnticipationResponse result = recipientsController.getAnticipations(recipientId, null, null, null, null, null, null, null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Get Withdrawals
-
-Gets a paginated list of transfers for the recipient
-
-```java
-ListWithdrawals getWithdrawals(
-    final String recipientId,
-    final Integer page,
-    final Integer size,
-    final String status,
-    final LocalDateTime createdSince,
-    final LocalDateTime createdUntil)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | - |
-| `page` | `Integer` | Query, Optional | - |
-| `size` | `Integer` | Query, Optional | - |
-| `status` | `String` | Query, Optional | - |
-| `createdSince` | `LocalDateTime` | Query, Optional | - |
-| `createdUntil` | `LocalDateTime` | Query, Optional | - |
-
-## Response Type
-
-[`ListWithdrawals`](../../doc/models/list-withdrawals.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    ListWithdrawals result = recipientsController.getWithdrawals(recipientId, null, null, null, null, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create KYC Link
-
-Create a KYC link
-
-```java
-CreateKYCLinkResponse createKYCLink(
-    final String recipientId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-
-## Response Type
-
-[`CreateKYCLinkResponse`](../../doc/models/create-kyc-link-response.md)
-
-## Example Usage
-
-```java
-String recipientId = "recipient_id0";
-
-try {
-    CreateKYCLinkResponse result = recipientsController.createKYCLink(recipientId);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Update Recipient Code
-
-Updates recipient code
-
-```java
-GetRecipientResponse updateRecipientCode(
-    final String recipientId,
-    final UpdateRecipientCodeRequest request,
+    final UpdateTransferSettingsRequest request,
     final String idempotencyKey)
 ```
 
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `recipientId` | `String` | Template, Required | Recipient id |
-| `request` | [`UpdateRecipientCodeRequest`](../../doc/models/update-recipient-code-request.md) | Body, Required | UpdateRecipientCodeRequest |
+| `recipientId` | `String` | Template, Required | Recipient Identificator |
+| `request` | [`UpdateTransferSettingsRequest`](../../doc/models/update-transfer-settings-request.md) | Body, Required | - |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetRecipientResponse`](../../doc/models/get-recipient-response.md)
 
@@ -990,19 +1271,29 @@ GetRecipientResponse updateRecipientCode(
 
 ```java
 String recipientId = "recipient_id0";
-UpdateRecipientCodeRequest request = new UpdateRecipientCodeRequest.Builder(
-    "code4"
+UpdateTransferSettingsRequest request = new UpdateTransferSettingsRequest.Builder(
+    "transfer_enabled2",
+    "transfer_interval6",
+    "transfer_day6"
 )
 .build();
 
 
-try {
-    GetRecipientResponse result = recipientsController.updateRecipientCode(recipientId, request, null);
+recipientsController.updateRecipientTransferSettingsAsync(recipientId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 

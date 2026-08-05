@@ -18,25 +18,17 @@ Split response
 | `Options` | [`GetSplitOptionsResponse`](../../doc/models/get-split-options-response.md) | Optional | - | GetSplitOptionsResponse getOptions() | setOptions(GetSplitOptionsResponse options) |
 | `Id` | `String` | Optional | - | String getId() | setId(String id) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "type0",
-  "amount": 252,
-  "recipient": {
-    "id": "id8",
-    "name": "name8",
-    "email": "email8",
-    "document": "document8",
-    "description": "description2"
-  },
-  "gateway_id": "gateway_id0",
-  "options": {
-    "liable": false,
-    "charge_processing_fee": false,
-    "charge_remainder_fee": "charge_remainder_fee0"
-  }
-}
+```java
+import me.pagar.api.models.GetSplitResponse;
+
+GetSplitResponse getSplitResponse = new GetSplitResponse.Builder()
+    .type("type0")
+    .amount(42)
+    .recipient(null)
+    .gatewayId("gateway_id0")
+    .options(null)
+    .build();
 ```
 

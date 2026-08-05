@@ -13,11 +13,14 @@ Request for canceling a subscription
 |  --- | --- | --- | --- | --- | --- |
 | `CancelPendingInvoices` | `boolean` | Required | Indicates if the pending invoices must also be canceled.<br><br>**Default**: `true` | boolean getCancelPendingInvoices() | setCancelPendingInvoices(boolean cancelPendingInvoices) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "cancel_pending_invoices": true
-}
+```java
+import me.pagar.api.models.CreateCancelSubscriptionRequest;
+
+CreateCancelSubscriptionRequest createCancelSubscriptionRequest = new CreateCancelSubscriptionRequest.Builder(
+    true
+)
+.build();
 ```
 

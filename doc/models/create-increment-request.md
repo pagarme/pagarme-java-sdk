@@ -17,15 +17,18 @@ Request for creating a new increment
 | `Cycles` | `Integer` | Optional | Number of cycles that the increment will be applied | Integer getCycles() | setCycles(Integer cycles) |
 | `Description` | `String` | Optional | Description | String getDescription() | setDescription(String description) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "value": 72.04,
-  "increment_type": "increment_type4",
-  "item_id": "item_id8",
-  "cycles": 196,
-  "description": "description8"
-}
+```java
+import me.pagar.api.models.CreateIncrementRequest;
+
+CreateIncrementRequest createIncrementRequest = new CreateIncrementRequest.Builder(
+    84.78D,
+    "increment_type8",
+    "item_id4"
+)
+.cycles(202)
+.description("description4")
+.build();
 ```
 

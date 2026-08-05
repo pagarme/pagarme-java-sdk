@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ListPayablesResponse {
     private OptionalNullable<List<GetPayableResponse>> data;
-    private OptionalNullable<PagingResponse> paging;
+    private CursorPagingResponse paging;
 
     /**
      * Default constructor.
@@ -28,24 +28,24 @@ public class ListPayablesResponse {
 
     /**
      * Initialization constructor.
+     * @param  paging  CursorPagingResponse value for paging.
      * @param  data  List of GetPayableResponse value for data.
-     * @param  paging  PagingResponse value for paging.
      */
     public ListPayablesResponse(
-            List<GetPayableResponse> data,
-            PagingResponse paging) {
+            CursorPagingResponse paging,
+            List<GetPayableResponse> data) {
         this.data = OptionalNullable.of(data);
-        this.paging = OptionalNullable.of(paging);
+        this.paging = paging;
     }
 
     /**
      * Initialization constructor.
+     * @param  paging  CursorPagingResponse value for paging.
      * @param  data  List of GetPayableResponse value for data.
-     * @param  paging  PagingResponse value for paging.
      */
 
-    protected ListPayablesResponse(OptionalNullable<List<GetPayableResponse>> data,
-            OptionalNullable<PagingResponse> paging) {
+    protected ListPayablesResponse(CursorPagingResponse paging,
+            OptionalNullable<List<GetPayableResponse>> data) {
         this.data = data;
         this.paging = paging;
     }
@@ -90,42 +90,23 @@ public class ListPayablesResponse {
     }
 
     /**
-     * Internal Getter for Paging.
-     * Paging object
-     * @return Returns the Internal PagingResponse
+     * Getter for Paging.
+     * Cursor paging response
+     * @return Returns the CursorPagingResponse
      */
     @JsonGetter("paging")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonSerialize(using = OptionalNullable.Serializer.class)
-    protected OptionalNullable<PagingResponse> internalGetPaging() {
-        return this.paging;
-    }
-
-    /**
-     * Getter for Paging.
-     * Paging object
-     * @return Returns the PagingResponse
-     */
-    public PagingResponse getPaging() {
-        return OptionalNullable.getFrom(paging);
+    public CursorPagingResponse getPaging() {
+        return paging;
     }
 
     /**
      * Setter for Paging.
-     * Paging object
-     * @param paging Value for PagingResponse
+     * Cursor paging response
+     * @param paging Value for CursorPagingResponse
      */
     @JsonSetter("paging")
-    public void setPaging(PagingResponse paging) {
-        this.paging = OptionalNullable.of(paging);
-    }
-
-    /**
-     * UnSetter for Paging.
-     * Paging object
-     */
-    public void unsetPaging() {
-        paging = null;
+    public void setPaging(CursorPagingResponse paging) {
+        this.paging = paging;
     }
 
     /**
@@ -134,7 +115,7 @@ public class ListPayablesResponse {
      */
     @Override
     public String toString() {
-        return "ListPayablesResponse [" + "data=" + data + ", paging=" + paging + "]";
+        return "ListPayablesResponse [" + "paging=" + paging + ", data=" + data + "]";
     }
 
     /**
@@ -143,9 +124,8 @@ public class ListPayablesResponse {
      * @return a new {@link ListPayablesResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder();
+        Builder builder = new Builder(paging);
         builder.data = internalGetData();
-        builder.paging = internalGetPaging();
         return builder;
     }
 
@@ -153,10 +133,32 @@ public class ListPayablesResponse {
      * Class to build instances of {@link ListPayablesResponse}.
      */
     public static class Builder {
+        private CursorPagingResponse paging;
         private OptionalNullable<List<GetPayableResponse>> data;
-        private OptionalNullable<PagingResponse> paging;
 
+        /**
+         * Initialization constructor.
+         */
+        public Builder() {
+        }
 
+        /**
+         * Initialization constructor.
+         * @param  paging  CursorPagingResponse value for paging.
+         */
+        public Builder(CursorPagingResponse paging) {
+            this.paging = paging;
+        }
+
+        /**
+         * Setter for paging.
+         * @param  paging  CursorPagingResponse value for paging.
+         * @return Builder
+         */
+        public Builder paging(CursorPagingResponse paging) {
+            this.paging = paging;
+            return this;
+        }
 
         /**
          * Setter for data.
@@ -178,30 +180,11 @@ public class ListPayablesResponse {
         }
 
         /**
-         * Setter for paging.
-         * @param  paging  PagingResponse value for paging.
-         * @return Builder
-         */
-        public Builder paging(PagingResponse paging) {
-            this.paging = OptionalNullable.of(paging);
-            return this;
-        }
-
-        /**
-         * UnSetter for paging.
-         * @return Builder
-         */
-        public Builder unsetPaging() {
-            paging = null;
-            return this;
-        }
-
-        /**
          * Builds a new {@link ListPayablesResponse} object using the set fields.
          * @return {@link ListPayablesResponse}
          */
         public ListPayablesResponse build() {
-            return new ListPayablesResponse(data, paging);
+            return new ListPayablesResponse(paging, data);
         }
     }
 }

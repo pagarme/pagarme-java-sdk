@@ -14,16 +14,19 @@ Request for creating a transfer
 | `Amount` | `int` | Required | Transfer amount | int getAmount() | setAmount(int amount) |
 | `Metadata` | `Map<String, String>` | Required | Metadata | Map<String, String> getMetadata() | setMetadata(Map<String, String> metadata) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 148,
-  "metadata": {
-    "key0": "metadata7",
-    "key1": "metadata8",
-    "key2": "metadata9"
-  }
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.models.CreateTransferRequest;
+
+CreateTransferRequest createTransferRequest = new CreateTransferRequest.Builder(
+    192,
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+        put("key1", "metadata2");
+    }}
+)
+.build();
 ```
 

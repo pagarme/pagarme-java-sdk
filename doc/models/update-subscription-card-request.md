@@ -15,20 +15,24 @@ Request for updating the card from a subscription
 | `CardId` | `String` | Required | Credit card id | String getCardId() | setCardId(String cardId) |
 | `IndirectAcceptor` | `String` | Optional | Business model identifier | String getIndirectAcceptor() | setIndirectAcceptor(String indirectAcceptor) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "card": {
-    "type": "credit",
-    "number": "number6",
-    "holder_name": "holder_name2",
-    "exp_month": 228,
-    "exp_year": 68,
-    "cvv": "cvv4"
-  },
-  "card_id": "card_id0",
-  "indirect_acceptor": "indirect_acceptor0"
-}
+```java
+import me.pagar.api.models.CreateCardRequest;
+import me.pagar.api.models.UpdateSubscriptionCardRequest;
+
+UpdateSubscriptionCardRequest updateSubscriptionCardRequest = new UpdateSubscriptionCardRequest.Builder(
+    new CreateCardRequest.Builder()
+        .number("number6")
+        .holderName("holder_name2")
+        .expMonth(228)
+        .expYear(68)
+        .cvv("cvv4")
+        .type("credit")
+        .build(),
+    null
+)
+.indirectAcceptor("indirect_acceptor6")
+.build();
 ```
 

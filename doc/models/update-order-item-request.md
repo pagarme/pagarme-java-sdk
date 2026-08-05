@@ -16,14 +16,17 @@ Update Order item Request
 | `Quantity` | `int` | Required | - | int getQuantity() | setQuantity(int quantity) |
 | `Category` | `String` | Required | - | String getCategory() | setCategory(String category) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 130,
-  "description": "description4",
-  "quantity": 244,
-  "category": "category2"
-}
+```java
+import me.pagar.api.models.UpdateOrderItemRequest;
+
+UpdateOrderItemRequest updateOrderItemRequest = new UpdateOrderItemRequest.Builder(
+    202,
+    "description0",
+    60,
+    "category8"
+)
+.build();
 ```
 

@@ -12,12 +12,14 @@
 | `TargetId` | `String` | Optional | - | String getTargetId() | setTargetId(String targetId) |
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "target_id": "target_id0",
-  "type": "type0"
-}
+```java
+import me.pagar.api.models.GetTransferTargetResponse;
+
+GetTransferTargetResponse getTransferTargetResponse = new GetTransferTargetResponse.Builder()
+    .targetId("target_id4")
+    .type("type6")
+    .build();
 ```
 
