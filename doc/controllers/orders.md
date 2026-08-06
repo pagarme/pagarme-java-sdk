@@ -10,69 +10,171 @@ OrdersController ordersController = client.getOrdersController();
 
 ## Methods
 
-* [Delete All Order Items](../../doc/controllers/orders.md#delete-all-order-items)
-* [Get Order Item](../../doc/controllers/orders.md#get-order-item)
-* [Update Order Metadata](../../doc/controllers/orders.md#update-order-metadata)
-* [Delete Order Item](../../doc/controllers/orders.md#delete-order-item)
-* [Get Order](../../doc/controllers/orders.md#get-order)
-* [Get Orders](../../doc/controllers/orders.md#get-orders)
-* [Update Order Item](../../doc/controllers/orders.md#update-order-item)
 * [Close Order](../../doc/controllers/orders.md#close-order)
 * [Create Order](../../doc/controllers/orders.md#create-order)
 * [Create Order Item](../../doc/controllers/orders.md#create-order-item)
+* [Delete All Order Items](../../doc/controllers/orders.md#delete-all-order-items)
+* [Delete Order Item](../../doc/controllers/orders.md#delete-order-item)
+* [Get Order](../../doc/controllers/orders.md#get-order)
+* [Get Order Item](../../doc/controllers/orders.md#get-order-item)
+* [Get Orders](../../doc/controllers/orders.md#get-orders)
+* [Update Order Item](../../doc/controllers/orders.md#update-order-item)
+* [Update Order Metadata](../../doc/controllers/orders.md#update-order-metadata)
 
 
-# Delete All Order Items
+# Close Order
 
 ```java
-GetOrderResponse deleteAllOrderItems(
-    final String orderId,
+CompletableFuture<GetOrderResponse> closeOrderAsync(
+    final String id,
+    final UpdateOrderStatusRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order Id |
+| `id` | `String` | Template, Required | Order Id |
+| `request` | [`UpdateOrderStatusRequest`](../../doc/models/update-order-status-request.md) | Body, Required | Update Order Model |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
 ```java
-String orderId = "orderId2";
+String id = "id0";
+UpdateOrderStatusRequest request = new UpdateOrderStatusRequest.Builder(
+    "status8"
+)
+.build();
 
-try {
-    GetOrderResponse result = ordersController.deleteAllOrderItems(orderId, null);
+
+ordersController.closeOrderAsync(id, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Get Order Item
+# Create Order
+
+Creates a new Order
 
 ```java
-GetOrderItemResponse getOrderItem(
-    final String orderId,
-    final String itemId)
+CompletableFuture<GetOrderResponse> createOrderAsync(
+    final CreateOrderRequest body,
+    final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreateOrderRequest`](../../doc/models/create-order-request.md) | Body, Required | Request for creating an order |
+| `idempotencyKey` | `String` | Header, Optional | - |
+
+## Response Type
+
+**200**
+
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
+
+## Example Usage
+
+```java
+CreateOrderRequest body = new CreateOrderRequest.Builder(
+    Arrays.asList(
+        null
+    ),
+    new CreateCustomerRequest.Builder(
+        "Tony Stark",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    )
+    .build(),
+    Arrays.asList(
+        null
+    ),
+    null,
+    true
+)
+.build();
+
+
+ordersController.createOrderAsync(body, null).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Create Order Item
+
+```java
+CompletableFuture<GetOrderItemResponse> createOrderItemAsync(
+    final String orderId,
+    final CreateOrderItemRequest request,
+    final String idempotencyKey)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `orderId` | `String` | Template, Required | Order Id |
-| `itemId` | `String` | Template, Required | Item Id |
+| `request` | [`CreateOrderItemRequest`](../../doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
+| `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
@@ -80,73 +182,95 @@ GetOrderItemResponse getOrderItem(
 
 ```java
 String orderId = "orderId2";
-String itemId = "itemId8";
+CreateOrderItemRequest request = new CreateOrderItemRequest.Builder(
+    242,
+    "description6",
+    100,
+    "category4"
+)
+.build();
 
-try {
-    GetOrderItemResponse result = ordersController.getOrderItem(orderId, itemId);
+
+ordersController.createOrderItemAsync(orderId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Update Order Metadata
-
-Updates the metadata from an order
+# Delete All Order Items
 
 ```java
-GetOrderResponse updateOrderMetadata(
+CompletableFuture<GetOrderResponse> deleteAllOrderItemsAsync(
     final String orderId,
-    final UpdateMetadataRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | The order id |
-| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the order metadata |
+| `orderId` | `String` | Template, Required | Order Id |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
 ```java
-String orderId = "order_id6";
-UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
-    new LinkedHashMap<String, String>() {{
-        put("key0", "metadata3");
-    }}
-)
-.build();
+String orderId = "orderId2";
 
-
-try {
-    GetOrderResponse result = ordersController.updateOrderMetadata(orderId, request, null);
+ordersController.deleteAllOrderItemsAsync(orderId, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
 # Delete Order Item
 
 ```java
-GetOrderItemResponse deleteOrderItem(
+CompletableFuture<GetOrderItemResponse> deleteOrderItemAsync(
     final String orderId,
     final String itemId,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -158,6 +282,8 @@ GetOrderItemResponse deleteOrderItem(
 
 ## Response Type
 
+**200**
+
 [`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
 ## Example Usage
@@ -166,14 +292,22 @@ GetOrderItemResponse deleteOrderItem(
 String orderId = "orderId2";
 String itemId = "itemId8";
 
-try {
-    GetOrderItemResponse result = ordersController.deleteOrderItem(orderId, itemId, null);
+ordersController.deleteOrderItemAsync(orderId, itemId, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
@@ -182,9 +316,13 @@ try {
 Gets an order
 
 ```java
-GetOrderResponse getOrder(
+CompletableFuture<GetOrderResponse> getOrderAsync(
     final String orderId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -194,6 +332,8 @@ GetOrderResponse getOrder(
 
 ## Response Type
 
+**200**
+
 [`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
@@ -201,14 +341,72 @@ GetOrderResponse getOrder(
 ```java
 String orderId = "order_id6";
 
-try {
-    GetOrderResponse result = ordersController.getOrder(orderId);
+ordersController.getOrderAsync(orderId).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
+```
+
+
+# Get Order Item
+
+```java
+CompletableFuture<GetOrderItemResponse> getOrderItemAsync(
+    final String orderId,
+    final String itemId)
+```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `orderId` | `String` | Template, Required | Order Id |
+| `itemId` | `String` | Template, Required | Item Id |
+
+## Response Type
+
+**200**
+
+[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
+
+## Example Usage
+
+```java
+String orderId = "orderId2";
+String itemId = "itemId8";
+
+ordersController.getOrderItemAsync(orderId, itemId).thenAccept(result -> {
+    // TODO success callback handler
+    System.out.println(result);
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
@@ -217,7 +415,7 @@ try {
 Gets all orders
 
 ```java
-ListOrderResponse getOrders(
+CompletableFuture<ListOrderResponse> getOrdersAsync(
     final Integer page,
     final Integer size,
     final String code,
@@ -226,6 +424,10 @@ ListOrderResponse getOrders(
     final LocalDateTime createdUntil,
     final String customerId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -241,31 +443,45 @@ ListOrderResponse getOrders(
 
 ## Response Type
 
+**200**
+
 [`ListOrderResponse`](../../doc/models/list-order-response.md)
 
 ## Example Usage
 
 ```java
-try {
-    ListOrderResponse result = ordersController.getOrders(null, null, null, null, null, null, null);
+ordersController.getOrdersAsync(null, null, null, null, null, null, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
 # Update Order Item
 
 ```java
-GetOrderItemResponse updateOrderItem(
+CompletableFuture<GetOrderItemResponse> updateOrderItemAsync(
     final String orderId,
     final String itemId,
     final UpdateOrderItemRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -277,6 +493,8 @@ GetOrderItemResponse updateOrderItem(
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
+
+**200**
 
 [`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
 
@@ -294,183 +512,81 @@ UpdateOrderItemRequest request = new UpdateOrderItemRequest.Builder(
 .build();
 
 
-try {
-    GetOrderItemResponse result = ordersController.updateOrderItem(orderId, itemId, request, null);
+ordersController.updateOrderItemAsync(orderId, itemId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 
 
-# Close Order
+# Update Order Metadata
+
+Updates the metadata from an order
 
 ```java
-GetOrderResponse closeOrder(
-    final String id,
-    final UpdateOrderStatusRequest request,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `String` | Template, Required | Order Id |
-| `request` | [`UpdateOrderStatusRequest`](../../doc/models/update-order-status-request.md) | Body, Required | Update Order Model |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetOrderResponse`](../../doc/models/get-order-response.md)
-
-## Example Usage
-
-```java
-String id = "id0";
-UpdateOrderStatusRequest request = new UpdateOrderStatusRequest.Builder(
-    "status8"
-)
-.build();
-
-
-try {
-    GetOrderResponse result = ordersController.closeOrder(id, request, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Order
-
-Creates a new Order
-
-```java
-GetOrderResponse createOrder(
-    final CreateOrderRequest body,
-    final String idempotencyKey)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`CreateOrderRequest`](../../doc/models/create-order-request.md) | Body, Required | Request for creating an order |
-| `idempotencyKey` | `String` | Header, Optional | - |
-
-## Response Type
-
-[`GetOrderResponse`](../../doc/models/get-order-response.md)
-
-## Example Usage
-
-```java
-CreateOrderRequest body = new CreateOrderRequest.Builder(
-    Arrays.asList(
-        new CreateOrderItemRequest.Builder(
-            164,
-            "description2",
-            22,
-            "category6"
-        )
-        .build()
-    ),
-    new CreateCustomerRequest.Builder(
-        "Tony Stark",
-        "email6",
-        "document6",
-        "type0",
-        new CreateAddressRequest.Builder(
-            "street6",
-            "number4",
-            "zip_code0",
-            "neighborhood2",
-            "city6",
-            "state2",
-            "country0",
-            "complement2",
-            "line_10",
-            "line_24"
-        )
-        .build(),
-        new LinkedHashMap<String, String>() {{
-            put("key0", "metadata3");
-        }},
-        new CreatePhonesRequest.Builder()
-            .build(),
-        "code8"
-    )
-    .build(),
-    Arrays.asList(
-        new CreatePaymentRequest.Builder(
-            "payment_method8"
-        )
-        .build()
-    ),
-    "code4",
-    true
-)
-.build();
-
-
-try {
-    GetOrderResponse result = ordersController.createOrder(body, null);
-    System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-
-# Create Order Item
-
-```java
-GetOrderItemResponse createOrderItem(
+CompletableFuture<GetOrderResponse> updateOrderMetadataAsync(
     final String orderId,
-    final CreateOrderItemRequest request,
+    final UpdateMetadataRequest request,
     final String idempotencyKey)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `orderId` | `String` | Template, Required | Order Id |
-| `request` | [`CreateOrderItemRequest`](../../doc/models/create-order-item-request.md) | Body, Required | Order Item Model |
+| `orderId` | `String` | Template, Required | The order id |
+| `request` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Required | Request for updating the order metadata |
 | `idempotencyKey` | `String` | Header, Optional | - |
 
 ## Response Type
 
-[`GetOrderItemResponse`](../../doc/models/get-order-item-response.md)
+**200**
+
+[`GetOrderResponse`](../../doc/models/get-order-response.md)
 
 ## Example Usage
 
 ```java
-String orderId = "orderId2";
-CreateOrderItemRequest request = new CreateOrderItemRequest.Builder(
-    242,
-    "description6",
-    100,
-    "category4"
+String orderId = "order_id6";
+UpdateMetadataRequest request = new UpdateMetadataRequest.Builder(
+    new LinkedHashMap<String, String>() {{
+        put("key0", "metadata3");
+    }}
 )
 .build();
 
 
-try {
-    GetOrderItemResponse result = ordersController.createOrderItem(orderId, request, null);
+ordersController.updateOrderMetadataAsync(orderId, request, null).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 

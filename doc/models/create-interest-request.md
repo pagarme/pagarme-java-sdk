@@ -15,13 +15,16 @@ Interest Request
 | `Type` | `String` | Required | Type | String getType() | setType(String type) |
 | `Amount` | `int` | Required | Amount | int getAmount() | setAmount(int amount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "days": 4,
-  "type": "\"percentage\" or \"flat\"",
-  "amount": 78
-}
+```java
+import me.pagar.api.models.CreateInterestRequest;
+
+CreateInterestRequest createInterestRequest = new CreateInterestRequest.Builder(
+    0,
+    "\"percentage\" or \"flat\"",
+    0
+)
+.build();
 ```
 

@@ -14,18 +14,14 @@ Anticipation limits
 | `Max` | [`GetAnticipationLimitResponse`](../../doc/models/get-anticipation-limit-response.md) | Optional | Max limit | GetAnticipationLimitResponse getMax() | setMax(GetAnticipationLimitResponse max) |
 | `Min` | [`GetAnticipationLimitResponse`](../../doc/models/get-anticipation-limit-response.md) | Optional | Min limit | GetAnticipationLimitResponse getMin() | setMin(GetAnticipationLimitResponse min) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "max": {
-    "amount": 140,
-    "anticipation_fee": 234
-  },
-  "min": {
-    "amount": 34,
-    "anticipation_fee": 60
-  }
-}
+```java
+import me.pagar.api.models.GetAnticipationLimitsResponse;
+
+GetAnticipationLimitsResponse getAnticipationLimitsResponse = new GetAnticipationLimitsResponse.Builder()
+    .max(null)
+    .min(null)
+    .build();
 ```
 

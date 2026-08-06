@@ -15,15 +15,17 @@
 | `Delay` | `Integer` | Optional | - | Integer getDelay() | setDelay(Integer delay) |
 | `Days` | `Integer` | Optional | - | Integer getDays() | setDays(Integer days) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "enabled": false,
-  "type": "type8",
-  "volume_percentage": 132,
-  "delay": 158,
-  "days": 66
-}
+```java
+import me.pagar.api.models.UpdateAutomaticAnticipationSettingsRequest;
+
+UpdateAutomaticAnticipationSettingsRequest updateAutomaticAnticipationSettingsRequest = new UpdateAutomaticAnticipationSettingsRequest.Builder()
+    .enabled(false)
+    .type("type4")
+    .volumePercentage(178)
+    .delay(112)
+    .days(20)
+    .build();
 ```
 

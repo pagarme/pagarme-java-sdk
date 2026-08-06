@@ -6,11 +6,12 @@
 
 package me.pagar.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.DateTimeHelper;
 import me.pagar.api.Server;
@@ -39,214 +40,6 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
-     * @param  orderId  Required parameter: Order Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetOrderResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetOrderResponse deleteAllOrderItems(
-            final String orderId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareDeleteAllOrderItemsRequest(orderId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for deleteAllOrderItems.
-     */
-    private ApiCall<GetOrderResponse, ApiException> prepareDeleteAllOrderItemsRequest(
-            final String orderId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetOrderResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/orders/{orderId}/items")
-                        .templateParam(param -> param.key("orderId").value(orderId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.DELETE))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetOrderResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  orderId  Required parameter: Order Id
-     * @param  itemId  Required parameter: Item Id
-     * @return    Returns the GetOrderItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetOrderItemResponse getOrderItem(
-            final String orderId,
-            final String itemId) throws ApiException, IOException {
-        return prepareGetOrderItemRequest(orderId, itemId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getOrderItem.
-     */
-    private ApiCall<GetOrderItemResponse, ApiException> prepareGetOrderItemRequest(
-            final String orderId,
-            final String itemId) throws IOException {
-        return new ApiCall.Builder<GetOrderItemResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/orders/{orderId}/items/{itemId}")
-                        .templateParam(param -> param.key("orderId").value(orderId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("itemId").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetOrderItemResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Updates the metadata from an order.
-     * @param  orderId  Required parameter: The order id
-     * @param  request  Required parameter: Request for updating the order metadata
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetOrderResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetOrderResponse updateOrderMetadata(
-            final String orderId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareUpdateOrderMetadataRequest(orderId, request, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for updateOrderMetadata.
-     */
-    private ApiCall<GetOrderResponse, ApiException> prepareUpdateOrderMetadataRequest(
-            final String orderId,
-            final UpdateMetadataRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
-        return new ApiCall.Builder<GetOrderResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/Orders/{order_id}/metadata")
-                        .bodyParam(param -> param.value(request))
-                        .bodySerializer(() ->  ApiHelper.serialize(request))
-                        .templateParam(param -> param.key("order_id").value(orderId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param ->param.key("content-type").value("application/json"))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.PATCH))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetOrderResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * @param  orderId  Required parameter: Order Id
-     * @param  itemId  Required parameter: Item Id
-     * @param  idempotencyKey  Optional parameter: Example:
-     * @return    Returns the GetOrderItemResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetOrderItemResponse deleteOrderItem(
-            final String orderId,
-            final String itemId,
-            final String idempotencyKey) throws ApiException, IOException {
-        return prepareDeleteOrderItemRequest(orderId, itemId, idempotencyKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for deleteOrderItem.
-     */
-    private ApiCall<GetOrderItemResponse, ApiException> prepareDeleteOrderItemRequest(
-            final String orderId,
-            final String itemId,
-            final String idempotencyKey) throws IOException {
-        return new ApiCall.Builder<GetOrderItemResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/orders/{orderId}/items/{itemId}")
-                        .templateParam(param -> param.key("orderId").value(orderId)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("itemId").value(itemId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("idempotency-key")
-                                .value(idempotencyKey).isRequired(false))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.DELETE))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetOrderItemResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
-     * Gets an order.
-     * @param  orderId  Required parameter: Order id
-     * @return    Returns the GetOrderResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetOrderResponse getOrder(
-            final String orderId) throws ApiException, IOException {
-        return prepareGetOrderRequest(orderId).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getOrder.
-     */
-    private ApiCall<GetOrderResponse, ApiException> prepareGetOrderRequest(
-            final String orderId) throws IOException {
-        return new ApiCall.Builder<GetOrderResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/orders/{order_id}")
-                        .templateParam(param -> param.key("order_id").value(orderId)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .withAuth(auth -> auth
-                                .add("httpBasic"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetOrderResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * Gets all orders.
      * @param  page  Optional parameter: Page number
      * @param  size  Optional parameter: Page size
@@ -272,6 +65,33 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
+     * Gets all orders.
+     * @param  page  Optional parameter: Page number
+     * @param  size  Optional parameter: Page size
+     * @param  code  Optional parameter: Filter for order's code
+     * @param  status  Optional parameter: Filter for order's status
+     * @param  createdSince  Optional parameter: Filter for order's creation date start range
+     * @param  createdUntil  Optional parameter: Filter for order's creation date end range
+     * @param  customerId  Optional parameter: Filter for order's customer id
+     * @return    Returns the ListOrderResponse response from the API call
+     */
+    public CompletableFuture<ListOrderResponse> getOrdersAsync(
+            final Integer page,
+            final Integer size,
+            final String code,
+            final String status,
+            final LocalDateTime createdSince,
+            final LocalDateTime createdUntil,
+            final String customerId) {
+        try {
+            return prepareGetOrdersRequest(page, size, code, status, createdSince, createdUntil,
+            customerId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getOrders.
      */
     private ApiCall<ListOrderResponse, ApiException> prepareGetOrdersRequest(
@@ -281,7 +101,7 @@ public final class DefaultOrdersController extends BaseController implements Ord
             final String status,
             final LocalDateTime createdSince,
             final LocalDateTime createdUntil,
-            final String customerId) throws IOException {
+            final String customerId) {
         return new ApiCall.Builder<ListOrderResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -331,13 +151,32 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @param  request  Required parameter: Item Model
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderItemResponse response from the API call
+     */
+    public CompletableFuture<GetOrderItemResponse> updateOrderItemAsync(
+            final String orderId,
+            final String itemId,
+            final UpdateOrderItemRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateOrderItemRequest(orderId, itemId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for updateOrderItem.
      */
     private ApiCall<GetOrderItemResponse, ApiException> prepareUpdateOrderItemRequest(
             final String orderId,
             final String itemId,
             final UpdateOrderItemRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetOrderItemResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -365,6 +204,123 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetOrderResponse deleteAllOrderItems(
+            final String orderId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeleteAllOrderItemsRequest(orderId, idempotencyKey).execute();
+    }
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     */
+    public CompletableFuture<GetOrderResponse> deleteAllOrderItemsAsync(
+            final String orderId,
+            final String idempotencyKey) {
+        try {
+            return prepareDeleteAllOrderItemsRequest(orderId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for deleteAllOrderItems.
+     */
+    private ApiCall<GetOrderResponse, ApiException> prepareDeleteAllOrderItemsRequest(
+            final String orderId,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetOrderResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/orders/{orderId}/items")
+                        .templateParam(param -> param.key("orderId").value(orderId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetOrderResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetOrderItemResponse deleteOrderItem(
+            final String orderId,
+            final String itemId,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareDeleteOrderItemRequest(orderId, itemId, idempotencyKey).execute();
+    }
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderItemResponse response from the API call
+     */
+    public CompletableFuture<GetOrderItemResponse> deleteOrderItemAsync(
+            final String orderId,
+            final String itemId,
+            final String idempotencyKey) {
+        try {
+            return prepareDeleteOrderItemRequest(orderId, itemId, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for deleteOrderItem.
+     */
+    private ApiCall<GetOrderItemResponse, ApiException> prepareDeleteOrderItemRequest(
+            final String orderId,
+            final String itemId,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetOrderItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/orders/{orderId}/items/{itemId}")
+                        .templateParam(param -> param.key("orderId").value(orderId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("itemId").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.DELETE))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetOrderItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
      * @param  id  Required parameter: Order Id
      * @param  request  Required parameter: Update Order Model
      * @param  idempotencyKey  Optional parameter: Example:
@@ -380,12 +336,29 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
+     * @param  id  Required parameter: Order Id
+     * @param  request  Required parameter: Update Order Model
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     */
+    public CompletableFuture<GetOrderResponse> closeOrderAsync(
+            final String id,
+            final UpdateOrderStatusRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCloseOrderRequest(id, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for closeOrder.
      */
     private ApiCall<GetOrderResponse, ApiException> prepareCloseOrderRequest(
             final String id,
             final UpdateOrderStatusRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetOrderResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -425,11 +398,27 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
+     * Creates a new Order.
+     * @param  body  Required parameter: Request for creating an order
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     */
+    public CompletableFuture<GetOrderResponse> createOrderAsync(
+            final CreateOrderRequest body,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateOrderRequest(body, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createOrder.
      */
     private ApiCall<GetOrderResponse, ApiException> prepareCreateOrderRequest(
             final CreateOrderRequest body,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetOrderResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -468,12 +457,29 @@ public final class DefaultOrdersController extends BaseController implements Ord
     }
 
     /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  request  Required parameter: Order Item Model
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderItemResponse response from the API call
+     */
+    public CompletableFuture<GetOrderItemResponse> createOrderItemAsync(
+            final String orderId,
+            final CreateOrderItemRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateOrderItemRequest(orderId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createOrderItem.
      */
     private ApiCall<GetOrderItemResponse, ApiException> prepareCreateOrderItemRequest(
             final String orderId,
             final CreateOrderItemRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetOrderItemResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -493,6 +499,176 @@ public final class DefaultOrdersController extends BaseController implements Ord
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetOrderItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @return    Returns the GetOrderItemResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetOrderItemResponse getOrderItem(
+            final String orderId,
+            final String itemId) throws ApiException, IOException {
+        return prepareGetOrderItemRequest(orderId, itemId).execute();
+    }
+
+    /**
+     * @param  orderId  Required parameter: Order Id
+     * @param  itemId  Required parameter: Item Id
+     * @return    Returns the GetOrderItemResponse response from the API call
+     */
+    public CompletableFuture<GetOrderItemResponse> getOrderItemAsync(
+            final String orderId,
+            final String itemId) {
+        try {
+            return prepareGetOrderItemRequest(orderId, itemId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getOrderItem.
+     */
+    private ApiCall<GetOrderItemResponse, ApiException> prepareGetOrderItemRequest(
+            final String orderId,
+            final String itemId) {
+        return new ApiCall.Builder<GetOrderItemResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/orders/{orderId}/items/{itemId}")
+                        .templateParam(param -> param.key("orderId").value(orderId)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("itemId").value(itemId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetOrderItemResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Updates the metadata from an order.
+     * @param  orderId  Required parameter: The order id
+     * @param  request  Required parameter: Request for updating the order metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetOrderResponse updateOrderMetadata(
+            final String orderId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) throws ApiException, IOException {
+        return prepareUpdateOrderMetadataRequest(orderId, request, idempotencyKey).execute();
+    }
+
+    /**
+     * Updates the metadata from an order.
+     * @param  orderId  Required parameter: The order id
+     * @param  request  Required parameter: Request for updating the order metadata
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetOrderResponse response from the API call
+     */
+    public CompletableFuture<GetOrderResponse> updateOrderMetadataAsync(
+            final String orderId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareUpdateOrderMetadataRequest(orderId, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for updateOrderMetadata.
+     */
+    private ApiCall<GetOrderResponse, ApiException> prepareUpdateOrderMetadataRequest(
+            final String orderId,
+            final UpdateMetadataRequest request,
+            final String idempotencyKey) {
+        return new ApiCall.Builder<GetOrderResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/Orders/{order_id}/metadata")
+                        .bodyParam(param -> param.value(request))
+                        .bodySerializer(() ->  ApiHelper.serialize(request))
+                        .templateParam(param -> param.key("order_id").value(orderId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("idempotency-key")
+                                .value(idempotencyKey).isRequired(false))
+                        .headerParam(param ->param.key("content-type").value("application/json"))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.PATCH))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetOrderResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Gets an order.
+     * @param  orderId  Required parameter: Order id
+     * @return    Returns the GetOrderResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetOrderResponse getOrder(
+            final String orderId) throws ApiException, IOException {
+        return prepareGetOrderRequest(orderId).execute();
+    }
+
+    /**
+     * Gets an order.
+     * @param  orderId  Required parameter: Order id
+     * @return    Returns the GetOrderResponse response from the API call
+     */
+    public CompletableFuture<GetOrderResponse> getOrderAsync(
+            final String orderId) {
+        try {
+            return prepareGetOrderRequest(orderId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getOrder.
+     */
+    private ApiCall<GetOrderResponse, ApiException> prepareGetOrderRequest(
+            final String orderId) {
+        return new ApiCall.Builder<GetOrderResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/orders/{order_id}")
+                        .templateParam(param -> param.key("order_id").value(orderId)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .withAuth(auth -> auth
+                                .add("httpBasic"))
+                        .httpMethod(HttpMethod.GET))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetOrderResponse.class))
                         .nullify404(false)
                         .globalErrorCase(GLOBAL_ERROR_CASES))
                 .build();

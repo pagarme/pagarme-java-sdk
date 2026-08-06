@@ -16,29 +16,25 @@ Checkout card payment request
 | `Authentication` | [`CreatePaymentAuthenticationRequest`](../../doc/models/create-payment-authentication-request.md) | Optional | Creates payment authentication | CreatePaymentAuthenticationRequest getAuthentication() | setAuthentication(CreatePaymentAuthenticationRequest authentication) |
 | `Capture` | `Boolean` | Optional | Authorize and capture? | Boolean getCapture() | setCapture(Boolean capture) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "statement_descriptor": "statement_descriptor0",
-  "installments": [
-    {
-      "number": 164,
-      "total": 16
-    }
-  ],
-  "authentication": {
-    "type": "type2",
-    "threed_secure": {
-      "mpi": "mpi0",
-      "cavv": "cavv8",
-      "eci": "eci2",
-      "transaction_id": "transaction_id0",
-      "success_url": "success_url4",
-      "ds_transaction_id": "ds_transaction_id0"
-    }
-  },
-  "capture": false
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateCheckoutCardInstallmentOptionRequest;
+import me.pagar.api.models.CreateCheckoutCreditCardPaymentRequest;
+
+CreateCheckoutCreditCardPaymentRequest createCheckoutCreditCardPaymentRequest = new CreateCheckoutCreditCardPaymentRequest.Builder()
+    .statementDescriptor("statement_descriptor8")
+    .installments(Arrays.asList(
+        null,
+        new CreateCheckoutCardInstallmentOptionRequest.Builder(
+            0,
+            0
+        )
+        .build()
+    ))
+    .authentication(null)
+    .capture(false)
+    .build();
 ```
 

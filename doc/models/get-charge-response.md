@@ -34,16 +34,18 @@ Response object for getting a charge
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 | `PaymentOrigin` | [`GetPaymentOriginResponse`](../../doc/models/get-payment-origin-response.md) | Optional | - | GetPaymentOriginResponse getPaymentOrigin() | setPaymentOrigin(GetPaymentOriginResponse paymentOrigin) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "recurrency_cycle": "\"first\" or \"subsequent\"",
-  "id": "id0",
-  "code": "code8",
-  "gateway_id": "gateway_id0",
-  "amount": 164,
-  "status": "status2"
-}
+```java
+import me.pagar.api.models.GetChargeResponse;
+
+GetChargeResponse getChargeResponse = new GetChargeResponse.Builder()
+    .id("id4")
+    .code("code2")
+    .gatewayId("gateway_id6")
+    .amount(36)
+    .status("status4")
+    .recurrencyCycle("\"first\" or \"subsequent\"")
+    .build();
 ```
 

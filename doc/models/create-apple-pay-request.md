@@ -17,19 +17,18 @@ The ApplePay Token Payment Request
 | `Signature` | `String` | Required | Detached PKCS #7 signature, Base64 encoded as string | String getSignature() | setSignature(String signature) |
 | `MerchantIdentifier` | `String` | Required | ApplePay Merchant identifier | String getMerchantIdentifier() | setMerchantIdentifier(String merchantIdentifier) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "version": "version6",
-  "data": "data0",
-  "header": {
-    "public_key_hash": "public_key_hash4",
-    "ephemeral_public_key": "ephemeral_public_key6",
-    "transaction_id": "transaction_id4"
-  },
-  "signature": "signature8",
-  "merchant_identifier": "merchant_identifier4"
-}
+```java
+import me.pagar.api.models.CreateApplePayRequest;
+
+CreateApplePayRequest createApplePayRequest = new CreateApplePayRequest.Builder(
+    "version2",
+    "data6",
+    null,
+    "signature4",
+    "merchant_identifier0"
+)
+.build();
 ```
 

@@ -17,15 +17,17 @@ Information about the recipient on the gateway
 | `CreatedAt` | `String` | Optional | Creation date | String getCreatedAt() | setCreatedAt(String createdAt) |
 | `UpdatedAt` | `String` | Optional | Last update date | String getUpdatedAt() | setUpdatedAt(String updatedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway": "gateway2",
-  "status": "status4",
-  "pgid": "pgid8",
-  "created_at": "created_at0",
-  "updated_at": "updated_at8"
-}
+```java
+import me.pagar.api.models.GetGatewayRecipientResponse;
+
+GetGatewayRecipientResponse getGatewayRecipientResponse = new GetGatewayRecipientResponse.Builder()
+    .gateway("gateway0")
+    .status("status2")
+    .pgid("pgid6")
+    .createdAt("created_at8")
+    .updatedAt("updated_at6")
+    .build();
 ```
 

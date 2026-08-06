@@ -39,15 +39,17 @@ Resposta das configurações de pagamento do checkout
 | `AcceptedBrands` | `List<String>` | Optional | Accepted Brands | List<String> getAcceptedBrands() | setAcceptedBrands(List<String> acceptedBrands) |
 | `Pix` | [`GetCheckoutPixPaymentResponse`](../../doc/models/get-checkout-pix-payment-response.md) | Optional | Pix payment response | GetCheckoutPixPaymentResponse getPix() | setPix(GetCheckoutPixPaymentResponse pix) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id6",
-  "amount": 148,
-  "default_payment_method": "default_payment_method6",
-  "success_url": "success_url8",
-  "payment_url": "payment_url0"
-}
+```java
+import me.pagar.api.models.GetCheckoutPaymentResponse;
+
+GetCheckoutPaymentResponse getCheckoutPaymentResponse = new GetCheckoutPaymentResponse.Builder()
+    .id("id8")
+    .amount(8)
+    .defaultPaymentMethod("default_payment_method8")
+    .successUrl("success_url0")
+    .paymentUrl("payment_url2")
+    .build();
 ```
 

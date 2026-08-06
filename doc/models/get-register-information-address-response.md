@@ -20,15 +20,17 @@ Response object for getting an RegisterInformationAddress
 | `ZipCode` | `String` | Optional | - | String getZipCode() | setZipCode(String zipCode) |
 | `ReferencePoint` | `String` | Optional | - | String getReferencePoint() | setReferencePoint(String referencePoint) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "street": "street2",
-  "complementary": "complementary4",
-  "street_number": "street_number2",
-  "neighborhood": "neighborhood8",
-  "city": "city2"
-}
+```java
+import me.pagar.api.models.GetRegisterInformationAddressResponse;
+
+GetRegisterInformationAddressResponse getRegisterInformationAddressResponse = new GetRegisterInformationAddressResponse.Builder()
+    .street("street4")
+    .complementary("complementary6")
+    .streetNumber("street_number4")
+    .neighborhood("neighborhood0")
+    .city("city4")
+    .build();
 ```
 

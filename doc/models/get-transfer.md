@@ -23,31 +23,32 @@
 | `Source` | [`GetTransferSourceResponse`](../../doc/models/get-transfer-source-response.md) | Required | - | GetTransferSourceResponse getSource() | setSource(GetTransferSourceResponse source) |
 | `Target` | [`GetTransferTargetResponse`](../../doc/models/get-transfer-target-response.md) | Required | - | GetTransferTargetResponse getTarget() | setTarget(GetTransferTargetResponse target) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id8",
-  "gateway_id": "gateway_id8",
-  "amount": 122,
-  "status": "status0",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z",
-  "metadata": {
-    "key0": "metadata5"
-  },
-  "fee": 80,
-  "funding_date": "2016-03-13T12:52:32.123Z",
-  "funding_estimated_date": "2016-03-13T12:52:32.123Z",
-  "type": "type8",
-  "source": {
-    "source_id": "source_id8",
-    "type": "type6"
-  },
-  "target": {
-    "target_id": "target_id2",
-    "type": "type8"
-  }
-}
+```java
+import java.util.LinkedHashMap;
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetTransfer;
+
+GetTransfer getTransfer = new GetTransfer.Builder(
+    "id6",
+    "gateway_id4",
+    0,
+    "status2",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"),
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"),
+    "type4",
+    null,
+    null
+)
+.metadata(new LinkedHashMap<String, String>() {{
+        put("key0", "metadata7");
+        put("key1", "metadata8");
+        put("key2", "metadata9");
+    }})
+.fee(214)
+.fundingDate(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+.fundingEstimatedDate(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+.build();
 ```
 

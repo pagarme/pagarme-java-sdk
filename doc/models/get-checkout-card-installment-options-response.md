@@ -12,12 +12,15 @@
 | `Number` | `Long` | Required | Número de parcelas | Long getNumber() | setNumber(Long number) |
 | `Total` | `Integer` | Required | Valor total da compra | Integer getTotal() | setTotal(Integer total) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "number": 40,
-  "total": 188
-}
+```java
+import me.pagar.api.models.GetCheckoutCardInstallmentOptionsResponse;
+
+GetCheckoutCardInstallmentOptionsResponse getCheckoutCardInstallmentOptionsResponse = new GetCheckoutCardInstallmentOptionsResponse.Builder(
+    40L,
+    188
+)
+.build();
 ```
 

@@ -31,29 +31,30 @@ Generic response object for getting a transaction.
 | `Fine` | [`GetFineResponse`](../../doc/models/get-fine-response.md) | Optional | - | GetFineResponse getFine() | setFine(GetFineResponse fine) |
 | `MaxDaysToPayPastDue` | `Integer` | Optional | - | Integer getMaxDaysToPayPastDue() | setMaxDaysToPayPastDue(Integer maxDaysToPayPastDue) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "qr_code": "qr_code0",
-  "qr_code_url": "qr_code_url6",
-  "expires_at": "2016-03-13T12:52:32.123Z",
-  "additional_information": [
-    {
-      "Name": "Name0",
-      "Value": "Value2"
-    },
-    {
-      "Name": "Name0",
-      "Value": "Value2"
-    }
-  ],
-  "end_to_end_id": "end_to_end_id6"
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetPixTransactionResponse;
+import me.pagar.api.models.GetTransactionResponse;
+import me.pagar.api.models.PixAdditionalInformation;
+
+GetTransactionResponse getTransactionResponse = new GetPixTransactionResponse.Builder()
+    .qrCode("qr_code0")
+    .qrCodeUrl("qr_code_url6")
+    .expiresAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .additionalInformation(Arrays.asList(
+        null,
+        new PixAdditionalInformation.Builder()
+            .build()
+    ))
+    .endToEndId("end_to_end_id6")
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

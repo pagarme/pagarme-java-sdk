@@ -23,15 +23,18 @@
 | `Cycles` | `Integer` | Optional | - | Integer getCycles() | setCycles(Integer cycles) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "description": "description8",
-  "status": "status6",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetSubscriptionItemResponse;
+
+GetSubscriptionItemResponse getSubscriptionItemResponse = new GetSubscriptionItemResponse.Builder()
+    .id("id2")
+    .description("description2")
+    .status("status4")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .updatedAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

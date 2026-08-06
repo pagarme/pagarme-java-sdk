@@ -21,35 +21,23 @@ Shipping data
 | `EstimatedDeliveryDate` | `LocalDateTime` | Optional | Prazo estimado de entrega | LocalDateTime getEstimatedDeliveryDate() | setEstimatedDeliveryDate(LocalDateTime estimatedDeliveryDate) |
 | `Type` | `String` | Required | Shipping type | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 136,
-  "description": "description4",
-  "recipient_name": "recipient_name4",
-  "recipient_phone": "recipient_phone8",
-  "address_id": "address_id4",
-  "address": {
-    "street": "street6",
-    "number": "number4",
-    "zip_code": "zip_code0",
-    "neighborhood": "neighborhood2",
-    "city": "city6",
-    "state": "state2",
-    "country": "country0",
-    "complement": "complement2",
-    "metadata": {
-      "key0": "metadata3",
-      "key1": "metadata2",
-      "key2": "metadata1"
-    },
-    "line_1": "line_10",
-    "line_2": "line_24"
-  },
-  "max_delivery_date": "2016-03-13T12:52:32.123Z",
-  "estimated_delivery_date": "2016-03-13T12:52:32.123Z",
-  "type": "type4"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.CreateShippingRequest;
+
+CreateShippingRequest createShippingRequest = new CreateShippingRequest.Builder(
+    44,
+    "description0",
+    "recipient_name8",
+    "recipient_phone2",
+    "address_id0",
+    null,
+    "type0"
+)
+.maxDeliveryDate(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+.estimatedDeliveryDate(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+.build();
 ```
 

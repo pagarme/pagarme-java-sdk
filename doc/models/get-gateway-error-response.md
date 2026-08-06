@@ -13,11 +13,13 @@ Gateway Response
 |  --- | --- | --- | --- | --- | --- |
 | `Message` | `String` | Optional | The message error | String getMessage() | setMessage(String message) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "message": "message4"
-}
+```java
+import me.pagar.api.models.GetGatewayErrorResponse;
+
+GetGatewayErrorResponse getGatewayErrorResponse = new GetGatewayErrorResponse.Builder()
+    .message("message2")
+    .build();
 ```
 

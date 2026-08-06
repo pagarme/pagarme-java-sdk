@@ -13,13 +13,15 @@
 | `TransferInterval` | `String` | Optional | - | String getTransferInterval() | setTransferInterval(String transferInterval) |
 | `TransferDay` | `Integer` | Optional | - | Integer getTransferDay() | setTransferDay(Integer transferDay) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transfer_enabled": false,
-  "transfer_interval": "transfer_interval0",
-  "transfer_day": 52
-}
+```java
+import me.pagar.api.models.GetTransferSettingsResponse;
+
+GetTransferSettingsResponse getTransferSettingsResponse = new GetTransferSettingsResponse.Builder()
+    .transferEnabled(false)
+    .transferInterval("transfer_interval4")
+    .transferDay(156)
+    .build();
 ```
 

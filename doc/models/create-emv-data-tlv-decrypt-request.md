@@ -13,13 +13,16 @@
 | `Lenght` | `String` | Required | Emv lenght | String getLenght() | setLenght(String lenght) |
 | `Value` | `String` | Required | Emv value | String getValue() | setValue(String value) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "tag": "tag6",
-  "lenght": "lenght6",
-  "value": "value4"
-}
+```java
+import me.pagar.api.models.CreateEmvDataTlvDecryptRequest;
+
+CreateEmvDataTlvDecryptRequest createEmvDataTlvDecryptRequest = new CreateEmvDataTlvDecryptRequest.Builder(
+    "tag8",
+    "lenght4",
+    "value6"
+)
+.build();
 ```
 

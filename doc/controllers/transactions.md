@@ -12,9 +12,13 @@ TransactionsController transactionsController = client.getTransactionsController
 # Get Transaction
 
 ```java
-GetTransactionResponse getTransaction(
+CompletableFuture<GetTransactionResponse> getTransactionAsync(
     final String transactionId)
 ```
+
+## Authentication
+
+This endpoint requires [httpBasic](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -24,6 +28,8 @@ GetTransactionResponse getTransaction(
 
 ## Response Type
 
+**200**
+
 [`GetTransactionResponse`](../../doc/models/get-transaction-response.md)
 
 ## Example Usage
@@ -31,13 +37,21 @@ GetTransactionResponse getTransaction(
 ```java
 String transactionId = "transaction_id8";
 
-try {
-    GetTransactionResponse result = transactionsController.getTransaction(transactionId);
+transactionsController.getTransactionAsync(transactionId).thenAccept(result -> {
+    // TODO success callback handler
     System.out.println(result);
-} catch (ApiException e) {
-    e.printStackTrace();
-} catch (IOException e) {
-    e.printStackTrace();
-}
+}).exceptionally(exception -> {
+    Throwable cause = exception.getCause();
+
+    if (cause instanceof ErrorException) {
+        ErrorException errorException = (ErrorException) cause;
+        errorException.printStackTrace();
+    } else {
+        // fallback for unexpected errors
+        exception.printStackTrace();
+    }
+
+    return null;
+});
 ```
 

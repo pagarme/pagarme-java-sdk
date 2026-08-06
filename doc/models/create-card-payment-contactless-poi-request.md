@@ -15,15 +15,18 @@
 | `SerialNumber` | `String` | Required | serial number | String getSerialNumber() | setSerialNumber(String serialNumber) |
 | `VersionNumber` | `String` | Required | version number | String getVersionNumber() | setVersionNumber(String versionNumber) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "system_name": "system_name0",
-  "model": "model8",
-  "provider": "provider2",
-  "serial_number": "serial_number4",
-  "version_number": "version_number0"
-}
+```java
+import me.pagar.api.models.CreateCardPaymentContactlessPOIRequest;
+
+CreateCardPaymentContactlessPOIRequest createCardPaymentContactlessPOIRequest = new CreateCardPaymentContactlessPOIRequest.Builder(
+    "system_name4",
+    "model2",
+    "provider4",
+    "serial_number8",
+    "version_number4"
+)
+.build();
 ```
 

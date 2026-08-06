@@ -9,6 +9,8 @@ package me.pagar.api.controllers;
 import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
@@ -40,10 +42,23 @@ public final class DefaultTransactionsController extends BaseController implemen
     }
 
     /**
+     * @param  transactionId  Required parameter: Example:
+     * @return    Returns the GetTransactionResponse response from the API call
+     */
+    public CompletableFuture<GetTransactionResponse> getTransactionAsync(
+            final String transactionId) {
+        try {
+            return prepareGetTransactionRequest(transactionId).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for getTransaction.
      */
     private ApiCall<GetTransactionResponse, ApiException> prepareGetTransactionRequest(
-            final String transactionId) throws IOException {
+            final String transactionId) {
         return new ApiCall.Builder<GetTransactionResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder

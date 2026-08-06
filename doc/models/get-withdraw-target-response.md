@@ -12,12 +12,14 @@
 | `TargetId` | `String` | Optional | - | String getTargetId() | setTargetId(String targetId) |
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "target_id": "target_id4",
-  "type": "type6"
-}
+```java
+import me.pagar.api.models.GetWithdrawTargetResponse;
+
+GetWithdrawTargetResponse getWithdrawTargetResponse = new GetWithdrawTargetResponse.Builder()
+    .targetId("target_id8")
+    .type("type8")
+    .build();
 ```
 

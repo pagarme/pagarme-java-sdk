@@ -30,97 +30,34 @@ Request for creating a plan
 | `Quantity` | `Integer` | Optional | Quantity | Integer getQuantity() | setQuantity(Integer quantity) |
 | `TrialPeriodDays` | `Integer` | Optional | Trial period, where the customer will not be charged. | Integer getTrialPeriodDays() | setTrialPeriodDays(Integer trialPeriodDays) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name0",
-  "description": "description0",
-  "statement_descriptor": "statement_descriptor0",
-  "items": [
-    {
-      "name": "name8",
-      "pricing_scheme": {
-        "scheme_type": "scheme_type8",
-        "price_brackets": [
-          {
-            "start_quantity": 144,
-            "price": 174,
-            "end_quantity": 152,
-            "overage_price": 166
-          },
-          {
-            "start_quantity": 144,
-            "price": 174,
-            "end_quantity": 152,
-            "overage_price": 166
-          },
-          {
-            "start_quantity": 144,
-            "price": 174,
-            "end_quantity": 152,
-            "overage_price": 166
-          }
-        ],
-        "price": 166,
-        "minimum_price": 6,
-        "percentage": 251.76
-      },
-      "id": "id8",
-      "description": "description2",
-      "cycles": 214,
-      "quantity": 22
-    }
-  ],
-  "shippable": false,
-  "payment_methods": [
-    "payment_methods5",
-    "payment_methods4"
-  ],
-  "installments": [
-    195,
-    196
-  ],
-  "currency": "currency0",
-  "interval": "interval8",
-  "interval_count": 158,
-  "billing_days": [
-    159
-  ],
-  "billing_type": "billing_type4",
-  "pricing_scheme": {
-    "scheme_type": "scheme_type8",
-    "price_brackets": [
-      {
-        "start_quantity": 144,
-        "price": 174,
-        "end_quantity": 152,
-        "overage_price": 166
-      },
-      {
-        "start_quantity": 144,
-        "price": 174,
-        "end_quantity": 152,
-        "overage_price": 166
-      },
-      {
-        "start_quantity": 144,
-        "price": 174,
-        "end_quantity": 152,
-        "overage_price": 166
-      }
-    ],
-    "price": 166,
-    "minimum_price": 6,
-    "percentage": 251.76
-  },
-  "metadata": {
-    "key0": "metadata7"
-  },
-  "minimum_price": 156,
-  "cycles": 164,
-  "quantity": 144,
-  "trial_period_days": 130
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreatePlanRequest;
+
+CreatePlanRequest createPlanRequest = new CreatePlanRequest.Builder(
+    null,
+    null,
+    null,
+    Arrays.asList(
+        null
+    ),
+    false,
+    null,
+    null,
+    null,
+    null,
+    0,
+    null,
+    null,
+    null,
+    null
+)
+.minimumPrice(56)
+.cycles(48)
+.quantity(188)
+.trialPeriodDays(174)
+.build();
 ```
 

@@ -21,6 +21,7 @@ public class GetBalanceResponse {
     private OptionalNullable<GetRecipientResponse> recipient;
     private OptionalNullable<Long> transferredAmount;
     private OptionalNullable<Long> waitingFundsAmount;
+    private String paymentProfileId;
 
     /**
      * Default constructor.
@@ -30,6 +31,7 @@ public class GetBalanceResponse {
 
     /**
      * Initialization constructor.
+     * @param  paymentProfileId  String value for paymentProfileId.
      * @param  currency  String value for currency.
      * @param  availableAmount  Long value for availableAmount.
      * @param  recipient  GetRecipientResponse value for recipient.
@@ -37,6 +39,7 @@ public class GetBalanceResponse {
      * @param  waitingFundsAmount  Long value for waitingFundsAmount.
      */
     public GetBalanceResponse(
+            String paymentProfileId,
             String currency,
             Long availableAmount,
             GetRecipientResponse recipient,
@@ -47,10 +50,12 @@ public class GetBalanceResponse {
         this.recipient = OptionalNullable.of(recipient);
         this.transferredAmount = OptionalNullable.of(transferredAmount);
         this.waitingFundsAmount = OptionalNullable.of(waitingFundsAmount);
+        this.paymentProfileId = paymentProfileId;
     }
 
     /**
      * Initialization constructor.
+     * @param  paymentProfileId  String value for paymentProfileId.
      * @param  currency  String value for currency.
      * @param  availableAmount  Long value for availableAmount.
      * @param  recipient  GetRecipientResponse value for recipient.
@@ -58,7 +63,7 @@ public class GetBalanceResponse {
      * @param  waitingFundsAmount  Long value for waitingFundsAmount.
      */
 
-    protected GetBalanceResponse(OptionalNullable<String> currency,
+    protected GetBalanceResponse(String paymentProfileId, OptionalNullable<String> currency,
             OptionalNullable<Long> availableAmount,
             OptionalNullable<GetRecipientResponse> recipient,
             OptionalNullable<Long> transferredAmount, OptionalNullable<Long> waitingFundsAmount) {
@@ -67,11 +72,12 @@ public class GetBalanceResponse {
         this.recipient = recipient;
         this.transferredAmount = transferredAmount;
         this.waitingFundsAmount = waitingFundsAmount;
+        this.paymentProfileId = paymentProfileId;
     }
 
     /**
      * Internal Getter for Currency.
-     * Currency
+     * Currency (official ISO 4217 currency names)
      * @return Returns the Internal String
      */
     @JsonGetter("currency")
@@ -83,7 +89,7 @@ public class GetBalanceResponse {
 
     /**
      * Getter for Currency.
-     * Currency
+     * Currency (official ISO 4217 currency names)
      * @return Returns the String
      */
     public String getCurrency() {
@@ -92,7 +98,7 @@ public class GetBalanceResponse {
 
     /**
      * Setter for Currency.
-     * Currency
+     * Currency (official ISO 4217 currency names)
      * @param currency Value for String
      */
     @JsonSetter("currency")
@@ -102,7 +108,7 @@ public class GetBalanceResponse {
 
     /**
      * UnSetter for Currency.
-     * Currency
+     * Currency (official ISO 4217 currency names)
      */
     public void unsetCurrency() {
         currency = null;
@@ -110,7 +116,7 @@ public class GetBalanceResponse {
 
     /**
      * Internal Getter for AvailableAmount.
-     * Amount available for transferring
+     * Amount available for transferring in cents
      * @return Returns the Internal Long
      */
     @JsonGetter("available_amount")
@@ -122,7 +128,7 @@ public class GetBalanceResponse {
 
     /**
      * Getter for AvailableAmount.
-     * Amount available for transferring
+     * Amount available for transferring in cents
      * @return Returns the Long
      */
     public Long getAvailableAmount() {
@@ -131,7 +137,7 @@ public class GetBalanceResponse {
 
     /**
      * Setter for AvailableAmount.
-     * Amount available for transferring
+     * Amount available for transferring in cents
      * @param availableAmount Value for Long
      */
     @JsonSetter("available_amount")
@@ -141,7 +147,7 @@ public class GetBalanceResponse {
 
     /**
      * UnSetter for AvailableAmount.
-     * Amount available for transferring
+     * Amount available for transferring in cents
      */
     public void unsetAvailableAmount() {
         availableAmount = null;
@@ -188,6 +194,7 @@ public class GetBalanceResponse {
 
     /**
      * Internal Getter for TransferredAmount.
+     * Amount transfered in cents
      * @return Returns the Internal Long
      */
     @JsonGetter("transferred_amount")
@@ -199,6 +206,7 @@ public class GetBalanceResponse {
 
     /**
      * Getter for TransferredAmount.
+     * Amount transfered in cents
      * @return Returns the Long
      */
     public Long getTransferredAmount() {
@@ -207,6 +215,7 @@ public class GetBalanceResponse {
 
     /**
      * Setter for TransferredAmount.
+     * Amount transfered in cents
      * @param transferredAmount Value for Long
      */
     @JsonSetter("transferred_amount")
@@ -216,6 +225,7 @@ public class GetBalanceResponse {
 
     /**
      * UnSetter for TransferredAmount.
+     * Amount transfered in cents
      */
     public void unsetTransferredAmount() {
         transferredAmount = null;
@@ -223,6 +233,7 @@ public class GetBalanceResponse {
 
     /**
      * Internal Getter for WaitingFundsAmount.
+     * Amount waiting in cents
      * @return Returns the Internal Long
      */
     @JsonGetter("waiting_funds_amount")
@@ -234,6 +245,7 @@ public class GetBalanceResponse {
 
     /**
      * Getter for WaitingFundsAmount.
+     * Amount waiting in cents
      * @return Returns the Long
      */
     public Long getWaitingFundsAmount() {
@@ -242,6 +254,7 @@ public class GetBalanceResponse {
 
     /**
      * Setter for WaitingFundsAmount.
+     * Amount waiting in cents
      * @param waitingFundsAmount Value for Long
      */
     @JsonSetter("waiting_funds_amount")
@@ -251,9 +264,30 @@ public class GetBalanceResponse {
 
     /**
      * UnSetter for WaitingFundsAmount.
+     * Amount waiting in cents
      */
     public void unsetWaitingFundsAmount() {
         waitingFundsAmount = null;
+    }
+
+    /**
+     * Getter for PaymentProfileId.
+     * Operational id of merchant in payments operations (new)
+     * @return Returns the String
+     */
+    @JsonGetter("payment_profile_id")
+    public String getPaymentProfileId() {
+        return paymentProfileId;
+    }
+
+    /**
+     * Setter for PaymentProfileId.
+     * Operational id of merchant in payments operations (new)
+     * @param paymentProfileId Value for String
+     */
+    @JsonSetter("payment_profile_id")
+    public void setPaymentProfileId(String paymentProfileId) {
+        this.paymentProfileId = paymentProfileId;
     }
 
     /**
@@ -262,9 +296,10 @@ public class GetBalanceResponse {
      */
     @Override
     public String toString() {
-        return "GetBalanceResponse [" + "currency=" + currency + ", availableAmount="
-                + availableAmount + ", recipient=" + recipient + ", transferredAmount="
-                + transferredAmount + ", waitingFundsAmount=" + waitingFundsAmount + "]";
+        return "GetBalanceResponse [" + "paymentProfileId=" + paymentProfileId + ", currency="
+                + currency + ", availableAmount=" + availableAmount + ", recipient=" + recipient
+                + ", transferredAmount=" + transferredAmount + ", waitingFundsAmount="
+                + waitingFundsAmount + "]";
     }
 
     /**
@@ -273,7 +308,7 @@ public class GetBalanceResponse {
      * @return a new {@link GetBalanceResponse.Builder} object
      */
     public Builder toBuilder() {
-        Builder builder = new Builder();
+        Builder builder = new Builder(paymentProfileId);
         builder.currency = internalGetCurrency();
         builder.availableAmount = internalGetAvailableAmount();
         builder.recipient = internalGetRecipient();
@@ -286,13 +321,36 @@ public class GetBalanceResponse {
      * Class to build instances of {@link GetBalanceResponse}.
      */
     public static class Builder {
+        private String paymentProfileId;
         private OptionalNullable<String> currency;
         private OptionalNullable<Long> availableAmount;
         private OptionalNullable<GetRecipientResponse> recipient;
         private OptionalNullable<Long> transferredAmount;
         private OptionalNullable<Long> waitingFundsAmount;
 
+        /**
+         * Initialization constructor.
+         */
+        public Builder() {
+        }
 
+        /**
+         * Initialization constructor.
+         * @param  paymentProfileId  String value for paymentProfileId.
+         */
+        public Builder(String paymentProfileId) {
+            this.paymentProfileId = paymentProfileId;
+        }
+
+        /**
+         * Setter for paymentProfileId.
+         * @param  paymentProfileId  String value for paymentProfileId.
+         * @return Builder
+         */
+        public Builder paymentProfileId(String paymentProfileId) {
+            this.paymentProfileId = paymentProfileId;
+            return this;
+        }
 
         /**
          * Setter for currency.
@@ -394,8 +452,8 @@ public class GetBalanceResponse {
          * @return {@link GetBalanceResponse}
          */
         public GetBalanceResponse build() {
-            return new GetBalanceResponse(currency, availableAmount, recipient, transferredAmount,
-                    waitingFundsAmount);
+            return new GetBalanceResponse(paymentProfileId, currency, availableAmount, recipient,
+                    transferredAmount, waitingFundsAmount);
         }
     }
 }

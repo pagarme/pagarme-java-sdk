@@ -13,11 +13,14 @@ Invoice Update Status Request
 |  --- | --- | --- | --- | --- | --- |
 | `Status` | `String` | Required | Status | String getStatus() | setStatus(String status) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "status": "status8"
-}
+```java
+import me.pagar.api.models.UpdateInvoiceStatusRequest;
+
+UpdateInvoiceStatusRequest updateInvoiceStatusRequest = new UpdateInvoiceStatusRequest.Builder(
+    "status2"
+)
+.build();
 ```
 

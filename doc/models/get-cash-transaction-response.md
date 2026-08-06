@@ -17,16 +17,19 @@ Response object for getting a cash transaction
 |  --- | --- | --- | --- | --- | --- |
 | `Description` | `String` | Optional | Description | String getDescription() | setDescription(String description) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "description": "description0"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetCashTransactionResponse;
+
+GetCashTransactionResponse getCashTransactionResponse = new GetCashTransactionResponse.Builder()
+    .description("description6")
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

@@ -13,11 +13,13 @@ Request for creating a device
 |  --- | --- | --- | --- | --- | --- |
 | `Platform` | `String` | Optional | Device's platform | String getPlatform() | setPlatform(String platform) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "platform": "platform8"
-}
+```java
+import me.pagar.api.models.CreateDeviceRequest;
+
+CreateDeviceRequest createDeviceRequest = new CreateDeviceRequest.Builder()
+    .platform("platform2")
+    .build();
 ```
 

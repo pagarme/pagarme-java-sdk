@@ -23,37 +23,22 @@ Request for creating a recipient
 | `PaymentMode` | `String` | Required | Payment mode<br><br>**Default**: `"bank_transfer"` | String getPaymentMode() | setPaymentMode(String paymentMode) |
 | `RegisterInformation` | [`CreateRegisterInformationBaseRequest`](../../doc/models/create-register-information-base-request.md) | Optional | Register Information | CreateRegisterInformationBaseRequest getRegisterInformation() | setRegisterInformation(CreateRegisterInformationBaseRequest registerInformation) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "default_bank_account": {
-    "holder_name": "holder_name4",
-    "holder_type": "holder_type0",
-    "holder_document": "holder_document2",
-    "bank": "bank6",
-    "branch_number": "branch_number4",
-    "branch_check_digit": "branch_check_digit4",
-    "account_number": "account_number8",
-    "account_check_digit": "account_check_digit4",
-    "type": "type2",
-    "metadata": {
-      "key0": "metadata5",
-      "key1": "metadata4",
-      "key2": "metadata3"
-    },
-    "pix_key": "pix_key8"
-  },
-  "metadata": {
-    "key0": "metadata3"
-  },
-  "code": "code4",
-  "payment_mode": "bank_transfer",
-  "name": "name6",
-  "email": "email0",
-  "description": "description6",
-  "document": "document0",
-  "type": "type4"
-}
+```java
+import me.pagar.api.models.CreateRecipientRequest;
+
+CreateRecipientRequest createRecipientRequest = new CreateRecipientRequest.Builder(
+    null,
+    null,
+    null,
+    "bank_transfer"
+)
+.name("name2")
+.email("email4")
+.description("description2")
+.document("document4")
+.type("type8")
+.build();
 ```
 

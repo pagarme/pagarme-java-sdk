@@ -7,6 +7,7 @@
 package me.pagar.api.controllers;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import me.pagar.api.exceptions.ApiException;
 import me.pagar.api.models.CreateTransfer;
 import me.pagar.api.models.GetTransfer;
@@ -27,12 +28,11 @@ public interface TransfersController {
             final String transferId) throws ApiException, IOException;
 
     /**
-     * Gets all transfers.
-     * @return    Returns the ListTransfers response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     * @param  transferId  Required parameter: Example:
+     * @return    Returns the GetTransfer response from the API call
      */
-    ListTransfers getTransfers() throws ApiException, IOException;
+    CompletableFuture<GetTransfer> getTransferByIdAsync(
+            final String transferId);
 
     /**
      * @param  request  Required parameter: Example:
@@ -42,5 +42,26 @@ public interface TransfersController {
      */
     GetTransfer createTransfer(
             final CreateTransfer request) throws ApiException, IOException;
+
+    /**
+     * @param  request  Required parameter: Example:
+     * @return    Returns the GetTransfer response from the API call
+     */
+    CompletableFuture<GetTransfer> createTransferAsync(
+            final CreateTransfer request);
+
+    /**
+     * Gets all transfers.
+     * @return    Returns the ListTransfers response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    ListTransfers getTransfers() throws ApiException, IOException;
+
+    /**
+     * Gets all transfers.
+     * @return    Returns the ListTransfers response from the API call
+     */
+    CompletableFuture<ListTransfers> getTransfersAsync();
 
 }

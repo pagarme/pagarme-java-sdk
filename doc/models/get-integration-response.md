@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `Code` | `String` | Optional | - | String getCode() | setCode(String code) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": "code2"
-}
+```java
+import me.pagar.api.models.GetIntegrationResponse;
+
+GetIntegrationResponse getIntegrationResponse = new GetIntegrationResponse.Builder()
+    .code("code2")
+    .build();
 ```
 

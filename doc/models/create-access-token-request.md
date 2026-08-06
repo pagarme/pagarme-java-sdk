@@ -13,11 +13,13 @@ Request for creating a new Access Token
 |  --- | --- | --- | --- | --- | --- |
 | `ExpiresIn` | `Integer` | Optional | Minutes to expire the token | Integer getExpiresIn() | setExpiresIn(Integer expiresIn) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "expires_in": 86
-}
+```java
+import me.pagar.api.models.CreateAccessTokenRequest;
+
+CreateAccessTokenRequest createAccessTokenRequest = new CreateAccessTokenRequest.Builder()
+    .expiresIn(204)
+    .build();
 ```
 

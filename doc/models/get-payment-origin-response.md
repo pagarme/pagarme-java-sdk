@@ -12,12 +12,14 @@
 | `ChargeId` | `String` | Optional | - | String getChargeId() | setChargeId(String chargeId) |
 | `BrandId` | `String` | Optional | - | String getBrandId() | setBrandId(String brandId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "charge_id": "charge_id8",
-  "brand_id": "brand_id4"
-}
+```java
+import me.pagar.api.models.GetPaymentOriginResponse;
+
+GetPaymentOriginResponse getPaymentOriginResponse = new GetPaymentOriginResponse.Builder()
+    .chargeId("charge_id4")
+    .brandId("brand_id0")
+    .build();
 ```
 

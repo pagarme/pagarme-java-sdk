@@ -23,15 +23,18 @@ Response object for getting a plan item
 | `Cycles` | `Integer` | Optional | - | Integer getCycles() | setCycles(Integer cycles) |
 | `DeletedAt` | `LocalDateTime` | Optional | - | LocalDateTime getDeletedAt() | setDeletedAt(LocalDateTime deletedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id8",
-  "name": "name8",
-  "status": "status0",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetPlanItemResponse;
+
+GetPlanItemResponse getPlanItemResponse = new GetPlanItemResponse.Builder()
+    .id("id4")
+    .name("name4")
+    .status("status4")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .updatedAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

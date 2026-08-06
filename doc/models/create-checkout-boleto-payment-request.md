@@ -13,13 +13,17 @@
 | `Instructions` | `String` | Required | Instructions | String getInstructions() | setInstructions(String instructions) |
 | `DueAt` | `LocalDateTime` | Required | Due date | LocalDateTime getDueAt() | setDueAt(LocalDateTime dueAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "bank": "bank4",
-  "instructions": "instructions4",
-  "due_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.CreateCheckoutBoletoPaymentRequest;
+
+CreateCheckoutBoletoPaymentRequest createCheckoutBoletoPaymentRequest = new CreateCheckoutBoletoPaymentRequest.Builder(
+    "bank6",
+    "instructions6",
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 ```
 

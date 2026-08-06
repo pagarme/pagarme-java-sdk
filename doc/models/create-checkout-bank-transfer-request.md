@@ -14,16 +14,20 @@ Checkout bank transfer payment request
 | `Bank` | `List<String>` | Required | Bank | List<String> getBank() | setBank(List<String> bank) |
 | `Retries` | `int` | Required | Number of retries for processing | int getRetries() | setRetries(int retries) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "bank": [
-    "bank7",
-    "bank8",
-    "bank9"
-  ],
-  "retries": 56
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateCheckoutBankTransferRequest;
+
+CreateCheckoutBankTransferRequest createCheckoutBankTransferRequest = new CreateCheckoutBankTransferRequest.Builder(
+    Arrays.asList(
+        "bank1",
+        "bank2",
+        "bank3"
+    ),
+    56
+)
+.build();
 ```
 

@@ -14,17 +14,20 @@
 | `TargetId` | `String` | Required | - | String getTargetId() | setTargetId(String targetId) |
 | `Metadata` | `List<String>` | Optional | - | List<String> getMetadata() | setMetadata(List<String> metadata) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 252,
-  "source_id": "source_id6",
-  "target_id": "target_id8",
-  "metadata": [
-    "metadata1",
-    "metadata2"
-  ]
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateTransfer;
+
+CreateTransfer createTransfer = new CreateTransfer.Builder(
+    130,
+    "source_id6",
+    "target_id8"
+)
+.metadata(Arrays.asList(
+        "metadata1"
+    ))
+.build();
 ```
 

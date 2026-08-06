@@ -13,11 +13,14 @@ Update code for a recipient
 |  --- | --- | --- | --- | --- | --- |
 | `Code` | `String` | Required | Code | String getCode() | setCode(String code) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": "code6"
-}
+```java
+import me.pagar.api.models.UpdateRecipientCodeRequest;
+
+UpdateRecipientCodeRequest updateRecipientCodeRequest = new UpdateRecipientCodeRequest.Builder(
+    "code8"
+)
+.build();
 ```
 

@@ -23,15 +23,18 @@
 | `Source` | [`GetWithdrawSourceResponse`](../../doc/models/get-withdraw-source-response.md) | Optional | - | GetWithdrawSourceResponse getSource() | setSource(GetWithdrawSourceResponse source) |
 | `Target` | [`GetWithdrawTargetResponse`](../../doc/models/get-withdraw-target-response.md) | Optional | - | GetWithdrawTargetResponse getTarget() | setTarget(GetWithdrawTargetResponse target) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id6",
-  "gateway_id": "gateway_id4",
-  "amount": 78,
-  "status": "status8",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetWithdrawResponse;
+
+GetWithdrawResponse getWithdrawResponse = new GetWithdrawResponse.Builder()
+    .id("id0")
+    .gatewayId("gateway_id0")
+    .amount(166)
+    .status("status2")
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

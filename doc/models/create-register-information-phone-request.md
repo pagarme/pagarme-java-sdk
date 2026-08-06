@@ -15,13 +15,16 @@ Register Information Phone
 | `Number` | `String` | Required | - | String getNumber() | setNumber(String number) |
 | `Type` | `String` | Required | - | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "ddd": "ddd4",
-  "number": "number6",
-  "type": "type8"
-}
+```java
+import me.pagar.api.models.CreateRegisterInformationPhoneRequest;
+
+CreateRegisterInformationPhoneRequest createRegisterInformationPhoneRequest = new CreateRegisterInformationPhoneRequest.Builder(
+    "ddd2",
+    "number0",
+    "type8"
+)
+.build();
 ```
 

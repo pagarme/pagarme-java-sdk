@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- | --- | --- |
 | `CustomSla` | `int` | Required | - | int getCustomSla() | setCustomSla(int customSla) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "custom_sla": 150
-}
+```java
+import me.pagar.api.models.CreateClearSaleRequest;
+
+CreateClearSaleRequest createClearSaleRequest = new CreateClearSaleRequest.Builder(
+    156
+)
+.build();
 ```
 

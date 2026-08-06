@@ -22,21 +22,17 @@ Anticipation
 | `Status` | `String` | Optional | Status | String getStatus() | setStatus(String status) |
 | `Timeframe` | `String` | Optional | Timeframe | String getTimeframe() | setTimeframe(String timeframe) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id8",
-  "requested_amount": 130,
-  "approved_amount": 184,
-  "recipient": {
-    "id": "id8",
-    "name": "name8",
-    "email": "email8",
-    "document": "document8",
-    "description": "description2"
-  },
-  "pgid": "pgid4"
-}
+```java
+import me.pagar.api.models.GetAnticipationResponse;
+
+GetAnticipationResponse getAnticipationResponse = new GetAnticipationResponse.Builder()
+    .id("id6")
+    .requestedAmount(186)
+    .approvedAmount(240)
+    .recipient(null)
+    .pgid("pgid2")
+    .build();
 ```
 

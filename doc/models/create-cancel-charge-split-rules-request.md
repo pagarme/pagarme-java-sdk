@@ -15,13 +15,16 @@ Creates a refund with split rules
 | `Amount` | `int` | Required | The split rule amount | int getAmount() | setAmount(int amount) |
 | `Type` | `String` | Required | The amount type (flat ou percentage) | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id6",
-  "Amount": 222,
-  "type": "type6"
-}
+```java
+import me.pagar.api.models.CreateCancelChargeSplitRulesRequest;
+
+CreateCancelChargeSplitRulesRequest createCancelChargeSplitRulesRequest = new CreateCancelChargeSplitRulesRequest.Builder(
+    "id0",
+    140,
+    "type0"
+)
+.build();
 ```
 

@@ -35,15 +35,17 @@ Response object for getting an invoice
 | `TotalIncrement` | `Integer` | Optional | Total discounted value | Integer getTotalIncrement() | setTotalIncrement(Integer totalIncrement) |
 | `SubscriptionId` | `String` | Optional | Subscription Id | String getSubscriptionId() | setSubscriptionId(String subscriptionId) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id0",
-  "code": "code8",
-  "url": "url4",
-  "amount": 168,
-  "status": "status8"
-}
+```java
+import me.pagar.api.models.GetInvoiceResponse;
+
+GetInvoiceResponse getInvoiceResponse = new GetInvoiceResponse.Builder()
+    .id("id8")
+    .code("code6")
+    .url("url2")
+    .amount(132)
+    .status("status0")
+    .build();
 ```
 

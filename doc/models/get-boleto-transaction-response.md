@@ -33,20 +33,23 @@ Response object for getting a boleto transaction
 | `CreditAt` | `LocalDateTime` | Optional | - | LocalDateTime getCreditAt() | setCreditAt(LocalDateTime creditAt) |
 | `StatementDescriptor` | `String` | Optional | Soft Descriptor | String getStatementDescriptor() | setStatementDescriptor(String statementDescriptor) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "url": "url0",
-  "barcode": "barcode4",
-  "nosso_numero": "nosso_numero6",
-  "bank": "bank4",
-  "document_number": "document_number0"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetBoletoTransactionResponse;
+
+GetBoletoTransactionResponse getBoletoTransactionResponse = new GetBoletoTransactionResponse.Builder()
+    .url("url2")
+    .barcode("barcode2")
+    .nossoNumero("nosso_numero8")
+    .bank("bank6")
+    .documentNumber("document_number8")
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

@@ -15,13 +15,15 @@ Response object for getting an PhoneNumberResponse
 | `Number` | `String` | Optional | - | String getNumber() | setNumber(String number) |
 | `Type` | `String` | Optional | - | String getType() | setType(String type) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "ddd": "ddd2",
-  "number": "number0",
-  "type": "type8"
-}
+```java
+import me.pagar.api.models.GetPhoneNumberResponse;
+
+GetPhoneNumberResponse getPhoneNumberResponse = new GetPhoneNumberResponse.Builder()
+    .ddd("ddd4")
+    .number("number8")
+    .type("type0")
+    .build();
 ```
 

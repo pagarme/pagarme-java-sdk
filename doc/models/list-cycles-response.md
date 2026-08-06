@@ -14,43 +14,22 @@ Response object for listing subscription cycles
 | `Data` | [`List<GetPeriodResponse>`](../../doc/models/get-period-response.md) | Optional | The subscription cycles objects | List<GetPeriodResponse> getData() | setData(List<GetPeriodResponse> data) |
 | `Paging` | [`PagingResponse`](../../doc/models/paging-response.md) | Optional | Paging object | PagingResponse getPaging() | setPaging(PagingResponse paging) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "data": [
-    {
-      "start_at": "2016-03-13T12:52:32.123Z",
-      "end_at": "2016-03-13T12:52:32.123Z",
-      "id": "id0",
-      "billing_at": "2016-03-13T12:52:32.123Z",
-      "subscription": {
-        "id": "id4",
-        "code": "code2",
-        "start_at": "2016-03-13T12:52:32.123Z",
-        "interval": "interval2",
-        "interval_count": 234
-      }
-    },
-    {
-      "start_at": "2016-03-13T12:52:32.123Z",
-      "end_at": "2016-03-13T12:52:32.123Z",
-      "id": "id0",
-      "billing_at": "2016-03-13T12:52:32.123Z",
-      "subscription": {
-        "id": "id4",
-        "code": "code2",
-        "start_at": "2016-03-13T12:52:32.123Z",
-        "interval": "interval2",
-        "interval_count": 234
-      }
-    }
-  ],
-  "paging": {
-    "total": 6,
-    "previous": "previous2",
-    "next": "next8"
-  }
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.GetPeriodResponse;
+import me.pagar.api.models.ListCyclesResponse;
+
+ListCyclesResponse listCyclesResponse = new ListCyclesResponse.Builder()
+    .data(Arrays.asList(
+        null,
+        new GetPeriodResponse.Builder()
+            .build(),
+        new GetPeriodResponse.Builder()
+            .build()
+    ))
+    .paging(null)
+    .build();
 ```
 

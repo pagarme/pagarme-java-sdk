@@ -13,11 +13,14 @@ Request to update the end date of the current subscription cycle
 |  --- | --- | --- | --- | --- | --- |
 | `EndAt` | `LocalDateTime` | Optional | Current cycle end date | LocalDateTime getEndAt() | setEndAt(LocalDateTime endAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "end_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.UpdateCurrentCycleEndDateRequest;
+
+UpdateCurrentCycleEndDateRequest updateCurrentCycleEndDateRequest = new UpdateCurrentCycleEndDateRequest.Builder()
+    .endAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

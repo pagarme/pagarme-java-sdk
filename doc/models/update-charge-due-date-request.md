@@ -13,11 +13,14 @@ Request for updating a charge due date
 |  --- | --- | --- | --- | --- | --- |
 | `DueAt` | `LocalDateTime` | Optional | The charge's new due date | LocalDateTime getDueAt() | setDueAt(LocalDateTime dueAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "due_at": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.UpdateChargeDueDateRequest;
+
+UpdateChargeDueDateRequest updateChargeDueDateRequest = new UpdateChargeDueDateRequest.Builder()
+    .dueAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

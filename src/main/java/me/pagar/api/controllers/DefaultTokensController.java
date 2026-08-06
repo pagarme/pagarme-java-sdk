@@ -6,10 +6,11 @@
 
 package me.pagar.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.apimatic.core.ApiCall;
 import io.apimatic.core.GlobalConfiguration;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import me.pagar.api.ApiHelper;
 import me.pagar.api.Server;
 import me.pagar.api.exceptions.ApiException;
@@ -31,45 +32,6 @@ public final class DefaultTokensController extends BaseController implements Tok
     }
 
     /**
-     * Gets a token from its id.
-     * @param  id  Required parameter: Token id
-     * @param  publicKey  Required parameter: Public key
-     * @return    Returns the GetTokenResponse response from the API call
-     * @throws    ApiException    Represents error response from the server.
-     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
-     */
-    public GetTokenResponse getToken(
-            final String id,
-            final String publicKey) throws ApiException, IOException {
-        return prepareGetTokenRequest(id, publicKey).execute();
-    }
-
-    /**
-     * Builds the ApiCall object for getToken.
-     */
-    private ApiCall<GetTokenResponse, ApiException> prepareGetTokenRequest(
-            final String id,
-            final String publicKey) throws IOException {
-        return new ApiCall.Builder<GetTokenResponse, ApiException>()
-                .globalConfig(getGlobalConfiguration())
-                .requestBuilder(requestBuilder -> requestBuilder
-                        .server(Server.ENUM_DEFAULT.value())
-                        .path("/tokens/{id}?appId={public_key}")
-                        .templateParam(param -> param.key("id").value(id)
-                                .shouldEncode(true))
-                        .templateParam(param -> param.key("public_key").value(publicKey)
-                                .shouldEncode(true))
-                        .headerParam(param -> param.key("accept").value("application/json"))
-                        .httpMethod(HttpMethod.GET))
-                .responseHandler(responseHandler -> responseHandler
-                        .deserializer(
-                                response -> ApiHelper.deserialize(response, GetTokenResponse.class))
-                        .nullify404(false)
-                        .globalErrorCase(GLOBAL_ERROR_CASES))
-                .build();
-    }
-
-    /**
      * @param  publicKey  Required parameter: Public key
      * @param  request  Required parameter: Request for creating a token
      * @param  idempotencyKey  Optional parameter: Example:
@@ -85,12 +47,29 @@ public final class DefaultTokensController extends BaseController implements Tok
     }
 
     /**
+     * @param  publicKey  Required parameter: Public key
+     * @param  request  Required parameter: Request for creating a token
+     * @param  idempotencyKey  Optional parameter: Example:
+     * @return    Returns the GetTokenResponse response from the API call
+     */
+    public CompletableFuture<GetTokenResponse> createTokenAsync(
+            final String publicKey,
+            final CreateTokenRequest request,
+            final String idempotencyKey) {
+        try {
+            return prepareCreateTokenRequest(publicKey, request, idempotencyKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
      * Builds the ApiCall object for createToken.
      */
     private ApiCall<GetTokenResponse, ApiException> prepareCreateTokenRequest(
             final String publicKey,
             final CreateTokenRequest request,
-            final String idempotencyKey) throws JsonProcessingException, IOException {
+            final String idempotencyKey) {
         return new ApiCall.Builder<GetTokenResponse, ApiException>()
                 .globalConfig(getGlobalConfiguration())
                 .requestBuilder(requestBuilder -> requestBuilder
@@ -105,6 +84,61 @@ public final class DefaultTokensController extends BaseController implements Tok
                         .headerParam(param ->param.key("content-type").value("application/json"))
                         .headerParam(param -> param.key("accept").value("application/json"))
                         .httpMethod(HttpMethod.POST))
+                .responseHandler(responseHandler -> responseHandler
+                        .deserializer(
+                                response -> ApiHelper.deserialize(response, GetTokenResponse.class))
+                        .nullify404(false)
+                        .globalErrorCase(GLOBAL_ERROR_CASES))
+                .build();
+    }
+
+    /**
+     * Gets a token from its id.
+     * @param  id  Required parameter: Token id
+     * @param  publicKey  Required parameter: Public key
+     * @return    Returns the GetTokenResponse response from the API call
+     * @throws    ApiException    Represents error response from the server.
+     * @throws    IOException    Signals that an I/O exception of some sort has occurred.
+     */
+    public GetTokenResponse getToken(
+            final String id,
+            final String publicKey) throws ApiException, IOException {
+        return prepareGetTokenRequest(id, publicKey).execute();
+    }
+
+    /**
+     * Gets a token from its id.
+     * @param  id  Required parameter: Token id
+     * @param  publicKey  Required parameter: Public key
+     * @return    Returns the GetTokenResponse response from the API call
+     */
+    public CompletableFuture<GetTokenResponse> getTokenAsync(
+            final String id,
+            final String publicKey) {
+        try {
+            return prepareGetTokenRequest(id, publicKey).executeAsync();
+        } catch (Exception e) {
+            throw new CompletionException(e);
+        }
+    }
+
+    /**
+     * Builds the ApiCall object for getToken.
+     */
+    private ApiCall<GetTokenResponse, ApiException> prepareGetTokenRequest(
+            final String id,
+            final String publicKey) {
+        return new ApiCall.Builder<GetTokenResponse, ApiException>()
+                .globalConfig(getGlobalConfiguration())
+                .requestBuilder(requestBuilder -> requestBuilder
+                        .server(Server.ENUM_DEFAULT.value())
+                        .path("/tokens/{id}?appId={public_key}")
+                        .templateParam(param -> param.key("id").value(id)
+                                .shouldEncode(true))
+                        .templateParam(param -> param.key("public_key").value(publicKey)
+                                .shouldEncode(true))
+                        .headerParam(param -> param.key("accept").value("application/json"))
+                        .httpMethod(HttpMethod.GET))
                 .responseHandler(responseHandler -> responseHandler
                         .deserializer(
                                 response -> ApiHelper.deserialize(response, GetTokenResponse.class))

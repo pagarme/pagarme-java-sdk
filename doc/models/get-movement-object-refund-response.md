@@ -21,19 +21,21 @@ Generic response object for getting a MovementObjectRefund.
 | `LocalTransactionId` | `String` | Optional | - | String getLocalTransactionId() | setLocalTransactionId(String localTransactionId) |
 | `UpdatedAt` | `String` | Optional | - | String getUpdatedAt() | setUpdatedAt(String updatedAt) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": "id2",
-  "status": "status4",
-  "amount": "amount4",
-  "created_at": "created_at0",
-  "fraud_coverage_fee": "fraud_coverage_fee0",
-  "charge_fee_recipient_id": "charge_fee_recipient_id2",
-  "bank_account_id": "bank_account_id2",
-  "local_transaction_id": "local_transaction_id8",
-  "updated_at": "updated_at8"
-}
+```java
+import me.pagar.api.models.GetMovementObjectRefundResponse;
+
+GetMovementObjectRefundResponse getMovementObjectRefundResponse = new GetMovementObjectRefundResponse.Builder()
+    .fraudCoverageFee("fraud_coverage_fee2")
+    .chargeFeeRecipientId("charge_fee_recipient_id0")
+    .bankAccountId("bank_account_id4")
+    .localTransactionId("local_transaction_id0")
+    .updatedAt("updated_at0")
+    .id("id2")
+    .status("status4")
+    .amount("amount4")
+    .createdAt("created_at0")
+    .build();
 ```
 

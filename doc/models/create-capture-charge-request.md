@@ -16,37 +16,20 @@ Request for capturing a charge
 | `Split` | [`List<CreateSplitRequest>`](../../doc/models/create-split-request.md) | Optional | Splits | List<CreateSplitRequest> getSplit() | setSplit(List<CreateSplitRequest> split) |
 | `OperationReference` | `String` | Required | - | String getOperationReference() | setOperationReference(String operationReference) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": "code8",
-  "amount": 96,
-  "split": [
-    {
-      "type": "type2",
-      "amount": 10,
-      "recipient_id": "recipient_id2",
-      "options": {
-        "liable": false,
-        "charge_processing_fee": false,
-        "charge_remainder_fee": false
-      },
-      "split_rule_id": "split_rule_id0"
-    },
-    {
-      "type": "type2",
-      "amount": 10,
-      "recipient_id": "recipient_id2",
-      "options": {
-        "liable": false,
-        "charge_processing_fee": false,
-        "charge_remainder_fee": false
-      },
-      "split_rule_id": "split_rule_id0"
-    }
-  ],
-  "operation_reference": "operation_reference0"
-}
+```java
+import java.util.Arrays;
+import me.pagar.api.models.CreateCaptureChargeRequest;
+
+CreateCaptureChargeRequest createCaptureChargeRequest = new CreateCaptureChargeRequest.Builder(
+    "code8",
+    "operation_reference0"
+)
+.amount(236)
+.split(Arrays.asList(
+        null
+    ))
+.build();
 ```
 

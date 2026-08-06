@@ -20,19 +20,22 @@ Response object for getting a safety pay transaction
 | `PaidAt` | `LocalDateTime` | Optional | Payment date | LocalDateTime getPaidAt() | setPaidAt(LocalDateTime paidAt) |
 | `PaidAmount` | `Integer` | Optional | Paid amount | Integer getPaidAmount() | setPaidAmount(Integer paidAmount) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "gateway_id": "gateway_id8",
-  "amount": 40,
-  "status": "status6",
-  "success": false,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "url": "url8",
-  "bank_tid": "bank_tid8",
-  "paid_at": "2016-03-13T12:52:32.123Z",
-  "paid_amount": 154
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetSafetyPayTransactionResponse;
+
+GetSafetyPayTransactionResponse getSafetyPayTransactionResponse = new GetSafetyPayTransactionResponse.Builder()
+    .url("url0")
+    .bankTid("bank_tid0")
+    .paidAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .paidAmount(4)
+    .gatewayId("gateway_id8")
+    .amount(40)
+    .status("status6")
+    .success(false)
+    .createdAt(DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z"))
+    .build();
 ```
 

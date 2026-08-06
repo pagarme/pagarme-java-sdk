@@ -17,21 +17,17 @@ The settings for creating a voucher payment
 | `Card` | [`CreateCardRequest`](../../doc/models/create-card-request.md) | Optional | Card info | CreateCardRequest getCard() | setCard(CreateCardRequest card) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "recurrency_cycle": "\"first\" or \"subsequent\"",
-  "statement_descriptor": "statement_descriptor0",
-  "card_id": "card_id6",
-  "card_token": "card_token0",
-  "Card": {
-    "number": "number8",
-    "holder_name": "holder_name6",
-    "exp_month": 240,
-    "exp_year": 56,
-    "cvv": "cvv8"
-  }
-}
+```java
+import me.pagar.api.models.CreateVoucherPaymentRequest;
+
+CreateVoucherPaymentRequest createVoucherPaymentRequest = new CreateVoucherPaymentRequest.Builder()
+    .statementDescriptor("statement_descriptor4")
+    .cardId("card_id0")
+    .cardToken("card_token6")
+    .card(null)
+    .recurrencyCycle("\"first\" or \"subsequent\"")
+    .build();
 ```
 

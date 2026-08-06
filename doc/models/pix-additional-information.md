@@ -14,12 +14,14 @@ Pix Additional Information
 | `Name` | `String` | Optional | - | String getName() | setName(String name) |
 | `Value` | `String` | Optional | - | String getValue() | setValue(String value) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "Name": "Name6",
-  "Value": "Value6"
-}
+```java
+import me.pagar.api.models.PixAdditionalInformation;
+
+PixAdditionalInformation pixAdditionalInformation = new PixAdditionalInformation.Builder()
+    .name("Name2")
+    .value("Value0")
+    .build();
 ```
 

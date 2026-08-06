@@ -15,13 +15,17 @@ Response object for getting an RetryTransactionInformation
 | `TransactionLimit` | `Integer` | Required | - | Integer getTransactionLimit() | setTransactionLimit(Integer transactionLimit) |
 | `TransactionDateLimit` | `LocalDateTime` | Required | - | LocalDateTime getTransactionDateLimit() | setTransactionDateLimit(LocalDateTime transactionDateLimit) |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "brand_failure_return_code": "brand_failure_return_code2",
-  "transaction_limit": 44,
-  "transaction_date_limit": "2016-03-13T12:52:32.123Z"
-}
+```java
+import me.pagar.api.DateTimeHelper;
+import me.pagar.api.models.GetRetryTransactionInformationResponse;
+
+GetRetryTransactionInformationResponse getRetryTransactionInformationResponse = new GetRetryTransactionInformationResponse.Builder(
+    "brand_failure_return_code0",
+    158,
+    DateTimeHelper.fromRfc8601DateTime("2016-03-13T12:52:32.123Z")
+)
+.build();
 ```
 
