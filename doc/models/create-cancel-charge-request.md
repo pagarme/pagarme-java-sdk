@@ -16,6 +16,7 @@ Request for canceling a charge.
 | `Split` | [`List<CreateSplitRequest>`](../../doc/models/create-split-request.md) | Optional | Splits | List<CreateSplitRequest> getSplit() | setSplit(List<CreateSplitRequest> split) |
 | `OperationReference` | `String` | Required | - | String getOperationReference() | setOperationReference(String operationReference) |
 | `BankAccount` | [`CreateBankAccountRefundingDTO`](../../doc/models/create-bank-account-refunding-dto.md) | Optional | - | CreateBankAccountRefundingDTO getBankAccount() | setBankAccount(CreateBankAccountRefundingDTO bankAccount) |
+| `Reason` | `String` | Optional | Cancellation reason | String getReason() | setReason(String reason) |
 
 ## Example
 
@@ -60,6 +61,7 @@ CreateCancelChargeRequest createCancelChargeRequest = new CreateCancelChargeRequ
         .build()
     ))
 .bankAccount(null)
+.reason("reason4")
 .build();
 ```
 
