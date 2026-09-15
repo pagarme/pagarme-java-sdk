@@ -9,6 +9,8 @@ package me.pagar.api.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.apimatic.core.types.OptionalNullable;
 
 /**
  * This is a model class for CreateCreditCardPaymentRequest type.
@@ -23,7 +25,7 @@ public class CreateCreditCardPaymentRequest {
     private Boolean capture;
     private Boolean extendedLimitEnabled;
     private String extendedLimitCode;
-    private Long merchantCategoryCode;
+    private OptionalNullable<Long> merchantCategoryCode;
     private CreatePaymentAuthenticationRequest authentication;
     private CreateCardPaymentContactlessRequest contactless;
     private Boolean autoRecovery;
@@ -86,6 +88,61 @@ public class CreateCreditCardPaymentRequest {
             String initiatedType,
             String recurrenceModel,
             CreatePaymentOriginRequest paymentOrigin,
+            String indirectAcceptor) {
+        this.installments = installments;
+        this.statementDescriptor = statementDescriptor;
+        this.card = card;
+        this.cardId = cardId;
+        this.cardToken = cardToken;
+        this.recurrence = recurrence;
+        this.capture = capture;
+        this.extendedLimitEnabled = extendedLimitEnabled;
+        this.extendedLimitCode = extendedLimitCode;
+        this.merchantCategoryCode = OptionalNullable.of(merchantCategoryCode);
+        this.authentication = authentication;
+        this.contactless = contactless;
+        this.autoRecovery = autoRecovery;
+        this.operationType = operationType;
+        this.recurrencyCycle = recurrencyCycle;
+        this.payload = payload;
+        this.initiatedType = initiatedType;
+        this.recurrenceModel = recurrenceModel;
+        this.paymentOrigin = paymentOrigin;
+        this.indirectAcceptor = indirectAcceptor;
+    }
+
+    /**
+     * Initialization constructor.
+     * @param  installments  Integer value for installments.
+     * @param  statementDescriptor  String value for statementDescriptor.
+     * @param  card  CreateCardRequest value for card.
+     * @param  cardId  String value for cardId.
+     * @param  cardToken  String value for cardToken.
+     * @param  recurrence  Boolean value for recurrence.
+     * @param  capture  Boolean value for capture.
+     * @param  extendedLimitEnabled  Boolean value for extendedLimitEnabled.
+     * @param  extendedLimitCode  String value for extendedLimitCode.
+     * @param  merchantCategoryCode  Long value for merchantCategoryCode.
+     * @param  authentication  CreatePaymentAuthenticationRequest value for authentication.
+     * @param  contactless  CreateCardPaymentContactlessRequest value for contactless.
+     * @param  autoRecovery  Boolean value for autoRecovery.
+     * @param  operationType  String value for operationType.
+     * @param  recurrencyCycle  String value for recurrencyCycle.
+     * @param  payload  CreateCardPayloadRequest value for payload.
+     * @param  initiatedType  String value for initiatedType.
+     * @param  recurrenceModel  String value for recurrenceModel.
+     * @param  paymentOrigin  CreatePaymentOriginRequest value for paymentOrigin.
+     * @param  indirectAcceptor  String value for indirectAcceptor.
+     */
+
+    protected CreateCreditCardPaymentRequest(Integer installments, String statementDescriptor,
+            CreateCardRequest card, String cardId, String cardToken, Boolean recurrence,
+            Boolean capture, Boolean extendedLimitEnabled, String extendedLimitCode,
+            OptionalNullable<Long> merchantCategoryCode,
+            CreatePaymentAuthenticationRequest authentication,
+            CreateCardPaymentContactlessRequest contactless, Boolean autoRecovery,
+            String operationType, String recurrencyCycle, CreateCardPayloadRequest payload,
+            String initiatedType, String recurrenceModel, CreatePaymentOriginRequest paymentOrigin,
             String indirectAcceptor) {
         this.installments = installments;
         this.statementDescriptor = statementDescriptor;
@@ -297,14 +354,24 @@ public class CreateCreditCardPaymentRequest {
     }
 
     /**
+     * Internal Getter for MerchantCategoryCode.
+     * Customer business segment code
+     * @return Returns the Internal Long
+     */
+    @JsonGetter("merchant_category_code")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = OptionalNullable.Serializer.class)
+    protected OptionalNullable<Long> internalGetMerchantCategoryCode() {
+        return this.merchantCategoryCode;
+    }
+
+    /**
      * Getter for MerchantCategoryCode.
      * Customer business segment code
      * @return Returns the Long
      */
-    @JsonGetter("merchant_category_code")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Long getMerchantCategoryCode() {
-        return merchantCategoryCode;
+        return OptionalNullable.getFrom(merchantCategoryCode);
     }
 
     /**
@@ -314,7 +381,15 @@ public class CreateCreditCardPaymentRequest {
      */
     @JsonSetter("merchant_category_code")
     public void setMerchantCategoryCode(Long merchantCategoryCode) {
-        this.merchantCategoryCode = merchantCategoryCode;
+        this.merchantCategoryCode = OptionalNullable.of(merchantCategoryCode);
+    }
+
+    /**
+     * UnSetter for MerchantCategoryCode.
+     * Customer business segment code
+     */
+    public void unsetMerchantCategoryCode() {
+        merchantCategoryCode = null;
     }
 
     /**
@@ -554,7 +629,6 @@ public class CreateCreditCardPaymentRequest {
                 .capture(getCapture())
                 .extendedLimitEnabled(getExtendedLimitEnabled())
                 .extendedLimitCode(getExtendedLimitCode())
-                .merchantCategoryCode(getMerchantCategoryCode())
                 .authentication(getAuthentication())
                 .contactless(getContactless())
                 .autoRecovery(getAutoRecovery())
@@ -565,6 +639,7 @@ public class CreateCreditCardPaymentRequest {
                 .recurrenceModel(getRecurrenceModel())
                 .paymentOrigin(getPaymentOrigin())
                 .indirectAcceptor(getIndirectAcceptor());
+        builder.merchantCategoryCode = internalGetMerchantCategoryCode();
         return builder;
     }
 
@@ -581,7 +656,7 @@ public class CreateCreditCardPaymentRequest {
         private Boolean capture = true;
         private Boolean extendedLimitEnabled;
         private String extendedLimitCode;
-        private Long merchantCategoryCode;
+        private OptionalNullable<Long> merchantCategoryCode;
         private CreatePaymentAuthenticationRequest authentication;
         private CreateCardPaymentContactlessRequest contactless;
         private Boolean autoRecovery;
@@ -691,7 +766,16 @@ public class CreateCreditCardPaymentRequest {
          * @return Builder
          */
         public Builder merchantCategoryCode(Long merchantCategoryCode) {
-            this.merchantCategoryCode = merchantCategoryCode;
+            this.merchantCategoryCode = OptionalNullable.of(merchantCategoryCode);
+            return this;
+        }
+
+        /**
+         * UnSetter for merchantCategoryCode.
+         * @return Builder
+         */
+        public Builder unsetMerchantCategoryCode() {
+            merchantCategoryCode = null;
             return this;
         }
 

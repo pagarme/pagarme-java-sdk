@@ -51,7 +51,6 @@ ListPayablesResponse listPayablesResponse = new ListPayablesResponse.Builder(
         .anticipationFee(0)
         .fraudCoverageFee(0)
         .installment(44)
-        .anticipationId("anticipation_id0")
         .paymentDate(DateTimeHelper.fromRfc8601DateTime("2025-08-18T03:00:00Z"))
         .type("credit")
         .accrualAt(DateTimeHelper.fromRfc8601DateTime("2023-08-21T12:51:28Z"))
