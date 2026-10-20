@@ -457,7 +457,7 @@ public class CreateCreditCardPaymentRequest {
 
     /**
      * Getter for OperationType.
-     * AuthOnly, AuthAndCapture, PreAuth
+     * One of "auth_only", "auth_and_capture" or "pre_auth"
      * @return Returns the String
      */
     @JsonGetter("operation_type")
@@ -468,7 +468,7 @@ public class CreateCreditCardPaymentRequest {
 
     /**
      * Setter for OperationType.
-     * AuthOnly, AuthAndCapture, PreAuth
+     * One of "auth_only", "auth_and_capture" or "pre_auth"
      * @param operationType Value for String
      */
     @JsonSetter("operation_type")

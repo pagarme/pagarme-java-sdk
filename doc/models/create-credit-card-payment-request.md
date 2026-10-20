@@ -24,7 +24,7 @@ The settings for creating a credit card payment
 | `Authentication` | [`CreatePaymentAuthenticationRequest`](../../doc/models/create-payment-authentication-request.md) | Optional | The payment authentication request | CreatePaymentAuthenticationRequest getAuthentication() | setAuthentication(CreatePaymentAuthenticationRequest authentication) |
 | `Contactless` | [`CreateCardPaymentContactlessRequest`](../../doc/models/create-card-payment-contactless-request.md) | Optional | The Credit card payment contactless request | CreateCardPaymentContactlessRequest getContactless() | setContactless(CreateCardPaymentContactlessRequest contactless) |
 | `AutoRecovery` | `Boolean` | Optional | Indicates whether a particular payment will enter the offline retry flow | Boolean getAutoRecovery() | setAutoRecovery(Boolean autoRecovery) |
-| `OperationType` | `String` | Optional | AuthOnly, AuthAndCapture, PreAuth | String getOperationType() | setOperationType(String operationType) |
+| `OperationType` | `String` | Optional | One of `auth_only`, `auth_and_capture` or `pre_auth` | String getOperationType() | setOperationType(String operationType) |
 | `RecurrencyCycle` | `String` | Optional | Defines whether the card has been used one or more times. | String getRecurrencyCycle() | setRecurrencyCycle(String recurrencyCycle) |
 | `Payload` | [`CreateCardPayloadRequest`](../../doc/models/create-card-payload-request.md) | Optional | - | CreateCardPayloadRequest getPayload() | setPayload(CreateCardPayloadRequest payload) |
 | `InitiatedType` | `String` | Optional | - | String getInitiatedType() | setInitiatedType(String initiatedType) |
