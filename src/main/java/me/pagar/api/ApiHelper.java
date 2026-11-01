@@ -8,9 +8,23 @@ package me.pagar.api;
 
 import io.apimatic.core.utilities.CoreHelper;
 
+import java.util.Base64;
+
 /**
  * This is a Helper class with commonly used utilities for the SDK.
  */
 public class ApiHelper extends CoreHelper {
+
+    public static String getBase64EncodedCredentials(String basicAuthUserName,
+                                                     String basicAuthPassword) {
+        if (basicAuthUserName == null) {
+             basicAuthUserName = "";
+        }
+        if (basicAuthPassword == null) {
+            basicAuthPassword = "";
+        }
+        String authCredentials = basicAuthUserName + ":" + basicAuthPassword;
+        return "Basic " + Base64.getEncoder().encodeToString(authCredentials.getBytes());
+    }
 
 }
